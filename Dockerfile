@@ -1,6 +1,6 @@
 FROM mhart/alpine-node:8 as node
 WORKDIR /app
-COPY package.json yarn.lock ./
+COPY package.json ./
 RUN yarn install
 
 FROM ruby:2.5.1-alpine3.7
@@ -9,7 +9,6 @@ COPY --from=node /usr/lib/libgcc* /usr/lib/libstdc* /usr/lib/
 WORKDIR /app
 COPY --from=node /app .
 
-RUN bundle config --global frozen 1
 COPY Gemfile Gemfile.lock ./
 RUN apk add --no-cache \
   build-base \
