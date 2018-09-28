@@ -4,15 +4,15 @@ services:
     image: postgres:10-alpine
     environment:
       - POSTGRES_USER=root
-    volumes:
-      - ./tmp/db:/var/lib/postgresql/data
+ #   volumes:
+ #     - ./tmp/db:/var/lib/postgresql/data
   spring:
     build: .
     volumes:
       - .:/app
     command: spring server
     environment:
-      - DATABASE_URL=postgres://db:5432
+      - DATABASE_URL=postgres://root@db:5432
     # This ensures that the pid namespace is shared between the host
     # and the container. It's not necessary to be able to run spring
     # commands, but it is necessary for "spring status" and "spring stop"
@@ -22,9 +22,9 @@ services:
     build: .
     command: bundle exec rails s -p 1337 -b '0.0.0.0'
     environment:
-      - DATABASE_URL=postgres://db:5432
-    volumes:
-      - .:/app
+      - DATABASE_URL=postgres://root@db:5432
+ #   volumes:
+ #     - .:/app
     ports:
       - "1337:1337"
     depends_on:
