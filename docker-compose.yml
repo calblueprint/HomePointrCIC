@@ -4,8 +4,8 @@ services:
     image: postgres:10-alpine
     environment:
       - POSTGRES_USER=root
- #   volumes:
- #     - ./tmp/db:/var/lib/postgresql/data
+    volumes:
+      - ./tmp/db:/var/lib/postgresql/data
   spring:
     build: .
     volumes:
@@ -23,8 +23,8 @@ services:
     command: bundle exec rails s -p 1337 -b '0.0.0.0'
     environment:
       - DATABASE_URL=postgres://root@db:5432
- #   volumes:
- #     - .:/app
+    volumes:
+      - .:/app
     ports:
       - "1337:1337"
     depends_on:
