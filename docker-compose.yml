@@ -20,7 +20,7 @@ services:
     pid: host
   web:
     build: .
-    command: bundle exec rails s -p 1337 -b '0.0.0.0'
+    command: unbuffer bundle exec rails s -p 1337 -b '0.0.0.0'
     environment:
       - DATABASE_URL=postgres://root@db:5432
     volumes:
