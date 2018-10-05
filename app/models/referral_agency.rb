@@ -1,0 +1,2 @@
+class ReferralAgency < User
+end
