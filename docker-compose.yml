@@ -1,4 +1,14 @@
-version: '3'
+x-default_env: &env
+  environment:
+    - NODE_ENV=development
+    - RAILS_ENV=development
+    - DATABASE_URL=postgres://root@db:5432
+    - BUNDLE_PATH=/gems
+    - GEM_PATH=/gems
+    - GEM_HOME=/gems
+    - PATH=/usr/local/bundle/bin:/usr/local/bundle/gems/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/gems/bin
+    - WEBPACKER_DEV_SERVER_HOST=sh
+version: '3.4'
 services:
   db:
     image: postgres:10-alpine
@@ -15,24 +25,36 @@ services:
     environment:
       - DATABASE_URL=postgres://root@db:5432
       - SPRING_TMP_PATH=/spring
-    # This ensures that the pid namespace is shared between the host
-    # and the container. It's not necessary to be able to run spring
-    # commands, but it is necessary for "spring status" and "spring stop"
-    # to work properly.
+      - GEM_PATH=/gems
+      - GEM_HOME=/gems
+      - PATH=/usr/local/bundle/bin:/usr/local/bundle/gems/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/gems/bin
     pid: host
   web:
     build: .
     command: unbuffer bundle exec rails s -p 1337 -b '0.0.0.0'
-    environment:
-      - DATABASE_URL=postgres://root@db:5432
+    <<: *env
     volumes:
       - .:/app
       - spring-vol:/spring
+      - gems:/gems
     ports:
       - "1337:1337"
     depends_on:
       - db
       - spring
+      # Uncomment this line if you'd like to enable Webpack Dev Server
+      # - sh
+  sh:
+    build: .
+    command: ./bin/webpack-dev-server
+    <<: *env
+    volumes:
+      - .:/app
+      - spring-vol:/spring
+      - gems:/gems
+    ports:
+      - "3035:3035" # for Webpack Dev Server, if run from sh
 volumes:
   spring-vol:
   postgres-vol:
+  gems:
