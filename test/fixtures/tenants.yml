@@ -1,0 +1,31 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  description: MyText
+  email: MyString
+  phone: MyString
+  nino: MyString
+  rent_min: 1
+  rent_max: MyString
+  integer: MyString
+  housing_type: 1
+  property_type: 1
+  num_bedrooms: 1
+  location: MyString
+  date_needed: 2018-10-11
+
+two:
+  name: MyString
+  description: MyText
+  email: MyString
+  phone: MyString
+  nino: MyString
+  rent_min: 1
+  rent_max: MyString
+  integer: MyString
+  housing_type: 1
+  property_type: 1
+  num_bedrooms: 1
+  location: MyString
+  date_needed: 2018-10-11
