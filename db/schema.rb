@@ -15,6 +15,19 @@ ActiveRecord::Schema.define(version: 2018_10_11_035806) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
+  create_table "properties", force: :cascade do |t|
+    t.integer "capacity"
+    t.text "description"
+    t.bigint "landlord_id"
+    t.integer "rent"
+    t.integer "size"
+    t.integer "property_type"
+    t.integer "housing_type"
+    t.date "date_available"
+    t.integer "location"
+    t.index ["landlord_id"], name: "index_properties_on_landlord_id"
+  end
+
   create_table "tenants", force: :cascade do |t|
     t.string "name"
     t.text "description"
@@ -33,18 +46,6 @@ ActiveRecord::Schema.define(version: 2018_10_11_035806) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["referral_agency_id"], name: "index_tenants_on_referral_agency_id"
-
-  create_table "properties", force: :cascade do |t|
-    t.integer "capacity"
-    t.text "description"
-    t.bigint "landlord_id"
-    t.integer "rent"
-    t.integer "size"
-    t.integer "property_type"
-    t.integer "housing_type"
-    t.date "date_available"
-    t.integer "location"
-    t.index ["landlord_id"], name: "index_properties_on_landlord_id"
   end
 
   create_table "users", force: :cascade do |t|

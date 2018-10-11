@@ -19,7 +19,8 @@ RUN apk add --no-cache \
   busybox-extras \
   bash \
   postgresql-client \
-  curl
+  curl \
+  expect
 
 RUN bundle install
 COPY . .
