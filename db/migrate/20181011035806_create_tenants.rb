@@ -12,7 +12,8 @@ class CreateTenants < ActiveRecord::Migration[5.2]
       t.integer :housing_type
       t.integer :property_type
       t.integer :num_bedrooms
-      t.string :location
+      t.integer :location
+      t.references :referral_agency, index: true 
       t.date :date_needed
 
       t.timestamps

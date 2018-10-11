@@ -27,10 +27,12 @@ ActiveRecord::Schema.define(version: 2018_10_11_035806) do
     t.integer "housing_type"
     t.integer "property_type"
     t.integer "num_bedrooms"
-    t.string "location"
+    t.integer "location"
+    t.bigint "referral_agency_id"
     t.date "date_needed"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["referral_agency_id"], name: "index_tenants_on_referral_agency_id"
   end
 
   create_table "users", force: :cascade do |t|
