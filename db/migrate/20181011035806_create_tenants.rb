@@ -14,7 +14,6 @@ class CreateTenants < ActiveRecord::Migration[5.2]
       t.integer :location
       t.references :referral_agency, index: true 
       t.date :date_needed
-
       t.timestamps
     end
   end
