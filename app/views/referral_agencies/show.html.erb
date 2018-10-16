@@ -1,0 +1,18 @@
+<h1>ReferralAgencies#show</h1>
+<p>Find me in app/views/referral_agencies/show.html.erb</p>
+
+<div>
+  <% @tenants.each do |tenant| %>
+	<p><%= tenant.id %></p>
+  <% end %>
+</div>
+
+<% if user_signed_in? %>
+  <li>
+  <%= link_to('Logout', destroy_user_session_path, method: :delete) %>        
+  </li>
+<% else %>
+  <li>
+  <%= link_to('Login', new_user_session_path)  %>  
+  </li>
+<% end %>
