@@ -1,2 +1,22 @@
-<h1>Properties#show</h1>
-<p>Find me in app/views/properties/show.html.erb</p>
+<h1>Properites#show</h1>
+<p>Find me in app/views/properites/show.html.erb</p>
+
+Property ID: <%= @property.id %>
+Property Capacity: <%= @property.capacity %>
+Property Description: <%= @property.description %>
+Property Landlord ID: <%= @property.landlord_id %>
+Property Rent: <%= @property.rent %>
+Property Size: <%= @property.size %>
+Property Housing Type: <%= @property.housing_type %>
+Property Property Type: <%= @property.property_type %>
+Property Location: <%= @property.location %>
+Property Date Available: <%= @property.date_available %>
+<br>
+<br>
+Property Applications
+<% @applications.each do |a| %>
+	Application ID: <%= a.id %>
+	Application Status: <%= a.status %>
+	Application Property ID: <%= a.property_id %>
+	Application Info ID: <%= a.info_id %>
+<% end %>

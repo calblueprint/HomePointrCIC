@@ -1,10 +1,40 @@
 class ApplicationsController < ApplicationController
+  def index
+  	@applications = Application.all
+  end
+
+  def new
+  	@application = Application.new
+  end
+
   def create
+  	application = Application.new(application_params)
+  	if application.save
+      redirect_to applications_path
+    else
+      error_response(application)
+    end
   end
 
-  def update
+  def show
+  	@application = Application.find(params[:id])
+  	@info = @application.info
+  	@property = @application.property
   end
 
-  def delete
+  def destroy
+  	@application = Application.find(params[:id])
+		@application.destroy
+		redirect_to applications_path
   end
+
+  private
+  	
+	def application_params
+		params.require(:application).permit(
+      :status,
+      :property_id,
+      :info_id
+    )
+	end
 end

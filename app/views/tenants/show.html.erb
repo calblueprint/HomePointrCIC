@@ -1,2 +1,26 @@
 <h1>Tenants#show</h1>
 <p>Find me in app/views/tenants/show.html.erb</p>
+
+Tenant ID: <%= @tenant.id %>
+Tenant Name: <%= @tenant.name %>
+Tenant Description: <%= @tenant.description %>
+Tenant Email: <%= @tenant.email %>
+Tenant Phone: <%= @tenant.phone %>
+Tenant NINO: <%= @tenant.nino %>
+Tenant Rent Min: <%= @tenant.rent_min %>
+Tenant Rent Max: <%= @tenant.rent_max %>
+Tenant Housing Type: <%= @tenant.housing_type %>
+Tenant Property Type: <%= @tenant.property_type %>
+Tenant Num Bedrooms: <%= @tenant.num_bedrooms %>
+Tenant Location: <%= @tenant.location %>
+Tenant Referral Agency ID: <%= @tenant.referral_agency_id %>
+Tenant Date Needed: <%= @tenant.date_needed %>
+<br>
+<br>
+Tenant Applications
+<% @applications.each do |a| %>
+	Application ID: <%= a.id %>
+	Application Status: <%= a.status %>
+	Application Property ID: <%= a.property_id %>
+	Application Info ID: <%= a.info_id %>
+<% end %>

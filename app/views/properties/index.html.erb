@@ -1,0 +1,13 @@
+<h1>Properites#index</h1>
+<p>Find me in app/views/properites/index.html.erb</p>
+
+<% @properties.each do |p| %>
+	Property ID: <%= p.id %>
+	Landlord ID: <%= p.landlord_id %>
+	<%= link_to "Show", property_path(id: p.id) %>
+	<%= link_to "Edit", edit_property_path(id: p.id), :method => :get %>
+	<%= link_to "Delete", property_path(id: p.id), :method => :delete %><br>
+<% end %>
+
+<%= link_to "Create", new_property_path %>
+

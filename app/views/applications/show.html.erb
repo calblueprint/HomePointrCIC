@@ -1,0 +1,27 @@
+<h1>Applications#show</h1>
+<p>Find me in app/views/applications/show.html.erb</p>
+
+Application ID: <%= @application.id %>
+Application Status: <%= @application.status %>
+Application Property ID: <%= @application.property_id %>
+Application Info ID: <%= @application.info_id %>
+<br>
+<br>
+Info:
+<br>
+	Info ID: <%= @info.id %>
+	Tenant ID: <%= @info.tenant_id %><br>
+<br>
+<br>
+Property:
+<br>
+	Property ID: <%= @property.id %>
+	Property Capacity: <%= @property.capacity %>
+	Property Description: <%= @property.description %>
+	Property Landlord ID: <%= @property.landlord_id %>
+	Property Rent: <%= @property.rent %>
+	Property Size: <%= @property.size %>
+	Property Housing Type: <%= @property.housing_type %>
+	Property Property Type: <%= @property.property_type %>
+	Property Location: <%= @property.location %>
+	Property Date Available: <%= @property.date_available %>
