@@ -1,22 +1,27 @@
-<h1>Properites#show</h1>
-<p>Find me in app/views/properites/show.html.erb</p>
+<h1>Properties#show</h1>
+<p>Find me in app/views/properties/show.html.erb</p>
 
-Property ID: <%= @property.id %>
-Property Capacity: <%= @property.capacity %>
-Property Description: <%= @property.description %>
-Property Landlord ID: <%= @property.landlord_id %>
-Property Rent: <%= @property.rent %>
-Property Size: <%= @property.size %>
-Property Housing Type: <%= @property.housing_type %>
-Property Property Type: <%= @property.property_type %>
-Property Location: <%= @property.location %>
-Property Date Available: <%= @property.date_available %>
+<br>
+	<ul>
+		<li>Property ID: <%= @property.id %></li>
+		<li>Property Capacity: <%= @property.capacity %></li>
+		<li>Property Description: <%= @property.description %></li>
+		<li>Property Landlord ID: <%= @property.landlord_id %></li>
+		<li>Property Rent: <%= @property.rent %></li>
+		<li>Property Size: <%= @property.size %></li>
+		<li>Property Housing Type: <%= @property.housing_type %></li>
+		<li>Property Property Type: <%= @property.property_type %></li>
+		<li>Property Location: <%= @property.location %></li>
+		<li>Property Date Available: <%= @property.date_available %></li>
+	</ul>
 <br>
 <br>
 Property Applications
-<% @applications.each do |a| %>
-	Application ID: <%= a.id %>
-	Application Status: <%= a.status %>
-	Application Property ID: <%= a.property_id %>
-	Application Info ID: <%= a.info_id %>
-<% end %>
+<ul>
+	<% @applications.each do |a| %>
+		<li>Application ID: <%= a.id %></li>
+		<li>Application Status: <%= a.status %></li>
+		<li>Application Property ID: <%= a.property_id %></li>
+		<li>Application Info ID: <%= a.info_id %></li><br>
+	<% end %>
+</ul>

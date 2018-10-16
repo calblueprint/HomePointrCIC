@@ -19,6 +19,7 @@ class ApplicationsController < ApplicationController
   def show
   	@application = Application.find(params[:id])
   	@info = @application.info
+  	@application_tenant = @info.tenant
   	@property = @application.property
   end
 
