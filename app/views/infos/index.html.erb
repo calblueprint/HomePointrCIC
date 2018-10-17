@@ -2,8 +2,8 @@
 <p>Find me in app/views/infos/index.html.erb</p>
 
 <% @infos.each do |info| %>
-	Info ID: <%= info.id %>
-	Tenant ID: <%= info.tenant_id %><br>
+  Info ID: <%= info.id %>
+  Tenant ID: <%= info.tenant_id %><br>
 <% end %>
 
 <%= link_to "Create", new_info_path %>

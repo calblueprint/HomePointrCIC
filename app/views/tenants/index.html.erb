@@ -2,11 +2,11 @@
 <p>Find me in app/views/tenants/index.html.erb</p>
 
 <% @tenants.each do |t| %>
-	Tenant ID: <%= t.id %>
-	Name: <%= t.name %>
-	<%= link_to "Show", tenant_path(id: t.id) %>
-	<%= link_to "Edit", edit_tenant_path(id: t.id), :method => :get %>
-	<%= link_to "Delete", tenant_path(id: t.id), :method => :delete %><br>
+  Tenant ID: <%= t.id %>
+  Name: <%= t.name %>
+  <%= link_to "Show", tenant_path(id: t.id) %>
+  <%= link_to "Edit", edit_tenant_path(id: t.id), :method => :get %>
+  <%= link_to "Delete", tenant_path(id: t.id), :method => :delete %><br>
 <% end %>
 
 <%= link_to "Create", new_tenant_path %>
