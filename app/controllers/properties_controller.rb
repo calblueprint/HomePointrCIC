@@ -1,55 +1,49 @@
 class PropertiesController < ApplicationController
-  def index
-  	@properties = Property.all
-  end
-
-  def new
-  	@property = Property.new
-  end
-
-  def create
-  	property = Property.new(property_params)
-  	if property.save
-      redirect_to properties_path
-    else
-      error_response(property)
-    end
-  end
-
-  def show
-  	@property = Property.find(params[:id])
-    @applications = @property.applications
-  end
-
-  def edit
-  	@property = Property.find(params[:id])
+	def create
+		property = Property.new(property_params)
+		if property.save
+			redirect_to properties_path
+		else
+			render json: { errors: property.errors.messages }
+		end
 	end
 
-  def update
+	def show
 		@property = Property.find(params[:id])
-    @property.update(property_params)
-    redirect_to properties_path
-  end
+		@applications = @property.applications
+	end
 
-  def destroy
-  	@property = Property.find(params[:id])
-		@property.destroy
-		redirect_to properties_path
-  end
+	def update
+		property = Property.find(params[:id])
+		if property.update(property_params)
+			redirect_to properties_path
+		else
+			render json: { errors: property.errors.messages }
+		end
+	end
 
-  private
-  	
+	def destroy
+		property = Property.find(params[:id])
+		if property.destroy
+			redirect_to properties_path
+		else
+			render json: { errors: property.errors.messages }
+		end
+	end
+
+	private
+		
 	def property_params
 		params.require(:property).permit(
-      :capacity,
-      :description,
-      :landlord_id,
-      :rent,
-      :size,
-      :property_type,
-      :housing_type,
-      :date_available,
-      :location
-    )
+			:capacity,
+			:description,
+			:landlord_id,
+			:rent,
+			:size,
+			:property_type,
+			:housing_type,
+			:date_available,
+			:location
+		)
 	end
 end

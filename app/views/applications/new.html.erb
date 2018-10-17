@@ -2,11 +2,11 @@
 <p>Find me in app/views/applications/new.html.erb</p>
 
 <%= form_for @application do |f| %>
-  <%= f.label :status%>
-  <%= f.select(:status, Application.statuses.keys.map {|status| [status.titleize, status]}) %>
-  <%= f.label :property_id%>
-  <%= f.select(:property_id, Property.all.pluck(:id, :id)) %>
-  <%= f.label :info_id%>
-  <%= f.select(:info_id, Info.all.pluck(:tenant_id, :id)) %>
-  <%= f.submit %>
+	<%= f.label :status%>
+	<%= f.select(:status, Application.statuses.keys.map {|status| [status.titleize, status]}) %>
+	<%= f.label :property_id%>
+	<%= f.select(:property_id, Property.all.pluck(:id, :id)) %>
+	<%= f.label :info_id%>
+	<%= f.select(:info_id, Info.all.pluck(:tenant_id, :id)) %>
+	<%= f.submit %>
 <% end %>

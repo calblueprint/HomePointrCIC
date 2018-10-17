@@ -1,27 +1,18 @@
 class InfosController < ApplicationController
-
-	def index
-		@infos = Info.all
+	def create
+		info = Info.new(info_params)
+		if info.save
+			redirect_to infos_path
+		else
+			render json: { errors: info.errors.messages }
+		end
 	end
 
-	def new
-		@info = Info.new
-	end
-
-  def create
-  	info = Info.new(info_params)
-  	if info.save
-      redirect_to infos_path
-    else
-      error_response(info)
-    end
-  end
-
-  private
-  	
+	private
+		
 	def info_params
 		params.require(:info).permit(
-      :tenant_id
-    )
+			:tenant_id
+		)
 	end
 end
