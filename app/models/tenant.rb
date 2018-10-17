@@ -7,37 +7,37 @@ class Tenant < ApplicationRecord
   validates :name, :description, :email, :phone, :nino, :rent_min, :rent_max, :housing_type, :property_type, :num_bedrooms, :location, :referral_agency_id, :date_needed, presence: true
 
   def priority
-	  """Returns priority of tenant:
-		0 - matched with a house
-		1 - interviewing with a house
-		2 - applied
-		3 - rejected
-		4 - not applied yet
-		"""
-  	if !info
-  		return
-  	end
-  	apps = info.applications
-		if !apps
-			return 4
-		end
-		all_status = Application.statuses
-		max_status = 0
-		apps.each do |app|
-			app_status = all_status[app.status]
-			if app_status > max_status
-				max_status = app_status
-			end
-		end
-		if max_status == 0
-			return 3
-		elsif max_status == 1
-			return 2
-		elsif max_status == 2
-			return 1
-		elsif max_status == 3
-			return 0
-		end	
+    """Returns priority of tenant:
+    0 - matched with a house
+    1 - interviewing with a house
+    2 - applied
+    3 - rejected
+    4 - not applied yet
+    """
+    if !info
+      return
+    end
+    apps = info.applications
+    if !apps
+      return 4
+    end
+    all_status = Application.statuses
+    max_status = 0
+    apps.each do |app|
+      app_status = all_status[app.status]
+      if app_status > max_status
+        max_status = app_status
+      end
+    end
+    if max_status == 0
+      return 3
+    elsif max_status == 1
+      return 2
+    elsif max_status == 2
+      return 1
+    elsif max_status == 3
+      return 0
+    end 
   end
 end
 
