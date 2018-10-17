@@ -2,8 +2,13 @@
 <p>Find me in app/views/landlords/show.html.erb</p>
 
 <div>
-  <% @properties.each do |property| %>
-	  <p><%= property.id %></p>
+	<% if !@error %>
+		<p> Property IDs: </p>
+	  <% @properties.each do |property| %>
+		  <p><%= property.id %></p>
+		<% end %>
+  <% else %>
+  	<p> Error with Databsae </p>
   <% end %>
 </div>
 

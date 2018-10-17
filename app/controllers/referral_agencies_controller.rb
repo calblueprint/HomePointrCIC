@@ -1,10 +1,8 @@
 class ReferralAgenciesController < ApplicationController
   def create
-  	if current_user.type == 'ReferralAgency'
-	  	referral_agency = ReferralAgency.new(referral_agency_params)
-	  	landlord.save!
-	  	redirect_to referral_agencies_show_url
-    end
+  	referral_agency = ReferralAgency.new(referral_agency_params)
+  	referral_agency.save!
+  	redirect_to referral_agencies_show_url
   end
 
   def show
@@ -15,7 +13,7 @@ class ReferralAgenciesController < ApplicationController
   end
 
   def update
-  	if user_signed_in?
+  	if params[:id] == current_user.id
   	  @referral_agency = ReferralAgency.find(params[:id])
   	  @referral_agency.update!
   	  redirect_to referral_agencies_show_url
@@ -23,9 +21,11 @@ class ReferralAgenciesController < ApplicationController
   end
 
   def delete
-  	@referral_agency = ReferralAgency.find(params[:id])
-  	@referral_agency.find(params[:id]).destroy
-  	redirect_to referral_agencies_show_url
+    if params[:id] == current_user.id
+    	@referral_agency = ReferralAgency.find(params[:id])
+    	@referral_agency.find(params[:id]).destroy
+    	redirect_to referral_agencies_show_url
+    end
   end
 
   private
