@@ -20,23 +20,12 @@ class Tenant < ApplicationRecord
     if !apps
       return 4
     end
-    all_status = Application.statuses
-    max_status = 0
+    status_map = Application.statuses
+    statuses = Array.new
     apps.each do |app|
-      app_status = all_status[app.status]
-      if app_status > max_status
-        max_status = app_status
-      end
+      statuses.push(status_map[app.status])
     end
-    if max_status == 0
-      return 3
-    elsif max_status == 1
-      return 2
-    elsif max_status == 2
-      return 1
-    elsif max_status == 3
-      return 0
-    end 
+    max_status = statuses.max
+    return 3 - max_status
   end
 end
-
