@@ -1,12 +1,10 @@
 class LandlordsController < ApplicationController
   def create
   	landlord = Landlord.new(landlord_params)
-  	@error = false
   	if landlord.save!
   		redirect_to landlords_show_url
   	else
-  		@error = true
-  		redirect_to landlords_show_url
+  		render json: { errors: landlord.errors.messages }
 	  end
   end
 
@@ -14,29 +12,36 @@ class LandlordsController < ApplicationController
   	if user_signed_in? and current_user.type == 'Landlord'
   	  @landlord = current_user
   	  @properties = @landlord.properties
+  	else
+  		redirect_to '/users/sign_up'
   	end
   end
 
   def update
-  	@error = false
-  	if params[:id] == current_user.id
-  	  @landlord = Landlord.find(params[:id])
-  	  @landlord.update!
-  	else
-  		@error = true
-  	redirect_to landlords_show_url
-  	end
+  	# if params[:id] == current_user.id
+	  @landlord = Landlord.find(params[:id])
+	  if @landlord.update(landlord_params)
+	  	redirect_to landlords_show_url
+	  else
+	  	render json: { errors: @landlord.errors.messages }
+	  end 
+  	# else
+  	# 	puts('you do not have access to this page')
+  	# end
   end
 
-  def delete
-  	@error = false
-  	if params[:id] == current_user.id
-	  	@landlord = Landlord.find(params[:id])
-	  	@landlord.find(params[:id]).destroy
-	  else 
-	  	@error = true
-	  redirect_to landlords_show_url
-	  end
+  def destroy
+  	# if params[:id] == current_user.id
+  	@landlord = Landlord.find(params[:id])
+    @landlord.destroy
+  	if @landlord.destroyed?
+      redirect_to new_user_registration_path
+    else
+      render json: { errors: @landlord.errors.messages }
+    end
+    # else 
+    #   puts('you do not have access to this page')
+    # end
   end
 
   private

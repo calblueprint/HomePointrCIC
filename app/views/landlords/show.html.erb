@@ -2,15 +2,14 @@
 <p>Find me in app/views/landlords/show.html.erb</p>
 
 <div>
-	<% if !@error %>
-		<p> Property IDs: </p>
-	  <% @properties.each do |property| %>
-		  <p><%= property.id %></p>
-		<% end %>
-  <% else %>
-  	<p> Error with Databsae </p>
+	<h3><%= @landlord.name %></h3>
+	<p> Property IDs: </p>
+  <% @properties.each do |property| %>
+	  <p><%= property.id %></p>
   <% end %>
 </div>
+
+<%= link_to "Delete", landlord_path(id: @landlord.id), :method => :delete %><br>
 
 <% if user_signed_in? %>
   <li>

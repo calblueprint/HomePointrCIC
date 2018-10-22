@@ -2,10 +2,14 @@
 <p>Find me in app/views/referral_agencies/show.html.erb</p>
 
 <div>
+  <h3><%= @referral_agency.name %></h3>
+  <p> Tenant IDs: </p>
   <% @tenants.each do |tenant| %>
 	<p><%= tenant.id %></p>
   <% end %>
 </div>
+
+<%= link_to "Delete", referral_agency_path(id: @referral_agency.id), :method => :delete %><br>
 
 <% if user_signed_in? %>
   <li>
