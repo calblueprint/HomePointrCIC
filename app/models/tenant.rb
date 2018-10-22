@@ -22,10 +22,7 @@ class Tenant < ApplicationRecord
       return 4
     end
     status_map = Application.statuses
-    statuses = Array.new
-    apps.each do |app|
-      statuses.push(status_map[app.status])
-    end
+    statuses = apps.map{ |a| status_map[a.status] }
     max_status = statuses.max
     return 3 - max_status
   end
