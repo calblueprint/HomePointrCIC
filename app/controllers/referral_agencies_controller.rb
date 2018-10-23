@@ -1,9 +1,10 @@
 class ReferralAgenciesController < ApplicationController
   def create
-  	if current_user.type == 'ReferralAgency'
-	  	referral_agency = ReferralAgency.new(referral_agency_params)
-	  	landlord.save!
-	  	redirect_to referral_agencies_show_url
+  	referral_agency = ReferralAgency.new(referral_agency_params)
+  	if referral_agency.save!
+  	  redirect_to referral_agencies_show_url
+    else
+      render json: { errors: referral_agency.errors.messages }
     end
   end
 
@@ -11,21 +12,36 @@ class ReferralAgenciesController < ApplicationController
   	if user_signed_in? and current_user.type == 'ReferralAgency'
   	  @referral_agency = current_user
   	  @tenants = @referral_agency.tenants
+    else
+      redirect_to '/users/sign_up'
   	end
   end
 
   def update
-  	if user_signed_in?
-  	  @referral_agency = ReferralAgency.find(params[:id])
-  	  @referral_agency.update!
-  	  redirect_to referral_agencies_show_url
-  	end
+  	# if params[:id] == current_user.id
+	  @referral_agency = ReferralAgency.find(params[:id])
+    if @referral_agency.update(referral_agency)
+	    redirect_to referral_agencies_show_url
+    else
+      render json: { errors: @referral_agency.errors.messages }
+    end 
+    # else
+    #   puts('you do not have access to this page')
+  	# end
   end
 
-  def delete
+  def destroy
+    # if params[:id] == current_user.id
   	@referral_agency = ReferralAgency.find(params[:id])
-  	@referral_agency.find(params[:id]).destroy
-  	redirect_to referral_agencies_show_url
+    @referral_agency.destroy!
+  	if @referral_agency.destroyed?
+      redirect_to new_user_registration_path
+    else
+      render json: { errors: @referral_agency.errors.messages }
+    end
+    # else 
+      #puts('you do not have access to this page')
+    #end
   end
 
   private

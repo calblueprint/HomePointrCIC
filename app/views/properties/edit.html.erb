@@ -1,0 +1,24 @@
+<h1>Properties#edit</h1>
+<p>Find me in app/views/properties/edit.html.erb</p>
+
+<%= form_for @property do |f| %>
+  <%= f.label :capacity%>
+  <%= f.text_field :capacity%>
+  <%= f.label :description%>
+  <%= f.text_field :description%>
+  <%= f.label :rent%>
+  <%= f.text_field :rent%>
+  <%= f.label :size%>
+  <%= f.text_field :size%>
+  <%= f.label :date_available%>
+  <%= f.date_field :date_available, as: :date, value: f.object.try(:strftime,"%m/%d/%Y"), class: 'form-control' %>
+  <%= f.label :housing_type%>
+  <%= f.select(:housing_type, Property.housing_types.keys.map {|housing_type| [housing_type.titleize, housing_type]}) %>
+  <%= f.label :property_type%>
+  <%= f.select(:property_type, Property.property_types.keys.map {|property_type| [property_type.titleize, property_type]}) %>
+  <%= f.label :location%>
+  <%= f.select(:location, Property.locations.keys.map {|location| [location.titleize,location]}) %>
+  <%= f.label :landlord_id%>
+  <%= f.select(:landlord_id, Landlord.all.pluck(:email, :id)) %>
+  <%= f.submit %>
+<% end %>

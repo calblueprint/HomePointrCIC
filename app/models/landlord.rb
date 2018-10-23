@@ -1,3 +1,3 @@
 class Landlord < User
-	has_many :properties, dependent: :destroy
+  has_many :properties, dependent: :destroy
 end
