@@ -34,11 +34,11 @@ class ReferralAgenciesController < ApplicationController
     # if params[:id] == current_user.id
   	@referral_agency = ReferralAgency.find(params[:id])
     @referral_agency.destroy!
-    	if @referral_agency.destroyed?
-        redirect_to new_user_registration_path
-      else
-        render json: { errors: @referral_agency.errors.messages }
-      end
+  	if @referral_agency.destroyed?
+      redirect_to new_user_registration_path
+    else
+      render json: { errors: @referral_agency.errors.messages }
+    end
     # else 
       #puts('you do not have access to this page')
     #end
