@@ -1,4 +1,5 @@
-class Tenant < ApplicationRecord
+class Tenant < ApplicationRecord 
+	# locations not set
 	belongs_to :referral_agency
 	has_one :info, dependent: :destroy
 	enum housing_type: { other_housing_type: 0, supported_housing: 1, temporary_hostel: 2, sheltered_housing: 3, private_sector_leasing: 4, private_property: 5, care_home: 6, retired_housing: 7, council_housing: 8, housing_association: 9, student_housing: 10, mid_market_rent: 11, housing_first: 12, rehab_center: 13, refuge_center: 14, youth_hostel: 15 }

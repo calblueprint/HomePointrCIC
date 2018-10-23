@@ -1,4 +1,5 @@
 class Property < ApplicationRecord
+	# locations not set
 	belongs_to :landlord
 	has_many :infos, :through => :applications
 	has_many :applications, dependent: :destroy
