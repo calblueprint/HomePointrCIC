@@ -1,6 +1,10 @@
 # Constants
+
+#Please set the following to at LEAST 10
 NUM_LANDLORDS = 10
 NUM_REFERRAL_AGENCIES = 10
+
+#Please set the following to a multiple of 3. RECOMMENDED: 30 for both
 NUM_PROPERTIES = 30
 NUM_TENTANTS = 30
 
@@ -79,15 +83,68 @@ def make_tenants
   puts "\n"
 end
 
+#Assuming NUM is 30...
+
+#creates applications for 20 tenants. There should be 10 tenants and 15 properties without apps.
 def make_applications
-  0.upto(NUM_TENTANTS-10) do |n|
+	make_received_apps
+	make_rejected_apps
+	make_special_apps(NUM_TENTANTS/3 + 1, NUM_TENTANTS/3 + 5, 2, "Interview")
+	make_special_apps(NUM_TENTANTS/3 + 6, NUM_TENTANTS/3 + 10, 3, "Housed")
+end
+
+#Makes 10 apps with status received for users 1-10. These apps are distributed
+#amongst properties 1-5.
+def make_received_apps
+  1.upto(NUM_TENTANTS/3) do |n|
     application = Application.create(
       status: 1,
       property_id: n%5+1,
       info_id: n
     )
     application.save
-    printf("#{n}/#{NUM_TENTANTS-10} Applications \r")
+    printf("#{n}/#{10} Received Applications \r")
+  end
+  puts "\n"
+end
+
+#Makes 5 apps with status rejected for users 1-5. These apps are distributed
+#amongst properties 1-5.
+def make_rejected_apps
+  1.upto(5) do |n|
+    application = Application.create(
+      status: 0,
+      property_id: n%5+2,
+      info_id: n
+    )
+    application.save
+    printf("#{n}/#{5} Rejected Applications \r")
+  end
+  puts "\n"
+end
+
+#Makes 25 apps (5 'interview/housed' and 20 'received' apps). 5 tenants, 5 houses
+#Each tenant will have 4 'received' apps and 1 'interview/housed' app. 
+def make_special_apps(start, fin, stat_num, custom)
+  special_num, received, new_stat, count = 0, 0, 1, fin-5
+  start.upto(fin) do |n|
+    (start-5).upto(fin-5) do |p|
+    	if p == count
+    		new_stat = stat_num
+    		count -= 1
+    		special_num += 1
+    	else
+    		received += 1
+    	end
+	    application = Application.create(
+	      status: new_stat,
+	      property_id: p,
+	      info_id: n
+	    )
+	    application.save
+	    new_stat = 1
+	    printf("#{special_num}/#{5} #{custom} Applications, #{received}/#{20} Received Applications \r")
+	  end
   end
   puts "\n"
 end
