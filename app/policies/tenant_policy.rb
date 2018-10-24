@@ -23,7 +23,7 @@ class TenantPolicy
   end
 
   def update?
-    false
+    user.admin?
   end
 
   def edit?

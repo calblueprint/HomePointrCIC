@@ -7,11 +7,11 @@ class PropertyPolicy < ApplicationPolicy
   end
 
   def index?
-    user.admin? #referral agency can see all properties
+    user.admin? #RA can see all properties
   end
 
   def show?
-    user.admin? #RA can see specific property
+    #if @property.id in user.propertyIDs || user.admin? true else false #RA can see specific property, but Landlord can only see property if its one of theirs
   end
 
   def create?
@@ -23,11 +23,7 @@ class PropertyPolicy < ApplicationPolicy
   end
 
   def update?
-    false
-  end
-
-  def edit?
-    update?
+    !user.admin? # only Landlord can update a property, and landlords aren't admins
   end
 
   def destroy?

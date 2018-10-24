@@ -16,6 +16,7 @@ class TenantsController < ApplicationController
 
   def update
     tenant = Tenant.find(params[:id])
+    authorize tenant
     if tenant.update(tenant_params)
       redirect_to tenants_path
     else

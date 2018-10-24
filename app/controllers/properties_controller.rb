@@ -10,12 +10,13 @@ class PropertiesController < ApplicationController
 
   def show
     @property = Property.find(params[:id])
-    authorize @property #both RA and Landlord should be able to see a property
+    authorize @property #both RA and Landlord should be able to see a property..so actually don't really need to auth here?
     @applications = @property.applications
   end
 
   def update
     property = Property.find(params[:id])
+    authorize @property # only a landlord can update a property
     if property.update(property_params)
       redirect_to properties_path
     else
