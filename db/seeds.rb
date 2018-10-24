@@ -18,6 +18,7 @@ def make_landlords
       phone: Faker::PhoneNumber.cell_phone.gsub(/-/, ''),
       address: Faker::Address.street_address
     )
+    landlord.skip_confirmation!
     landlord.save
     printf("#{n}/#{NUM_LANDLORDS} Landlords \r")
   end
@@ -34,6 +35,7 @@ def make_referral_agencies
       phone: Faker::PhoneNumber.cell_phone.gsub(/-/, ''),
       address: Faker::Address.street_address
     )
+    referral_agency.skip_confirmation!
     referral_agency.save
     printf("#{n-NUM_LANDLORDS}/#{NUM_REFERRAL_AGENCIES} Referral Agencies \r")
   end
