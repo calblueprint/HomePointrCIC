@@ -10,6 +10,7 @@ class PropertiesController < ApplicationController
 
   def show
     @property = Property.find(params[:id])
+    authorize @property #both RA and Landlord should be able to see a property
     @applications = @property.applications
   end
 

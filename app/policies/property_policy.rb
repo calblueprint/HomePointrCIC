@@ -1,17 +1,17 @@
-class PropertyPolicy
-  attr_reader :user, :record
+class PropertyPolicy < ApplicationPolicy
+  attr_reader :user, :property
 
-  def initialize(user, record)
+  def initialize(user, property)
     @user = user
-    @record = record
+    @property = property
   end
 
   def index?
-    false
+    user.admin? #referral agency can see all properties
   end
 
   def show?
-    false
+    user.admin? #RA can see specific property
   end
 
   def create?
@@ -43,7 +43,10 @@ class PropertyPolicy
     end
 
     def resolve
-      scope.all
-    end
+      if user.admin?
+        scope.all #RA can see ALL PROPERTIES!
+      else 
+        #scope.where(propertyid in landlord's properties) #Landlord can see only properties that belong to him 
+      end
   end
 end

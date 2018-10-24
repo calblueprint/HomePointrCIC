@@ -1,21 +1,21 @@
-class InfoPolicy
-  attr_reader :user, :info
+class AppPolicy
+  attr_reader :user, :record
 
-  def initialize(user, info)
+  def initialize(user, record)
     @user = user
-    @info = info
+    @record = record
   end
 
   def index?
-    user.admin? # RA can see all Infos
+    user.admin? # RA can see all Applications
   end
 
   def show?
-    user.admin? # RA can see specific info
+    user.admin? # RA can see specific Application
   end
 
   def create?
-    user.admin? # RA can create an Info
+    user.admin? # RA can create an Applicatoin
   end
 
   def new?
@@ -23,7 +23,7 @@ class InfoPolicy
   end
 
   def update?
-    user.admin? # RA can update an Info
+    user.admin? # RA can update an Application
   end
 
   def edit?

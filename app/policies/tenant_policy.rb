@@ -1,17 +1,17 @@
 class TenantPolicy
-  attr_reader :user, :record
+  attr_reader :user, :tenant
 
-  def initialize(user, record)
+  def initialize(user, tenant)
     @user = user
-    @record = record
+    @tenant = tenant
   end
 
   def index?
-    false
+    user.admin? # RA can see all tenants
   end
 
   def show?
-    false
+    user.admin? # RA can see specific tenant
   end
 
   def create?
@@ -43,7 +43,10 @@ class TenantPolicy
     end
 
     def resolve
-      scope.all
+      if user.admin? 
+        scope.where(tenant_id in RA tenants?) # if RA, can see only tenants associated with yourself
+      else 
+        scope.where() #if Landlord, can only see tenants that have applied to you!
     end
   end
 end
