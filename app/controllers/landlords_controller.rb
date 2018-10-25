@@ -13,6 +13,7 @@ class LandlordsController < ApplicationController
   	  @landlord = current_user
   	  @properties = @landlord.properties
   	else
+      # if current user is referral agency, should still be able to see. 
   		redirect_to '/users/sign_up'
   	end
   end
@@ -28,6 +29,11 @@ class LandlordsController < ApplicationController
   	# else
   	# 	puts('you do not have access to this page')
   	# end
+  end
+
+  def index
+    @landlords = Landlord.all
+    authorize @landlords
   end
 
   def destroy
