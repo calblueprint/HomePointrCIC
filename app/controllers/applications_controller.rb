@@ -1,6 +1,7 @@
 class ApplicationsController < ApplicationController
   def create
     @application = Application.new(application_params)
+    authorize @application #only an RA can create an application
     if @application.save
       ApplicationsMailer.with(application: @application).new_application.deliver_now
       redirect_to applications_path
@@ -24,6 +25,18 @@ class ApplicationsController < ApplicationController
     @applications = @tenant.applications #do I still need to authorize?
   end
 
+  def update
+    # RA can update general information
+    @application = Applicaion.find(params[:id])
+    authorize @application
+    # landlord can only update the status of an application
+  end
+
+  def update_status
+    #only for landlord!
+    @application = Application.find(params[:id])
+    authorize @application
+  end 
   def destroy
     application = Application.find(params[:id])
     if application.destroy

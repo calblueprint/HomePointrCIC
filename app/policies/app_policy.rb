@@ -1,9 +1,9 @@
 class AppPolicy
-  attr_reader :user, :record
+  attr_reader :user, :app
 
-  def initialize(user, record)
+  def initialize(user, app)
     @user = user
-    @record = record
+    @app = app
   end
 
   def index?
@@ -23,7 +23,11 @@ class AppPolicy
   end
 
   def update?
-    user.admin? # RA can update an Application
+    user.admin? && user.tenants.ids.include?(app.tenant.id)# RA can update an Application of a tenant under them
+  end
+
+  def update_status? 
+    !user.admin? && user.properties.applications.tenants.ids.include?(app.tenant.id) # <-- probably wrong: Only landlord can update status of an application of a tenant that's applied to them
   end
 
   def edit?
@@ -43,7 +47,11 @@ class AppPolicy
     end
 
     def resolve
-      scope.all
+      if user.admin?
+        # if Referral Agency, can see appli
+      else
+
+      end
     end
   end
 end
