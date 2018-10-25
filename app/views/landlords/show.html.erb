@@ -1,0 +1,22 @@
+<h1>Landlords#show</h1>
+<p>Find me in app/views/landlords/show.html.erb</p>
+
+<div>
+	<h3><%= @landlord.name %></h3>
+	<p> Property IDs: </p>
+  <% @properties.each do |property| %>
+	  <p><%= property.id %></p>
+  <% end %>
+</div>
+
+<%= link_to "Delete", landlord_path(id: @landlord.id), :method => :delete %><br>
+
+<% if user_signed_in? %>
+  <li>
+  <%= link_to('Logout', destroy_user_session_path, method: :delete) %>        
+  </li>
+<% else %>
+  <li>
+  <%= link_to('Login', new_user_session_path)  %>  
+  </li>
+<% end %>
