@@ -7,7 +7,11 @@ class TenantPolicy
   end
 
   def show?
-    user.admin? # RA can see specific tenant
+    user.tenants.include?(tenant) # true only if tenant passed in belongs to the user
+  end
+
+  def index?
+    user.tenants.include?(tenant) # true only if tenant passed in belongs to the user
   end
 
   def create?

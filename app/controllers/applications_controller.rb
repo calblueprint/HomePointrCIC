@@ -13,7 +13,15 @@ class ApplicationsController < ApplicationController
     @application = Application.find(params[:id])
     @info = @application.info
     @application_tenant = @info.tenant
+    authorize @application_tenant #need to verify that the tenant belongs to the user in order to see their application
     @property = @application.property
+  end
+
+  def index   
+    # should be passed in a Tenant ID and need to verify that the Tenant belongs to the current user
+    @tenant = Tenant.find(params[:tenant_id])
+    authorize @tenant                          
+    @applications = @tenant.applications #do I still need to authorize?
   end
 
   def destroy

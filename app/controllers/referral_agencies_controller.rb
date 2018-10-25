@@ -12,6 +12,7 @@ class ReferralAgenciesController < ApplicationController
   	if user_signed_in? and current_user.type == 'ReferralAgency'
   	  @referral_agency = current_user
   	  @tenants = @referral_agency.tenants
+    # if user is a landlord, then only show if RA has applied to you -> how to find out? need to check that RA = landlord.property.application.info.tenant.RA 
     else
       redirect_to '/users/sign_up'
   	end
