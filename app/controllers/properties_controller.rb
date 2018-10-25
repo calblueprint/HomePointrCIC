@@ -15,7 +15,7 @@ class PropertiesController < ApplicationController
   end
 
   def index                                             
-    @properties = policy_scope(Property)
+    @properties = policy_scope(Property) #do I still need to authorize?
     # @tasks = policy_scope(Task)
      # authorize @properties
   end
