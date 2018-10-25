@@ -22,7 +22,8 @@ class Tenant < ApplicationRecord
       return 4
     end
     status_map = Application.statuses
-    all_statuses = apps.map{ |a| status_map[a.status] }
+    all_statuses = apps.map{ |a| status_map[a.status.to_s].between?(0, 3) ? 
+      status_map[a.status.to_s] : -1 }
     return 3 - all_statuses.max
   end
 end
