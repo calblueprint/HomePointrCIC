@@ -6,10 +6,6 @@ class TenantPolicy
     @tenant = tenant
   end
 
-  def index?
-    user.admin? # RA can see all tenants
-  end
-
   def show?
     user.admin? # RA can see specific tenant
   end
@@ -23,7 +19,7 @@ class TenantPolicy
   end
 
   def update?
-    user.admin?
+    user.admin? && user.tenants.ids.include?(tenant.id) #only RA can update Tenant, that's associated with them
   end
 
   def edit?
@@ -44,9 +40,9 @@ class TenantPolicy
 
     def resolve
       if user.admin? 
-        scope.where(tenant_id in RA tenants?) # if RA, can see only tenants associated with yourself
+        scope.where(referral_agency: user) # if RA, can see only tenants associated with yourself
       else 
-        scope.where() #if Landlord, can only see tenants that have applied to you!
+        scope.where(landlord: user) #if Landlord, can only see tenants that have applied to you!
     end
   end
 end

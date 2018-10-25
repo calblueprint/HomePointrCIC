@@ -14,6 +14,11 @@ class TenantsController < ApplicationController
     @applications = @tenant.info.applications
   end
 
+  def index                                             
+    @tenants = policy_scope(Tenant)
+    # authorize @tenants not needed because both can see Tenants, just different ones
+  end
+
   def update
     tenant = Tenant.find(params[:id])
     authorize tenant
