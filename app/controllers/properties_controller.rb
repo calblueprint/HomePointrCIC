@@ -14,6 +14,11 @@ class PropertiesController < ApplicationController
     @applications = @property.applications
   end
 
+  def index                                             
+    @properties = policy_scope(Property)
+    # @tasks = policy_scope(Task)
+     # authorize @properties
+  end
   def update
     property = Property.find(params[:id])
     authorize @property # only a landlord can update a property

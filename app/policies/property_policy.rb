@@ -6,9 +6,9 @@ class PropertyPolicy < ApplicationPolicy
     @property = property
   end
 
-  def index?
-    user.admin? #RA can see all properties
-  end
+  # def index?
+  #   user.admin? #RA can see all properties
+  # end
 
   def show?
     #if @property.id in user.propertyIDs || user.admin? true else false #RA can see specific property, but Landlord can only see property if its one of theirs
@@ -42,7 +42,8 @@ class PropertyPolicy < ApplicationPolicy
       if user.admin?
         scope.all #RA can see ALL PROPERTIES!
       else 
-        #scope.where(propertyid in landlord's properties) #Landlord can see only properties that belong to him 
+        # landlord_property_ids = user.properties.ids
+        scope.where(landlord: user)
       end
   end
 end
