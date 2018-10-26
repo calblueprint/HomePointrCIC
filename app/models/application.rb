@@ -3,4 +3,23 @@ class Application < ApplicationRecord
   belongs_to :property
   belongs_to :info
   validates :status, :property_id, :info_id, presence: true
+
+  def hidden  
+  """
+  Returns whether this application should be hidden or not.
+  """
+    status_key = status.to_s
+    status = Application.statuses[status_key]
+    if status == 0
+      return true
+    elsif status > 1
+      return false
+    else
+      if info.tenant.priority < 2
+        return true
+      else
+        return false
+      end
+    end
+  end
 end
