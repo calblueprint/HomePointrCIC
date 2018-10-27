@@ -45,5 +45,6 @@ class PropertyPolicy < ApplicationPolicy
         # landlord_property_ids = user.properties.ids
         scope.where(landlord: user)
       end
+    end
   end
 end

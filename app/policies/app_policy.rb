@@ -47,10 +47,10 @@ class AppPolicy
     end
 
     def resolve
-      if user.admin?
-        # if Referral Agency, can see appli
+      if user.type == 'ReferralAgency'
+        scope.all # if Referral Agency, can see applications associated with their HVI's
       else
-
+        scope.all # if Landlord, can only check applications of HVI's that applied to your properties
       end
     end
   end
