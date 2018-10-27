@@ -11,4 +11,25 @@ class Tenant < ApplicationRecord
   validates :property_type, inclusion: { in: property_types.keys }
   validates :location, inclusion: { in: locations.keys }
   validates_associated :referral_agency 
+
+  def priority
+    """Returns priority of tenant:
+    0 - matched with a house
+    1 - interviewing with a house
+    2 - applied
+    3 - rejected
+    4 - not applied yet
+    """
+    if !info
+      return
+    end
+    apps = info.applications
+    if !apps
+      return 4
+    end
+    status_map = Application.statuses
+    all_statuses = apps.map{ |a| status_map.key?(a.status.to_s) ? 
+      status_map[a.status.to_s] : -1 }
+    return 3 - all_statuses.max
+  end
 end
