@@ -7,15 +7,15 @@ class InfoPolicy
   end
 
   def index?
-    user.admin? # RA can see all Infos
+    user.type == 'ReferralAgency' # RA can see all Infos
   end
 
   def show?
-    user.admin? # RA can see specific info
+    user.type == 'ReferralAgency' # RA can see specific info
   end
 
   def create?
-    user.admin? # RA can create an Info
+    user.type == 'ReferralAgency' # RA can create an Info
   end
 
   def new?
@@ -23,7 +23,7 @@ class InfoPolicy
   end
 
   def update?
-    user.admin? # RA can update an Info
+    user.type == 'ReferralAgency' # RA can update an Info
   end
 
   def edit?

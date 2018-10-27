@@ -23,7 +23,7 @@ class PropertyPolicy < ApplicationPolicy
   end
 
   def update?
-    !user.admin? # only Landlord can update a property, and landlords aren't admins
+    !(user.type == 'ReferralAgency') # only Landlord can update a property, and landlords aren't admins
   end
 
   def destroy?
@@ -39,7 +39,7 @@ class PropertyPolicy < ApplicationPolicy
     end
 
     def resolve
-      if user.admin?
+      if user.type == 'ReferralAgency'
         scope.all #RA can see ALL PROPERTIES!
       else 
         # landlord_property_ids = user.properties.ids

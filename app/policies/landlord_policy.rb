@@ -7,11 +7,11 @@ class LandlordPolicy
   end
 
   def index?
-    user.admin? # RA can see all landlords
+    user.type == 'ReferralAgency' # RA can see all landlords
   end
 
   def show?
-    user.admin? # RA can see specific landlord
+    user.type == 'ReferralAgency' # RA can see specific landlord
   end
 
   class Scope
