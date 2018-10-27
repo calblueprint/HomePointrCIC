@@ -10,9 +10,9 @@ class TenantPolicy
     user.tenants.include?(tenant) # true only if tenant passed in belongs to the user
   end
 
-  def index?
-    user.tenants.include?(tenant) # true only if tenant passed in belongs to the user
-  end
+  # def index?
+  #   user.tenants.include?(tenant) # true only if tenant passed in belongs to the user
+  # end
 
   def create?
     false
@@ -43,10 +43,11 @@ class TenantPolicy
     end
 
     def resolve
-      if user.admin? 
+      if user.type == 'ReferralAgency'
         scope.where(referral_agency: user) # if RA, can see only tenants associated with yourself
       else 
         scope.where(landlord: user) #if Landlord, can only see tenants that have applied to you!
+      end
     end
   end
-end
+end 

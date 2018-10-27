@@ -13,12 +13,6 @@ class PropertiesController < ApplicationController
     authorize @property #both RA and Landlord should be able to see a property..so actually don't really need to auth here?
     @applications = @property.applications
   end
-
-  def index                                             
-    @properties = policy_scope(Property) #do I still need to authorize?
-    # @tasks = policy_scope(Task)
-     # authorize @properties
-  end
   
   def update
     property = Property.find(params[:id])

@@ -9,8 +9,9 @@ class LandlordsController < ApplicationController
   end
 
   def show
-  	if user_signed_in? and current_user.type == 'Landlord'
-  	  @landlord = current_user
+  	if user_signed_in? 
+  	  @landlord = Landlord.find(params[:id])
+      authorize @landlord
   	  @properties = @landlord.properties
   	else
       # if current user is referral agency, should still be able to see. 

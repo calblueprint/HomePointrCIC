@@ -11,6 +11,7 @@ class PropertyPolicy < ApplicationPolicy
   # end
 
   def show?
+    true
     #if @property.id in user.propertyIDs || user.admin? true else false #RA can see specific property, but Landlord can only see property if its one of theirs
   end
 
@@ -23,7 +24,7 @@ class PropertyPolicy < ApplicationPolicy
   end
 
   def update?
-    !(user.type == 'ReferralAgency') # only Landlord can update a property, and landlords aren't admins
+    user.type == 'Landlord' # only Landlord can update a property, and landlords aren't admins
   end
 
   def destroy?

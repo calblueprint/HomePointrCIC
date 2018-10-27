@@ -11,11 +11,12 @@ class TenantsController < ApplicationController
 
   def show
     @tenant = Tenant.find(params[:id])
+    authorize @tenant
     @applications = @tenant.info.applications
   end
 
   def index                                             
-    @tenants = policy_scope(Tenant)
+    @tenants = TenantPolicy::Scope.new(current_user, Tenant).resolve
     # authorize @tenants not needed because both can see Tenants, just different ones
   end
 
