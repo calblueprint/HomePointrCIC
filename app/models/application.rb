@@ -3,4 +3,6 @@ class Application < ApplicationRecord
   belongs_to :property
   belongs_to :info
   validates :status, :property_id, :info_id, presence: true
+  validates :status, inclusion: { in: statuses.keys }
+  validates_associated :info, :property
 end
