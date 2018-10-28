@@ -14,7 +14,7 @@ class ApplicationsController < ApplicationController
     @application = Application.find(params[:id])
     @info = @application.info
     @application_tenant = @info.tenant
-    authorize @application_tenant, policy_class: AppPolicy #need to verify that the tenant belongs to the user in order to see their application
+    authorize @application, policy_class: AppPolicy #need to verify that the application belongs to the landlord's property OR RA
     @property = @application.property
   end
 
@@ -27,7 +27,7 @@ class ApplicationsController < ApplicationController
 
   def update
     # RA can update general information
-    @application = Applicaion.find(params[:id])
+    @application = Application.find(params[:id])
     authorize @application, policy_class: AppPolicy
     # landlord can only update the status of an application
   end
@@ -37,6 +37,7 @@ class ApplicationsController < ApplicationController
     @application = Application.find(params[:id])
     authorize @application, policy_class: AppPolicy
   end 
+
   def destroy
     application = Application.find(params[:id])
     if application.destroy

@@ -19,9 +19,9 @@ class TenantPolicy
     end  
   end
 
-  # def index?
-  #   user.tenants.include?(tenant) # true only if tenant passed in belongs to the user
-  # end
+  def index?
+    true #both RA and LL can see tenants, scope chooses which ones they are able to see
+  end
 
   def create?
     false

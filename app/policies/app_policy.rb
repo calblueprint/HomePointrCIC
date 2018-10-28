@@ -6,12 +6,21 @@ class AppPolicy
     @app = app
   end
 
-  def index?
-    user.type == 'ReferralAgency' # RA can see all Applications
-  end
+  # def index?
+  #   user.type == 'ReferralAgency' # RA can see all Applications
+  # end
 
   def show?
-    user.type == 'ReferralAgency' # RA can see specific Application
+    if user.type == 'ReferralAgency' # RA can see specific Application
+      user.tenants.exists?(app.info.tenant)
+    else
+      user.properties.each do |property|
+        if property.applications.ids.include?(app.id)
+          return true
+        end
+      end
+      return false
+    end 
   end
 
   def create?
