@@ -15,7 +15,7 @@ class TenantPolicy
       end
       return false
     else 
-      user.tenants.exists?(tenant) # for RA # true only if tenant passed in belongs to the user 
+      user.tenants.include?(tenant) # for RA # true only if tenant passed in belongs to the user 
     end  
   end
 
