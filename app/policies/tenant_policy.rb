@@ -7,7 +7,16 @@ class TenantPolicy
   end
 
   def show?
-    user.tenants.include?(tenant) # true only if tenant passed in belongs to the user
+    if user.type == 'Landlord'
+      tenant.info.applications.each do |app|
+        if app.property.landlord.id == user.id
+          return true
+        end
+      end
+      return false
+    else 
+      user.tenants.exists?(tenant) # for RA # true only if tenant passed in belongs to the user 
+    end  
   end
 
   # def index?
