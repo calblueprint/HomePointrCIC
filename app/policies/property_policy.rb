@@ -11,7 +11,7 @@ class PropertyPolicy < ApplicationPolicy
   # end
 
   def show?
-    true
+    user.type == 'ReferralAgency' || Property.where(landlord: user).exists?(:id => property.id)
     #if @property.id in user.propertyIDs || user.admin? true else false #RA can see specific property, but Landlord can only see property if its one of theirs
   end
 

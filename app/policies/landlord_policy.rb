@@ -11,7 +11,7 @@ class LandlordPolicy
   end
 
   def show?
-    user.type == 'ReferralAgency' # RA can see specific landlord
+    user.type == 'ReferralAgency' || user.id == landlord.id # RA can see all landlords but landlord can only see his own profile
   end
 
   class Scope
