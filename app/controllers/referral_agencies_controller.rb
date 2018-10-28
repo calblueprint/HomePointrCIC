@@ -9,8 +9,9 @@ class ReferralAgenciesController < ApplicationController
   end
 
   def show
-  	if user_signed_in? and current_user.type == 'ReferralAgency'
-  	  @referral_agency = current_user
+  	if user_signed_in? 
+  	  @referral_agency = ReferralAgency.find(params[:id])
+      authorize @referral_agency
   	  @tenants = @referral_agency.tenants
     # if user is a landlord, then only show if RA has applied to you -> how to find out? need to check that RA = landlord.property.application.info.tenant.RA 
     else
