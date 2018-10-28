@@ -9,7 +9,7 @@ class TenantPolicy
   def show?
     if user.type == 'Landlord'
       tenant.info.applications.each do |app|
-        if app.property.landlord.id == user.id
+        if app.property.landlord == user
           return true
         end
       end
