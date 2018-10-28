@@ -8,15 +8,6 @@ class ReferralAgenciesController < ApplicationController
     end
   end
 
-  def show
-  	if user_signed_in? and current_user.type == 'ReferralAgency'
-  	  @referral_agency = current_user
-  	  @tenants = @referral_agency.tenants
-    else
-      redirect_to '/users/sign_up'
-  	end
-  end
-
   def update
   	# if params[:id] == current_user.id
 	  @referral_agency = ReferralAgency.find(params[:id])

@@ -9,13 +9,6 @@ class ApplicationsController < ApplicationController
     end
   end
 
-  def show
-    @application = Application.find(params[:id])
-    @info = @application.info
-    @application_tenant = @info.tenant
-    @property = @application.property
-  end
-
   def destroy
     application = Application.find(params[:id])
     if application.destroy
