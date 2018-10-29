@@ -1,4 +1,8 @@
 class TenantsController < ApplicationController
+  def new
+    @tenant = Tenant.new
+  end
+
   def create
     tenant = Tenant.new(tenant_params)
     if tenant.save

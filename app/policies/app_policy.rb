@@ -12,7 +12,7 @@ class AppPolicy
 
   def show?
     if user.type == 'ReferralAgency' # RA can see specific Application
-      user.tenants.exists?(app.info.tenant)
+      user.tenants.include?(app.info.tenant)
     else
       user.properties.each do |property|
         if property.applications.ids.include?(app.id)
@@ -24,7 +24,7 @@ class AppPolicy
   end
 
   def create?
-    user.type == 'ReferralAgency' # RA can create an Applicatoin
+    user.type == 'ReferralAgency' &&  user.tenants.include?(app.info.tenant)# RA can create an Applicatoin
   end
 
   def new?

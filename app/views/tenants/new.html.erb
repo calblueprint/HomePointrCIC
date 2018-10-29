@@ -1,7 +1,7 @@
 <h1>Tenants#new</h1>
 <p>Find me in app/views/tenants/new.html.erb</p>
 
-<%= form_for @tenant do |f| %>
+<%= form_for Tenant.new do |f| %>
   <%= f.label :name%>
   <%= f.text_field :name%>
   <%= f.label :description%>

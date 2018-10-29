@@ -8,3 +8,5 @@
   <%= link_to "Edit", tenant_path(id: t.id), :method => :patch %>
   <%= link_to "Delete", tenant_path(id: t.id), :method => :delete %><br>
 <% end %>
+
+<%= link_to "New Tenant", new_tenant_path %><br>
