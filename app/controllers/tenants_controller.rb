@@ -5,6 +5,7 @@ class TenantsController < ApplicationController
 
   def create
     tenant = Tenant.new(tenant_params)
+    authorize tenant
     if tenant.save
       Info.create(tenant_id: tenant.id)
       redirect_to tenants_path

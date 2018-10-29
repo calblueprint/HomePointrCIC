@@ -24,7 +24,7 @@ class TenantPolicy
   end
 
   def create?
-    false
+    user.type == 'ReferralAgency' && tenant.referral_agency == user
   end
 
   def new?
