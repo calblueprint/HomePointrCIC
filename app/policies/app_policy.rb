@@ -24,7 +24,7 @@ class AppPolicy
   end
 
   def create?
-    user.type == 'ReferralAgency' &&  user.tenants.include?(app.info.tenant)# RA can create an Applicatoin
+    user.type == 'ReferralAgency' && user.tenants.include?(app.info.tenant)# RA can create an Applicatoin
   end
 
   def new?

@@ -1,10 +1,14 @@
 class ApplicationsController < ApplicationController
+  def new
+    @application = Application.new
+  end
+
   def create
     @application = Application.new(application_params)
     authorize @application, policy_class: AppPolicy #only an RA can create an application
     if @application.save
       ApplicationsMailer.with(application: @application).new_application.deliver_now
-      redirect_to applications_path
+      redirect_to tenant_path(@application.info.tenant)
     else
       render json: { errors: @application.errors.messages }
     end
