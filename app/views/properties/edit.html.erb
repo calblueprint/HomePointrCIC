@@ -22,3 +22,5 @@
   <%= f.select(:landlord_id, Landlord.all.pluck(:email, :id)) %>
   <%= f.submit %>
 <% end %>
+
+<%= react_component("EditProperty", { aProp: @property }) %>
