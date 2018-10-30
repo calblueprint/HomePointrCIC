@@ -26,12 +26,12 @@ class TenantsController < ApplicationController
   end
 
   def update
-    tenant = Tenant.find(params[:id])
-    authorize tenant
-    if tenant.update(tenant_params)
+    @tenant = Tenant.find(params[:id])
+    authorize @tenant
+    if @tenant.update(tenant_params)
       redirect_to tenants_path
     else
-      render json: { errors: tenant.errors.messages }
+      render json: { errors: @tenant.errors.messages }
     end
   end
 

@@ -32,7 +32,7 @@ class AppPolicy
   end
 
   def update?
-    user.type == 'ReferralAgency' && user.tenants.ids.include?(app.tenant.id)# RA can update an Application of a tenant under them
+    user.type == 'ReferralAgency' && user.tenants.include?(app.info.tenant)# RA can update an Application of a tenant under them
   end
 
   def update_status? 

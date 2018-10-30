@@ -29,6 +29,11 @@ class ApplicationsController < ApplicationController
     @applications = @tenant.applications #do I still need to authorize?
   end
 
+  def edit
+    @application = Application.find(params[:id])
+    #authorize @application
+  end 
+
   def update
     # RA can update general information
     @application = Application.find(params[:id])

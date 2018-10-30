@@ -5,7 +5,7 @@
   Tenant ID: <%= t.id %>
   Name: <%= t.name %>
   <%= link_to "Show", tenant_path(id: t.id) %>
-  <%= link_to "Edit", tenant_path(id: t.id), :method => :patch %>
+  <%= link_to "Edit", edit_tenant_path(t) %>
   <%= link_to "Delete", tenant_path(id: t.id), :method => :delete %><br>
 <% end %>
 
