@@ -30,3 +30,5 @@
   <%= f.select(:referral_agency_id, ReferralAgency.all.pluck(:email, :id)) %>
   <%= f.submit %>
 <% end %>
+
+<%= react_component("ProfileForm", { aProp: @thingfromeditcontrollermethod }) %>
