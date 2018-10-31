@@ -23,4 +23,6 @@
   <%= f.submit %>
 <% end %>
 
-<%= react_component("ProfileForm", { aProp: @thingfromeditcontrollermethod }) %>
+<%= react_component("ProfileForm", { mode: @mode}, { type: @type }, { prevValues: @prev_values },
+                    { fieldNames: @field_names }, { fieldTypes: @field_types }) %>
+
