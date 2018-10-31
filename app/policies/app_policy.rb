@@ -7,22 +7,19 @@ class AppPolicy < ApplicationPolicy
   end
 
   def permitted_attributes
-    if user.type == 'ReferralAgency' && user.tenants.include?(app.info.tenant)
+    if user.type == 'ReferralAgency' 
       [:status, :property_id, :info_id]
     else
       [:status]
     end
   end
-  # def index?
-  #   user.type == 'ReferralAgency' # RA can see all Applications
-  # end
 
   def show?
-    if user.type == 'ReferralAgency' # RA can see specific Application
+    if user.type == 'ReferralAgency' 
       user.tenants.include?(app.info.tenant)
     else
       user.properties.each do |property|
-        if property.applications.ids.include?(app.id)
+        if property.applications.include?(app)
           return true
         end
       end
@@ -43,7 +40,7 @@ class AppPolicy < ApplicationPolicy
       user.tenants.include?(app.info.tenant)
     else 
       user.properties.each do |property|
-        if property.applications.ids.include?(app.id)
+        if property.applications.include?(app)
           return true
         end
       end
@@ -57,24 +54,5 @@ class AppPolicy < ApplicationPolicy
 
   def destroy?
     false
-  end
-
-  
-
-  class Scope
-    attr_reader :user, :scope
-
-    def initialize(user, scope)
-      @user = user
-      @scope = scope
-    end
-
-    def resolve
-      if user.type == 'ReferralAgency'
-        scope.all # if Referral Agency, can see applications associated with their HVI's
-      else
-        scope.all # if Landlord, can only check applications of HVI's that applied to your properties
-      end
-    end
   end
 end

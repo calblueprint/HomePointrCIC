@@ -6,13 +6,8 @@ class PropertyPolicy < ApplicationPolicy
     @property = property
   end
 
-  # def index?
-  #   user.admin? #RA can see all properties
-  # end
-
   def show?
-    user.type == 'ReferralAgency' || Property.where(landlord: user).exists?(:id => property.id)
-    #if @property.id in user.propertyIDs || user.admin? true else false #RA can see specific property, but Landlord can only see property if its one of theirs
+    user.type == 'ReferralAgency' || user.properties.include?(property)
   end
 
   def create?
@@ -24,7 +19,7 @@ class PropertyPolicy < ApplicationPolicy
   end
 
   def update?
-    user.type == 'Landlord' # only Landlord can update a property, and landlords aren't admins
+    user.type == 'Landlord' && user.properties.include?(property)
   end
 
   def destroy?
@@ -41,9 +36,8 @@ class PropertyPolicy < ApplicationPolicy
 
     def resolve
       if user.type == 'ReferralAgency'
-        scope.all #RA can see ALL PROPERTIES!
+        scope.all 
       else 
-        # landlord_property_ids = user.properties.ids
         scope.where(landlord: user)
       end
     end

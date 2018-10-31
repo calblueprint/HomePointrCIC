@@ -13,7 +13,6 @@ class ReferralAgenciesController < ApplicationController
   	  @referral_agency = ReferralAgency.find(params[:id])
       authorize @referral_agency
   	  @tenants = @referral_agency.tenants
-    # if user is a landlord, then only show if RA has applied to you -> how to find out? need to check that RA = landlord.property.application.info.tenant.RA 
     else
       redirect_to '/users/sign_up'
   	end

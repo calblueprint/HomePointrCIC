@@ -14,27 +14,17 @@ class LandlordsController < ApplicationController
       authorize @landlord
   	  @properties = @landlord.properties
   	else
-      # if current user is referral agency, should still be able to see. 
   		redirect_to '/users/sign_up'
   	end
   end
 
   def update
-  	# if params[:id] == current_user.id
 	  @landlord = Landlord.find(params[:id])
 	  if @landlord.update(landlord_params)
 	  	redirect_to landlords_show_url
 	  else
 	  	render json: { errors: @landlord.errors.messages }
 	  end 
-  	# else
-  	# 	puts('you do not have access to this page')
-  	# end
-  end
-
-  def index
-    @landlords = Landlord.all
-    authorize @landlords
   end
 
   def destroy

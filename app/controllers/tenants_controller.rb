@@ -27,7 +27,6 @@ class TenantsController < ApplicationController
 
   def index                                             
     @tenants = TenantPolicy::Scope.new(current_user, Tenant).resolve
-    # authorize @tenants not needed because both can see Tenants, just different ones
   end
 
   def update
