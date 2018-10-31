@@ -21,10 +21,12 @@
 Tenant Applications
 <ul>
   <% @applications.each do |a| %>
-    <li>Application ID: <%= a.id %></li>
-    <li>Application Status: <%= a.status %></li>
-    <li>Application Property ID: <%= a.property_id %></li>
-    <li>Application Info ID: <%= a.info_id %></li><br>
+    <%if not a.hidden %>
+      <li>Application ID: <%= a.id %></li>
+      <li>Application Status: <%= a.status %></li>
+      <li>Application Property ID: <%= a.property_id %></li>
+      <li>Application Info ID: <%= a.info_id %></li><br>
+    <% end %>
   <% end %>
 </ul>
 <%= link_to "New Application", new_application_path %><br>
