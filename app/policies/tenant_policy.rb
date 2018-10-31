@@ -32,8 +32,7 @@ class TenantPolicy
   end
 
   def update?
-    # user.type == 'ReferralAgency' && user.tenants.include?(tenant) #only RA can update Tenant, that's associated with them
-    true
+    user.type == 'ReferralAgency' && user.tenants.include?(tenant) #only RA can update Tenant, that's associated with them
   end
 
   def edit?

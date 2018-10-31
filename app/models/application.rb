@@ -3,4 +3,7 @@ class Application < ApplicationRecord
   belongs_to :property
   belongs_to :info
   validates :status, :property_id, :info_id, presence: true
+  def self.policy_class
+    AppPolicy
+  end
 end

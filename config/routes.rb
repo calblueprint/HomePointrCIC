@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-	root :to => "tenants#index"
+	root :to => "tenants#denied"
   resources :referral_agencies, :only => [:create, :show, :update, :destroy]
   resources :landlords, :only => [:create, :show, :update, :destroy]
   resources :properties, :only => [:create, :update, :show, :destroy]

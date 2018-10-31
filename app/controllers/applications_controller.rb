@@ -31,13 +31,18 @@ class ApplicationsController < ApplicationController
 
   def edit
     @application = Application.find(params[:id])
-    #authorize @application
+    authorize @application, policy_class: AppPolicy
   end 
 
   def update
     # RA can update general information
     @application = Application.find(params[:id])
     authorize @application, policy_class: AppPolicy
+    if @application.update_attributes(application_params)
+      redirect_to applications_path
+    else
+    render json: { errors: @application.errors.messages }
+    end
     # landlord can only update the status of an application
   end
 
@@ -59,10 +64,6 @@ class ApplicationsController < ApplicationController
   private
     
   def application_params
-    params.require(:application).permit(
-      :status,
-      :property_id,
-      :info_id
-    )
+    params.require(:application).permit(policy(@application).permitted_attributes)
   end
 end
