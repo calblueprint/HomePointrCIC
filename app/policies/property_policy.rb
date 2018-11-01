@@ -7,7 +7,7 @@ class PropertyPolicy < ApplicationPolicy
   end
 
   def show?
-    user.type == 'ReferralAgency' || user.properties.include?(property)
+    user.type == 'ReferralAgency' || user.properties.ids.include?(property.id)
   end
 
   def create?
