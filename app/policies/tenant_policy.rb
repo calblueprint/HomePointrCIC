@@ -15,7 +15,7 @@ class TenantPolicy
       end
       return false
     else 
-      user.tenants.include?(tenant) # for RA # true only if tenant passed in belongs to the user 
+      user.tenants.ids.include?(tenant.id) # for RA # true only if tenant passed in belongs to the user 
     end  
   end
 
@@ -32,7 +32,7 @@ class TenantPolicy
   end
 
   def update?
-    user.type == 'ReferralAgency' && user.tenants.include?(tenant) #only RA can update Tenant, that's associated with them
+    user.type == 'ReferralAgency' && user.tenants.ids.include?(tenant.id) #only RA can update Tenant, that's associated with them
   end
 
   def edit?

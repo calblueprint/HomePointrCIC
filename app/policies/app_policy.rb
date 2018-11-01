@@ -19,7 +19,7 @@ class AppPolicy < ApplicationPolicy
       user.tenants.include?(app.info.tenant)
     else
       user.properties.each do |property|
-        if property.applications.include?(app)
+        if property.applications.ids.include?(app.id)
           return true
         end
       end
