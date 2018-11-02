@@ -1,6 +1,7 @@
 class TenantsController < ApplicationController
   def new
     @tenant = Tenant.new
+    render react_component: 'NewTenantForm', props: { property: @property }
   end
 
   def create
@@ -27,6 +28,11 @@ class TenantsController < ApplicationController
 
   def index                                             
     @tenants = TenantPolicy::Scope.new(current_user, Tenant).resolve
+  end
+
+  def edit
+    @tenant = Tenant.find(params[:id])
+    render react_component: 'EditTenantForm', props: { property: @tenant }
   end
 
   def update

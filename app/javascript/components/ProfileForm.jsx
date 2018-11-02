@@ -207,8 +207,6 @@ class ProfileForm extends React.Component {
           <Button type="danger" onClick={this.handleDestroy}>Delete</Button>]
     }
     return returnArr;
-  }
-}
 
 ProfileForm.propTypes = {
   mode: PropTypes.string,
