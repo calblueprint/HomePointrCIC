@@ -1,9 +1,13 @@
 class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
-  devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :validatable, :confirmable
-  validates :name, :email, :type, :address, :phone, presence: true
-  validates :email, format: { with: Devise.email_regexp }
+  has_many :emails
+  validates :name, :emails, :type, :address, :phone, presence: true
   validates :type, inclusion: { in: ["Landlord", "ReferralAgency"] }
+  devise :multi_email_authenticatable, :registerable,
+         :recoverable, :rememberable, :validatable, 
+         :multi_email_confirmable, :multi_email_validatable
+
+	def will_save_change_to_email?
+	end
 end
