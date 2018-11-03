@@ -39,7 +39,7 @@ class ApplicationsController < ApplicationController
     if @application.update_attributes(application_params)
       redirect_to applications_path
     else
-    render json: { errors: @application.errors.messages }
+      render json: { errors: @application.errors.messages }
     end
   end
 
