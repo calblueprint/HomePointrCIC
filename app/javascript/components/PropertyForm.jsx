@@ -1,6 +1,6 @@
 import React from "react"
 import PropTypes from "prop-types"
-class ProfileForm extends React.Component {
+class PropertyForm extends React.Component {
 
   constructor(props) {
     super(props);
@@ -124,7 +124,7 @@ class ProfileForm extends React.Component {
   // }
 }
 
-ProfileForm.propTypes = {
+PropertyForm.propTypes = {
   mode: PropTypes.string,
   type: PropTypes.string,
   prevValues: PropTypes.array,
@@ -132,4 +132,4 @@ ProfileForm.propTypes = {
   fieldTypes: PropTypes.arrayOf(PropTypes.string)
 };
 
-export default ProfileForm;
+export default PropertyForm;

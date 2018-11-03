@@ -9,7 +9,7 @@ class PropertiesController < ApplicationController
 
   def new
     @property = Property.new
-    render react_component: 'NewPropertyForm', props: { property: @property }
+    render react_component: 'PropertyForm', props: { property: @property }
   end
 
   def create
@@ -40,7 +40,7 @@ class PropertiesController < ApplicationController
     @property = Property.find(params[:id])
     authorize @property
     @applications = @property.applications
-    render react_component: 'ProfileForm', props: { property: @property }
+    render react_component: 'PropertyForm', props: { property: @property }
   end
 
   def update

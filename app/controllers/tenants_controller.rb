@@ -1,7 +1,11 @@
 class TenantsController < ApplicationController
+  def index
+    @tenants = Tenant.all
+  end
+
   def new
     @tenant = Tenant.new
-    render react_component: 'NewTenantForm', props: { property: @property }
+    render react_component: 'TenantForm', props: { tenant: @tenant }
   end
 
   def create
@@ -32,7 +36,7 @@ class TenantsController < ApplicationController
 
   def edit
     @tenant = Tenant.find(params[:id])
-    render react_component: 'EditTenantForm', props: { property: @tenant }
+    render react_component: 'TenantForm', props: { tenant: @tenant }
   end
 
   def update

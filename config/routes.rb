@@ -7,7 +7,8 @@ Rails.application.routes.draw do
   resources :applications, :only => [:new, :create, :edit, :update, :show, :destroy]
   # resources :properties, :only => [:create, :update, :show, :destroy]
   resources :properties
-  resources :tenants, :only => [:create, :update, :show, :destroy]
+  # resources :tenants, :only => [:create, :update, :show, :destroy]
+  resources :tenants
   resources :applications, :only => [:create, :show, :destroy]
   resources :infos, :only => [:create]
   devise_for :users

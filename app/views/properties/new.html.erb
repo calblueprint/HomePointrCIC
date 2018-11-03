@@ -24,7 +24,7 @@
 <% end %>
 
 <%= form_with(model: @property, local: true) do |form| %>
-  <%= react_component "NewPropertyForm", { property: @property } %>
+  <%= react_component "PropertyForm", { property: @property } %>
 <% end %>
 
 <!--<%#= react_component("ProfileForm", { aProp: @mode, @type, <% nil %>, @fieldnames, @fieldtypes }) %>-->

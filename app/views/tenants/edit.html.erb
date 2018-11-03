@@ -31,5 +31,7 @@
   <%= f.submit %>
 <% end %>
 
-<%#= react_component("ProfileForm", { aProp: @thingfromeditcontrollermethod }) %>
+<%= form_with(model: @tenant, local: true) do |form| %>
+  <%= react_component "TenantForm", { tenant: @tenant } %>
+<% end %>
 
