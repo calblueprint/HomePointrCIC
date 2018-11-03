@@ -2,5 +2,6 @@
 <p>Find me in app/views/properties/edit.html.erb</p>
 
 <%= form_with(model: @property, local: true) do |form| %>
-  <%= react_component "ProfileForm", { property: @property } %>
+  <%= render react_component: 'PropertyForm', props: { property: @property, mode: @mode, type: @type, prevValues: @prev_values, fieldNames: @field_names,fieldTypes: @field_types } %>
 <% end %>
+
