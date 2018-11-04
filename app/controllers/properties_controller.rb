@@ -1,6 +1,7 @@
 class PropertiesController < ApplicationController
   def create
     property = Property.new(property_params)
+    authorize property
     if property.save
       redirect_to properties_path
     else
@@ -26,6 +27,7 @@ class PropertiesController < ApplicationController
 
   def destroy
     property = Property.find(params[:id])
+    authorize property
     if property.destroy
       redirect_to properties_path
     else
