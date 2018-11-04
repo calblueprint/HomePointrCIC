@@ -10,7 +10,6 @@ class ReferralAgencyPolicy
     if user.type == 'ReferralAgency' 
       return user.id == referral_agency.id
     else 
-      #guessing that this way is shorter because there's less applications per property than applications per tenant in an RA 
       user.properties.each do |property|
         if property.applications 
           property.applications.each do |app|
@@ -20,7 +19,7 @@ class ReferralAgencyPolicy
           end
         end
       end
-    end #if user is a landlord, need to check that referral agency has applied to one of the landlord's properties
+    end 
     return false
   end
 end

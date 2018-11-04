@@ -17,7 +17,7 @@ class PropertiesController < ApplicationController
   
   def update
     property = Property.find(params[:id])
-    authorize @property # only a landlord can update a property that is their own
+    authorize @property 
     if property.update(property_params)
       redirect_to properties_path
     else
