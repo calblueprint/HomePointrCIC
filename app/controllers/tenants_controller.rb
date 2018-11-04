@@ -41,6 +41,7 @@ class TenantsController < ApplicationController
 
   def destroy
     tenant = Tenant.find(params[:id])
+    authorize tenant
     if tenant.destroy
       redirect_to tenants_path
     else

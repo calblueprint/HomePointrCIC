@@ -40,7 +40,7 @@ class TenantPolicy
   end
 
   def destroy?
-    false
+    user.type == 'ReferralAgency' && tenant.referral_agency == user
   end
 
   class Scope
