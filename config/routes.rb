@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-	match "/302", :to => "errors#index", :via => :all
+  get 'errors/show'
   resources :referral_agencies, :only => [:create, :show, :update, :destroy]
   resources :landlords, :only => [:create, :show, :update, :destroy]
   resources :properties, :only => [:create, :update, :show, :destroy]

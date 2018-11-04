@@ -30,4 +30,30 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 en:
-  hello: "Hello world"
+ pundit:
+   default: 'You cannot perform this action.'
+   app_policy:
+     update?: 'You cannot edit this application!'
+     create?: 'You cannot create an application!'
+     show?: 'You cannot see this application!'
+     destroy?: 'You cannot destroy this application!'
+   property_policy:
+     update?: 'You cannot edit this property!'
+     create?: 'You cannot create an property!'
+     show?: 'You cannot see this property!'
+     destroy?: 'You cannot destroy this property!'
+   landlord_policy:
+     update?: 'You cannot edit this landlord!'
+     create?: 'You cannot create an landlord!'
+     show?: 'You cannot see this landlord!'
+     destroy?: 'You cannot destroy this landlord!'
+   referral_agency_policy:
+     update?: 'You cannot edit this referral agency!'
+     create?: 'You cannot create an referral agency!'
+     show?: 'You cannot see this referral agency!'
+     destroy?: 'You cannot destroy this referral agency!'
+   tenant_policy:
+     update?: 'You cannot edit this tenant!'
+     create?: 'You cannot create an tenant!'
+     show?: 'You cannot see this tenant!'
+     destroy?: 'You cannot destroy this tenant!'
