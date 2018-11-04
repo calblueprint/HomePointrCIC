@@ -11,7 +11,7 @@ class PropertyPolicy < ApplicationPolicy
   end
 
   def create?
-    false
+    user.type == 'Landlord'
   end
 
   def new?
@@ -23,7 +23,7 @@ class PropertyPolicy < ApplicationPolicy
   end
 
   def destroy?
-    false
+    user.type == 'Landlord' && user.properties.include?(property)
   end
 
   class Scope
