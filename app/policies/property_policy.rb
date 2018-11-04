@@ -11,7 +11,7 @@ class PropertyPolicy < ApplicationPolicy
   end
 
   def create?
-    user.type == 'Landlord'
+    user.type == 'Landlord' && property.landlord == user
   end
 
   def new?
