@@ -208,6 +208,7 @@ class ProfileForm extends React.Component {
     }
     return returnArr;
   }
+}
 
 ProfileForm.propTypes = {
   mode: PropTypes.string,
