@@ -22,4 +22,19 @@ class ReferralAgencyPolicy
     end 
     return false
   end
+
+  def edit?
+    if user.type == 'ReferralAgency' 
+      return user.id == referral_agency.id
+    end
+    return false
+  end
+
+  def destroy?
+    if user.type == 'ReferralAgency' 
+      return user.id == referral_agency.id
+    end
+    return false
+  end
+
 end

@@ -37,7 +37,7 @@ class ApplicationsController < ApplicationController
     @application = Application.find(params[:id])
     authorize @application
     if @application.update_attributes(application_params)
-      redirect_to applications_path
+      redirect_to application_path
     else
       render json: { errors: @application.errors.messages }
     end

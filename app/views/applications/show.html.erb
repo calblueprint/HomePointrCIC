@@ -44,3 +44,4 @@ Property:
   </ul>
 
   <%= link_to "Edit", edit_application_path(@application) %>
+  <%= link_to "Delete", tenant_path(id: @application.info.tenant.id), :method => :delete %><br>

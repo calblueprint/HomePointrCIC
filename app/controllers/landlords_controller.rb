@@ -1,6 +1,7 @@
 class LandlordsController < ApplicationController
   def create
   	landlord = Landlord.new(landlord_params)
+    authorize landlord
   	if landlord.save!
   		redirect_to landlords_show_url
   	else
@@ -20,6 +21,7 @@ class LandlordsController < ApplicationController
 
   def update
 	  @landlord = Landlord.find(params[:id])
+    authorize @landlord
 	  if @landlord.update(landlord_params)
 	  	redirect_to landlords_show_url
 	  else
@@ -30,6 +32,7 @@ class LandlordsController < ApplicationController
   def destroy
   	# if params[:id] == current_user.id
   	@landlord = Landlord.find(params[:id])
+    authorize @landlord
     @landlord.destroy
   	if @landlord.destroyed?
       redirect_to new_user_registration_path
