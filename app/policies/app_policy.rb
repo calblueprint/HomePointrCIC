@@ -6,7 +6,7 @@ class AppPolicy < ApplicationPolicy
     @app = app
   end
 
-  def permitted_attributes
+  def self.permitted_attributes
     if user.type == 'ReferralAgency' 
       [:status, :property_id, :info_id]
     else
@@ -14,6 +14,9 @@ class AppPolicy < ApplicationPolicy
     end
   end
 
+  """
+  An application can be seen if a Referral Agency 
+  """
   def show?
     if user.type == 'ReferralAgency' 
       user.tenants.include?(app.info.tenant)

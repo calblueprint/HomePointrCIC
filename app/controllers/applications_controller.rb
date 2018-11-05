@@ -4,11 +4,12 @@ class ApplicationsController < ApplicationController
   end
 
   def create
-    @application = Application.new(application_params)
+    @application = Application.create!(application_params)
+
     authorize @application
     if @application.save
       ApplicationsMailer.with(application: @application).new_application.deliver_now
-      redirect_to tenant_path(@application.info.tenant)
+      redirect_to tenant_path(id: @application.info.tenant.id)
     else
       render json: { errors: @application.errors.messages }
     end
@@ -56,6 +57,6 @@ class ApplicationsController < ApplicationController
   private
     
   def application_params
-    params.require(:application).permit(policy(@application).permitted_attributes)
+    params.require(:application).permit(AppPolicy.permitted_attributes)
   end
 end
