@@ -21,6 +21,7 @@ class ReferralAgenciesController < ApplicationController
   def update
   	# if params[:id] == current_user.id
 	  @referral_agency = ReferralAgency.find(params[:id])
+    authorize @referral_agency
     if @referral_agency.update(referral_agency)
 	    redirect_to referral_agencies_show_url
     else
@@ -34,6 +35,7 @@ class ReferralAgenciesController < ApplicationController
   def destroy
     # if params[:id] == current_user.id
   	@referral_agency = ReferralAgency.find(params[:id])
+    authorize @referral_agency
     @referral_agency.destroy!
   	if @referral_agency.destroyed?
       redirect_to new_user_registration_path

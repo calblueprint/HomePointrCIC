@@ -45,6 +45,7 @@ class ApplicationsController < ApplicationController
 
   def destroy
     application = Application.find(params[:id])
+    authorize application
     if application.destroy
       redirect_to applications_path
     else

@@ -15,7 +15,8 @@
     <li>Property Date Available: <%= @property.date_available %></li>
   </ul>
   <% if current_user.type == 'Landlord' %>
-    <%= link_to "Update", property_path(id: @property.id) %>
+    <%= link_to "Edit", edit_property_path(@property) %>
+    <%= link_to "Delete", property_path(@property), :method => :delete %>
   <% end %>
 <br>
 <br>

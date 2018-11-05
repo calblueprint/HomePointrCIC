@@ -18,6 +18,10 @@ class PropertyPolicy < ApplicationPolicy
     create?
   end
 
+  def edit
+    update?
+  end
+
   def update?
     user.type == 'Landlord' && user.properties.include?(property)
   end
