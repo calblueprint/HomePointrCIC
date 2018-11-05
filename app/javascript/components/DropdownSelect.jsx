@@ -1,5 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { Button, Intent } from "@blueprintjs/core";
+import { Select } from "@blueprintjs/select";
+
 import PropertyForm from "./PropertyForm";
 
 class DropdownSelect extends React.Component {
@@ -11,18 +14,17 @@ class DropdownSelect extends React.Component {
   //   this.setState({selectValue:e.target.value});
   // }
 
+  // value={this.state.selectValue}
+  // onChange={this.handleChange}
+
   render() {
     return (
       <div>
-      <label>{this.props.text}</label>
-        <select 
-          // value={this.state.selectValue} 
-          // onChange={this.handleChange} 
+        <label>{this.props.text}</label>
+        <Select
+          items={this.props.selections}
         >
-          <option value="Orange">Orange</option>
-          <option value="Radish">Radish</option>
-          <option value="Cherry">Cherry</option>
-        </select>
+        </Select>
       </div>  
     )
   }
