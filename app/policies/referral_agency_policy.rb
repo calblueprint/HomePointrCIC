@@ -24,6 +24,10 @@ class ReferralAgencyPolicy
   end
 
   def edit?
+    update?
+  end
+
+  def update?
     if user.type == 'ReferralAgency' 
       return user.id == referral_agency.id
     end
@@ -31,10 +35,7 @@ class ReferralAgencyPolicy
   end
 
   def destroy?
-    if user.type == 'ReferralAgency' 
-      return user.id == referral_agency.id
-    end
-    return false
+    update?
   end
 
 end

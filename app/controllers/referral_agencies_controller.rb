@@ -18,12 +18,17 @@ class ReferralAgenciesController < ApplicationController
   	end
   end
 
+  def edit
+    @referral_agency = ReferralAgency.find(params[:id])
+    authorize @referral_agency
+  end 
+
   def update
   	# if params[:id] == current_user.id
 	  @referral_agency = ReferralAgency.find(params[:id])
     authorize @referral_agency
-    if @referral_agency.update(referral_agency)
-	    redirect_to referral_agencies_show_url
+    if @referral_agency.update(referral_agency_params)
+	    redirect_to referral_agency_path(@referral_agency)
     else
       render json: { errors: @referral_agency.errors.messages }
     end 

@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   get 'errors/show'
-  resources :referral_agencies, :only => [:create, :show, :update, :destroy]
+  resources :referral_agencies, :only => [:create, :show, :update, :edit, :destroy]
   resources :landlords, :only => [:create, :show, :update, :edit, :destroy]
   resources :properties, :only => [:new, :create, :update, :edit, :show, :destroy]
   resources :tenants, :only => [:new, :create, :edit, :update, :show, :index, :destroy]
