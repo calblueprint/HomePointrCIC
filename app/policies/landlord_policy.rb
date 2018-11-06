@@ -19,6 +19,6 @@ class LandlordPolicy
   end 
 
   def destroy?
-  	user.type == 'Landlord' && user.id == landlord.id 
+  	update?
   end 
 end

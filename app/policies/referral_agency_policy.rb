@@ -6,6 +6,9 @@ class ReferralAgencyPolicy
     @referral_agency = referral_agency
   end
 
+  # Returns true if a Referral Agency is viewing their own profile,
+  # or if a Landlord is viewing a Referral Agency that has a tenant
+  # that has applied to one of their properties.
   def show?
     if user.type == 'ReferralAgency' 
       return user.id == referral_agency.id

@@ -6,6 +6,8 @@ class TenantPolicy
     @tenant = tenant
   end
 
+  # Returns true if a landlord if viewing a tenant that has applied to one of their properties, 
+  # or if a referral agency is viewing one of their own tenants.
   def show?
     if user.type == 'Landlord'
       tenant.info.applications.each do |app|
@@ -15,7 +17,7 @@ class TenantPolicy
       end
       return false
     else 
-      user.tenants.ids.include?(tenant.id) 
+      user.tenants.include?(tenant) 
     end  
   end
 
@@ -32,7 +34,7 @@ class TenantPolicy
   end
 
   def update?
-    user.type == 'ReferralAgency' && user.tenants.ids.include?(tenant.id) #only RA can update Tenant, that's associated with them
+    user.type == 'ReferralAgency' && user.tenants.include?(tenant) 
   end
 
   def edit?
@@ -40,7 +42,7 @@ class TenantPolicy
   end
 
   def destroy?
-    user.type == 'ReferralAgency' && tenant.referral_agency == user
+    create?
   end
 
   class Scope

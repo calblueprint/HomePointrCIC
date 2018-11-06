@@ -14,15 +14,14 @@ class AppPolicy < ApplicationPolicy
     end
   end
 
-  """
-  An application can be seen if a Referral Agency 
-  """
+  # Returns true if a Referral Agency is viewing one of their own tenants' applications, 
+  # or if a Landlord is viewing the application of a tenant that has applied to one of their properties.
   def show?
     if user.type == 'ReferralAgency' 
       user.tenants.include?(app.info.tenant)
     else
       user.properties.each do |property|
-        if property.applications.ids.include?(app.id)
+        if property.applications.include?(app)
           return true
         end
       end
@@ -39,16 +38,7 @@ class AppPolicy < ApplicationPolicy
   end
 
   def update?
-    if user.type == 'ReferralAgency'
-      user.tenants.include?(app.info.tenant)
-    else 
-      user.properties.each do |property|
-        if property.applications.include?(app)
-          return true
-        end
-      end
-      return false
-    end
+    show?
   end
 
   def edit?
