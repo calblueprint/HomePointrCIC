@@ -2,6 +2,9 @@
   "name": "whales-docker",
   "private": true,
   "dependencies": {
+    "@blueprintjs/core": "^3.8.0",
+    "@blueprintjs/select": "^3.2.1",
+    "@blueprintjs/table": "^3.3.0",
     "@rails/webpacker": "3.5",
     "react": "^16.6.0",
     "react-dom": "^16.6.0",
