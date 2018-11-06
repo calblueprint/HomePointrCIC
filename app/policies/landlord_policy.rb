@@ -10,6 +10,10 @@ class LandlordPolicy
     user.type == 'ReferralAgency' || user.id == landlord.id 
   end
 
+  def edit?
+    update?
+  end
+
   def update?
   	user.type == 'Landlord' && user.id == landlord.id 
   end 
