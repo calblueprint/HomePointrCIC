@@ -11,8 +11,15 @@ class PropertiesController < ApplicationController
     @property = Property.new
     @mode = "create"
     @type = "property"
+    enums = []
     @field_names = ["Property Name", "Description", "Rent", "Housing Type", "Property Type", "Location", "Capacity", "Number of Bedrooms", "Date Available", "Upload Pictures"]
-    @field_types = ["textbox", "textbox", "textbox", "dropdown", "dropdown", "dropdown", "textbox", "textbox", "textbox", "upload"]
+    @field_names.each do |i|
+      if Property.defined_enums.keys.include? i
+        enums << Property.defined_enums[i].keys
+      end
+    end
+    @prev_values = nil
+    @field_types = ["textbox", "textarea", "textbox", "dropdown", "dropdown", "dropdown", "textbox", "textbox", "textbox", "upload"]
     render react_component: 'ProfileForm', props: { property: @property, mode: @mode, type: @type, prevValues: @prev_values, fieldNames: @field_names, fieldTypes: @field_types }
   end
 
@@ -42,11 +49,10 @@ class PropertiesController < ApplicationController
         enums << Property.defined_enums[i].keys
       end
     end
-    @field_types = ["textbox", "textbox", "textbox", enums[0], enums[1], enums[2], "textbox", "textbox", "textbox"]
     @property = Property.find(params[:id])
     authorize @property
-    @applications = @property.applications
-    render react_component: 'PropertyForm', props: { property: @property, mode: @mode, type: @type, prevValues: @prev_values, fieldNames: @field_names,fieldTypes: @field_types }
+    @prev_values = @property.attributes.values
+    @field_types = ["textbox", "textbox", "textbox", enums[0], enums[1], enums[2], "textbox", "textbox", "textbox"]
   end
 
   def update
