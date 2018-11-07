@@ -12,15 +12,15 @@ class PropertiesController < ApplicationController
     @mode = "create"
     @type = "property"
     enums = []
-    @field_names = ["Property Name", "Description", "Rent", "Housing Type", "Property Type", "Location", "Capacity", "Number of Bedrooms", "Date Available", "Upload Pictures"]
-    column_names = Property.column_names[1..-1]
-    column_names.each do |i|
+    # @field_names = ["Property Name", "Description", "Rent", "Housing Type", "Property Type", "Location", "Capacity", "Number of Bedrooms", "Date Available", "Upload Pictures"]
+    @field_names = Property.column_names[1..-1]
+    @field_names.each do |i|
       if Property.defined_enums.keys.include? i
         enums << Property.defined_enums[i].keys
       end
     end
     @prev_values = nil
-    @field_types = ["textbox", "textarea", "textbox", enums[0], enums[1], enums[2], "textbox", "textbox", "textbox", "textbox"]
+    @field_types = ["textbox", "textarea", "textbox", "textbox", "textbox", enums[0], enums[1], "textbox", enums[2]]
     render react_component: 'ProfileForm', props: { property: @property, mode: @mode, type: @type, prevValues: @prev_values, fieldNames: @field_names, fieldTypes: @field_types }
   end
 
