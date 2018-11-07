@@ -21,7 +21,6 @@ class PropertiesController < ApplicationController
     end
     @prev_values = nil
     @field_types = ["textbox", "textarea", "textbox", "textbox", "textbox", enums[0], enums[1], "textbox", enums[2]]
-    render react_component: 'ProfileForm', props: { property: @property, mode: @mode, type: @type, prevValues: @prev_values, fieldNames: @field_names, fieldTypes: @field_types }
   end
 
   def create
