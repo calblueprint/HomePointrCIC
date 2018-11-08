@@ -1,20 +1,7 @@
 <h1>Properties#show</h1>
 <p>Find me in app/views/properties/show.html.erb</p>
 
-<br>
-  <ul>
-    <li>Property ID: <%= @property.id %></li>
-    <li>Property Capacity: <%= @property.capacity %></li>
-    <li>Property Description: <%= @property.description %></li>
-    <li>Property Landlord ID: <%= @property.landlord_id %></li>
-    <li>Property Rent: <%= @property.rent %></li>
-    <li>Property Size: <%= @property.size %></li>
-    <li>Property Housing Type: <%= @property.housing_type %></li>
-    <li>Property Property Type: <%= @property.property_type %></li>
-    <li>Property Location: <%= @property.location %></li>
-    <li>Property Date Available: <%= @property.date_available %></li>
-  </ul>
-<br>
+<%= react_component("PropertyView", { fieldNames: @field_names, fieldValues: @field_values }) %>
 <br>
 Property Applications
 <ul>

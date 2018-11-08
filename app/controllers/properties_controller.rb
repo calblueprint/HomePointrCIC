@@ -10,6 +10,8 @@ class PropertiesController < ApplicationController
 
   def show
     @property = Property.find(params[:id])
+    @field_names = Property.column_names[1..-1]
+    @field_values = @property.attributes.values[1..-1]
     @applications = @property.applications
   end
 
