@@ -19,7 +19,8 @@ class PropertiesController < ApplicationController
         enums << Property.defined_enums[i].keys
       end
     end
-    @prev_values = nil
+    num_fields = @field_names.length
+    @prev_values = Array.new(num_fields, "")
     @field_types = ["textbox", "textarea", "textbox", "textbox", "textbox", enums[0], enums[1], "textbox", enums[2]]
   end
 

@@ -5,7 +5,18 @@ class TenantsController < ApplicationController
 
   def new
     @tenant = Tenant.new
-    render react_component: 'TenantForm', props: { tenant: @tenant }
+    @mode = "create"
+    @type = "tenant"
+    enums = []
+    @field_names = Tenant.column_names[1..-3]
+    @field_names.each do |i|
+      if Tenant.defined_enums.keys.include? i
+        enums << Tenant.defined_enums[i].keys
+      end
+    end
+    num_fields = @field_names.length
+    @prev_values = Array.new(num_fields, "")
+    @field_types = ["textbox", "textarea", "textbox", "textbox", "textbox", "textbox", "textbox", "textbox", enums[0], enums[1], "textbox", enums[2], "textbox"]
   end
 
   def create
@@ -35,8 +46,18 @@ class TenantsController < ApplicationController
   end
 
   def edit
+    @mode = "edit"
+    @type = "tenant"
+    enums = []
+    @field_names = Tenant.column_names[1..-3]
+    @field_names.each do |i|
+      if Tenant.defined_enums.keys.include? i
+        enums << Tenant.defined_enums[i].keys
+      end
+    end
     @tenant = Tenant.find(params[:id])
-    render react_component: 'TenantForm', props: { tenant: @tenant }
+    @prev_values = @tenant.attributes.values[1..-3]
+    @field_types = ["textbox", "textarea", "textbox", "textbox", "textbox", "textbox", "textbox", "textbox", enums[0], enums[1], "textbox", enums[2], "textbox"]
   end
 
   def update
