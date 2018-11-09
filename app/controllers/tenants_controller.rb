@@ -1,6 +1,11 @@
 class TenantsController < ApplicationController
+  def new
+    @tenant = Tenant.new
+  end
+
   def create
     tenant = Tenant.new(tenant_params)
+    authorize tenant
     if tenant.save
       Info.create(tenant_id: tenant.id)
       redirect_to tenants_path
@@ -11,20 +16,32 @@ class TenantsController < ApplicationController
 
   def show
     @tenant = Tenant.find(params[:id])
+    authorize @tenant
     @applications = @tenant.info.applications
   end
 
+  def edit 
+    @tenant = Tenant.find(params[:id])
+    authorize @tenant
+  end
+
+  def index                                             
+    @tenants = TenantPolicy::Scope.new(current_user, Tenant).resolve
+  end
+
   def update
-    tenant = Tenant.find(params[:id])
-    if tenant.update(tenant_params)
+    @tenant = Tenant.find(params[:id])
+    authorize @tenant
+    if @tenant.update(tenant_params)
       redirect_to tenants_path
     else
-      render json: { errors: tenant.errors.messages }
+      render json: { errors: @tenant.errors.messages }
     end
   end
 
   def destroy
     tenant = Tenant.find(params[:id])
+    authorize tenant
     if tenant.destroy
       redirect_to tenants_path
     else

@@ -9,7 +9,8 @@
   <% end %>
 </div>
 
-<%= link_to "Delete", landlord_path(id: @landlord.id), :method => :delete %><br>
+<%= link_to "Edit", edit_landlord_path(@landlord) %>
+<%= link_to "Delete", landlord_path(@landlord), :method => :delete %><br>
 
 <% if user_signed_in? %>
   <li>

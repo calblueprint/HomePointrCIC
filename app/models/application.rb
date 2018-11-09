@@ -6,6 +6,10 @@ class Application < ApplicationRecord
   validates :status, inclusion: { in: statuses.keys }
   validates_associated :info, :property
 
+  def self.policy_class
+    AppPolicy
+  end
+  
   def hidden  
   """
   Returns whether this application should be hidden or not.

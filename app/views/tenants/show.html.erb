@@ -26,6 +26,8 @@ Tenant Applications
       <li>Application Status: <%= a.status %></li>
       <li>Application Property ID: <%= a.property_id %></li>
       <li>Application Info ID: <%= a.info_id %></li><br>
+      <%= link_to "Delete", tenant_path(id: a.info.tenant.id), :method => :delete %>
     <% end %>
   <% end %>
 </ul>
+

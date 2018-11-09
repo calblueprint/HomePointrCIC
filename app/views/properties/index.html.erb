@@ -5,9 +5,5 @@
   Property ID: <%= p.id %>
   Landlord ID: <%= p.landlord_id %>
   <%= link_to "Show", property_path(id: p.id) %>
-  <%= link_to "Edit", edit_property_path(id: p.id), :method => :get %>
-  <%= link_to "Delete", property_path(id: p.id), :method => :delete %><br>
+  <%= link_to "Update", property_path(id: p.id) %>
 <% end %>
-
-<%= link_to "Create", new_property_path %>
-
