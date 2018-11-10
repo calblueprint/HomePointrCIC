@@ -32,6 +32,7 @@ class PropertiesController < ApplicationController
     else
       render json: { errors: property.errors.messages }
     end
+    @field_types = ["textbox", "textarea", "textbox", "textbox", "textbox", enums[0], enums[1], "datepicker", enums[2]]
   end
 
   def show
@@ -76,21 +77,5 @@ class PropertiesController < ApplicationController
     else
       render json: { errors: property.errors.messages }
     end
-  end
-
-  private
-    
-  def property_params
-    params.require(:property).permit(
-      :capacity,
-      :description,
-      :landlord_id,
-      :rent,
-      :size,
-      :property_type,
-      :housing_type,
-      :date_available,
-      :location
-    )
   end
 end
