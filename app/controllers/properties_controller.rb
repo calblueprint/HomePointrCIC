@@ -10,7 +10,7 @@ class PropertiesController < ApplicationController
   def new
     @property = Property.new
     @mode = "create"
-    @type = "property"
+    @type = "properties"
     enums = []
     # @field_names = ["Property Name", "Description", "Rent", "Housing Type", "Property Type", "Location", "Capacity", "Number of Bedrooms", "Date Available", "Upload Pictures"]
     @field_names = Property.column_names[1..-1]

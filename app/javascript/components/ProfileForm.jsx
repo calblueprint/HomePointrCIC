@@ -14,14 +14,21 @@ class ProfileForm extends React.Component {
       id: props.id,
       prevValues: props.prevValues, //array of strings
       fieldNames: props.fieldNames, //array of strings
+<<<<<<< HEAD
       fieldTypes: props.fieldTypes,  //array of strings
       niceFieldNames: props.niceFieldNames //array of strings
+=======
+      fieldTypes: props.fieldTypes  //array of strings
+>>>>>>> pushing attempted code for requests
       // enums: props.enums
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleCreate = this.handleCreate.bind(this);
     this.handleEdit = this.handleEdit.bind(this);
+<<<<<<< HEAD
     this.handleDestroy = this.handleDestroy.bind(this);
+=======
+>>>>>>> pushing attempted code for requests
   }
 
   convertToDict(keys, values) {
@@ -83,6 +90,7 @@ class ProfileForm extends React.Component {
   }
 
   handleEdit() {
+<<<<<<< HEAD
     let id = this.state.id;
     let type = this.state.type;
     var request = null;
@@ -104,6 +112,26 @@ class ProfileForm extends React.Component {
       credentials: 'same-origin',
     }).then((data) => {
       window.location = '/' + type + '/' + id.toString();
+=======
+    let type = this.state.type;
+    let mode = this.state.mode;
+    var id = this.state.id;
+    var body = this.convertToDict(this.state.fieldNames, this.state.prevValues)
+    body = JSON.stringify({property: body})
+    
+    fetch(APIRoutes.properties.update(id), {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: body,
+      credentials: 'same-origin',
+      headers: {
+        "X_CSRF-Token": document.getElementsByName("csrf-token")[0].content
+      }
+    }).then((data) => {
+      window.location = '/properties/' + id.toString();
+>>>>>>> pushing attempted code for requests
     }).catch((data) => {
       console.error(data);
     });
@@ -144,11 +172,18 @@ class ProfileForm extends React.Component {
   renderDropdown(name, index) {
     const Option = Select.Option;
     return (
+<<<<<<< HEAD
       <div key={index}>
         <label>{this.state.niceFieldNames[index]}</label>
         <Select defaultValue={this.state.prevValues[index]} style={{width: 220}} onChange={(e) => this.state.prevValues[index] = e}>
           {this.state.fieldTypes[index].map(option => 
             <Option key={index} value={option}>{option}</Option>)}
+=======
+      <div>
+        <label>{name.charAt(0).toUpperCase() + name.slice(1)}</label>
+        <Select defaultValue={this.state.prevValues[index]} style={{width: 220}} onChange={(e) => this.state.prevValues[index] = e}>
+          {this.state.fieldTypes[index].map(option => <Option value={option}>{option}</Option>)}
+>>>>>>> pushing attempted code for requests
         </Select>
       </div>
     )
@@ -197,6 +232,7 @@ class ProfileForm extends React.Component {
   render() {
     let returnArr = [];
     if (this.state.mode === "create") {
+<<<<<<< HEAD
       returnArr = [this.renderForm(),
           <Button type="primary" onClick={this.handleCreate}>Submit</Button>,
           <Button type="default" href={"/" + this.state.type} >Cancel</Button>]
@@ -205,6 +241,13 @@ class ProfileForm extends React.Component {
           <Button type="primary" onClick={this.handleEdit}>Save</Button>,
           <Button type="default" href={"/" + this.state.type} >Cancel</Button>,
           <Button type="danger" onClick={this.handleDestroy}>Delete</Button>]
+=======
+      return [this.renderForm(), <Button type="primary" href="" onClick={this.handleCreate}>Submit</Button>]
+    } else if (this.state.mode === "edit") {
+      return [this.renderForm(), <Button type="primary" href="" onClick={this.handleEdit}>Submit</Button>]
+    } else {
+      return null
+>>>>>>> pushing attempted code for requests
     }
     return returnArr;
   }
