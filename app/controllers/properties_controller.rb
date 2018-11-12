@@ -12,9 +12,10 @@ class PropertiesController < ApplicationController
     @mode = "create"
     @type = "properties"
     enums = []
-    # @field_names = ["Property Name", "Description", "Rent", "Housing Type", "Property Type", "Location", "Capacity", "Number of Bedrooms", "Date Available", "Upload Pictures"]
     @field_names = Property.column_names[1..-1]
+    @nice_field_names = []
     @field_names.each do |i|
+      @nice_field_names << i.titleize
       if Property.defined_enums.keys.include? i
         enums << Property.defined_enums[i].keys
       end
