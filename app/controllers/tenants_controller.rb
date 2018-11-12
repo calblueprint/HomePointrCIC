@@ -16,7 +16,7 @@ class TenantsController < ApplicationController
     end
     num_fields = @field_names.length
     @prev_values = Array.new(num_fields, "")
-    @field_types = ["textbox", "textarea", "textbox", "textbox", "textbox", "textbox", "textbox", "textbox", enums[0], enums[1], "textbox", enums[2], "textbox"]
+    @field_types = ["textbox", "textarea", "textbox", "textbox", "textbox", "slider", "slider", "textbox", enums[0], enums[1], "textbox", enums[2], "textbox"]
   end
 
   def create
@@ -57,7 +57,7 @@ class TenantsController < ApplicationController
     end
     @tenant = Tenant.find(params[:id])
     @prev_values = @tenant.attributes.values[1..-3]
-    @field_types = ["textbox", "textarea", "textbox", "textbox", "textbox", "textbox", "textbox", "textbox", enums[0], enums[1], "textbox", enums[2], "textbox"]
+    @field_types = ["textbox", "textarea", "textbox", "textbox", "textbox", "slider", "slider", "textbox", enums[0], enums[1], "textbox", enums[2], "textbox"]
   end
 
   def update
