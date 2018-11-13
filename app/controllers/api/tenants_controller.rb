@@ -20,6 +20,15 @@ class Api::TenantsController < ApplicationController
     end
   end
 
+  def destroy
+    @tenant = Tenant.find(params[:id])
+    if @tenant.destroy
+      render json: @tenant
+    else
+      render json: { errors: @tenant.errors.messages }
+    end
+  end
+
   private
     
   def tenant_params

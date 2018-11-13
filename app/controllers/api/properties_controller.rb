@@ -3,7 +3,7 @@ class Api::PropertiesController < ApplicationController
 
   def create
     @property = Property.new(property_params)
-    if @property.save!
+    if @property.save
       render json: @property
     else
       render json: { errors: @property.errors.messages }
@@ -12,7 +12,16 @@ class Api::PropertiesController < ApplicationController
 
   def update
     @property = Property.find(params[:id])
-    if @property.update!(property_params)
+    if @property.update(property_params)
+      render json: @property
+    else
+      render json: { errors: @property.errors.messages }
+    end
+  end
+
+  def destroy
+    @property = Property.find(params[:id])
+    if @property.destroy
       render json: @property
     else
       render json: { errors: @property.errors.messages }
