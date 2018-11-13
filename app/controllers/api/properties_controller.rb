@@ -3,10 +3,10 @@ class Api::PropertiesController < ApplicationController
 
   def create
     @property = Property.new(property_params)
-    if @property.save
+    if @property.save!
       render json: @property
     else
-      render json: { errors: property.errors.messages }
+      render json: { errors: @property.errors.messages }
     end
   end
 
@@ -15,15 +15,14 @@ class Api::PropertiesController < ApplicationController
     if @property.update!(property_params)
       render json: @property
     else
-      render json: { errors: property.errors.messages }
+      render json: { errors: @property.errors.messages }
     end
   end
 
   private
     
   def property_params
-    params.permit(
-      :property,
+    params.require(:property).permit(
       :capacity,
       :description,
       :landlord_id,

@@ -6,7 +6,7 @@ class TenantsController < ApplicationController
   def new
     @tenant = Tenant.new
     @mode = "create"
-    @type = "tenant"
+    @type = "tenants"
     enums = []
     @field_names = Tenant.column_names[1..-3]
     @nice_field_names = []
@@ -49,7 +49,7 @@ class TenantsController < ApplicationController
 
   def edit
     @mode = "edit"
-    @type = "tenant"
+    @type = "tenants"
     enums = []
     @field_names = Tenant.column_names[1..-3]
     @nice_field_names = []

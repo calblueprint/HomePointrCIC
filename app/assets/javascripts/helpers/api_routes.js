@@ -2,7 +2,7 @@ class ApiRoutes {
   get properties() {
     return {
       create: '/api/properties',
-      update: (id) => '/api/properties/' + id
+      update: (id) => '/api/properties/' + id,
     }
   }
 }
