@@ -1,28 +1,8 @@
 <h1>Properties#show</h1>
 <p>Find me in app/views/properties/show.html.erb</p>
 
-<br>
-  <ul>
-    <li>Property ID: <%= @property.id %></li>
-    <li>Property Capacity: <%= @property.capacity %></li>
-    <li>Property Description: <%= @property.description %></li>
-    <li>Property Landlord ID: <%= @property.landlord_id %></li>
-    <li>Property Rent: <%= @property.rent %></li>
-    <li>Property Size: <%= @property.size %></li>
-    <li>Property Housing Type: <%= @property.housing_type %></li>
-    <li>Property Property Type: <%= @property.property_type %></li>
-    <li>Property Location: <%= @property.location %></li>
-    <li>Property Date Available: <%= @property.date_available %></li>
-    <% @property.images.each do |i| %>
-      <li>Property Images: <%= image_tag i %></li>
-    <% end %>
-  </ul>
-  <% if current_user.type == 'Landlord' %>
-    <%= link_to "Edit", edit_property_path(@property) %>
-    <%= link_to "Delete", property_path(@property), :method => :delete %>
-  <% end %>
-<br>
-<br>
+<%= react_component("PropertyView", { fieldNames: @field_names, fieldValues: @field_values }) %>
+
 Property Applications
 <ul>
   <% @applications.each do |a| %>
