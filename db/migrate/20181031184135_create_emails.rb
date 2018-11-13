@@ -3,7 +3,7 @@ class CreateEmails < ActiveRecord::Migration[5.2]
     create_table :emails do |t|
       t.integer :user_id
       t.string :email
-      t.boolean :primary, default: false
+      t.boolean :primary
       t.string :unconfirmed_email
       t.string :confirmation_token
       t.datetime :confirmed_at

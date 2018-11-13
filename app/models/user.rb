@@ -5,7 +5,7 @@ class User < ApplicationRecord
   validates :name, :emails, :type, :address, :phone, presence: true
   validates :type, inclusion: { in: ["Landlord", "ReferralAgency"] }
   devise :multi_email_authenticatable, :registerable,
-         :recoverable, :rememberable, :validatable, 
+         :recoverable, :rememberable, 
          :multi_email_confirmable, :multi_email_validatable
 
 	def will_save_change_to_email?

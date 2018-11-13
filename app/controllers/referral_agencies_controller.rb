@@ -9,10 +9,11 @@ class ReferralAgenciesController < ApplicationController
   end
 
   def show
-  	if user_signed_in? and current_user.type == 'ReferralAgency'
+  	if user_signed_in?
   	  @referral_agency = current_user
   	  @tenants = @referral_agency.tenants
     else
+      render json: { errors: errors.messages }
       redirect_to '/users/sign_up'
   	end
   end

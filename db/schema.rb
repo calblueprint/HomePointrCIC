@@ -29,7 +29,7 @@ ActiveRecord::Schema.define(version: 2018_10_31_185050) do
   create_table "emails", force: :cascade do |t|
     t.integer "user_id"
     t.string "email"
-    t.boolean "primary", default: false
+    t.boolean "primary"
     t.string "unconfirmed_email"
     t.string "confirmation_token"
     t.datetime "confirmed_at"
