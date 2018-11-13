@@ -3,6 +3,7 @@ class Api::PropertiesController < ApplicationController
 
   def create
     @property = Property.new(property_params)
+    authorize @property
     if @property.save
       render json: @property
     else
@@ -12,6 +13,7 @@ class Api::PropertiesController < ApplicationController
 
   def update
     @property = Property.find(params[:id])
+    authorize @property
     if @property.update(property_params)
       render json: @property
     else
@@ -21,6 +23,7 @@ class Api::PropertiesController < ApplicationController
 
   def destroy
     @property = Property.find(params[:id])
+    authorize @property
     if @property.destroy
       render json: @property
     else

@@ -18,19 +18,7 @@ class TenantsController < ApplicationController
     end
     num_fields = @field_names.length
     @prev_values = Array.new(num_fields, "")
-    @field_types = ["textbox", "textarea", "textbox", "textbox", "textbox", "slider", "_slider", "textbox", enums[0], enums[1], "textbox", enums[2], "textbox"]
-  end
-
-  def create
-    tenant = Tenant.new(tenant_params)
-    authorize tenant
-    if tenant.save
-      Info.create(tenant_id: tenant.id)
-      redirect_to tenants_path
-    else
-      render json: { errors: tenant.errors.messages }
-    end
-    @field_types = ["textbox", "textarea", "textbox", "textbox", "textbox", "slider", "_slider", enums[0], enums[1], "textbox", enums[2], "textbox", "datepicker"]
+     @field_types = ["textbox", "textarea", "textbox", "textbox", "textbox", "slider", "_slider", enums[0], enums[1], "textbox", enums[2], "textbox", "datepicker"]
   end
 
   def show
@@ -58,28 +46,7 @@ class TenantsController < ApplicationController
     @tenant = Tenant.find(params[:id])
     authorize @tenant
     @prev_values = @tenant.attributes.values[1..-3]
-    @field_types = ["textbox", "textarea", "textbox", "textbox", "textbox", "slider", "_slider", "textbox", enums[0], enums[1], "textbox", enums[2], "textbox"]
-  end
-
-  def update
-    @tenant = Tenant.find(params[:id])
-    authorize @tenant
-    if @tenant.update(tenant_params)
-      redirect_to tenants_path
-    else
-      render json: { errors: @tenant.errors.messages }
-    end
     @field_types = ["textbox", "textarea", "textbox", "textbox", "textbox", "slider", "_slider", enums[0], enums[1], "textbox", enums[2], "textbox", "datepicker"]
-  end
-
-  def destroy
-    tenant = Tenant.find(params[:id])
-    authorize tenant
-    if tenant.destroy
-      redirect_to tenants_path
-    else
-      render json: { errors: tenant.errors.messages }
-    end
   end
 
   private

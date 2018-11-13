@@ -3,6 +3,7 @@ class Api::TenantsController < ApplicationController
 
   def create
     @tenant = Tenant.new(tenant_params)
+    authorize @tenant
     if @tenant.save
       Info.create(tenant_id: @tenant.id)
       render json: @tenant
@@ -13,6 +14,7 @@ class Api::TenantsController < ApplicationController
 
   def update
     @tenant = Tenant.find(params[:id])
+    authorize @tenant
     if @tenant.update(tenant_params)
       render json: @tenant
     else
@@ -22,6 +24,7 @@ class Api::TenantsController < ApplicationController
 
   def destroy
     @tenant = Tenant.find(params[:id])
+    authorize @tenant
     if @tenant.destroy
       render json: @tenant
     else
