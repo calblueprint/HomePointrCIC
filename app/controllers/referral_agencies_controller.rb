@@ -9,8 +9,9 @@ class ReferralAgenciesController < ApplicationController
   end
 
   def show
-  	if user_signed_in?
-  	  @referral_agency = current_user
+  	if user_signed_in? 
+  	  @referral_agency = ReferralAgency.find(params[:id])
+      authorize @referral_agency
   	  @tenants = @referral_agency.tenants
     else
       render json: { errors: errors.messages }
@@ -18,11 +19,17 @@ class ReferralAgenciesController < ApplicationController
   	end
   end
 
+  def edit
+    @referral_agency = ReferralAgency.find(params[:id])
+    authorize @referral_agency
+  end 
+
   def update
   	# if params[:id] == current_user.id
 	  @referral_agency = ReferralAgency.find(params[:id])
-    if @referral_agency.update(referral_agency)
-	    redirect_to referral_agencies_show_url
+    authorize @referral_agency
+    if @referral_agency.update(referral_agency_params)
+	    redirect_to referral_agency_path(@referral_agency)
     else
       render json: { errors: @referral_agency.errors.messages }
     end 
@@ -34,6 +41,7 @@ class ReferralAgenciesController < ApplicationController
   def destroy
     # if params[:id] == current_user.id
   	@referral_agency = ReferralAgency.find(params[:id])
+    authorize @referral_agency
     @referral_agency.destroy!
   	if @referral_agency.destroyed?
       redirect_to new_user_registration_path

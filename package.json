@@ -4,11 +4,14 @@
   "dependencies": {
     "@rails/webpacker": "3.5",
     "antd": "^3.10.4",
+    "react": "^16.6.1",
+    "react-dom": "^16.6.1",
     "react_ujs": "^2.4.4"
   },
   "devDependencies": {
     "babel-plugin-transform-es2015-destructuring": "^6.23.0",
     "babel-preset-react": "^6.24.1",
-    "webpack-dev-server": "2.11.2"
+    "webpack-dev-server": "^2.11.3",
+    "webpack": "^2.2.0 || ^3.0.0"
   }
 }
