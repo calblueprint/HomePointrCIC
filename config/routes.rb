@@ -7,5 +7,9 @@ Rails.application.routes.draw do
   resources :applications, :only => [:new, :create, :edit, :update, :show, :destroy]
   resources :infos, :only => [:create]
   devise_for :users
+
+  namespace :api do
+  	resources :landlords, :referral_agencies, :tenants, :properties, :infos, :applications
+  end
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end
