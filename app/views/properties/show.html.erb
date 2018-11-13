@@ -2,10 +2,12 @@
 <p>Find me in app/views/properties/show.html.erb</p>
 
 <%= react_component("PropertyView", { fieldNames: @field_names, fieldValues: @field_values }) %>
+
 <br>
 Property Applications
 <ul>
   <% @applications.each do |a| %>
+    <li>Tenant ID: <%= a.info.tenant.id %></li>
     <li>Application ID: <%= a.id %></li>
     <li>Application Status: <%= a.status %></li>
     <li>Application Property ID: <%= a.property_id %></li>

@@ -1,6 +1,7 @@
 class LandlordsController < ApplicationController
   def create
   	landlord = Landlord.new(landlord_params)
+    authorize landlord
   	if landlord.save!
   		redirect_to landlords_show_url
   	else
@@ -9,30 +10,34 @@ class LandlordsController < ApplicationController
   end
 
   def show
-  	if user_signed_in? and current_user.type == 'Landlord'
-  	  @landlord = current_user
+  	if user_signed_in? 
+  	  @landlord = Landlord.find(params[:id])
+      authorize @landlord
   	  @properties = @landlord.properties
   	else
   		redirect_to '/users/sign_up'
   	end
   end
 
+  def edit
+    @landlord = Landlord.find(params[:id])
+    authorize @landlord
+  end 
+
   def update
-  	# if params[:id] == current_user.id
 	  @landlord = Landlord.find(params[:id])
+    authorize @landlord
 	  if @landlord.update(landlord_params)
-	  	redirect_to landlords_show_url
+	  	redirect_to landlord_path(@landlord)
 	  else
 	  	render json: { errors: @landlord.errors.messages }
 	  end 
-  	# else
-  	# 	puts('you do not have access to this page')
-  	# end
   end
 
   def destroy
   	# if params[:id] == current_user.id
   	@landlord = Landlord.find(params[:id])
+    authorize @landlord
     @landlord.destroy
   	if @landlord.destroyed?
       redirect_to new_user_registration_path

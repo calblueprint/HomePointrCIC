@@ -1,0 +1,39 @@
+Arguments: 
+  /usr/bin/node /usr/share/node_modules/yarn/bin/yarn.js install
+
+PATH: 
+  /usr/local/bundle/bin:/usr/local/bundle/gems/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/gems/bin
+
+Yarn version: 
+  1.3.2
+
+Node version: 
+  8.9.3
+
+Platform: 
+  linux x64
+
+npm manifest: 
+  {
+    "name": "whales-docker",
+    "private": true,
+    "dependencies": {
+      "@rails/webpacker": "3.5",
+      "antd": "^3.10.4",
+      "react_ujs": "^2.4.4"
+    },
+    "devDependencies": {
+      "babel-plugin-transform-es2015-destructuring": "^6.23.0",
+      "babel-preset-react": "^6.24.1",
+      "webpack-dev-server": "2.11.2"
+    }
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile
+
+Trace: 
+  Error: ENOENT: no such file or directory, lstat '/app/node_modules/inherits/'

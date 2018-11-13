@@ -1,6 +1,11 @@
 class PropertiesController < ApplicationController
+  def new
+    @property = Property.new
+  end
+
   def create
     property = Property.new(property_params)
+    authorize property
     if property.save
       redirect_to properties_path
     else
@@ -12,11 +17,18 @@ class PropertiesController < ApplicationController
     @property = Property.find(params[:id])
     @field_names = Property.column_names[1..-1]
     @field_values = @property.attributes.values[1..-1]
+    authorize @property
     @applications = @property.applications
   end
 
+  def edit 
+    @property = Property.find(params[:id])
+    authorize @property
+  end
+  
   def update
     property = Property.find(params[:id])
+    authorize property 
     if property.update(property_params)
       redirect_to properties_path
     else
@@ -26,6 +38,7 @@ class PropertiesController < ApplicationController
 
   def destroy
     property = Property.find(params[:id])
+    authorize property
     if property.destroy
       redirect_to properties_path
     else
