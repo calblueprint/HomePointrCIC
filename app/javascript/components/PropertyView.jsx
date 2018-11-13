@@ -1,13 +1,17 @@
+import React from "react";
 import PropTypes from "prop-types";
-import 'antd/dist/antd.css';
- const PropertyView = props => {
+ const PropertyView = (props) => {
 	return (
+    
     props.fieldNames.map((name, index) => {
-      <li>
+      return (
+      <div>
       	<label>{name}</label>
       	{props.fieldValues[index]}
-      </li>
+      </div>
+      )
     })
+    
 	);
 }
  PropertyView.propTypes = {
