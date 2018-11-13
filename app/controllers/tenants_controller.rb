@@ -30,17 +30,13 @@ class TenantsController < ApplicationController
     else
       render json: { errors: tenant.errors.messages }
     end
+    @field_types = ["textbox", "textarea", "textbox", "textbox", "textbox", "slider", "_slider", enums[0], enums[1], "textbox", enums[2], "textbox", "datepicker"]
   end
 
   def show
     @tenant = Tenant.find(params[:id])
     authorize @tenant
     @applications = @tenant.info.applications
-  end
-
-  def edit 
-    @tenant = Tenant.find(params[:id])
-    authorize @tenant
   end
 
   def index                                             
@@ -60,6 +56,7 @@ class TenantsController < ApplicationController
       end
     end
     @tenant = Tenant.find(params[:id])
+    authorize @tenant
     @prev_values = @tenant.attributes.values[1..-3]
     @field_types = ["textbox", "textarea", "textbox", "textbox", "textbox", "slider", "_slider", "textbox", enums[0], enums[1], "textbox", enums[2], "textbox"]
   end
@@ -72,6 +69,7 @@ class TenantsController < ApplicationController
     else
       render json: { errors: @tenant.errors.messages }
     end
+    @field_types = ["textbox", "textarea", "textbox", "textbox", "textbox", "slider", "_slider", enums[0], enums[1], "textbox", enums[2], "textbox", "datepicker"]
   end
 
   def destroy
