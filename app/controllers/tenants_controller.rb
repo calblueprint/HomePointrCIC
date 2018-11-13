@@ -9,14 +9,16 @@ class TenantsController < ApplicationController
     @type = "tenant"
     enums = []
     @field_names = Tenant.column_names[1..-3]
+    @nice_field_names = []
     @field_names.each do |i|
+      @nice_field_names << i.titleize
       if Tenant.defined_enums.keys.include? i
         enums << Tenant.defined_enums[i].keys
       end
     end
     num_fields = @field_names.length
     @prev_values = Array.new(num_fields, "")
-    @field_types = ["textbox", "textarea", "textbox", "textbox", "textbox", "slider", "slider", "textbox", enums[0], enums[1], "textbox", enums[2], "textbox"]
+    @field_types = ["textbox", "textarea", "textbox", "textbox", "textbox", "slider", "_slider", "textbox", enums[0], enums[1], "textbox", enums[2], "textbox"]
   end
 
   def create
@@ -50,14 +52,16 @@ class TenantsController < ApplicationController
     @type = "tenant"
     enums = []
     @field_names = Tenant.column_names[1..-3]
+    @nice_field_names = []
     @field_names.each do |i|
+      @nice_field_names << i.titleize
       if Tenant.defined_enums.keys.include? i
         enums << Tenant.defined_enums[i].keys
       end
     end
     @tenant = Tenant.find(params[:id])
     @prev_values = @tenant.attributes.values[1..-3]
-    @field_types = ["textbox", "textarea", "textbox", "textbox", "textbox", "slider", "slider", "textbox", enums[0], enums[1], "textbox", enums[2], "textbox"]
+    @field_types = ["textbox", "textarea", "textbox", "textbox", "textbox", "slider", "_slider", "textbox", enums[0], enums[1], "textbox", enums[2], "textbox"]
   end
 
   def update
