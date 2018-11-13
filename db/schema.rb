@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_10_27_200859) do
+ActiveRecord::Schema.define(version: 2018_10_31_185050) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -24,6 +24,16 @@ ActiveRecord::Schema.define(version: 2018_10_27_200859) do
     t.index ["info_id", "property_id"], name: "index_applications_on_info_id_and_property_id", unique: true
     t.index ["info_id"], name: "index_applications_on_info_id"
     t.index ["property_id"], name: "index_applications_on_property_id"
+  end
+
+  create_table "emails", force: :cascade do |t|
+    t.integer "user_id"
+    t.string "email"
+    t.boolean "primary", default: false
+    t.string "unconfirmed_email"
+    t.string "confirmation_token"
+    t.datetime "confirmed_at"
+    t.datetime "confirmation_sent_at"
   end
 
   create_table "infos", force: :cascade do |t|
@@ -66,7 +76,6 @@ ActiveRecord::Schema.define(version: 2018_10_27_200859) do
   end
 
   create_table "users", force: :cascade do |t|
-    t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
     t.string "reset_password_token"
     t.datetime "reset_password_sent_at"
@@ -81,7 +90,6 @@ ActiveRecord::Schema.define(version: 2018_10_27_200859) do
     t.string "address"
     t.string "phone"
     t.string "type"
-    t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 

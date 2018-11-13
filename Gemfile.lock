@@ -86,6 +86,8 @@ GEM
       railties (>= 4.1.0, < 6.0)
       responders
       warden (~> 1.2.3)
+    devise-multi_email (2.0.1)
+      devise
     erubi (1.7.1)
     execjs (2.7.0)
     faker (1.9.1)
@@ -247,6 +249,7 @@ DEPENDENCIES
   chromedriver-helper
   coffee-rails (~> 4.2)
   devise
+  devise-multi_email
   faker (~> 1.6, >= 1.6.6)
   figaro
   jbuilder (~> 2.5)

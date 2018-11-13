@@ -7,7 +7,7 @@ class PropertyPolicy < ApplicationPolicy
   end
 
   def show?
-    user.type == 'ReferralAgency' || user.properties.ids.include?(property.id)
+    user.type == 'ReferralAgency' || user.properties.include?(property)
   end
 
   def create?
@@ -18,12 +18,16 @@ class PropertyPolicy < ApplicationPolicy
     create?
   end
 
+  def edit
+    update?
+  end
+
   def update?
     user.type == 'Landlord' && user.properties.include?(property)
   end
 
   def destroy?
-    user.type == 'Landlord' && user.properties.include?(property)
+    update?
   end
 
   class Scope

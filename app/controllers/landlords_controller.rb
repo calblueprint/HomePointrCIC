@@ -19,11 +19,16 @@ class LandlordsController < ApplicationController
   	end
   end
 
+  def edit
+    @landlord = Landlord.find(params[:id])
+    authorize @landlord
+  end 
+
   def update
 	  @landlord = Landlord.find(params[:id])
     authorize @landlord
 	  if @landlord.update(landlord_params)
-	  	redirect_to landlords_show_url
+	  	redirect_to landlord_path(@landlord)
 	  else
 	  	render json: { errors: @landlord.errors.messages }
 	  end 

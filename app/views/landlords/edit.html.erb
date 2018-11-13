@@ -1,0 +1,16 @@
+<h1>Landlords#edit</h1>
+<p>Find me in app/views/landlords/edit.html.erb</p>
+
+<%= form_for @landlord do |f| %>
+  <%= f.label :email%>
+  <%= f.text_field :email%>
+  <%= f.label :password%>
+  <%= f.text_field :password%>
+  <%= f.label :name%>
+  <%= f.text_field :name%>
+  <%= f.label :address%>
+  <%= f.text_field :address%>
+  <%= f.label :phone%>
+  <%= f.text_field :phone%>
+  <%= f.submit %>
+<% end %>

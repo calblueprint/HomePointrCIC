@@ -9,7 +9,7 @@ class ApplicationController < ActionController::Base
   def user_not_authorized(exception)
   	policy_name = exception.policy.class.to_s.underscore
 
-   	flash[:error] = t "#{policy_name}.#{exception.query}", scope: "pundit", default: :default
+   	flash[:error] = "You cannot #{policy_name}.#{exception.query}"
     redirect_to errors_show_path
   end
 

@@ -70,6 +70,8 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 gem 'devise'
 
+gem 'devise-multi_email'
+
 # Uncomment this line with "bcrypt" in the same file:
 
 # Use ActiveModel has_secure_password
