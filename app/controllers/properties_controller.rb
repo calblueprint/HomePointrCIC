@@ -25,6 +25,11 @@ class PropertiesController < ApplicationController
     @property = Property.find(params[:id])
     authorize @property
   end
+
+  def index
+    @properties = Property.all
+    # authorize @properties
+  end
   
   def update
     property = Property.find(params[:id])
