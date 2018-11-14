@@ -22,14 +22,6 @@ class ApplicationController < ActionController::Base
     	end
   	end
 
-  	def after_sign_in_path_for(resource)
-  		if current_user.type == 'Landlord'
-  			landlord_path(current_user)
-  		else 
-  			referral_agency_path(current_user)
-  		end
-  	end
-
 	protected
 
 	def configure_permitted_parameters

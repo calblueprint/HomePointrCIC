@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get 'home/index'
   get 'errors/show'
   resources :referral_agencies, :only => [:create, :show, :update, :edit, :destroy]
   resources :landlords, :only => [:create, :show, :update, :edit, :destroy]
@@ -10,6 +11,10 @@ Rails.application.routes.draw do
         sessions: 'sessions'
       }
   devise_scope :user do
+  authenticated do 
+  	root 'home#index', as: :authenticated_root
+  end
+  
   unauthenticated do
     root 'devise/sessions#new', as: :unauthenticated_root
   end
