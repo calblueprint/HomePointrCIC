@@ -43,8 +43,7 @@ class Api::PropertiesController < ApplicationController
       :property_type,
       :housing_type,
       :date_available,
-      :location,
-      :images
+      :location
     )
   end
 end
