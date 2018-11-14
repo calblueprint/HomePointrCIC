@@ -49,24 +49,4 @@ class TenantsController < ApplicationController
     @prev_values = @tenant.attributes.values[1..-3]
     @field_types = ["textbox", "textarea", "textbox", "textbox", "textbox", "slider", "_slider", enums[0], enums[1], "textbox", enums[2], "textbox", "datepicker"]
   end
-
-  private
-    
-  def tenant_params
-    params.require(:tenant).permit(
-      :name,
-      :description,
-      :email,
-      :phone,
-      :nino,
-      :rent_min,
-      :rent_max,
-      :housing_type,
-      :property_type,
-      :num_bedrooms,
-      :location,
-      :referral_agency_id,
-      :date_needed
-    )
-  end
 end
