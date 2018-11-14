@@ -16,7 +16,6 @@ class ProfileForm extends React.Component {
       fieldNames: props.fieldNames, //array of strings
       fieldTypes: props.fieldTypes,  //array of strings
       niceFieldNames: props.niceFieldNames //array of strings
-      // enums: props.enums
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleCreate = this.handleCreate.bind(this);
@@ -24,6 +23,10 @@ class ProfileForm extends React.Component {
     this.handleDestroy = this.handleDestroy.bind(this);
   }
 
+  /* takes in two arrays (our array of field names and our array of values)
+   * and combines the corresponding field and value as a key value pair to be 
+   * returned as a dictionary that will be sent in our JSON requests.
+   */
   convertToDict(keys, values) {
     keys = this.state.fieldNames
     values = this.state.prevValues
@@ -31,11 +34,13 @@ class ProfileForm extends React.Component {
     return result
   }
 
+  //updates our values
   handleChange = (index, e) => {
     this.state.prevValues[index] = e.target.value
     this.setState({prevValues: this.state.prevValues})
   }
 
+  //api destroy
   handleDestroy() {
     let id = this.state.id;
     let type = this.state.type;
@@ -56,6 +61,7 @@ class ProfileForm extends React.Component {
     })
   }
 
+  //api create
   handleCreate() {
     let type = this.state.type;
     var request = null;
@@ -82,6 +88,7 @@ class ProfileForm extends React.Component {
     });
   }
 
+  //api edit
   handleEdit() {
     let id = this.state.id;
     let type = this.state.type;
