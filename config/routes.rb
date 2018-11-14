@@ -6,7 +6,9 @@ Rails.application.routes.draw do
   resources :tenants, :only => [:new, :create, :edit, :update, :show, :index, :destroy]
   resources :applications, :only => [:new, :create, :edit, :update, :show, :destroy]
   resources :infos, :only => [:create]
-  devise_for :users
+  devise_for :users, controllers: {
+        sessions: 'sessions'
+      }
   devise_scope :user do
   unauthenticated do
     root 'devise/sessions#new', as: :unauthenticated_root

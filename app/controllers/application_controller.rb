@@ -1,6 +1,6 @@
 class ApplicationController < ActionController::Base
 	include Pundit
-	before_action :require_login, except: [:new, :create]
+	before_action :require_login
 	before_action :configure_permitted_parameters, if: :devise_controller?
 	# after_action :verify_authorized
 	
