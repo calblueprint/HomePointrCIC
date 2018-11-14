@@ -6,6 +6,9 @@ class ReferralAgencyPolicy
     @referral_agency = referral_agency
   end
 
+  # Returns true if a Referral Agency is viewing their own profile,
+  # or if a Landlord is viewing a Referral Agency that has a tenant
+  # that has applied to one of their properties.
   def show?
     if user.type == 'ReferralAgency' 
       return user.id == referral_agency.id
@@ -24,6 +27,10 @@ class ReferralAgencyPolicy
   end
 
   def edit?
+    update?
+  end
+
+  def update?
     if user.type == 'ReferralAgency' 
       return user.id == referral_agency.id
     end
@@ -31,10 +38,7 @@ class ReferralAgencyPolicy
   end
 
   def destroy?
-    if user.type == 'ReferralAgency' 
-      return user.id == referral_agency.id
-    end
-    return false
+    update?
   end
 
 end

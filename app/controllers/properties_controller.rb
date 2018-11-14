@@ -1,4 +1,8 @@
 class PropertiesController < ApplicationController
+  def new
+    @property = Property.new
+  end
+
   def create
     property = Property.new(property_params)
     authorize property
@@ -16,10 +20,15 @@ class PropertiesController < ApplicationController
     @field_values = @property.attributes.values[1..-1]
     @applications = @property.applications
   end
+
+  def edit 
+    @property = Property.find(params[:id])
+    authorize @property
+  end
   
   def update
     property = Property.find(params[:id])
-    authorize @property 
+    authorize property 
     if property.update(property_params)
       redirect_to properties_path
     else
