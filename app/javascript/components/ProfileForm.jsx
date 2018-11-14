@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { Select, Input, Button, Slider, Switch, DatePicker } from 'antd';
 import 'antd/dist/antd.css';
 import moment from 'moment';
+import APIRoutes from 'helpers/api_routes';
 
 class ProfileForm extends React.Component {
 
@@ -204,14 +205,14 @@ class ProfileForm extends React.Component {
   render() {
     let returnArr = [];
     if (this.state.mode === "create") {
-      returnArr = [this.renderForm(),
-          <Button type="primary" onClick={this.handleCreate}>Submit</Button>,
-          <Button type="default" href={"/" + this.state.type} >Cancel</Button>]
+      returnArr = [...this.renderForm(),
+          <Button key='submit' type="primary" onClick={this.handleCreate}>Submit</Button>,
+          <Button key='cancel' type="default" href={"/" + this.state.type} >Cancel</Button>]
     } else if (this.state.mode === "edit") {
-      returnArr = [this.renderForm(),
-          <Button type="primary" onClick={this.handleEdit}>Save</Button>,
-          <Button type="default" href={"/" + this.state.type} >Cancel</Button>,
-          <Button type="danger" onClick={this.handleDestroy}>Delete</Button>]
+      returnArr = [...this.renderForm(),
+          <Button key='save' type="primary" onClick={this.handleEdit}>Save</Button>,
+          <Button key='cancel' type="default" href={"/" + this.state.type} >Cancel</Button>,
+          <Button key='delete' type="danger" onClick={this.handleDestroy}>Delete</Button>]
     }
     return returnArr;
   }
