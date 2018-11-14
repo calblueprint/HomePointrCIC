@@ -5,6 +5,7 @@ class TenantsController < ApplicationController
 
   def new
     @tenant = Tenant.new
+    authorize @tenant
     @mode = "create"
     @type = "tenants"
     enums = []

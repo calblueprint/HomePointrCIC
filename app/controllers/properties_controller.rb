@@ -9,6 +9,7 @@ class PropertiesController < ApplicationController
 
   def new
     @property = Property.new
+    authorize @property
     @mode = "create"
     @type = "properties"
     enums = []
