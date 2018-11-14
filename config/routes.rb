@@ -8,7 +8,8 @@ Rails.application.routes.draw do
   resources :applications, :only => [:new, :create, :edit, :update, :show, :destroy]
   resources :infos, :only => [:create]
   devise_for :users, controllers: {
-        sessions: 'sessions'
+        sessions: 'sessions',
+        registrations: "registrations"
       }
   devise_scope :user do
   authenticated do 
