@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 	return (
     props.resources.map((property) => {
       return (
-      <Card title={resource.location} bordered={false}>{resource.description}</Card>
+        <div />
       )
     })
     
