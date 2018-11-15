@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get 'home/index'
   get 'errors/show'
   resources :referral_agencies, :only => [:create, :show, :update, :edit, :destroy]
   resources :landlords, :only => [:create, :show, :update, :edit, :destroy]
@@ -11,7 +12,19 @@ Rails.application.routes.draw do
   resources :tenants
   resources :applications, :only => [:create, :show, :destroy]
   resources :infos, :only => [:create]
-  devise_for :users
+  devise_for :users, controllers: {
+        sessions: 'sessions',
+        registrations: "registrations"
+      }
+  devise_scope :user do
+  authenticated do 
+  	root 'home#index', as: :authenticated_root
+  end
+
+  unauthenticated do
+    root 'sessions#new', as: :unauthenticated_root
+  end
+ end
 
   namespace :api do
   	resources :landlords, :referral_agencies, :tenants, :properties, :infos, :applications
