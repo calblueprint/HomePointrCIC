@@ -27,7 +27,7 @@ class PropertiesController < ApplicationController
   end
 
   def index
-    @properties = Property.all
+    @properties = PropertyPolicy::Scope.new(current_user, Property).resolve
     # authorize @properties
   end
   

@@ -26,7 +26,7 @@ class TenantsController < ApplicationController
   end
 
   def index                                             
-    @tenants = TenantPolicy::Scope.new(current_user, Tenant).resolve
+    @tenants = Tenant.all
   end
 
   def update
