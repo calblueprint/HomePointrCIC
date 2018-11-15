@@ -57,7 +57,7 @@ class TenantPolicy
       if user.type == 'ReferralAgency'
         scope.where(referral_agency: user) 
       else 
-        scope.where(landlord: user) 
+        scope.where(landlord: user) #wrong
       end
     end
   end
