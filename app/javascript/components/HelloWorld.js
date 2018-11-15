@@ -2,7 +2,7 @@ import React from "react"
 import PropTypes from "prop-types"
 class HelloWorld extends React.Component {
   render () {
-    return <p>What's up Arp</p>
+    return <p>{this.props.greeting}</p>
   }
 }
 

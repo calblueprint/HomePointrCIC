@@ -30,7 +30,7 @@ class TenantPolicy
   end
 
   def new?
-    create?
+    user.type == 'ReferralAgency'
   end
 
   def update?
