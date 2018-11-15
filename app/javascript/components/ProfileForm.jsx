@@ -117,7 +117,7 @@ class ProfileForm extends React.Component {
     });
   }
 
-  renderTextbox(name, index) {
+  renderTextbox(index) {
     return (
       <div key={index}>
         <label>{this.state.niceFieldNames[index]}</label>
@@ -126,7 +126,7 @@ class ProfileForm extends React.Component {
     )
   }
 
-  renderTextarea(name, index) {
+  renderTextarea(index) {
     const { TextArea } = Input;
     return (
       <div key={index}>
@@ -136,7 +136,7 @@ class ProfileForm extends React.Component {
     )
   }
 
-  renderDatePicker(name, index) {
+  renderDatePicker(index) {
     if (this.state.mode == "create") {
       this.state.prevValues[index] = moment().format("YYYY-MM-DD")
     }
@@ -149,7 +149,7 @@ class ProfileForm extends React.Component {
     )
   }
 
-  renderDropdown(name, index) {
+  renderDropdown(index) {
     const Option = Select.Option;
     return (
       <div key={index}>
@@ -162,7 +162,7 @@ class ProfileForm extends React.Component {
     )
   }
 
-  renderSlider(name, index) {
+  renderSlider(index) {
     return (
       <div key={index}>
         <label>{this.state.niceFieldNames[index]} - {this.state.niceFieldNames[index+1]}</label>
@@ -175,28 +175,28 @@ class ProfileForm extends React.Component {
 
   renderForm() {
     return (
-      this.state.fieldNames.map((name, index) => {
+      this.state.fieldNames.map((_, index) => {
         if (this.state.fieldTypes[index] === "textbox") {
           return ( 
-            this.renderTextbox(name, index)
+            this.renderTextbox(index)
           )
         } else if (this.state.fieldTypes[index] === "textarea") {
           return (
-            this.renderTextarea(name, index)
+            this.renderTextarea(index)
           )
         } else if (this.state.fieldTypes[index] === "datepicker") {
           return (
-            this.renderDatePicker(name, index)
+            this.renderDatePicker(index)
           )
         } else if (this.state.fieldTypes[index] === "slider") {
           return (
-            this.renderSlider(name, index)
+            this.renderSlider(index)
           )
         } else if (this.state.fieldTypes[index] === "_slider") {
           return null
         } else {
           return (
-            this.renderDropdown(name, index)
+            this.renderDropdown(index)
           )
         }
       })
