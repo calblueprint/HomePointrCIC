@@ -15,7 +15,7 @@ class PropertyPolicy < ApplicationPolicy
   end
 
   def new?
-    create?
+    user.type == 'Landlord'
   end
 
   def edit

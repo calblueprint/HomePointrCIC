@@ -3,14 +3,27 @@ class PropertiesController < ApplicationController
     @property = Property.new
   end
 
-  def create
-    property = Property.new(property_params)
-    authorize property
-    if property.save
-      redirect_to properties_path
-    else
-      render json: { errors: property.errors.messages }
+  def index
+    @properties = Property.all
+  end
+
+  def new
+    @property = Property.new
+    authorize @property
+    @mode = "create"
+    @type = "properties"
+    enums = []
+    @field_names = Property.column_names[1..-1]
+    @nice_field_names = []
+    @field_names.each do |i|
+      @nice_field_names << i.titleize
+      if Property.defined_enums.keys.include? i
+        enums << Property.defined_enums[i].keys
+      end
     end
+    num_fields = @field_names.length
+    @prev_values = Array.new(num_fields, "")
+    @field_types = ["textbox", "textarea", "textbox", "textbox", "textbox", enums[0], enums[1], "datepicker", enums[2]]
   end
 
   def show
@@ -20,50 +33,22 @@ class PropertiesController < ApplicationController
     @field_values = @property.attributes.values[1..-1]
     @applications = @property.applications
   end
-
-  def edit 
+  
+  def edit
+    @mode = "edit"
+    @type = "properties"
+    enums = []
+    @nice_field_names = []
+    @field_names = Property.column_names[1..-1]
+    @field_names.each do |i|
+      @nice_field_names << i.titleize
+      if Property.defined_enums.keys.include? i
+        enums << Property.defined_enums[i].keys
+      end
+    end
     @property = Property.find(params[:id])
     authorize @property
-  end
-
-  def index
-    @properties = PropertyPolicy::Scope.new(current_user, Property).resolve
-    # authorize @properties
-  end
-  
-  def update
-    property = Property.find(params[:id])
-    authorize property 
-    if property.update(property_params)
-      redirect_to properties_path
-    else
-      render json: { errors: property.errors.messages }
-    end
-  end
-
-  def destroy
-    property = Property.find(params[:id])
-    authorize property
-    if property.destroy
-      redirect_to properties_path
-    else
-      render json: { errors: property.errors.messages }
-    end
-  end
-
-  private
-    
-  def property_params
-    params.require(:property).permit(
-      :capacity,
-      :description,
-      :landlord_id,
-      :rent,
-      :size,
-      :property_type,
-      :housing_type,
-      :date_available,
-      :location
-    )
+    @prev_values = @property.attributes.values[1..-1]
+    @field_types = ["textbox", "textarea", "textbox", "textbox", "textbox", enums[0], enums[1], "datepicker", enums[2]]
   end
 end

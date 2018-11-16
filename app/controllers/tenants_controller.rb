@@ -1,17 +1,25 @@
 class TenantsController < ApplicationController
-  def new
-    @tenant = Tenant.new
+  def index
+    @tenants = Tenant.all
   end
 
-  def create
-    tenant = Tenant.new(tenant_params)
-    authorize tenant
-    if tenant.save
-      Info.create(tenant_id: tenant.id)
-      redirect_to tenants_path
-    else
-      render json: { errors: tenant.errors.messages }
+  def new
+    @tenant = Tenant.new
+    authorize @tenant
+    @mode = "create"
+    @type = "tenants"
+    enums = []
+    @field_names = Tenant.column_names[1..-3]
+    @nice_field_names = []
+    @field_names.each do |i|
+      @nice_field_names << i.titleize
+      if Tenant.defined_enums.keys.include? i
+        enums << Tenant.defined_enums[i].keys
+      end
     end
+    num_fields = @field_names.length
+    @prev_values = Array.new(num_fields, "")
+     @field_types = ["textbox", "textarea", "textbox", "textbox", "textbox", "slider", "_slider", enums[0], enums[1], "textbox", enums[2], "textbox", "datepicker"]
   end
 
   def show
@@ -20,52 +28,25 @@ class TenantsController < ApplicationController
     @applications = @tenant.info.applications
   end
 
-  def edit 
-    @tenant = Tenant.find(params[:id])
-    authorize @tenant
-  end
-
   def index                                             
     @tenants = Tenant.all
   end
 
-  def update
+  def edit
+    @mode = "edit"
+    @type = "tenants"
+    enums = []
+    @field_names = Tenant.column_names[1..-3]
+    @nice_field_names = []
+    @field_names.each do |i|
+      @nice_field_names << i.titleize
+      if Tenant.defined_enums.keys.include? i
+        enums << Tenant.defined_enums[i].keys
+      end
+    end
     @tenant = Tenant.find(params[:id])
     authorize @tenant
-    if @tenant.update(tenant_params)
-      redirect_to tenants_path
-    else
-      render json: { errors: @tenant.errors.messages }
-    end
-  end
-
-  def destroy
-    tenant = Tenant.find(params[:id])
-    authorize tenant
-    if tenant.destroy
-      redirect_to tenants_path
-    else
-      render json: { errors: tenant.errors.messages }
-    end
-  end
-
-  private
-    
-  def tenant_params
-    params.require(:tenant).permit(
-      :name,
-      :description,
-      :email,
-      :phone,
-      :nino,
-      :rent_min,
-      :rent_max,
-      :housing_type,
-      :property_type,
-      :num_bedrooms,
-      :location,
-      :referral_agency_id,
-      :date_needed
-    )
+    @prev_values = @tenant.attributes.values[1..-3]
+    @field_types = ["textbox", "textarea", "textbox", "textbox", "textbox", "slider", "_slider", enums[0], enums[1], "textbox", enums[2], "textbox", "datepicker"]
   end
 end
