@@ -1,9 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Select, Input, Button, Slider, Switch, DatePicker } from 'antd';
+import { Upload, message, Icon, Select, Input, Button, Slider, Switch, DatePicker } from 'antd';
 import 'antd/dist/antd.css';
 import moment from 'moment';
 import APIRoutes from 'helpers/api_routes';
+import UploadButton from './UploadButton'
 
 class ProfileForm extends React.Component {
 
@@ -173,6 +174,35 @@ class ProfileForm extends React.Component {
     );
   }
 
+  renderUpload(index) {
+    const fileList = [{
+      uid: '-1',
+      name: 'xxx.png',
+      status: 'done',
+      url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
+      thumbUrl: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
+    }, {
+      uid: '-2',
+      name: 'yyy.png',
+      status: 'done',
+      url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
+      thumbUrl: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
+    }];
+    const buttonProps = {
+      action: '',
+      listType: 'picture',
+      // defaultFileList: this.state.prevValues[index],
+      defaultFileList: fileList,
+      className: 'upload-list-inline',
+    };
+    return (
+      <div key={index}>
+        <label>{this.state.niceFieldNames[index]}</label>
+        <UploadButton {...buttonProps} />
+      </div>
+    );
+  }
+
   renderForm() {
     return (
       this.state.fieldNames.map((_, index) => {
@@ -194,6 +224,10 @@ class ProfileForm extends React.Component {
           )
         } else if (this.state.fieldTypes[index] === "_slider") {
           return null
+        } else if (this.state.fieldTypes[index] === "attachment") {
+          return (
+            this.renderUpload(index)
+          )
         } else {
           return (
             this.renderDropdown(index)

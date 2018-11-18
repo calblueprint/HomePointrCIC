@@ -57,6 +57,8 @@ def make_properties
       location: n%6,
       date_available: Date.today
     )
+    property.images.attach(io: File.open('app/assets/images/house1.png'), filename: 'house1.png')
+    property.images.attach(io: File.open('app/assets/images/house2.png'), filename: 'house2.png')
     property.save
     printf("#{n}/#{NUM_PROPERTIES} Properties \r")
   end

@@ -1,6 +1,6 @@
 class TenantsController < ApplicationController
-  def index
-    @tenants = Tenant.all
+  def index                                             
+    @tenants = TenantPolicy::Scope.new(current_user, Tenant).resolve
   end
 
   def new
@@ -26,10 +26,6 @@ class TenantsController < ApplicationController
     @tenant = Tenant.find(params[:id])
     authorize @tenant
     @applications = @tenant.info.applications
-  end
-
-  def index                                             
-    @tenants = TenantPolicy::Scope.new(current_user, Tenant).resolve
   end
 
   def edit

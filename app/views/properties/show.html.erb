@@ -13,6 +13,9 @@
     <li>Property Property Type: <%= @property.property_type %></li>
     <li>Property Location: <%= @property.location %></li>
     <li>Property Date Available: <%= @property.date_available %></li>
+    <% @property.images.each do |i| %>
+      <li>Property Images: <%= image_tag i %></li>
+    <% end %>
   </ul>
   <% if current_user.type == 'Landlord' %>
     <%= link_to "Edit", edit_property_path(@property) %>

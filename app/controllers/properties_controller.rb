@@ -1,10 +1,6 @@
 class PropertiesController < ApplicationController
-  def new
-    @property = Property.new
-  end
-
   def index
-    @properties = Property.all
+    @properties = PropertyPolicy::Scope.new(current_user, Property).resolve
   end
 
   def new
@@ -13,7 +9,7 @@ class PropertiesController < ApplicationController
     @mode = "create"
     @type = "properties"
     enums = []
-    @field_names = Property.column_names[1..-1]
+    @field_names = Property.column_names[1..-1] + ["images"]
     @nice_field_names = []
     @field_names.each do |i|
       @nice_field_names << i.titleize
@@ -23,7 +19,8 @@ class PropertiesController < ApplicationController
     end
     num_fields = @field_names.length
     @prev_values = Array.new(num_fields, "")
-    @field_types = ["textbox", "textarea", "textbox", "textbox", "textbox", enums[0], enums[1], "datepicker", enums[2]]
+    @prev_values << @property.images
+    @field_types = ["textbox", "textarea", "textbox", "textbox", "textbox", enums[0], enums[1], "datepicker", enums[2], "attachment"]
   end
 
   def show
@@ -37,7 +34,7 @@ class PropertiesController < ApplicationController
     @type = "properties"
     enums = []
     @nice_field_names = []
-    @field_names = Property.column_names[1..-1]
+    @field_names = Property.column_names[1..-1] + ["images"]
     @field_names.each do |i|
       @nice_field_names << i.titleize
       if Property.defined_enums.keys.include? i
@@ -47,6 +44,7 @@ class PropertiesController < ApplicationController
     @property = Property.find(params[:id])
     authorize @property
     @prev_values = @property.attributes.values[1..-1]
-    @field_types = ["textbox", "textarea", "textbox", "textbox", "textbox", enums[0], enums[1], "datepicker", enums[2]]
+    @prev_values << @property.images
+    @field_types = ["textbox", "textarea", "textbox", "textbox", "textbox", enums[0], enums[1], "datepicker", enums[2], "attachment"]
   end
 end
