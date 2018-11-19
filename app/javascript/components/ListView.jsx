@@ -1,11 +1,12 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Card, Col, Row } from 'antd';
+import { Card, Col, Row, Button } from 'antd';
+import 'antd/dist/antd.css';
 
  const ListView = (props) => {
   // 'ListView', {View}
   const handleClick = (property_id) => {
-    alert('hi');
+    window.location.assign("/properties/" + property_id);
   }
 	return (
     props.resources.map((resource) => {
@@ -15,11 +16,11 @@ import { Card, Col, Row } from 'antd';
         {props.type == 'property' ? 
        (<Card title={resource.location} bordered={false}>
         {resource.description}
-        <button onClick={handleClick}> View Info </button>
+        <Button type="default" href={"/properties/" + resource.id}> View Info </Button>
       </Card>) 
       : 
       (<Card title={resource.name} bordered={false}>
-        <button onClick={handleClick}> View Info </button>
+        <Button type="default" href={"/tenants/" + resource.id}> View Info </Button>
       </Card>)
       }
     </Row>
