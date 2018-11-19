@@ -21,6 +21,7 @@ services:
     volumes:
       - .:/app
       - spring-vol:/spring
+      - gems:/gems
     command: spring server
     environment:
       - DATABASE_URL=postgres://root@db:5432
