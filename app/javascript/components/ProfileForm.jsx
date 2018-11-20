@@ -174,20 +174,16 @@ class ProfileForm extends React.Component {
     );
   }
 
+  //grabs the active storage image urls from backend, name of pic at end of url
+  setupImages(index) {
+    let fileList = this.state.prevValues[index].map((url, id) => {
+      return {uid: id, url: url.image, name: url.image.split("/").slice(-1).pop()};
+    })
+    return fileList;
+  }
+
   renderUpload(index) {
-    const fileList = [{
-      uid: '-1',
-      name: 'xxx.png',
-      status: 'done',
-      url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
-      thumbUrl: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
-    }, {
-      uid: '-2',
-      name: 'yyy.png',
-      status: 'done',
-      url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
-      thumbUrl: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
-    }];
+    const fileList = this.setupImages(index);
     const buttonProps = {
       action: '',
       listType: 'picture',
@@ -261,4 +257,4 @@ ProfileForm.propTypes = {
   niceFieldNames: PropTypes.array
 };
 
-export default ProfileForm;
+export default ProfileForm; 
