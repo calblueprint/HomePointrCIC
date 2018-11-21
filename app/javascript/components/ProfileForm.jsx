@@ -4,7 +4,7 @@ import { Upload, message, Icon, Select, Input, Button, Slider, Switch, DatePicke
 import 'antd/dist/antd.css';
 import moment from 'moment';
 import APIRoutes from 'helpers/api_routes';
-import UploadButton from './UploadButton'
+import UploadButton from './UploadButton';
 
 class ProfileForm extends React.Component {
 
@@ -17,12 +17,14 @@ class ProfileForm extends React.Component {
       prevValues: props.prevValues, //array of strings
       fieldNames: props.fieldNames, //array of strings
       fieldTypes: props.fieldTypes,  //array of strings
-      niceFieldNames: props.niceFieldNames //array of strings
+      niceFieldNames: props.niceFieldNames, //array of strings
+      fileList: []
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleCreate = this.handleCreate.bind(this);
     this.handleEdit = this.handleEdit.bind(this);
     this.handleDestroy = this.handleDestroy.bind(this);
+    this.onImageAdd = this.onImageAdd.bind(this);
   }
 
   /* takes in two arrays (our array of field names and our array of values)
@@ -182,13 +184,22 @@ class ProfileForm extends React.Component {
     return fileList;
   }
 
+  //grabs the active storage image urls from backend, name of pic at end of url
+  onImageAdd(e) {
+    debugger
+    this.setState({fileList: e.fileList});
+  }
+
   renderUpload(index) {
-    const fileList = this.setupImages(index);
+    this.state.fileList = this.setupImages(index);
     const buttonProps = {
-      action: '',
+      action: "",
       listType: 'picture',
-      // defaultFileList: this.state.prevValues[index],
-      defaultFileList: fileList,
+      headers: {
+        "X_CSRF-Token": document.getElementsByName("csrf-token")[0].content
+      },
+      defaultFileList: this.state.fileList,
+      onChange: this.onImageAdd,
       className: 'upload-list-inline',
     };
     return (
