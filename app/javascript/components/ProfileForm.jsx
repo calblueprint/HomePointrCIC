@@ -5,6 +5,7 @@ import 'antd/dist/antd.css';
 import moment from 'moment';
 import APIRoutes from 'helpers/api_routes';
 import UploadButton from './UploadButton';
+import Dropzone from "react-dropzone";
 
 class ProfileForm extends React.Component {
 
@@ -24,7 +25,7 @@ class ProfileForm extends React.Component {
     this.handleCreate = this.handleCreate.bind(this);
     this.handleEdit = this.handleEdit.bind(this);
     this.handleDestroy = this.handleDestroy.bind(this);
-    this.onImageAdd = this.onImageAdd.bind(this);
+    this.onDrop = this.onDrop.bind(this);
   }
 
   /* takes in two arrays (our array of field names and our array of values)
@@ -32,8 +33,8 @@ class ProfileForm extends React.Component {
    * returned as a dictionary that will be sent in our JSON requests.
    */
   convertToDict(keys, values) {
-    keys = this.state.fieldNames
-    values = this.state.prevValues
+    keys = this.state.fieldNames.slice(0, -1);
+    values = this.state.prevValues.slice(0, -1);
     let result = keys.reduce((obj, k, i) => ({...obj, [k]: values[i] }), {})
     return result
   }
@@ -98,7 +99,16 @@ class ProfileForm extends React.Component {
     let type = this.state.type;
     var request = null;
     var body = this.convertToDict(this.state.fieldNames, this.state.prevValues)
+    var formData = new FormData();
+    for (var key in body) {
+      let key_temp = 'property[' + key + ']';
+      formData.append(key_temp, body[key]);
+    }
+    this.state.fileList.forEach((img) => {
+      formData.append('property[images][]', img);
+    });
     if (this.state.type === "properties") {
+      debugger
       body = JSON.stringify({property: body})
       request = APIRoutes.properties.update(id)
     } else {
@@ -111,7 +121,7 @@ class ProfileForm extends React.Component {
         'Content-Type': 'application/json',
         "X_CSRF-Token": document.getElementsByName("csrf-token")[0].content
       },
-      body: body,
+      body: formData,
       credentials: 'same-origin',
     }).then((data) => {
       window.location = '/' + type + '/' + id.toString();
@@ -185,30 +195,48 @@ class ProfileForm extends React.Component {
   }
 
   //grabs the active storage image urls from backend, name of pic at end of url
-  onImageAdd(e) {
-    debugger
-    this.setState({fileList: e.fileList});
+  // onImageAdd(e) {
+  //   debugger
+  //   this.setState({fileList: e.fileList});
+  // }
+
+  //grabs the active storage image urls from backend, name of pic at end of url
+  onDrop(index, images) {
+    this.state.fileList.push(images[0]);
   }
 
   renderUpload(index) {
-    this.state.fileList = this.setupImages(index);
-    const buttonProps = {
-      action: "",
-      listType: 'picture',
-      headers: {
-        "X_CSRF-Token": document.getElementsByName("csrf-token")[0].content
-      },
-      defaultFileList: this.state.fileList,
-      onChange: this.onImageAdd,
-      className: 'upload-list-inline',
-    };
+    // this.state.fileList = this.setupImages(index);
     return (
       <div key={index}>
         <label>{this.state.niceFieldNames[index]}</label>
-        <UploadButton {...buttonProps} />
+        <Dropzone
+          onDrop={(images) => this.onDrop(index, images)}
+          multiple={true}
+        />
       </div>
     );
   }
+
+  // renderUpload(index) {
+  //   this.state.fileList = this.setupImages(index);
+  //   const buttonProps = {
+  //     action: "",
+  //     listType: 'picture',
+  //     headers: {
+  //       "X_CSRF-Token": document.getElementsByName("csrf-token")[0].content
+  //     },
+  //     defaultFileList: this.state.fileList,
+  //     onChange: this.onImageAdd,
+  //     className: 'upload-list-inline',
+  //   };
+  //   return (
+  //     <div key={index}>
+  //       <label>{this.state.niceFieldNames[index]}</label>
+  //       <UploadButton {...buttonProps} />
+  //     </div>
+  //   );
+  // }
 
   renderForm() {
     return (
