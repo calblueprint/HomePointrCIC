@@ -1,6 +1,12 @@
 class TenantsController < ApplicationController
   def index
-    @tenants = Tenant.all
+    if ReferralAgency.exists?(current_user.id)
+      user = ReferralAgency.find(current_user.id)
+      @tenants = Tenant.where(referral_agency: user)
+    else
+      user = Landlord.find(current_user.id)
+      redirect_to errors_show_path
+    end
   end
 
   def new
@@ -26,10 +32,6 @@ class TenantsController < ApplicationController
     @tenant = Tenant.find(params[:id])
     authorize @tenant
     @applications = @tenant.info.applications
-  end
-
-  def index                                             
-    @tenants = Tenant.all
   end
 
   def edit
