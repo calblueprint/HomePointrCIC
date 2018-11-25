@@ -1,33 +1,3 @@
-<h1>Tenants#show</h1>
-<p>Find me in app/views/tenants/show.html.erb</p>
-<ul>
-  <li>Tenant ID: <%= @tenant.id %></li>
-  <li>Tenant Name: <%= @tenant.name %></li>
-  <li>Tenant Description: <%= @tenant.description %></li>
-  <li>Tenant Email: <%= @tenant.email %></li>
-  <li>Tenant Phone: <%= @tenant.phone %></li>
-  <li>Tenant NINO: <%= @tenant.nino %></li>
-  <li>Tenant Rent Min: <%= @tenant.rent_min %></li>
-  <li>Tenant Rent Max: <%= @tenant.rent_max %></li>
-  <li>Tenant Housing Type: <%= @tenant.housing_type %></li>
-  <li>Tenant Property Type: <%= @tenant.property_type %></li>
-  <li>Tenant Num Bedrooms: <%= @tenant.num_bedrooms %></li>
-  <li>Tenant Location: <%= @tenant.location %></li>
-  <li>Tenant Referral Agency ID: <%= @tenant.referral_agency_id %></li>
-  <li>Tenant Date Needed: <%= @tenant.date_needed %></li>
-</ul>
-<br>
-<br>
-Tenant Applications
-<ul>
-  <% @applications.each do |a| %>
-    <%if not a.hidden %>
-      <li>Application ID: <%= a.id %></li>
-      <li>Application Status: <%= a.status %></li>
-      <li>Application Property ID: <%= a.property_id %></li>
-      <li>Application Info ID: <%= a.info_id %></li><br>
-      <%= link_to "Delete", tenant_path(id: a.info.tenant.id), :method => :delete %>
-    <% end %>
-  <% end %>
-</ul>
-
+<%= form_with(model: @tenant, local: true) do |form| %>
+  <%= react_component("RATenantView", props={ id: @tenant.id, mode: @mode, name: @name, description: @description, tagValues: @tag_values, applications: @applications, status: @status }) %>
+<% end %>

@@ -1,6 +1,7 @@
 class TenantsController < ApplicationController
+
   def index
-    @tenants = Tenant.all
+    @tenants = TenantPolicy::Scope.new(current_user, Tenant).resolve
   end
 
   def new
@@ -19,17 +20,27 @@ class TenantsController < ApplicationController
     end
     num_fields = @field_names.length
     @prev_values = Array.new(num_fields, "")
-     @field_types = ["textbox", "textarea", "textbox", "textbox", "textbox", "slider", "_slider", enums[0], enums[1], "textbox", enums[2], "textbox", "datepicker"]
+    @field_types = ["textbox", "textarea", "textbox", "textbox", "textbox", "slider", "_slider", enums[0], enums[1], "textbox", enums[2], "textbox", "datepicker"]
   end
 
   def show
     @tenant = Tenant.find(params[:id])
     authorize @tenant
     @applications = @tenant.info.applications
-  end
-
-  def index                                             
-    @tenants = TenantPolicy::Scope.new(current_user, Tenant).resolve
+    @status = @tenant.priority
+    @mode = "ra_edit"
+    @name = @tenant.attributes.values[1]
+    @description = @tenant.attributes.values[2]
+    values = @tenant.attributes.values[3..-3]
+    field_names = Tenant.column_names[3..-3]
+    nice_field_names = []
+    field_names.each do |field_name|
+      nice_field_names << field_name.titleize
+    end
+    @tag_values = []
+    nice_field_names.each_with_index {| tag, index |
+      @tag_values << tag.to_s + ": " + values[index].to_s
+    }
   end
 
   def edit
