@@ -44,21 +44,4 @@ class TenantPolicy
   def destroy?
     create?
   end
-
-  class Scope
-    attr_reader :user, :scope
-
-    def initialize(user, scope)
-      @user = user
-      @scope = scope
-    end
-
-    def resolve
-      if user.type == 'ReferralAgency'
-        scope.where(referral_agency: user) 
-      else 
-        scope.where(landlord: user) 
-      end
-    end
-  end
 end 
