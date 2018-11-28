@@ -183,15 +183,22 @@ class ProfileForm extends React.Component {
 
   //grabs the active storage image urls from backend, name of pic at end of url
   setupImages(index) {
+    let fileList = [];
+    debugger
     try {
-      debugger
-      let fileList = this.state.prevValues[index].map((url, id) => {
+      fileList = this.state.prevValues[index].map((url, id) => {
         return {uid: id, url: url.image, name: url.image.split("/").slice(-1).pop()};
       })
       return fileList;
     } catch(error) {
-      return {}};
+      try {
+        fileList = [{uid: this.state.prevValues[index][0].id, url: this.state.prevValues[index][0].url, name: this.state.prevValues[index][0].url.split("/").slice(-1).pop()}];
+        return fileList;
+      } catch(error) {
+        return [];
+      }
     }
+  }
 
   onImageRemove() {
 

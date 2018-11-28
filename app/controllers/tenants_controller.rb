@@ -47,7 +47,7 @@ class TenantsController < ApplicationController
     if @tenant.avatar.attached? == false
       @prev_values << @tenant.avatar
     else
-      @prev_values << url_for(@tenant.avatar)
+      @prev_values << [{id: @tenant.avatar.id, url: url_for(@tenant.avatar)}]
     end
     @field_types = ["textbox", "textarea", "textbox", "textbox", "textbox", "slider", "_slider", enums[0], enums[1], "textbox", enums[2], "textbox", "datepicker", "attachment"]
   end
