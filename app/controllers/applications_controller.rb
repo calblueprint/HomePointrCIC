@@ -21,6 +21,7 @@ class ApplicationsController < ApplicationController
     @application_tenant = @info.tenant
     authorize @application
     @property = @application.property
+    @status = @application_tenant.priority
   end
 
   def index   
@@ -32,16 +33,6 @@ class ApplicationsController < ApplicationController
   def edit
     @application = Application.find(params[:id])
     authorize @application
-  end 
-
-  def update
-    @application = Application.find(params[:id])
-    authorize @application
-    if @application.update_attributes(application_params)
-      redirect_to application_path
-    else
-      render json: { errors: @application.errors.messages }
-    end
   end
 
   def destroy

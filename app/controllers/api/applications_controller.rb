@@ -5,4 +5,15 @@ class Api::ApplicationsController < ApplicationController
     render json: application
   end
 
-end 
+  #request sent here api/applications/22/update
+  def update
+    @application = Application.find(params[:id])
+    authorize @application
+    if @application.update_attributes(application_params)
+      redirect_to application_path
+    else
+      render json: { errors: @application.errors.messages }
+    end
+  end
+
+end

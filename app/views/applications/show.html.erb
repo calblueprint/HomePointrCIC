@@ -1,47 +1,6 @@
 <h1>Applications#show</h1>
 <p>Find me in app/views/applications/show.html.erb</p>
 
-Application ID: <%= @application.id %>
-Application Status: <%= @application.status %>
-Application Property ID: <%= @application.property_id %>
-Application Info ID: <%= @application.info_id %>
-<br>
-<br>
-Tenant:
-<br>
-  <ul>
-    <li>Tenant ID: <%= @application_tenant.id %></li>
-    <li>Tenant Name: <%= @application_tenant.name %></li>
-    <li>Tenant Description: <%= @application_tenant.description %></li>
-    <li>Tenant Email: <%= @application_tenant.email %></li>
-    <li>Tenant Phone: <%= @application_tenant.phone %></li>
-    <li>Tenant NINO: <%= @application_tenant.nino %></li>
-    <li>Tenant Rent Min: <%= @application_tenant.rent_min %></li>
-    <li>Tenant Rent Max: <%= @application_tenant.rent_max %></li>
-    <li>Tenant Housing Type: <%= @application_tenant.housing_type %></li>
-    <li>Tenant Property Type: <%= @application_tenant.property_type %></li>
-    <li>Tenant Num Bedrooms: <%= @application_tenant.num_bedrooms %></li>
-    <li>Tenant Location: <%= @application_tenant.location %></li>
-    <li>Tenant Referral Agency ID: <%= @application_tenant.referral_agency_id %></li>
-    <li>Tenant Date Needed: <%= @application_tenant.date_needed %></li>
-  </ul>
-<br>
-<br>
-<br>
-Property:
-<br>
-  <ul>
-    <li>Property ID: <%= @property.id %></li>
-    <li>Property Capacity: <%= @property.capacity %></li>
-    <li>Property Description: <%= @property.description %></li>
-    <li>Property Landlord ID: <%= @property.landlord_id %></li>
-    <li>Property Rent: <%= @property.rent %></li>
-    <li>Property Size: <%= @property.size %></li>
-    <li>Property Housing Type: <%= @property.housing_type %></li>
-    <li>Property Property Type: <%= @property.property_type %></li>
-    <li>Property Location: <%= @property.location %></li>
-    <li>Property Date Available: <%= @property.date_available %></li>
-  </ul>
-  <%= link_to "New Application", new_application_path %><br>
-  <%= link_to "Edit", edit_application_path(@application) %>
-  <%= link_to "Delete", application_path(@application), :method => :delete %><br>
+<%= form_with(model: @applications, local: true) do |form| %>
+  <%= react_component("ApplicationStatusButtons", props={ t_id: @tenant.id, a_id: @application.id, status: @status }) %>
+<% end %>

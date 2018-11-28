@@ -108,7 +108,8 @@ RATenantView.propTypes = {
   mode: PropTypes.string,
   description: PropTypes.string,
   tagValues: PropTypes.array,
-  status: PropTypes.number
+  status: PropTypes.number,
+  applications: PropTypes.array
 };
 
 export default RATenantView;
