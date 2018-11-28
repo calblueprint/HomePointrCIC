@@ -14,7 +14,12 @@ Rails.application.routes.draw do
   devise_for :users
 
   namespace :api do
-  	resources :landlords, :referral_agencies, :tenants, :properties, :infos, :applications
+  	resources :landlords, :referral_agencies, :infos, :applications
+    resources :tenants, :properties do
+      member do
+        delete :delete_image_attachment
+      end
+    end
   end
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

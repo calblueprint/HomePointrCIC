@@ -6,9 +6,6 @@ import 'antd/dist/antd.css';
 const UploadButton = props => {
   return (
     <Upload {...props}>
-      <Button>
-        <Icon type="upload" /> Click to Upload
-      </Button>
     </Upload>
   );
 }

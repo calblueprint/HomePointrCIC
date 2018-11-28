@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Upload, message, Icon, Select, Input, Button, Slider, Switch, DatePicker } from 'antd';
-import 'antd/dist/antd.css';
+import "antd/dist/antd.css";
 import moment from 'moment';
 import APIRoutes from 'helpers/api_routes';
 import UploadButton from './UploadButton';
@@ -25,7 +25,6 @@ class ProfileForm extends React.Component {
     this.handleCreate = this.handleCreate.bind(this);
     this.handleEdit = this.handleEdit.bind(this);
     this.handleDestroy = this.handleDestroy.bind(this);
-    this.onImageAdd = this.onImageAdd.bind(this);
   }
 
   /* takes in two arrays (our array of field names and our array of values)
@@ -167,10 +166,15 @@ class ProfileForm extends React.Component {
   }
 
   renderSlider(index) {
+    let df = (this.state.mode == 'edit') ? [this.state.prevValues[index], this.state.prevValues[index+1]] : [0, 5000]
+    if (this.state.mode == "create") {
+      this.state.prevValues[index] = 0
+      this.state.prevValues[index+1] = 5000
+    }
     return (
       <div key={index}>
         <label>{this.state.niceFieldNames[index]} - {this.state.niceFieldNames[index+1]}</label>
-        <Slider range defaultValue={[this.state.prevValues[index], this.state.prevValues[index+1]]}
+        <Slider range defaultValue={df}
                 onChange={(e) => [this.state.prevValues[index], this.state.prevValues[index+1]] = [e[0], e[1]]}
                 max={5000}/>
       </div>
@@ -179,30 +183,50 @@ class ProfileForm extends React.Component {
 
   //grabs the active storage image urls from backend, name of pic at end of url
   setupImages(index) {
-    let fileList = this.state.prevValues[index].map((url, id) => {
-      return {uid: id, url: url.image, name: url.image.split("/").slice(-1).pop()};
-    })
-    return fileList;
-  }
+    try {
+      debugger
+      let fileList = this.state.prevValues[index].map((url, id) => {
+        return {uid: id, url: url.image, name: url.image.split("/").slice(-1).pop()};
+      })
+      return fileList;
+    } catch(error) {
+      return {}};
+    }
 
-  //grabs the active storage image urls from backend, name of pic at end of url
-  onImageAdd(e) {
-    debugger
-    this.setState({fileList: e.fileList});
+  onImageRemove() {
+
   }
 
   renderUpload(index) {
     let id = this.state.id;
+    let type = this.state.type;
+    let path = (this.state.mode === "create") ? '/api/' + type : '/api/' + type + '/' + id.toString();
+    let model = (this.state.type === 'properties') ? 'Property' : 'Tenant';
+    let method = (this.state.mode === 'edit') ? 'PUT' : 'POST';
+    let attribute = (this.state.type === 'properties') ? 'images' : 'avatar';
+    let buttonProps = null;
+    if (this.state.mode === "edit") {
+      this.state.fileList = this.setupImages(index);
+      buttonProps = {
+        listType: 'picture',
+        defaultFileList: this.state.fileList,
+        onRemove: this.onImageRemove,
+        className: 'upload-list-inline',
+      };
+    }
     return (
       <div key={index}>
+        <UploadButton {...buttonProps} />
         <ActiveStorageProvider
           endpoint={{
-            path: '/api/properties/' + id.toString(),
-            model: 'Property',
-            attribute: 'images',
-            method: 'PUT',
+            path: path,
+            model: model,
+            attribute: attribute,
+            method: method,
           }}
-          // onSubmit={this.state.fileList.}
+          headers={{
+            'Content-Type': 'application/json'
+          }}
           render={({ handleUpload, uploads, ready }) => (
             <div>
               <input

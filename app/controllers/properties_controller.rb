@@ -44,7 +44,11 @@ class PropertiesController < ApplicationController
     @property = Property.find(params[:id])
     authorize @property
     @prev_values = @property.attributes.values[1..-1]
-    @prev_values << @property.images.map{|img| ({ image: url_for(img) })}
+    if @property.images.attached? == false
+      @prev_values << @property.images
+    else
+      @prev_values << @property.images.map{|img| ({ image: url_for(img) })}
+    end
     @field_types = ["textbox", "textarea", "textbox", "textbox", "textbox", enums[0], enums[1], "datepicker", enums[2], "attachment"]
   end
 end

@@ -29,7 +29,7 @@ gem 'jbuilder', '~> 2.5'
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 4.0'
 # Use ActiveModel has_secure_password
-gem 'bcrypt', '~> 3.1.12'
+gem 'bcrypt'
 
 # Use ActiveStorage variant
 gem 'mini_magick', '~> 4.8'
@@ -72,6 +72,5 @@ gem 'devise-multi_email'
 # Uncomment this line with "bcrypt" in the same file:
 
 # Use ActiveModel has_secure_password
-gem 'bcrypt', '~> 3.1.7'
 gem "aws-sdk-s3", require: false
 gem 'figaro'
