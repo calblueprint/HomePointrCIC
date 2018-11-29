@@ -28,7 +28,6 @@ class TenantsController < ApplicationController
     authorize @tenant
     @applications = @tenant.info.applications
     @status = @tenant.priority
-    @mode = "ra_edit"
     @name = @tenant.attributes.values[1]
     @description = @tenant.attributes.values[2]
     values = @tenant.attributes.values[3..-3]
