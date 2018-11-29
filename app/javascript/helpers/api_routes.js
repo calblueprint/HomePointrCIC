@@ -16,3 +16,4 @@ class ApiRoutes {
   }
 }
 const APIRoutes = new ApiRoutes();
+export default APIRoutes;

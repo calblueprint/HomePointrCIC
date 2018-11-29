@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { Select, Input, Button, Slider, Switch, DatePicker } from 'antd';
 import 'antd/dist/antd.css';
 import moment from 'moment';
+import APIRoutes from 'helpers/api_routes';
 
 class ProfileForm extends React.Component {
 
@@ -116,7 +117,7 @@ class ProfileForm extends React.Component {
     });
   }
 
-  renderTextbox(name, index) {
+  renderTextbox(index) {
     return (
       <div key={index}>
         <label>{this.state.niceFieldNames[index]}</label>
@@ -125,7 +126,7 @@ class ProfileForm extends React.Component {
     )
   }
 
-  renderTextarea(name, index) {
+  renderTextarea(index) {
     const { TextArea } = Input;
     return (
       <div key={index}>
@@ -135,7 +136,7 @@ class ProfileForm extends React.Component {
     )
   }
 
-  renderDatePicker(name, index) {
+  renderDatePicker(index) {
     if (this.state.mode == "create") {
       this.state.prevValues[index] = moment().format("YYYY-MM-DD")
     }
@@ -148,7 +149,7 @@ class ProfileForm extends React.Component {
     )
   }
 
-  renderDropdown(name, index) {
+  renderDropdown(index) {
     const Option = Select.Option;
     return (
       <div key={index}>
@@ -161,7 +162,7 @@ class ProfileForm extends React.Component {
     )
   }
 
-  renderSlider(name, index) {
+  renderSlider(index) {
     return (
       <div key={index}>
         <label>{this.state.niceFieldNames[index]} - {this.state.niceFieldNames[index+1]}</label>
@@ -174,28 +175,28 @@ class ProfileForm extends React.Component {
 
   renderForm() {
     return (
-      this.state.fieldNames.map((name, index) => {
+      this.state.fieldNames.map((_, index) => {
         if (this.state.fieldTypes[index] === "textbox") {
           return ( 
-            this.renderTextbox(name, index)
+            this.renderTextbox(index)
           )
         } else if (this.state.fieldTypes[index] === "textarea") {
           return (
-            this.renderTextarea(name, index)
+            this.renderTextarea(index)
           )
         } else if (this.state.fieldTypes[index] === "datepicker") {
           return (
-            this.renderDatePicker(name, index)
+            this.renderDatePicker(index)
           )
         } else if (this.state.fieldTypes[index] === "slider") {
           return (
-            this.renderSlider(name, index)
+            this.renderSlider(index)
           )
         } else if (this.state.fieldTypes[index] === "_slider") {
           return null
         } else {
           return (
-            this.renderDropdown(name, index)
+            this.renderDropdown(index)
           )
         }
       })
@@ -204,20 +205,21 @@ class ProfileForm extends React.Component {
   render() {
     let returnArr = [];
     if (this.state.mode === "create") {
-      returnArr = [this.renderForm(),
-          <Button type="primary" onClick={this.handleCreate}>Submit</Button>,
-          <Button type="default" href={"/" + this.state.type} >Cancel</Button>]
+      returnArr = [...this.renderForm(),
+          <Button key='submit' type="primary" onClick={this.handleCreate}>Submit</Button>,
+          <Button key='cancel' type="default" href={"/" + this.state.type} >Cancel</Button>]
     } else if (this.state.mode === "edit") {
-      returnArr = [this.renderForm(),
-          <Button type="primary" onClick={this.handleEdit}>Save</Button>,
-          <Button type="default" href={"/" + this.state.type} >Cancel</Button>,
-          <Button type="danger" onClick={this.handleDestroy}>Delete</Button>]
+      returnArr = [...this.renderForm(),
+          <Button key='save' type="primary" onClick={this.handleEdit}>Save</Button>,
+          <Button key='cancel' type="default" href={"/" + this.state.type} >Cancel</Button>,
+          <Button key='delete' type="danger" onClick={this.handleDestroy}>Delete</Button>]
     }
     return returnArr;
   }
 }
 
 ProfileForm.propTypes = {
+  id: PropTypes.number,
   mode: PropTypes.string,
   type: PropTypes.string,
   prevValues: PropTypes.array,

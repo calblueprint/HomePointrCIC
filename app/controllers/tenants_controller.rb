@@ -1,7 +1,13 @@
 class TenantsController < ApplicationController
 
   def index
-    @tenants = TenantPolicy::Scope.new(current_user, Tenant).resolve
+    if ReferralAgency.exists?(current_user.id)
+      user = ReferralAgency.find(current_user.id)
+      @tenants = Tenant.where(referral_agency: user)
+    else
+      user = Landlord.find(current_user.id)
+      redirect_to errors_show_path
+    end
   end
 
   def new
