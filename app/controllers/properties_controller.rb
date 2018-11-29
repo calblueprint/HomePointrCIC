@@ -1,7 +1,4 @@
 class PropertiesController < ApplicationController
-  def new
-    @property = Property.new
-  end
 
   def index
     @properties = PropertyPolicy::Scope.new(current_user, Property).resolve

@@ -24,11 +24,11 @@ class Tenant < ApplicationRecord
       return
     end
     apps = info.applications
-    if !apps
+    if apps.empty?
       return 4
     end
     status_map = Application.statuses
-    all_statuses = apps.map{ |a| status_map.key?(a.status.to_s) ? 
+    all_statuses = apps.map{ |a| status_map.key?(a.status.to_s) ?
       status_map[a.status.to_s] : -1 }
     return 3 - all_statuses.max
   end
