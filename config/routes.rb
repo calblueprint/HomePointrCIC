@@ -15,9 +15,9 @@ Rails.application.routes.draw do
 
   namespace :api do
   	resources :landlords, :referral_agencies, :infos, :applications
-    resources :tenants, :properties do
+    resources :properties do
       member do
-        delete :delete_image_attachment
+        delete 'delete_image_attachment/:image_id', :action => 'delete_image_attachment'
       end
     end
   end

@@ -184,10 +184,9 @@ class ProfileForm extends React.Component {
   //grabs the active storage image urls from backend, name of pic at end of url
   setupImages(index) {
     let fileList = [];
-    debugger
     try {
-      fileList = this.state.prevValues[index].map((url, id) => {
-        return {uid: id, url: url.image, name: url.image.split("/").slice(-1).pop()};
+      fileList = this.state.prevValues[index].map((url) => {
+        return {uid: url.id, url: url.image, name: url.image.split("/").slice(-1).pop()};
       })
       return fileList;
     } catch(error) {
@@ -200,8 +199,23 @@ class ProfileForm extends React.Component {
     }
   }
 
-  onImageRemove() {
-
+  onImageRemove(e) {
+    console.log(document.getElementsByName("csrf-token")[0].content)
+    let pic_id = e.uid;
+    let type = this.state.type;
+    var request = null;
+    if (this.state.type === "properties") {
+      request = '/api/properties/' + this.state.id + '/delete_image_attachment/' + pic_id
+    } else {
+      request = ''
+    }
+    fetch(request, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        "X_CSRF-Token": document.getElementsByName("csrf-token")[0].content
+      }
+    })
   }
 
   renderUpload(index) {
@@ -217,7 +231,7 @@ class ProfileForm extends React.Component {
       buttonProps = {
         listType: 'picture',
         defaultFileList: this.state.fileList,
-        onRemove: this.onImageRemove,
+        onRemove: (e) => this.onImageRemove(e),
         className: 'upload-list-inline',
       };
     }

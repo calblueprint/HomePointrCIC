@@ -47,7 +47,7 @@ class PropertiesController < ApplicationController
     if @property.images.attached? == false
       @prev_values << @property.images
     else
-      @prev_values << @property.images.map{|img| ({ image: url_for(img) })}
+      @prev_values << @property.images.map{|img| ({ image: url_for(img), id: img.id })}
     end
     @field_types = ["textbox", "textarea", "textbox", "textbox", "textbox", enums[0], enums[1], "datepicker", enums[2], "attachment"]
   end
