@@ -45,6 +45,7 @@ class ApplicationsController < ApplicationController
   private
     
   def application_params
-    params.require(:application).permit(AppPolicy.permitted_attributes)
+    params.require(:application).permit(:status)
   end
+
 end

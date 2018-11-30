@@ -10,10 +10,14 @@ class Api::ApplicationsController < ApplicationController
     @application = Application.find(params[:id])
     authorize @application
     if @application.update_attributes(application_params)
-      redirect_to application_path
+      render json: @application
     else
       render json: { errors: @application.errors.messages }
     end
+  end
+
+  def application_params
+    params.require(:application).permit(:status)
   end
 
 end

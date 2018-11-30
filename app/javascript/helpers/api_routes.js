@@ -15,9 +15,9 @@ class ApiRoutes {
     }
   }
 
-  get application() {
+  get applications() {
     return {
-      update: (id) => '/api/tenants/' + id
+      update: (id) => '/api/applications/' + id,
     }
   }
 }

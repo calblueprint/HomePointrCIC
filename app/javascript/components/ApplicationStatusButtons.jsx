@@ -9,17 +9,12 @@ import ProfileForm from "./ProfileForm";
 class ApplicationStatusButtons extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      status: props.status
-    };
     this.handleStatus = this.handleStatus.bind(this);
   }
 
   handleStatus(new_status) {
-    this.setState({status: new_status})
-
     let application_id = this.props.application_id;
-    let body = JSON.stringify({status: status});
+    let body = JSON.stringify({status: new_status});
     let request =APIRoutes.applications.update(application_id)
     fetch(request, {
       method: 'PUT',
@@ -43,12 +38,12 @@ class ApplicationStatusButtons extends React.Component {
 // rejected: 0, received: 1, interview: 2, housed: 3
 
   render() {
-    console.log(this.state.status)
-    if (this.state.status === "received") {
+    console.log(this.props.status)
+    if (this.props.status === "received") {
       return [<Button key="reject" type="danger" onClick={this.handleReject}>Reject</Button>,
               <Button key="interview" type="default" onClick={this.handleInterview}>Interview</Button>,
               <Button key="accept" type="primary" disabled>Accept</Button>]
-    } else if (this.state.status === "interview") {
+    } else if (this.props.status === "interview") {
       return [<Button key="reject" type="danger" onClick={this.handleReject}>Reject</Button>,
               <Button key="interview" type="default" disabled>Interview</Button>,
               <Button key="accept" type="primary" onClick={this.handleAccept}>Accept</Button>]
