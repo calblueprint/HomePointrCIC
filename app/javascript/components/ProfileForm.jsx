@@ -200,22 +200,22 @@ class ProfileForm extends React.Component {
   }
 
   onImageRemove(e) {
-    console.log(document.getElementsByName("csrf-token")[0].content)
-    let pic_id = e.uid;
-    let type = this.state.type;
-    var request = null;
-    if (this.state.type === "properties") {
-      request = '/api/properties/' + this.state.id + '/delete_image_attachment/' + pic_id
-    } else {
-      request = ''
-    }
-    fetch(request, {
-      method: 'DELETE',
-      headers: {
-        'Content-Type': 'application/json',
-        "X_CSRF-Token": document.getElementsByName("csrf-token")[0].content
-      }
-    })
+    // console.log(document.getElementsByName("csrf-token")[0].content)
+    // let pic_id = e.uid;
+    // let type = this.state.type;
+    // var request = null;
+    // if (this.state.type === "properties") {
+    //   request = '/api/properties/' + this.state.id + '/delete_image_attachment/' + pic_id
+    // } else {
+    //   request = ''
+    // }
+    // fetch(request, {
+    //   method: 'DELETE',
+    //   headers: {
+    //     'Content-Type': 'application/json',
+    //     "X_CSRF-Token": document.getElementsByName("csrf-token")[0].content
+    //   }
+    // })
   }
 
   renderUpload(index) {

@@ -9,7 +9,8 @@ class PropertiesController < ApplicationController
     @mode = "create"
     @type = "properties"
     enums = []
-    @field_names = Property.column_names[1..-1] + ["images"]
+    @field_names = Property.column_names[1..-1] 
+    # @field_names = Property.column_names[1..-1] + ["images"]
     @nice_field_names = []
     @field_names.each do |i|
       @nice_field_names << i.titleize
@@ -19,8 +20,9 @@ class PropertiesController < ApplicationController
     end
     num_fields = @field_names.length
     @prev_values = Array.new(num_fields, "")
-    @prev_values << @property.images
-    @field_types = ["textbox", "textarea", "textbox", "textbox", "textbox", enums[0], enums[1], "datepicker", enums[2], "attachment"]
+    # @prev_values << @property.images
+    # @field_types = ["textbox", "textarea", "textbox", "textbox", "textbox", enums[0], enums[1], "datepicker", enums[2], "attachment"]
+    @field_types = ["textbox", "textarea", "textbox", "textbox", "textbox", enums[0], enums[1], "datepicker", enums[2]]
   end
 
   def show
