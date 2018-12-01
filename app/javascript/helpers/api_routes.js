@@ -14,6 +14,12 @@ class ApiRoutes {
       delete: (id) => '/api/tenants/' + id,
     }
   }
+
+  get applications() {
+    return {
+      update: (id) => '/api/applications/' + id,
+    }
+  }
 }
 const APIRoutes = new ApiRoutes();
 export default APIRoutes;

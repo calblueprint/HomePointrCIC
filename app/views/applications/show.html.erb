@@ -2,5 +2,5 @@
 <p>Find me in app/views/applications/show.html.erb</p>
 
 <%= form_with(model: @applications, local: true) do |form| %>
-  <%= react_component("ApplicationStatusButtons", props={ t_id: @tenant.id, a_id: @application.id, status: @status }) %>
+  <%= react_component("ApplicationStatusButtons", props={ application_id: @application.id, status: @status }) %>
 <% end %>
