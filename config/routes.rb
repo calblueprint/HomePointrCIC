@@ -5,7 +5,7 @@ Rails.application.routes.draw do
   resources :landlords, :only => [:create, :show, :update, :edit, :destroy]
   resources :properties, :only => [:new, :create, :update, :index, :edit, :show, :destroy]
   resources :tenants, :only => [:new, :create, :edit, :update, :show, :index, :destroy]
-  resources :applications, :only => [:new, :create, :edit, :update, :show, :destroy]
+  resources :applications, :only => [:index, :new, :create, :edit, :update, :show, :destroy]
   # resources :properties, :only => [:create, :update, :show, :destroy]
   resources :properties
   # resources :tenants, :only => [:create, :update, :show, :destroy]
