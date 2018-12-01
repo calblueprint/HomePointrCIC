@@ -2,5 +2,5 @@
 <p>Find me in app/views/tenants/show.html.erb</p>
 
 <%= form_with(model: @tenant, local: true) do |form| %>
-  <%= react_component("RATenantView", props={ id: @tenant.id, mode: "ra_edit", name: @name, description: @description, tagValues: @tag_values, status: @status }) %>
+  <%= react_component("RATenantView", props={avatar: @avatar, id: @tenant.id, mode: "ra_edit", name: @name, description: @description, tagValues: @tag_values, status: @status }) %>
 <% end %>

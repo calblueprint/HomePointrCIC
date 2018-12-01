@@ -28,11 +28,20 @@ class RATenantView extends React.Component {
   }
 
   renderAvatar() {
-    return (
-      <React.Fragment key='avatar'>
-        <Avatar size={64} icon="user" />
-      </React.Fragment>
-    )
+    debugger
+    if (this.props.avatar == null) {
+      return (
+        <React.Fragment key='avatar'>
+          <Avatar size={64} icon="user"/>
+        </React.Fragment>
+      )
+    } else {
+      return (
+        <React.Fragment key='avatar'>
+          <Avatar size={64} src={this.props.avatar[0].url}/>
+        </React.Fragment>
+      )
+    }
   }
 //     0 - matched with a house
 //     1 - interviewing with a house
@@ -78,10 +87,11 @@ class RATenantView extends React.Component {
   renderTags() {
     return (
       <div key='tags'>
-        {this.props.tagValues.map(tag => <Tag key={tag}>{tag}</Tag>)}
+        {this.props.tagValues.slice(0, -1).map(tag => <Tag key={tag}>{tag}</Tag>)}
       </div>
     )
   }
+
   render() {
     if (this.props.mode === "ra_matching") {
       return [this.renderNameDescription(), this.renderAvatar(), this.renderStatus(), this.renderTags()]

@@ -40,7 +40,11 @@ class TenantsController < ApplicationController
     @name = @tenant.attributes.values[1]
     @description = @tenant.attributes.values[2]
     values = @tenant.attributes.values[3..-3]
-    field_names = Tenant.column_names[3..-3]
+    @avatar = nil
+    if @tenant.avatar.attached? == true
+      @avatar = [{id: @tenant.avatar.id, url: url_for(@tenant.avatar)}]
+    end
+    field_names = Tenant.column_names[3..-3] + ["avatar"]
     nice_field_names = []
     field_names.each do |field_name|
       nice_field_names << field_name.titleize
