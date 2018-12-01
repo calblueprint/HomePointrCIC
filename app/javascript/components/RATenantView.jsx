@@ -28,7 +28,6 @@ class RATenantView extends React.Component {
   }
 
   renderAvatar() {
-    debugger
     if (this.props.avatar == null) {
       return (
         <React.Fragment key='avatar'>

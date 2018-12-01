@@ -122,9 +122,14 @@ class ProfileForm extends React.Component {
 
   renderTextbox(index) {
     return (
-      <div key={index}>
+      <div 
+      style={{
+        width: "50%",  
+        margin: "1.5% auto"
+      }}
+      key={index}>
         <label>{this.state.niceFieldNames[index]}</label>
-        <Input defaultValue={this.state.prevValues[index]} onChange={(e) => this.handleChange(index, e)} />
+        <Input size="large" defaultValue={this.state.prevValues[index]} onChange={(e) => this.handleChange(index, e)} />
       </div>
     )
   }
@@ -132,9 +137,14 @@ class ProfileForm extends React.Component {
   renderTextarea(index) {
     const { TextArea } = Input;
     return (
-      <div key={index}>
+      <div 
+      style={{
+        width: "50%",  
+        margin: "1.5% auto"
+      }}
+      key={index}>
         <label>{this.state.niceFieldNames[index]}</label>
-        <TextArea defaultValue={this.state.prevValues[index]} rows ={4} onChange={(e) => this.handleChange(index, e)} autosize={true}/>
+        <TextArea defaultValue={this.state.prevValues[index]} rows ={8} onChange={(e) => this.handleChange(index, e)} autosize={true}/>
       </div>
     )
   }
@@ -144,7 +154,12 @@ class ProfileForm extends React.Component {
       this.state.prevValues[index] = moment().format("YYYY-MM-DD")
     }
     return (
-      <div key={index}>
+      <div 
+      style={{
+        width: "50%",  
+        margin: "1.5% auto"
+      }}
+      key={index}>
         <label>{this.state.niceFieldNames[index]}</label>
         <DatePicker defaultValue={this.state.prevValues[index] == "" ? moment() : moment(this.state.prevValues[index])} 
                     onChange={(date, dateString) => this.state.prevValues[index] = dateString} />
@@ -155,9 +170,14 @@ class ProfileForm extends React.Component {
   renderDropdown(index) {
     const Option = Select.Option;
     return (
-      <div key={index}>
+      <div 
+      style={{
+        width: "50%",  
+        margin: "1.5% auto"
+      }}
+      key={index}>
         <label>{this.state.niceFieldNames[index]}</label>
-        <Select defaultValue={this.state.prevValues[index]} style={{width: 220}} onChange={(e) => this.state.prevValues[index] = e}>
+        <Select defaultValue={this.state.prevValues[index]} onChange={(e) => this.state.prevValues[index] = e}>
           {this.state.fieldTypes[index].map(option => 
             <Option key={index} value={option}>{option}</Option>)}
         </Select>
@@ -172,7 +192,12 @@ class ProfileForm extends React.Component {
       this.state.prevValues[index+1] = 5000
     }
     return (
-      <div key={index}>
+      <div 
+      style={{
+        width: "50%",  
+        margin: "1.5% auto"
+      }}
+      key={index}>
         <label>{this.state.niceFieldNames[index]} - {this.state.niceFieldNames[index+1]}</label>
         <Slider range defaultValue={df}
                 onChange={(e) => [this.state.prevValues[index], this.state.prevValues[index+1]] = [e[0], e[1]]}
@@ -314,21 +339,49 @@ class ProfileForm extends React.Component {
           )
         }
       })
+
     )}
 
   render() {
     let returnArr = [];
     if (this.state.mode === "create") {
       returnArr = [...this.renderForm(),
-          <Button key='submit' type="primary" onClick={this.handleCreate}>Submit</Button>,
-          <Button key='cancel' type="default" href={"/" + this.state.type} >Cancel</Button>]
+          <Button 
+          style={{
+          width: "20%",
+          margin: "1.5% auto"
+          }}
+      key='submit' type="primary" onClick={this.handleCreate}>Submit</Button>,
+          <Button 
+          style={{
+          width: "20%",
+          margin: "1.5% auto"
+          }}
+           key='cancel' type="default" href={"/" + this.state.type} >Cancel</Button>]
     } else if (this.state.mode === "edit") {
       returnArr = [...this.renderForm(),
-          <Button key='save' type="primary" onClick={this.handleEdit}>Save</Button>,
-          <Button key='cancel' type="default" href={"/" + this.state.type} >Cancel</Button>,
-          <Button key='delete' type="danger" onClick={this.handleDestroy}>Delete</Button>]
+          <Button style={{
+          width: "20%",
+          margin: "1.5% auto"
+          }}key='save' type="primary" onClick={this.handleEdit}>Save</Button>,
+          <Button style={{
+          width: "20%",
+          margin: "1.5% auto"
+          }}key='cancel' type="default" href={"/" + this.state.type} >Cancel</Button>,
+          <Button style={{
+          width: "20%",
+          margin: "1.5% auto"
+          }}key='delete' type="danger" onClick={this.handleDestroy}>Delete</Button>]
     }
-    return returnArr;
+    return (
+      <div
+      style={{  
+        textAlign: "center", 
+            }}
+      >
+      {returnArr}
+      </div>
+      );
   }
 }
 
