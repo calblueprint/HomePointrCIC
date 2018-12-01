@@ -1,18 +1,3 @@
-<h1>Properties#show</h1>
-<p>Find me in app/views/properties/show.html.erb</p>
-
-<%= react_component("PropertyView", { fieldNames: @field_names, fieldValues: @field_values }) %>
-    <%= link_to "Edit", edit_property_path(@property) %>
-    <%= link_to "Delete", property_path(@property), :method => :delete %>
-
-<br>
-Property Applications
-<ul>
-  <% @applications.each do |a| %>
-    <li>Tenant ID: <%= a.info.tenant.id %></li>
-    <li>Application ID: <%= a.id %></li>
-    <li>Application Status: <%= a.status %></li>
-    <li>Application Property ID: <%= a.property_id %></li>
-    <li>Application Info ID: <%= a.info_id %></li><br>
-  <% end %>
-</ul>
+<%= form_with(model: @property, local: true) do |form| %>
+  <%= react_component("PropertyView", props={ id: @property.id, name: @name, description: @description, tagValues: @tag_values }) %>
+<% end %>

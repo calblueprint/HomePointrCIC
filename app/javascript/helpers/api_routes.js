@@ -14,6 +14,17 @@ class ApiRoutes {
       delete: (id) => '/api/tenants/' + id,
     }
   }
+  get users() {
+    return {
+      delete: () => '/users/sign_out'
+    }
+  }
+
+  get applications() {
+    return {
+      update: (id) => '/api/applications/' + id,
+    }
+  }
 }
 const APIRoutes = new ApiRoutes();
 export default APIRoutes;

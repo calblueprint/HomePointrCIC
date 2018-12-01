@@ -11,11 +11,21 @@ class ReferralAgenciesController < ApplicationController
   def show
   	if user_signed_in? 
   	  @referral_agency = ReferralAgency.find(params[:id])
+      @email = @referral_agency.email
+      @properties = Property.all
       authorize @referral_agency
-  	  @tenants = @referral_agency.tenants
+      @name = @referral_agency.name
+      field_values = [@referral_agency.email, @referral_agency.address, @referral_agency.phone]
+      field_names = ['email', 'Address', 'Phone Number']
+      @tag_values = []
+      field_names.each_with_index {| tag, index |
+        @tag_values << tag.to_s + ": " + field_values[index].to_s
+      }
+      @tenants = @referral_agency.tenants
+
     else
       redirect_to '/users/sign_up'
-  	end
+    end
   end
 
   def edit

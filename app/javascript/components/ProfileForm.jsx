@@ -219,6 +219,7 @@ class ProfileForm extends React.Component {
 }
 
 ProfileForm.propTypes = {
+  id: PropTypes.number,
   mode: PropTypes.string,
   type: PropTypes.string,
   prevValues: PropTypes.array,
