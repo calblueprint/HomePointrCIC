@@ -16,8 +16,8 @@ class ApplicationsController < ApplicationController
 
   def index   
     # @tenant = Tenant.find(params[:tenant_id])
-    # authorize @tenant, policy_class: TenantPolicy                          
-    # @applications = @tenant.applications 
+    # authorize @tenant, policy_class: TenantPolicy
+    # @applications = @tenant.applications
     @applications = Application.all
   end
 
@@ -34,5 +34,11 @@ class ApplicationsController < ApplicationController
     else
       render json: { errors: application.errors.messages }
     end
+  end
+
+  private
+    
+  def application_params
+    params.require(:application).permit(AppPolicy.permitted_attributes)
   end
 end

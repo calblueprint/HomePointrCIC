@@ -1,6 +1,10 @@
 <h1>Landlords#show</h1>
 <p>Find me in app/views/landlords/show.html.erb</p>
 
+<%= form_with(model: @landlord, local: true) do |form| %>
+  <%= react_component("NavBar", props={ id: @landlord.id, type: "landlords", email: @email }) %>
+<% end %>
+
 <div>
 	<h3><%= @landlord.name %></h3>
 	<p> Property IDs: </p>
@@ -14,12 +18,13 @@
 
 <% if user_signed_in? %>
   <li>
-  <%= link_to('Logout', destroy_user_session_path, method: :delete) %>        
+  <%= link_to('Logout', destroy_user_session_path, method: :delete) %>
   </li>
 <% else %>
   <li>
-  <%= link_to('Login', new_user_session_path)  %>  
+  <%= link_to('Login', new_user_session_path)  %>
   </li>
 <% end %>
+
 
 

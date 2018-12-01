@@ -6,10 +6,6 @@ import 'antd/dist/antd.css';
 class RATenantView extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      status: props.status,
-      applications: props.applications
-    };
     this.handleEdit = this.handleEdit.bind(this);
   }
 
@@ -119,7 +115,6 @@ RATenantView.propTypes = {
   description: PropTypes.string,
   tagValues: PropTypes.array,
   status: PropTypes.number,
-  applications: PropTypes.array
 };
 
 export default RATenantView;

@@ -21,14 +21,14 @@ class Api::ApplicationsController < ApplicationController
     @application = Application.find(params[:id])
     authorize @application
     if @application.update_attributes(application_params)
-      redirect_to application_path
+      render json: @application
     else
       render json: { errors: @application.errors.messages }
     end
   end
 
   private
-    
+
   def application_params
     if current_user.type == 'ReferralAgency'
       params.require(:application).permit([:status, :property_id, :info_id, :description])

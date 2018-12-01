@@ -75,3 +75,4 @@ gem 'devise-multi_email'
 gem "aws-sdk-s3", require: false
 gem 'figaro'
 gem 'faker', '~> 1.6', '>= 1.6.6'
+
