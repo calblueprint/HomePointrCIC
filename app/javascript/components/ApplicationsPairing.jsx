@@ -12,7 +12,8 @@ class ApplicationsPairing extends React.Component {
     super(props);
     this.state = {
       selectedProperties: [], //array of strings
-      selectedTenant: null
+      selectedTenant: null,
+      description: null
     };
     this.onChangeProperty = this.onChangeProperty.bind(this);
     this.onChangeTenant = this.onChangeTenant.bind(this);
@@ -38,7 +39,7 @@ class ApplicationsPairing extends React.Component {
     var request = null;
     var prop;
     for (prop in this.state.selectedProperties) {
-      let body = {"status": 1, "property_id": this.state.selectedProperties[prop], "info_id": this.state.selectedTenant};
+      let body = {"description": this.state.description, "status": 1, "property_id": this.state.selectedProperties[prop], "info_id": this.state.selectedTenant};
       body = JSON.stringify({application: body})
       request = APIRoutes.applications.create
       fetch(request, {
@@ -57,11 +58,22 @@ class ApplicationsPairing extends React.Component {
     }
   }
 
+  renderTextarea() {
+    const { TextArea } = Input;
+    return (
+      <div>
+        <label>Add a note to about the tenant.</label>
+        <TextArea rows ={4} onChange={(e) => this.state.description = e.target.value} autosize={true}/>
+      </div>
+    )
+  }
+
   render() {
     return (
       <div>
         <ListView resources={this.props.tenants} type={"tenant"} CheckboxChange={this.onChangeTenant}/>
         <ListView resources={this.props.properties} type={"property"} CheckboxChange={this.onChangeProperty}/>
+        {this.renderTextarea()}
         <Button key='save' type="primary" onClick={this.handleMatch}>
           Submit
         </Button>
