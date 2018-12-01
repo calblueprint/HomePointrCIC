@@ -19,6 +19,30 @@ class ApplicationsController < ApplicationController
     @application = Application.find(params[:id])
     authorize @application
     @status = @application.status
+
+    tenant = @application.info.tenant
+    field_values = tenant.attributes.values[3..-3]
+    field_names = Tenant.column_names[3..-3]
+    nice_field_names = []
+    field_names.each do |field_name|
+      nice_field_names << field_name.titleize
+    end
+    tenant_tag_values = []
+    nice_field_names.each_with_index {| tag, index |
+      tenant_tag_values << tag.to_s + ": " + field_values[index].to_s
+    }
+
+    ra = tenant.referral_agency
+    field_values = [ra.email, ra.address, ra.phone]
+    field_names = ['email', 'Address', 'Phone Number']
+    ra_tag_values = []
+    field_names.each_with_index {| tag, index |
+      ra_tag_values << tag.to_s + ": " + field_values[index].to_s
+    }
+
+    @tenantProps = [tenant.id, tenant.name, "ra_matching", tenant.description, tenant_tag_values, tenant.priority]
+    @raProps = [ra.id, ra.name, ra_tag_values]
+    @buttonProps = [@application.id, @status]
   end
 
   def index   
