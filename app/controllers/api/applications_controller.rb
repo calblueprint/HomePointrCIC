@@ -30,6 +30,10 @@ class Api::ApplicationsController < ApplicationController
   private
     
   def application_params
-    params.require(:application).permit(AppPolicy.permitted_attributes)
+    if current_user.type == 'ReferralAgency'
+      params.require(:application).permit([:status, :property_id, :info_id, :description])
+    else
+      params.require(:application).permit([:status])
+    end
   end
 end

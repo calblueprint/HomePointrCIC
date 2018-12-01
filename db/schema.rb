@@ -17,6 +17,7 @@ ActiveRecord::Schema.define(version: 2018_10_31_185050) do
 
   create_table "applications", force: :cascade do |t|
     t.integer "status"
+    t.text "description"
     t.bigint "property_id"
     t.bigint "info_id"
     t.datetime "created_at", null: false
