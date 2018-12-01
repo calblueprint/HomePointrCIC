@@ -18,17 +18,35 @@ class PropertyListWrapper extends React.Component {
 		updatedProperties = this.props.properties.filter(p => {
 			const dateToMoment = moment(filters["date_available"]);
 			return (
-				filters["location"].indexOf(p.location) > -1 &&
 				filters["capacity"] <= p.capacity && 
 				filters["rent_min"] <= p.rent && 
 				filters["rent_max"] >= p.rent && 
 				filters["size"] <= p.size && 
-				filters["property_type"].indexOf(p.property_type) > -1 && 
-				filters["housing_type"].indexOf(p.housing_type) > -1 &&
 				(dateToMoment.isAfter(p.date_available) ||
 				dateToMoment.isSame(p.date_available))
 			);
 		})
+		if (filters["location"].length > 0) {
+			updatedProperties = updatedProperties.filter(p => {
+				return (
+					filters["location"].indexOf(p.location) > -1
+				);
+			})
+		}
+		if (filters["property_type"].length > 0) {
+			updatedProperties = updatedProperties.filter(p => {
+				return (
+					filters["property_type"].indexOf(p.property_type) > -1
+				);
+			})
+		}
+		if (filters["housing_type"].length > 0) {
+			updatedProperties = updatedProperties.filter(p => {
+				return (
+					filters["housing_type"].indexOf(p.housing_type) > -1
+				);
+			})
+		}
 		this.setState({properties: updatedProperties})
 	}
 	

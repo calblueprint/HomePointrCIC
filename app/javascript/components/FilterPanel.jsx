@@ -13,7 +13,7 @@ class FilterPanel extends React.Component {
       capacity: 0,
       rent_min: props.tenant.rent_min,
       rent_max: props.tenant.rent_max,
-      size: 0,
+      size: props.tenant.num_bedrooms,
       property_type: [props.tenant.property_type],
       housing_type: [props.tenant.housing_type],
       date_available: props.tenant.date_needed,
@@ -86,15 +86,15 @@ class FilterPanel extends React.Component {
         </div>
         <div>
         Capacity
-      <InputNumber min={1} defaultValue={0} onChange={(e) => this.handleCheckbox(e, "capacity")} />
+        <InputNumber min={0} defaultValue={0} onChange={(e) => this.handleCheckbox(e, "capacity")} />
         </div>
         <div>
         Number of Bedrooms
-      <InputNumber min={1} defaultValue={0} onChange={(e) => this.handleCheckbox(e, "size")} />
+        <InputNumber min={0} defaultValue={this.state.size} onChange={(e) => this.handleCheckbox(e, "size")} />
         </div>
         <div>
-        Rent Min<InputNumber min={1} defaultValue={this.state.rent_min} onChange={(e) => this.handleCheckbox(e, "rent_min")} /> 
-        Max<InputNumber min={1} defaultValue={this.state.rent_max} onChange={(e) => this.handleCheckbox(e, "rent_max")} />
+        Rent Min<InputNumber min={0} defaultValue={this.state.rent_min} onChange={(e) => this.handleCheckbox(e, "rent_min")} /> 
+        Max<InputNumber min={0} defaultValue={this.state.rent_max} onChange={(e) => this.handleCheckbox(e, "rent_max")} />
         </div>
         <div>
         Date Available
@@ -109,13 +109,14 @@ class FilterPanel extends React.Component {
 
     return (
     <div>
-      <Dropdown overlay={menu} visible={this.state.isOpen} trigger='click'>
-        <a className="ant-dropdown-link" href="#" onClick={this.toggleOpen}>
+      <Dropdown overlay={menu} visible={this.state.isOpen} trigger={['click']}>
+        <a className="ant-dropdown-link" href="#">
           <div        
             style={{
             background: "white",
             marginLeft: "5%",
             }}
+            onClick={this.toggleOpen}
           >
             Filters <Icon type="down" />
           </div>
