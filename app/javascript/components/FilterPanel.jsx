@@ -71,7 +71,7 @@ class FilterPanel extends React.Component {
       Date Available
       <DatePicker onChange={(date, dateString) => this.handleDatePicker(date, dateString)} />
       </div>
-    <Button type="primary">Apply</Button>
+    <Button type="primary" onClick={this.props.handleFilter(this.state)}>Apply</Button>
     </div>
     );
 
