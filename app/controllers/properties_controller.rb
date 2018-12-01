@@ -1,5 +1,4 @@
 class PropertiesController < ApplicationController
-
   def index
     @properties = PropertyPolicy::Scope.new(current_user, Property).resolve
   end
@@ -10,7 +9,8 @@ class PropertiesController < ApplicationController
     @mode = "create"
     @type = "properties"
     enums = []
-    @field_names = Property.column_names[1..-1]
+    @field_names = Property.column_names[1..-1] 
+    # @field_names = Property.column_names[1..-1] + ["images"]
     @nice_field_names = []
     @field_names.each do |i|
       @nice_field_names << i.titleize
@@ -20,13 +20,15 @@ class PropertiesController < ApplicationController
     end
     num_fields = @field_names.length
     @prev_values = Array.new(num_fields, "")
+    # @prev_values << @property.images
+    # @field_types = ["textbox", "textarea", "textbox", "textbox", "textbox", enums[0], enums[1], "datepicker", enums[2], "attachment"]
     @field_types = ["textbox", "textarea", "textbox", "textbox", "textbox", enums[0], enums[1], "datepicker", enums[2]]
   end
 
   def show
     @property = Property.find(params[:id])
     authorize @property
-    field_names = Property.column_names[1..-1]
+    field_names = Property.column_names[1..-1] 
     field_values = @property.attributes.values[1..-1] #change start index
     field_names.delete_at(1)
     field_values.delete_at(1)
@@ -38,6 +40,11 @@ class PropertiesController < ApplicationController
     nice_field_names.each_with_index {| tag, index |
       @tag_values << tag.to_s + ": " + field_values[index].to_s
     }
+    @images = nil
+    if @property.images.attached? == true
+      image_list = @property.images.map{|img| ({ image: url_for(img) })}
+      @images = [{url: image_list[0][:image]}]
+    end
     @name = (@property.housing_type + " in " + @property.location).titleize
     @description = @property.attributes.values[2]
   end
@@ -47,7 +54,7 @@ class PropertiesController < ApplicationController
     @type = "properties"
     enums = []
     @nice_field_names = []
-    @field_names = Property.column_names[1..-1]
+    @field_names = Property.column_names[1..-1] + ["images"]
     @field_names.each do |i|
       @nice_field_names << i.titleize
       if Property.defined_enums.keys.include? i
@@ -57,6 +64,11 @@ class PropertiesController < ApplicationController
     @property = Property.find(params[:id])
     authorize @property
     @prev_values = @property.attributes.values[1..-1]
-    @field_types = ["textbox", "textarea", "textbox", "textbox", "textbox", enums[0], enums[1], "datepicker", enums[2]]
+    if @property.images.attached? == false
+      @prev_values << @property.images
+    else
+      @prev_values << @property.images.map{|img| ({ image: url_for(img), id: img.id })}
+    end
+    @field_types = ["textbox", "textarea", "textbox", "textbox", "textbox", enums[0], enums[1], "datepicker", enums[2], "attachment"]
   end
 end

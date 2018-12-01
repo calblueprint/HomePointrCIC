@@ -1,5 +1,11 @@
 class Api::PropertiesController < ApplicationController
   respond_to :json
+  skip_before_action :verify_authenticity_token
+
+  def delete_image_attachment
+    @image = ActiveStorage::Blob.find_signed(params[:image_id])
+    @image.purge
+  end
 
   def create
     @property = Property.new(property_params)
@@ -43,7 +49,8 @@ class Api::PropertiesController < ApplicationController
       :property_type,
       :housing_type,
       :date_available,
-      :location
+      :location,
+      :images
     )
   end
 end

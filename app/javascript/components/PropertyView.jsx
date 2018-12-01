@@ -24,11 +24,20 @@ class PropertyView extends React.Component {
   }
 
   renderPhotos() {
-    return (
-      <React.Fragment key='avatar'>
-        <Avatar size={64} icon="user" />
-      </React.Fragment>
-    )
+    debugger
+    if (this.props.images == null) {
+      return (
+        <React.Fragment key='photo'>
+          <Avatar size={256} shape="square" icon="user"/>
+        </React.Fragment>
+      )
+    } else {
+      return (
+        <React.Fragment key='photo'>
+          <Avatar size={256} src={this.props.images[0].url}/>
+        </React.Fragment>
+      )
+    }
   }
 
   renderTags() {

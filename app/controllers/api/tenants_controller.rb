@@ -48,7 +48,8 @@ class Api::TenantsController < ApplicationController
       :num_bedrooms,
       :location,
       :referral_agency_id,
-      :date_needed
+      :date_needed,
+      :avatar
     )
   end
 end

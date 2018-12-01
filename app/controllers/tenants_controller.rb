@@ -16,6 +16,7 @@ class TenantsController < ApplicationController
     @mode = "create"
     @type = "tenants"
     enums = []
+    # @field_names = Tenant.column_names[1..-3] + ["avatar"]
     @field_names = Tenant.column_names[1..-3]
     @nice_field_names = []
     @field_names.each do |i|
@@ -26,7 +27,9 @@ class TenantsController < ApplicationController
     end
     num_fields = @field_names.length
     @prev_values = Array.new(num_fields, "")
-    @field_types = ["textbox", "textarea", "textbox", "textbox", "textbox", "slider", "_slider", enums[0], enums[1], "textbox", enums[2], "textbox", "datepicker"]
+    # @prev_values << @tenant.avatar
+    # @field_types = ["textbox", "textarea", "textbox", "textbox", "textbox", "slider", "_slider", enums[0], enums[1], "textbox", enums[2], "textbox", "datepicker", "attachment"]
+    @field_types = ["textbox", "textarea", "textbox", "textbox", "textbox", "slider", "_slider", enums[0], enums[1], "textbox", enums[2], "textbox", "datepicker"]  
   end
 
   def show
@@ -37,7 +40,11 @@ class TenantsController < ApplicationController
     @name = @tenant.attributes.values[1]
     @description = @tenant.attributes.values[2]
     values = @tenant.attributes.values[3..-3]
-    field_names = Tenant.column_names[3..-3]
+    @avatar = nil
+    if @tenant.avatar.attached? == true
+      @avatar = [{id: @tenant.avatar.id, url: url_for(@tenant.avatar)}]
+    end
+    field_names = Tenant.column_names[3..-3] + ["avatar"]
     nice_field_names = []
     field_names.each do |field_name|
       nice_field_names << field_name.titleize
@@ -52,7 +59,7 @@ class TenantsController < ApplicationController
     @mode = "edit"
     @type = "tenants"
     enums = []
-    @field_names = Tenant.column_names[1..-3]
+    @field_names = Tenant.column_names[1..-3] + ["avatar"]
     @nice_field_names = []
     @field_names.each do |i|
       @nice_field_names << i.titleize
@@ -63,7 +70,12 @@ class TenantsController < ApplicationController
     @tenant = Tenant.find(params[:id])
     authorize @tenant
     @prev_values = @tenant.attributes.values[1..-3]
-    @field_types = ["textbox", "textarea", "textbox", "textbox", "textbox", "slider", "_slider", enums[0], enums[1], "textbox", enums[2], "textbox", "datepicker"]
+    if @tenant.avatar.attached? == false
+      @prev_values << @tenant.avatar
+    else
+      @prev_values << [{id: @tenant.avatar.id, url: url_for(@tenant.avatar)}]
+    end
+    @field_types = ["textbox", "textarea", "textbox", "textbox", "textbox", "slider", "_slider", enums[0], enums[1], "textbox", enums[2], "textbox", "datepicker", "attachment"]
   end
 
   private
@@ -85,4 +97,3 @@ class TenantsController < ApplicationController
       :date_needed
     )
   end
-end

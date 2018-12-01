@@ -4,9 +4,10 @@
   "dependencies": {
     "@rails/webpacker": "3.5",
     "antd": "^3.10.4",
-    "react": "^16.6.1",
-    "react-dom": "^16.6.1",
     "moment": "^2.22.2",
+    "react": "^16.6.1",
+    "react-activestorage-provider": "^0.6.0",
+    "react-dom": "^16.6.1",
     "react_ujs": "^2.4.4"
   },
   "devDependencies": {

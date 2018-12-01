@@ -48,7 +48,7 @@ def make_properties
   1.upto(NUM_PROPERTIES) do |n|
     property = Property.create(
       capacity: Faker::Number.between(1, 25),
-      description: Faker::RickAndMorty.quote,
+      description: Faker::HowIMetYourMother.quote,
       landlord_id: Faker::Number.between(1, NUM_LANDLORDS),
       rent: Faker::Number.between(500, 3000),
       size: Faker::Number.between(500, 3000),
@@ -57,6 +57,8 @@ def make_properties
       location: n%6,
       date_available: Date.today
     )
+    property.images.attach(io: File.open('app/assets/images/house1.png'), filename: 'house1.png')
+    property.images.attach(io: File.open('app/assets/images/house2.png'), filename: 'house2.png')
     property.save
     printf("#{n}/#{NUM_PROPERTIES} Properties \r")
   end
@@ -104,7 +106,8 @@ def make_received_apps
     application = Application.create(
       status: 1,
       property_id: n%5+1,
-      info_id: n
+      info_id: n,
+      description: 'received description'
     )
     application.save
     printf("#{n}/#{10} Received Applications \r")
@@ -119,7 +122,8 @@ def make_rejected_apps
     application = Application.create(
       status: 0,
       property_id: n%5+2,
-      info_id: n
+      info_id: n,
+      description: 'rejected description'
     )
     application.save
     printf("#{n}/#{5} Rejected Applications \r")
@@ -143,7 +147,8 @@ def make_special_apps(start, fin, stat_num, custom)
 	    application = Application.create(
 	      status: new_stat,
 	      property_id: p,
-	      info_id: n
+	      info_id: n,
+        description: 'special description'
 	    )
 	    application.save
 	    new_stat = 1

@@ -1,9 +1,11 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Select, Input, Button, Slider, Switch, DatePicker } from 'antd';
-import 'antd/dist/antd.css';
+import { Upload, message, Icon, Select, Input, Button, Slider, Switch, DatePicker } from 'antd';
+import "antd/dist/antd.css";
 import moment from 'moment';
 import APIRoutes from 'helpers/api_routes';
+import UploadButton from './UploadButton';
+import ActiveStorageProvider from "react-activestorage-provider";
 
 class ProfileForm extends React.Component {
 
@@ -16,7 +18,8 @@ class ProfileForm extends React.Component {
       prevValues: props.prevValues, //array of strings
       fieldNames: props.fieldNames, //array of strings
       fieldTypes: props.fieldTypes,  //array of strings
-      niceFieldNames: props.niceFieldNames //array of strings
+      niceFieldNames: props.niceFieldNames, //array of strings
+      fileList: []
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleCreate = this.handleCreate.bind(this);
@@ -163,14 +166,121 @@ class ProfileForm extends React.Component {
   }
 
   renderSlider(index) {
+    let df = (this.state.mode == 'edit') ? [this.state.prevValues[index], this.state.prevValues[index+1]] : [0, 5000]
+    if (this.state.mode == "create") {
+      this.state.prevValues[index] = 0
+      this.state.prevValues[index+1] = 5000
+    }
     return (
       <div key={index}>
         <label>{this.state.niceFieldNames[index]} - {this.state.niceFieldNames[index+1]}</label>
-        <Slider range defaultValue={[this.state.prevValues[index], this.state.prevValues[index+1]]}
+        <Slider range defaultValue={df}
                 onChange={(e) => [this.state.prevValues[index], this.state.prevValues[index+1]] = [e[0], e[1]]}
                 max={5000}/>
       </div>
     );
+  }
+
+  //grabs the active storage image urls from backend, name of pic at end of url
+  setupImages(index) {
+    let fileList = [];
+    try {
+      fileList = this.state.prevValues[index].map((url) => {
+        return {uid: url.id, url: url.image, name: url.image.split("/").slice(-1).pop()};
+      })
+      return fileList;
+    } catch(error) {
+      try {
+        fileList = [{uid: this.state.prevValues[index][0].id, url: this.state.prevValues[index][0].url, name: this.state.prevValues[index][0].url.split("/").slice(-1).pop()}];
+        return fileList;
+      } catch(error) {
+        return [];
+      }
+    }
+  }
+
+  onImageRemove(e) {
+    // console.log(document.getElementsByName("csrf-token")[0].content)
+    // let pic_id = e.uid;
+    // let type = this.state.type;
+    // var request = null;
+    // if (this.state.type === "properties") {
+    //   request = '/api/properties/' + this.state.id + '/delete_image_attachment/' + pic_id
+    // } else {
+    //   request = ''
+    // }
+    // fetch(request, {
+    //   method: 'DELETE',
+    //   headers: {
+    //     'Content-Type': 'application/json',
+    //     "X_CSRF-Token": document.getElementsByName("csrf-token")[0].content
+    //   }
+    // })
+  }
+
+  renderUpload(index) {
+    let id = this.state.id;
+    let type = this.state.type;
+    let path = (this.state.mode === "create") ? '/api/' + type : '/api/' + type + '/' + id.toString();
+    let model = (this.state.type === 'properties') ? 'Property' : 'Tenant';
+    let method = (this.state.mode === 'edit') ? 'PUT' : 'POST';
+    let attribute = (this.state.type === 'properties') ? 'images' : 'avatar';
+    let buttonProps = null;
+    if (this.state.mode === "edit") {
+      this.state.fileList = this.setupImages(index);
+      buttonProps = {
+        listType: 'picture',
+        defaultFileList: this.state.fileList,
+        onRemove: (e) => this.onImageRemove(e),
+        className: 'upload-list-inline',
+      };
+    }
+    return (
+      <div key={index}>
+        <UploadButton {...buttonProps} />
+        <ActiveStorageProvider
+          endpoint={{
+            path: path,
+            model: model,
+            attribute: attribute,
+            method: method,
+          }}
+          headers={{
+            'Content-Type': 'application/json'
+          }}
+          render={({ handleUpload, uploads, ready }) => (
+            <div>
+              <input
+                type="file"
+                disabled={!ready}
+                onChange={e => handleUpload(e.currentTarget.files)}
+              />
+
+              {uploads.map(upload => {
+                switch (upload.state) {
+                  case 'waiting':
+                    return <p key={upload.id}>Waiting to upload {upload.file.name}</p>
+                  case 'uploading':
+                    return (
+                      <p key={upload.id}>
+                        Uploading {upload.file.name}: {upload.progress}%
+                      </p>
+                    )
+                  case 'error':
+                    return (
+                      <p key={upload.id}>
+                        Error uploading {upload.file.name}: {upload.error}
+                      </p>
+                    )
+                  case 'finished':
+                    return <p key={upload.id}>Finished uploading {upload.file.name}</p>
+                }
+              })}
+            </div>
+          )}
+        />
+      </div>
+    )
   }
 
   renderForm() {
@@ -194,6 +304,10 @@ class ProfileForm extends React.Component {
           )
         } else if (this.state.fieldTypes[index] === "_slider") {
           return null
+        } else if (this.state.fieldTypes[index] === "attachment") {
+          return (
+            this.renderUpload(index)
+          )
         } else {
           return (
             this.renderDropdown(index)
@@ -228,4 +342,4 @@ ProfileForm.propTypes = {
   niceFieldNames: PropTypes.array
 };
 
-export default ProfileForm;
+export default ProfileForm; 
