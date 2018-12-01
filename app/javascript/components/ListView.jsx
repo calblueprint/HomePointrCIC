@@ -10,13 +10,7 @@ class ListView extends React.Component {
       resources: this.props.resources,
       type: this.props.type
     }
-    this.handleClick = this.handleClick.bind(this);
   }
-
-  handleClick(property_id) {
-    window.location.assign("/properties/" + property_id);
-  }
-
   render() {
     return this.state.resources.map(resource => {
       return (

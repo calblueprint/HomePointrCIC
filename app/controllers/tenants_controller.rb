@@ -33,6 +33,10 @@ class TenantsController < ApplicationController
     @tenant = Tenant.find(params[:id])
     authorize @tenant
     @applications = @tenant.info.applications
+    @housing_type_options = Property.housing_types.keys
+    @property_type_options = Property.property_types.keys
+    @location_options = Property.locations.keys
+    @properties = Property.all
     @status = @tenant.priority
     @name = @tenant.attributes.values[1]
     @description = @tenant.attributes.values[2]
@@ -67,7 +71,7 @@ class TenantsController < ApplicationController
   end
 
   private
-    
+
   def tenant_params
     params.require(:tenant).permit(
       :name,
