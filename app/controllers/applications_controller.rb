@@ -22,9 +22,21 @@ class ApplicationsController < ApplicationController
   end
 
   def index   
-    @tenant = Tenant.find(params[:tenant_id])
-    authorize @tenant, policy_class: TenantPolicy                          
-    @applications = @tenant.applications 
+    @tenant = Tenant.find(4)
+    @property = Property.find(2)
+    # authorize @tenant, policy_class: TenantPolicy
+    @tenants = []
+    if current_user.type == 'Landlord'
+
+      # @tenants = Tenant.where.not()
+    else
+      @property.applications.each do |app|
+        if app.status != 'housed'
+          @tenants.push(app.info.tenant)
+        end
+      end
+    end                          
+    
   end
 
   def edit

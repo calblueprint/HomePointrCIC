@@ -12,6 +12,7 @@ class ListView extends React.Component {
     }
   }
   render() {
+    debugger
     return this.state.resources.map(resource => {
       return (
         <div
@@ -24,20 +25,35 @@ class ListView extends React.Component {
           }}
         >
           <Row gutter={16}>
-            {this.state.type == "property" ? (
+          {(() => {
+        switch(this.state.type) {
+          case 'property':
+            return (
               <Card title={resource.location} bordered={false}>
                 {resource.description}
                 <Button type="default" href={"/properties/" + resource.id}>
                   View Info
                 </Button>
               </Card>
-            ) : (
+            );
+          case 'tenant':
+            return (
               <Card title={resource.name} bordered={false}>
                 <Button type="default" href={"/tenants/" + resource.id}>
                   View Info
                 </Button>
               </Card>
-            )}
+            );
+          case 'application':
+          console.log(resource)
+            return (
+              <Card title={resource.name} bordered={false}>
+                <Button type="default" href={"/tenants/" + resource.id}>
+                  View Info
+                </Button>
+              </Card>
+            );
+        }})()}
           </Row>
         </div>
       );

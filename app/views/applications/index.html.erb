@@ -1,13 +1,4 @@
 <h1>Applications#index</h1>
 <p>Find me in app/views/applications/index.html.erb</p>
 
-<% @applications.each do |a| %>
-  Application ID: <%= a.id %>
-  Status: <%= a.status %>
-  Property ID: <%= a.property_id %>
-  Info ID: <%= a.info_id %>
-  <%= link_to "Show", application_path(id: a.id) %>
-  <%= link_to "Delete", application_path(id: a.id), :method => :delete %><br>
-<% end %>
-
-<%= link_to "Create", new_application_path %>
+<%= react_component("ListView", {resources: @tenants, type: 'application'}) %>
