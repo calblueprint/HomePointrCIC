@@ -1,5 +1,4 @@
-<h1>Tenants#new</h1>
-<p>Find me in app/views/tenants/new.html.erb</p>
+<h1>Create a new tenant</h1>
 
 <%= form_with(model: @tenant, local: true) do |form| %>
   <%= react_component("ProfileForm", props={ id: @tenant.id, mode: @mode, type: @type, fieldNames: @field_names, fieldTypes: @field_types, niceFieldNames: @nice_field_names, prevValues: @prev_values }) %>

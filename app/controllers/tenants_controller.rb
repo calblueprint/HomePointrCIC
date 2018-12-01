@@ -101,3 +101,4 @@ class TenantsController < ApplicationController
       :date_needed
     )
   end
+end

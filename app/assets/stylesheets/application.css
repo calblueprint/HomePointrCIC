@@ -14,3 +14,7 @@
  *= require_self
  */
 @import 'antd/dist/antd.css';
+
+body {
+	font-family: "Avenir Next" !important;
+}
