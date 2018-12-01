@@ -5,18 +5,6 @@ class ApplicationsController < ApplicationController
     @application = Application.new
   end
 
-  def create
-    @application = Application.create!(application_params)
-
-    authorize @application
-    if @application.save
-      ApplicationsMailer.with(application: @application).new_application.deliver_now
-      redirect_to tenant_path(id: @application.info.tenant.id)
-    else
-      render json: { errors: @application.errors.messages }
-    end
-  end
-
   def show
     @application = Application.find(params[:id])
     @info = @application.info
@@ -27,9 +15,10 @@ class ApplicationsController < ApplicationController
   end
 
   def index   
-    @tenant = Tenant.find(params[:tenant_id])
-    authorize @tenant, policy_class: TenantPolicy                          
-    @applications = @tenant.applications 
+    # @tenant = Tenant.find(params[:tenant_id])
+    # authorize @tenant, policy_class: TenantPolicy                          
+    # @applications = @tenant.applications 
+    @applications = Application.all
   end
 
   def edit
@@ -45,11 +34,5 @@ class ApplicationsController < ApplicationController
     else
       render json: { errors: application.errors.messages }
     end
-  end
-
-  private
-    
-  def application_params
-    params.require(:application).permit(AppPolicy.permitted_attributes)
   end
 end

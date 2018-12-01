@@ -7,11 +7,11 @@ class AppPolicy < ApplicationPolicy
   end
 
   def self.permitted_attributes
-    if user.type == 'ReferralAgency' 
+    # if user.type == 'ReferralAgency' 
       [:status, :property_id, :info_id]
-    else
-      [:status]
-    end
+    # else
+    #   [:status]
+    # end
   end
 
   # Returns true if a Referral Agency is viewing one of their own tenants' applications, 
