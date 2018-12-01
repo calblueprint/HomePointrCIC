@@ -4,9 +4,6 @@ import { Card, Col, Row, Button } from "antd";
 import "antd/dist/antd.css";
 
 const ListView = props => {
-  const handleClick = property_id => {
-    window.location.assign("/properties/" + property_id);
-  };
   return props.resources.map(resource => {
     return (
       <div
