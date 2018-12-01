@@ -14,7 +14,7 @@ class ReferralAgenciesController < ApplicationController
       authorize @referral_agency
       @name = @referral_agency.name
       field_values = [@referral_agency.email, @referral_agency.address, @referral_agency.phone]
-      field_names = ['email: ', 'Address: ', 'Phone Number: ']
+      field_names = ['email', 'Address', 'Phone Number']
       @tag_values = []
       field_names.each_with_index {| tag, index |
         @tag_values << tag.to_s + ": " + field_values[index].to_s
