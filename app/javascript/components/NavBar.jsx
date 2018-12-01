@@ -74,7 +74,6 @@ class NavBar extends React.Component {
       <div style={{
         background: "#ECECEC",
         height: "10%",
-        float: "top"
       }}>
         {[this.renderEmail(),
           this.renderAvatar(),

@@ -1,6 +1,10 @@
 <h1>Landlords#show</h1>
 <p>Find me in app/views/landlords/show.html.erb</p>
 
+<%= form_with(model: @landlord, local: true) do |form| %>
+  <%= react_component("NavBar", props={ id: @landlord.id, type: "landlords", email: @email }) %>
+<% end %>
+
 <div>
 	<h3><%= @landlord.name %></h3>
 	<p> Property IDs: </p>
@@ -22,7 +26,5 @@
   </li>
 <% end %>
 
-<%= form_with(model: @landlord, local: true) do |form| %>
-  <%= react_component("NavBar", props={ id: @landlord.id, type: "landlords", email: @email }) %>
-<% end %>
+
 
