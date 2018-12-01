@@ -26,9 +26,20 @@ class PropertiesController < ApplicationController
   def show
     @property = Property.find(params[:id])
     authorize @property
-    @field_names = Property.column_names[1..-1]
-    @field_values = @property.attributes.values[1..-1]
-    @applications = @property.applications
+    field_names = Property.column_names[1..-1]
+    field_values = @property.attributes.values[1..-1] #change start index
+    field_names.delete_at(1)
+    field_values.delete_at(1)
+    nice_field_names = []
+    field_names.each do |field_name|
+      nice_field_names << field_name.titleize
+    end
+    @tag_values = []
+    nice_field_names.each_with_index {| tag, index |
+      @tag_values << tag.to_s + ": " + field_values[index].to_s
+    }
+    @name = (@property.housing_type + " in " + @property.location).titleize
+    @description = @property.attributes.values[2]
   end
   
   def edit

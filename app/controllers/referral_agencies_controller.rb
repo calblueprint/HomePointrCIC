@@ -11,6 +11,7 @@ class ReferralAgenciesController < ApplicationController
   def show
   	if user_signed_in? 
   	  @referral_agency = ReferralAgency.find(params[:id])
+      @properties = Property.all
       authorize @referral_agency
       @name = @referral_agency.name
       field_values = [@referral_agency.email, @referral_agency.address, @referral_agency.phone]

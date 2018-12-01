@@ -2,3 +2,11 @@
 *Dockerfile*
 *docker-compose*
 node_modules
+/log/*
+/tmp/*
+!/log/.keep
+!/tmp/.keep
+/public/packs
+/public/packs-test
+/db/*.sqlite3
+/db/*.sqlite3-journal

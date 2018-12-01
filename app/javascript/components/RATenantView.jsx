@@ -91,7 +91,7 @@ class RATenantView extends React.Component {
     //     <Button type="danger">Remove Tenant</Button>]
     } else if (this.props.mode === "ra_edit") {
       return [this.renderNameDescription(), this.renderAvatar(), this.renderStatus(), this.renderTags(),
-        <Button key='button' type="default" onClick={this.handleEdit} >Edit Tenant </Button>]
+        <Button key='button' type="default" onClick={this.handleEdit} >Edit Tenant</Button>]
     } else {
       return null
     }
