@@ -14,24 +14,15 @@ class ApiRoutes {
       delete: (id) => '/api/tenants/' + id,
     }
   }
-
-  get referral_agencies() {
-    return {
-      update: (id) => '/api/referral_agencies/' + id,
-      delete: (id) => '/api/referral_agencies/' + id,
-    }
-  }
-
-  get landlords() {
-    return {
-      update: (id) => '/api/landlords/' + id,
-      delete: (id) => '/api/landlords/' + id,
-    }
-  }
-
   get users() {
     return {
       delete: () => '/users/sign_out'
+    }
+  }
+
+  get applications() {
+    return {
+      update: (id) => '/api/applications/' + id,
     }
   }
 }

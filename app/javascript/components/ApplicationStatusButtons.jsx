@@ -1,59 +1,64 @@
-// import React from "react";
-// import PropTypes from "prop-types";
-// import { Button } from 'antd';
-// import 'antd/dist/antd.css';
-// import moment from 'moment';
-// import APIRoutes from 'helpers/api_routes';
-// import ProfileForm from "./ProfileForm";
-//
-// class ApplicationStatusButtons extends React.Component {
-//   constructor(props) {
-//     super(props);
-//     this.state = {
-//       status: props.status
-//     };
-//     this.handleAccept = this.handleAccept.bind(this);
-//     this.handleInterview = this.handleInterview.bind(this);
-//     this.handleReject = this.handleReject.bind(this)
-//   }
-//
-//   handleAccept() {
-//
-//   }
-//
-//   handleInterview() {
-//
-//   }
-//
-//   handleReject() {
-//
-//   }
-// //     0 - matched with a house
-// //     1 - interviewing with a house
-// //     2 - applied
-// //     3 - rejected
-// //     4 - not applied yet
-//   render() {
-//     if (this.state.status === 0) {
-//       return [<Button type="danger">Remove Tenant</Button>]
-//     } else if (this.state.status === 1) {
-//       return [<Button type="danger">Reject</Button>,
-//               <Button type="default">Interview</Button>,
-//               <Button type="primary" >Accept</Button>]
-//     } else if (this.state.status >= 2 && this.state.status <= 4) {
-//       return [<Button type="danger">Reject</Button>,
-//               <Button type="default">Interview</Button>,
-//               <Button type="primary" disabled>Accept</Button>]
-//     } else {
-//       return null
-//     }
-//   }
-// }
-//
-// ApplicationStatusButtons.propTypes = {
-//   t_id: PropTypes.number,
-//   a_id: PropTypes.number,
-//   status: PropTypes.number
-// };
-//
-// export default ApplicationStatusButtons
+import React from "react";
+import PropTypes from "prop-types";
+import { Button } from 'antd';
+import 'antd/dist/antd.css';
+import moment from 'moment';
+import APIRoutes from 'helpers/api_routes';
+import ProfileForm from "./ProfileForm";
+
+class ApplicationStatusButtons extends React.Component {
+  constructor(props) {
+    super(props);
+    this.handleStatus = this.handleStatus.bind(this);
+  }
+
+  handleStatus(new_status) {
+    let application_id = this.props.application_id;
+    let body = JSON.stringify({status: new_status});
+    let request =APIRoutes.applications.update(application_id)
+    fetch(request, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        "X_CSRF-Token": document.getElementsByName("csrf-token")[0].content
+      },
+      body: body,
+      credentials: 'same-origin',
+    }).then((data) => {
+      window.location = '/applications/' + this.props.application_id
+    }).catch((data) => {
+      console.error(data);
+    });
+  }
+
+  handleReject = () => this.handleStatus("rejected");
+  handleInterview = () => this.handleStatus("interview");
+  handleAccept = () => this.handleStatus("housed");
+  removeTenant = () => this.handleStatus("rejected");
+
+// rejected: 0, received: 1, interview: 2, housed: 3
+
+  render() {
+    console.log(this.props.status)
+    if (this.props.status === "received") {
+      return [<Button key="reject" type="danger" onClick={this.handleReject}>Reject</Button>,
+              <Button key="interview" type="default" onClick={this.handleInterview}>Interview</Button>,
+              <Button key="accept" type="primary" disabled>Accept</Button>]
+    } else if (this.props.status === "interview") {
+      return [<Button key="reject" type="danger" onClick={this.handleReject}>Reject</Button>,
+              <Button key="interview" type="default" disabled>Interview</Button>,
+              <Button key="accept" type="primary" onClick={this.handleAccept}>Accept</Button>]
+    } else if (this.props.status === "housed") {
+      return <Button key="remove" type="danger" onClick={this.removeTenant}>Remove Tenant</Button>
+    } else {
+      return null
+    }
+  }
+}
+
+ApplicationStatusButtons.propTypes = {
+  application_id: PropTypes.number,
+  status: PropTypes.string
+};
+
+export default ApplicationStatusButtons

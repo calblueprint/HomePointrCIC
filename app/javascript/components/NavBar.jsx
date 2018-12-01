@@ -18,7 +18,7 @@ class NavBar extends React.Component {
 
   
   handleLogout() {
-    let request = APIRoutes.users.delete()
+    let request = APIRoutes.users.delete();
     fetch(request, {
       method: 'DELETE',
       headers: {

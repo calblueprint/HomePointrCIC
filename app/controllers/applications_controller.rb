@@ -17,11 +17,8 @@ class ApplicationsController < ApplicationController
 
   def show
     @application = Application.find(params[:id])
-    @info = @application.info
-    @application_tenant = @info.tenant
     authorize @application
-    @property = @application.property
-    @status = @application_tenant.priority
+    @status = @application.status
   end
 
   def index   
@@ -48,6 +45,7 @@ class ApplicationsController < ApplicationController
   private
     
   def application_params
-    params.require(:application).permit(AppPolicy.permitted_attributes)
+    params.require(:application).permit(:status)
   end
+
 end
