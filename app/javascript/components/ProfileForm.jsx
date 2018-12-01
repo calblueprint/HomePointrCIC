@@ -124,7 +124,7 @@ class ProfileForm extends React.Component {
     return (
       <div 
       style={{
-        width: "50%",  
+        width: "50%",
         margin: "1.5% auto"
       }}
       key={index}>
@@ -156,7 +156,10 @@ class ProfileForm extends React.Component {
     return (
       <div 
       style={{
-        width: "50%",  
+        width: "50%",
+        textAlign: "center", 
+        display: "flex",
+        flexDirection: "column",
         margin: "1.5% auto"
       }}
       key={index}>
@@ -194,7 +197,7 @@ class ProfileForm extends React.Component {
     return (
       <div 
       style={{
-        width: "50%",  
+        width: "50%",
         margin: "1.5% auto"
       }}
       key={index}>
