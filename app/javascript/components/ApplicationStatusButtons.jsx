@@ -34,6 +34,7 @@ class ApplicationStatusButtons extends React.Component {
   handleReject = () => this.handleStatus("rejected");
   handleInterview = () => this.handleStatus("interview");
   handleAccept = () => this.handleStatus("housed");
+  removeTenant = () => this.handleStatus("rejected");
 
 // rejected: 0, received: 1, interview: 2, housed: 3
 
@@ -47,6 +48,8 @@ class ApplicationStatusButtons extends React.Component {
       return [<Button key="reject" type="danger" onClick={this.handleReject}>Reject</Button>,
               <Button key="interview" type="default" disabled>Interview</Button>,
               <Button key="accept" type="primary" onClick={this.handleAccept}>Accept</Button>]
+    } else if (this.props.status === "housed") {
+      return <Button key="remove" type="danger" onClick={this.removeTenant}>Remove Tenant</Button>
     } else {
       return null
     }
