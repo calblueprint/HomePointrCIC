@@ -11,6 +11,13 @@ class ListView extends React.Component {
       type: props.type
     }
   }
+
+  componentWillReceiveProps(nextProps){
+    if (nextProps.resources !== this.props.resources){
+      this.setState({resources: nextProps.resources});
+    }
+  }
+
   render() {
     return this.state.resources.map(resource => {
       return (
