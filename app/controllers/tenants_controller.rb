@@ -3,6 +3,9 @@ class TenantsController < ApplicationController
     if ReferralAgency.exists?(current_user.id)
       user = ReferralAgency.find(current_user.id)
       @tenants = Tenant.where(referral_agency: user)
+      @housing_type_options = Property.housing_types.keys
+      @property_type_options = Property.property_types.keys
+      @location_options = Property.locations.keys
     else
       user = Landlord.find(current_user.id)
       redirect_to errors_show_path

@@ -1,4 +1,4 @@
 <h1>Tenants#index</h1>
 <p>Find me in app/views/tenants/index.html.erb</p>
 
-<%= react_component("ListView", { resources: @tenants, type: 'tenant' }) %>
+<%= react_component("FilterPanel", { housing_options: @housing_type_options, property_options: @property_type_options, location_options: @location_options }) %>
