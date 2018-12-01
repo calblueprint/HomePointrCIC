@@ -14,18 +14,28 @@ class FilterPanel extends React.Component {
       rent_min: 0,
       rent_max: 0,
       size: 0,
-      property_type: "",
-      housing_type: "",
+      property_type: [],
+      housing_type: [],
       date_available: "",
     };
-    // this.handleClick = this.handleClick.bind(this);
+    this.handleClick = this.handleClick.bind(this);
+    this.handleCheckbox = this.handleCheckbox.bind(this);
+    this.handleDatePicker = this.handleDatePicker.bind(this);
   }
 
-  // handleClick = (event) => {
-  //   console.log(event.target);
-  // }
+  handleClick = (event, filter_name) => {
+    this.setState({[filter_name]: event.target.value})
+  }
+
+  handleCheckbox = (checkedValues, filter_name) => {
+    this.setState({[filter_name]: checkedValues})
+  }
+
+  handleDatePicker = (date, dateString) => {
+    this.setState({date_available: date})
+  }
+
   render() {
-    const { RangePicker } = DatePicker;
     const CheckboxGroup = Checkbox.Group;
     const menu = (
       <div>
@@ -33,17 +43,17 @@ class FilterPanel extends React.Component {
         Location
         <Radio.Group defaultValue="a" buttonStyle="solid">
           {this.props.location_options.map(location => {
-            return <Radio.Button value={location}>{location}</Radio.Button>
+            return <Radio.Button value={location} onClick={(e) => this.handleClick(e, "location")}>{location}</Radio.Button>
           })}
         </Radio.Group>
       </div>
       <div>
         Property Type
-        <CheckboxGroup options={this.props.property_options} />
+        <CheckboxGroup options={this.props.property_options} onChange={(e) => this.handleCheckbox(e, "property_type")}/>
       </div>
       <div>
         Housing Type
-        <CheckboxGroup options={this.props.housing_options} />
+        <CheckboxGroup options={this.props.housing_options} onChange={(e) => this.handleCheckbox(e, "housing_type")} />
       </div>
       <div>
       Capacity
@@ -54,11 +64,12 @@ class FilterPanel extends React.Component {
     <InputNumber min={1} max={10000000} defaultValue={0} />
       </div>
       <div>
-      Rent Min<InputNumber min={1} max={10000000} defaultValue={0} /> Max<InputNumber min={1} max={10000000} defaultValue={3} />
+      Rent Min<InputNumber min={1} max={10000000} defaultValue={this.props.tenant.rent_min} /> 
+      Max<InputNumber min={1} max={10000000} defaultValue={this.props.tenant.rent_min} />
       </div>
       <div>
       Date Available
-      <RangePicker />
+      <DatePicker onChange={(date, dateString) => this.handleDatePicker(date, dateString)} />
       </div>
     <Button type="primary">Apply</Button>
     </div>
@@ -66,7 +77,7 @@ class FilterPanel extends React.Component {
 
     return (
     <div>
-      <Dropdown overlay={menu} trigger='click'>
+      <Dropdown overlay={menu} visible={true} trigger='click'>
         <a className="ant-dropdown-link" href="#">
           Filters <Icon type="down" />
         </a>
@@ -75,14 +86,5 @@ class FilterPanel extends React.Component {
     );
   }
 }
-
-// FilterPanel.propTypes = {
-//   mode: PropTypes.string,
-//   type: PropTypes.string,
-//   prevValues: PropTypes.array,
-//   fieldNames: PropTypes.array,
-//   fieldTypes: PropTypes.array,
-//   niceFieldNames: PropTypes.array
-// };
 
 export default FilterPanel;
