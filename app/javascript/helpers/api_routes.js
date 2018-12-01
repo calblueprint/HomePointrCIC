@@ -14,6 +14,26 @@ class ApiRoutes {
       delete: (id) => '/api/tenants/' + id,
     }
   }
+
+  get referral_agencies() {
+    return {
+      update: (id) => '/api/referral_agencies/' + id,
+      delete: (id) => '/api/referral_agencies/' + id,
+    }
+  }
+
+  get landlords() {
+    return {
+      update: (id) => '/api/landlords/' + id,
+      delete: (id) => '/api/landlords/' + id,
+    }
+  }
+
+  get users() {
+    return {
+      delete: (id) => '/api/users/' + id,
+    }
+  }
 }
 const APIRoutes = new ApiRoutes();
 export default APIRoutes;

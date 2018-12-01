@@ -12,6 +12,7 @@ class LandlordsController < ApplicationController
   def show
   	if user_signed_in? 
   	  @landlord = Landlord.find(params[:id])
+      @email = @landlord.email
       authorize @landlord
   	  @properties = @landlord.properties
   	else
