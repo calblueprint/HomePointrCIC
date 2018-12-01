@@ -71,7 +71,4 @@ gem 'devise-multi_email'
 
 # Uncomment this line with "bcrypt" in the same file:
 
-# Use ActiveModel has_secure_password
-gem 'bcrypt', '~> 3.1.7'
-
 
