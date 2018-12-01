@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Card, Col, Row, Button } from "antd";
+import { Checkbox, Card, Col, Row, Button } from "antd";
 import "antd/dist/antd.css";
 
 class ListView extends React.Component {
@@ -30,9 +30,10 @@ class ListView extends React.Component {
           }}
         >
           <Row gutter={16}>
-            {this.state.type == "property" ? (
+            {this.state.type === "property" ? (
               <Card title={resource.location} bordered={false}>
                 {resource.description}
+                <Checkbox onChange={(e) => this.props.CheckboxChange(e, resource.id)}>Checkbox</Checkbox>
                 <Button type="default" href={"/properties/" + resource.id}>
                   View Info
                 </Button>

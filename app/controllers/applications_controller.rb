@@ -1,5 +1,7 @@
 class ApplicationsController < ApplicationController
   def new
+    @tenants = Tenant.where(referral_agency: current_user)
+    @properties = Property.all
     @application = Application.new
   end
 
