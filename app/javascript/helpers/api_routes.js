@@ -14,6 +14,11 @@ class ApiRoutes {
       delete: (id) => '/api/tenants/' + id,
     }
   }
+  get users() {
+    return {
+      delete: () => '/users/sign_out'
+    }
+  }
 
   get applications() {
     return {

@@ -11,6 +11,7 @@ class ReferralAgenciesController < ApplicationController
   def show
   	if user_signed_in? 
   	  @referral_agency = ReferralAgency.find(params[:id])
+      @email = @referral_agency.email
       @properties = Property.all
       authorize @referral_agency
       @name = @referral_agency.name
@@ -24,7 +25,7 @@ class ReferralAgenciesController < ApplicationController
 
     else
       redirect_to '/users/sign_up'
-  	end
+    end
   end
 
   def edit
