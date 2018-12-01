@@ -1,5 +1,6 @@
-<h1>ReferralAgencies#show</h1>
-<p>Find me in app/views/referral_agencies/show.html.erb</p>
+<%= form_with(model: @referral_agency, local: true) do |form| %>
+  <%= react_component("RAView", props={ id: @referral_agency.id, name: @name, tagValues: @tag_values }) %>
+<% end %>
 
 <div>
   <h3><%= @referral_agency.name %></h3>
@@ -20,3 +21,4 @@
   <%= link_to('Login', new_user_session_path)  %>  
   </li>
 <% end %>
+
