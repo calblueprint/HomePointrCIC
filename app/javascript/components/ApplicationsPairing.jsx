@@ -14,10 +14,12 @@ class ApplicationsPairing extends React.Component {
       selectedProperties: [], //array of strings
       selectedTenant: null
     };
-    this.onChange = this.onChange.bind(this);
+    this.onChangeProperty = this.onChangeProperty.bind(this);
+    this.onChangeTenant = this.onChangeTenant.bind(this);
+    this.handleMatch = this.handleMatch.bind(this);
   }
 
-  onChange(e, id) {
+  onChangeProperty(e, id) {
     if (e.target.checked) {
       this.state.selectedProperties.push(id);
     } else {
@@ -26,14 +28,43 @@ class ApplicationsPairing extends React.Component {
         this.state.selectedProperties.splice(index, 1);
       }
     }
-    
+  }
+
+  onChangeTenant(e, id) {
+    this.state.selectedTenant = id;
+  }
+
+  handleMatch() {
+    var request = null;
+    var prop;
+    for (prop in this.state.selectedProperties) {
+      let body = {"status": 1, "property_id": this.state.selectedProperties[prop], "info_id": this.state.selectedTenant};
+      body = JSON.stringify({application: body})
+      request = APIRoutes.applications.create
+      fetch(request, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          "X_CSRF-Token": document.getElementsByName("csrf-token")[0].content
+        },
+        body: body,
+        credentials: 'same-origin',
+      }).then((data) => {
+        window.location = '/applications/';
+      }).catch((data) => {
+        console.error(data);
+      });
+    }
   }
 
   render() {
     return (
       <div>
-        <ListView resources={this.props.tenants} type={"tenant"} CheckboxChange={this.onChange}/>
-        <ListView resources={this.props.properties} type={"property"} CheckboxChange={this.onChange}/>
+        <ListView resources={this.props.tenants} type={"tenant"} CheckboxChange={this.onChangeTenant}/>
+        <ListView resources={this.props.properties} type={"property"} CheckboxChange={this.onChangeProperty}/>
+        <Button key='save' type="primary" onClick={this.handleMatch}>
+          Submit
+        </Button>
       </div>
     );
   }

@@ -40,6 +40,7 @@ class ListView extends React.Component {
               </Card>
             ) : (
               <Card title={resource.name} bordered={false}>
+                <Checkbox onChange={(e) => this.props.CheckboxChange(e, resource.id)}>Checkbox</Checkbox>
                 <Button type="default" href={"/tenants/" + resource.id}>
                   View Info
                 </Button>
