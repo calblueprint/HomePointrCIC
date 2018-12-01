@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import {Avatar, Button} from 'antd';
+import APIRoutes from 'helpers/api_routes';
 import 'antd/dist/antd.css';
 
 class NavBar extends React.Component {
@@ -14,43 +15,18 @@ class NavBar extends React.Component {
     //switch to the ProfileForm Edit
     window.location = '/'+ this.props.type + '/' + this.props.id + '/edit'
   }
-
-  // handleLogout() {
-  //   e.preventDefault();
-  //   let that = this
-  //   let email = this.props.currentUser
-  //   axios.delete('/users/sign_out', {
-  //   })
-  //     .then(function(response){
-  //       that.props.changePage("login")
-  //     })
-  //     .catch(function(error){
-  //       console.log(error)
-  //     })
-  // }
   
-  // handleLogout() {
-  //   let id = this.props.id;
-  //   let type = this.props.type;
-  //   var request = null;
-  //   if (this.props.type === "referral_agencies") {
-  //     request = APIRoutes.referral_agencies.delete(id)
-  //   } else {
-  //     request = APIRoutes.landlords.delete(id)
-  //   }
-  //   fetch(request, {
-  //     method: 'DELETE',
-  //     headers: {
-  //       'Content-Type': 'application/json',
-  //       "X_CSRF-Token": document.getElementsByName("csrf-token")[0].content
-  //     }
-  //   }).then((response) => {
-  //     window.location = '/' + type + '/';
-  //   })
-  // }
-
   handleLogout() {
-    window.location = "/users/sign_out"
+    let request = APIRoutes.users.delete()
+    fetch(request, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        "X_CSRF-Token": document.getElementsByName("csrf-token")[0].content
+      }
+    }).then((response) => {
+      window.location = "/users/sign_in"
+    })
   }
 
   renderEmail() {
@@ -94,7 +70,6 @@ NavBar.propTypes = {
   id: PropTypes.number,
   type: PropTypes.string,
   email: PropTypes.string,
-
 };
 
 export default NavBar;
