@@ -52,7 +52,11 @@ class PropertyListWrapper extends React.Component {
 	
 	render() {
 		return (
-			<div>
+			<div
+        style={{
+	        paddingTop: "7%",
+        }}
+			>
 				<FilterPanel {...this.props} applyFilter={this.handleFilter} />
 				<ListView resources={this.state.properties} type='property' />
 			</div>
