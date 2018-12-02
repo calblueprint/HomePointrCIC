@@ -54,7 +54,7 @@ class PropertyListWrapper extends React.Component {
 		return (
 			<div
         style={{
-	        paddingTop: "7%",
+	        paddingTop: "5%",
         }}
 			>
 				<FilterPanel {...this.props} applyFilter={this.handleFilter} />
