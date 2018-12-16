@@ -50,7 +50,8 @@ class Api::PropertiesController < ApplicationController
       :housing_type,
       :date_available,
       :location,
-      :images
+      :images,
+      :form
     )
   end
 end

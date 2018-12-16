@@ -6,11 +6,12 @@ class Api::ApplicationsController < ApplicationController
   end
 
   def create
-    @application = Application.create!(application_params)
+    @application = Application.new(application_params)
     authorize @application
     if @application.save
       ApplicationsMailer.with(application: @application).new_application.deliver_now
-      redirect_to tenant_path(id: @application.info.tenant.id)
+      @application.form.attach(ActiveStorage::Blob.last)
+      render json: @application
     else
       render json: { errors: @application.errors.messages }
     end
@@ -31,7 +32,7 @@ class Api::ApplicationsController < ApplicationController
 
   def application_params
     if current_user.type == 'ReferralAgency'
-      params.require(:application).permit([:status, :property_id, :info_id, :description])
+      params.require(:application).permit([:status, :property_id, :info_id, :description, :form])
     else
       params.require(:application).permit([:status])
     end

@@ -1,6 +1,4 @@
-<h1>Applications#new</h1>
-<p>Find me in app/views/applications/new.html.erb</p>
-
 <%= form_with(model: @application, local: true) do |form| %>
   <%= react_component("ApplicationsPairing", props={ tenants: @tenants, properties: @properties}) %>
+  <%= form.file_field :form%>
 <% end %>
