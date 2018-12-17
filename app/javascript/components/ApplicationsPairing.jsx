@@ -7,6 +7,7 @@ import ListView from './ListView.jsx';
 import APIRoutes from 'helpers/api_routes';
 import UploadButton from './UploadButton';
 import ActiveStorageProvider from "react-activestorage-provider";
+import SplitViewContainer from "./SplitViewContainer.jsx";
 
 class ApplicationsPairing extends React.Component {
 
@@ -34,7 +35,11 @@ class ApplicationsPairing extends React.Component {
   }
 
   onChangeTenant(e, id) {
-    this.state.selectedTenant = id;
+    if (e.target.checked) {
+      this.state.selectedTenant = id;
+    } else {
+      this.state.selectedTenant = null;
+    }
   }
 
   handleMatch() {
@@ -71,10 +76,8 @@ class ApplicationsPairing extends React.Component {
   }
 
   renderUpload(index) {
-    let buttonProps = null;
     return (
       <div key={index}>
-        <UploadButton {...buttonProps} />
         <ActiveStorageProvider
           endpoint={{
             path: '/api/applications',
@@ -121,10 +124,19 @@ class ApplicationsPairing extends React.Component {
   }
 
   render() {
+    const leftComponent = (
+      <ListView resources={this.props.tenants} type="tenant" CheckboxChange={this.onChangeTenant}/>
+    );
+    const rightComponent = (
+      <ListView resources={this.props.properties} type="property" CheckboxChange={this.onChangeProperty}/>
+    );
+
     return (
       <div>
-        <ListView resources={this.props.tenants} type={"tenant"} CheckboxChange={this.onChangeTenant}/>
-        <ListView resources={this.props.properties} type={"property"} CheckboxChange={this.onChangeProperty}/>
+        <SplitViewContainer
+          leftComponent={leftComponent}
+          rightComponent={rightComponent}
+        />
         {this.renderTextarea()}
         {this.renderUpload()}
         <Button key='save' type="primary" onClick={this.handleMatch}>

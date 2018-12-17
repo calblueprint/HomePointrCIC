@@ -4,13 +4,17 @@ class PropertiesController < ApplicationController
   end
 
   def new
+    $activestoragestart = nil
+    $activestoragestart = ActiveStorage::Blob.last.id
+    puts "ASFASDJLASDJKLADJLADJLA:KJ:LASDJLADJ:ALDJ:ALKDJ:ALDJAL:SDKJL:"
+    puts $activestoragestart
     @property = Property.new
     authorize @property
     @mode = "create"
     @type = "properties"
     enums = []
     @field_names = Property.column_names[1..-1] 
-    # @field_names = Property.column_names[1..-1] + ["images"]
+    # @field_names = Property.column_names[1..-1] + ["images", "form"]
     @nice_field_names = []
     @field_names.each do |i|
       @nice_field_names << i.titleize
@@ -20,9 +24,8 @@ class PropertiesController < ApplicationController
     end
     num_fields = @field_names.length
     @prev_values = Array.new(num_fields, "")
-    # @prev_values << @property.images
-    # @field_types = ["textbox", "textarea", "textbox", "textbox", "textbox", enums[0], enums[1], "datepicker", enums[2], "attachment"]
-    @field_types = ["textbox", "textarea", "textbox", "textbox", "textbox", enums[0], enums[1], "datepicker", enums[2]]
+    @field_types = ["textbox", "textarea", "textbox", "textbox", "textbox", enums[0], enums[1], "datepicker", enums[2], "attachment", "form"]
+    # @field_types = ["textbox", "textarea", "textbox", "textbox", "textbox", enums[0], enums[1], "datepicker", enums[2]]
   end
 
   def show
@@ -54,7 +57,7 @@ class PropertiesController < ApplicationController
     @type = "properties"
     enums = []
     @nice_field_names = []
-    @field_names = Property.column_names[1..-1] + ["images"]
+    @field_names = Property.column_names[1..-1] + ["images", "form"]
     @field_names.each do |i|
       @nice_field_names << i.titleize
       if Property.defined_enums.keys.include? i
@@ -69,6 +72,11 @@ class PropertiesController < ApplicationController
     else
       @prev_values << @property.images.map{|img| ({ image: url_for(img), id: img.id })}
     end
-    @field_types = ["textbox", "textarea", "textbox", "textbox", "textbox", enums[0], enums[1], "datepicker", enums[2], "attachment"]
+    if @property.form.attached? == false
+      @prev_values << nil
+    else
+      @prev_values << { image: url_for(@property.form.attachment), id: @property.form.attachment.id }
+    end
+    @field_types = ["textbox", "textarea", "textbox", "textbox", "textbox", enums[0], enums[1], "datepicker", enums[2], "attachment", "form"]
   end
 end

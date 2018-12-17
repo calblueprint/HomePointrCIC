@@ -24,7 +24,6 @@ class PropertyView extends React.Component {
   }
 
   renderPhotos() {
-    debugger
     if (this.props.images == null) {
       return (
         <React.Fragment key='photo'>
