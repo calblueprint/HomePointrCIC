@@ -4,6 +4,7 @@ import { Upload, message, Icon, Select, Input, Button, Slider, Switch, DatePicke
 import "antd/dist/antd.css";
 import moment from 'moment';
 import APIRoutes from 'helpers/api_routes';
+import Utils from 'helpers/utils';
 import UploadButton from './UploadButton';
 import ActiveStorageProvider from "react-activestorage-provider";
 
@@ -277,36 +278,7 @@ class ProfileForm extends React.Component {
           headers={{
             'Content-Type': 'application/json'
           }}
-          render={({ handleUpload, uploads, ready }) => (
-            <div>
-              <input
-                type="file"
-                disabled={!ready}
-                onChange={e => handleUpload(e.currentTarget.files)}
-              />
-
-              {uploads.map(upload => {
-                switch (upload.state) {
-                  case 'waiting':
-                    return <p key={upload.id}>Waiting to upload {upload.file.name}</p>
-                  case 'uploading':
-                    return (
-                      <p key={upload.id}>
-                        Uploading {upload.file.name}: {upload.progress}%
-                      </p>
-                    )
-                  case 'error':
-                    return (
-                      <p key={upload.id}>
-                        Error uploading {upload.file.name}: {upload.error}
-                      </p>
-                    )
-                  case 'finished':
-                    return <p key={upload.id}>Finished uploading {upload.file.name}</p>
-                }
-              })}
-            </div>
-          )}
+          render={Utils.activeStorageUploadRenderer}
         />
       </div>
     )
@@ -320,6 +292,7 @@ class ProfileForm extends React.Component {
       buttonProps = {
         listType: 'picture',
         defaultFileList: this.state.prevValues[index] === null ? [] : [{uid: this.state.prevValues[index].id, url: this.state.prevValues[index].image, name: this.state.prevValues[index].image.split("/").slice(-1).pop()}],
+        onRemove: (e) => this.onImageRemove(e),
         className: 'upload-list-inline'
       }
     }
@@ -337,36 +310,7 @@ class ProfileForm extends React.Component {
           headers={{
             'Content-Type': 'application/json'
           }}
-          render={({ handleUpload, uploads, ready }) => (
-            <div>
-              <input
-                type="file"
-                disabled={!ready}
-                onChange={e => handleUpload(e.currentTarget.files)}
-              />
-
-              {uploads.map(upload => {
-                switch (upload.state) {
-                  case 'waiting':
-                    return <p key={upload.id}>Waiting to upload {upload.file.name}</p>
-                  case 'uploading':
-                    return (
-                      <p key={upload.id}>
-                        Uploading {upload.file.name}: {upload.progress}%
-                      </p>
-                    )
-                  case 'error':
-                    return (
-                      <p key={upload.id}>
-                        Error uploading {upload.file.name}: {upload.error}
-                      </p>
-                    )
-                  case 'finished':
-                    return <p key={upload.id}>Finished uploading {upload.file.name}</p>
-                }
-              })}
-            </div>
-          )}
+          render={Utils.activeStorageUploadRenderer}
         />
       </div>
     )

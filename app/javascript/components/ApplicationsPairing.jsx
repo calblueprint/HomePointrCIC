@@ -5,6 +5,7 @@ import 'antd/dist/antd.css';
 import moment from 'moment';
 import ListView from './ListView.jsx';
 import APIRoutes from 'helpers/api_routes';
+import Utils from 'helpers/utils';
 import UploadButton from './UploadButton';
 import ActiveStorageProvider from "react-activestorage-provider";
 import SplitViewContainer from "./SplitViewContainer.jsx";
@@ -88,36 +89,7 @@ class ApplicationsPairing extends React.Component {
           headers={{
             'Content-Type': 'application/json'
           }}
-          render={({ handleUpload, uploads, ready }) => (
-            <div>
-              <input
-                type="file"
-                disabled={!ready}
-                onChange={e => handleUpload(e.currentTarget.files)}
-              />
-
-              {uploads.map(upload => {
-                switch (upload.state) {
-                  case 'waiting':
-                    return <p key={upload.id}>Waiting to upload {upload.file.name}</p>
-                  case 'uploading':
-                    return (
-                      <p key={upload.id}>
-                        Uploading {upload.file.name}: {upload.progress}%
-                      </p>
-                    )
-                  case 'error':
-                    return (
-                      <p key={upload.id}>
-                        Error uploading {upload.file.name}: {upload.error}
-                      </p>
-                    )
-                  case 'finished':
-                    return <p key={upload.id}>Finished uploading {upload.file.name}</p>
-                }
-              })}
-            </div>
-          )}
+          render={Utils.activeStorageUploadRenderer}
         />
       </div>
     )
