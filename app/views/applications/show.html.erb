@@ -1,6 +1,9 @@
-<h1>Applications#show</h1>
-<p>Find me in app/views/applications/show.html.erb</p>
-
 <%= form_with(model: @applications, local: true) do |form| %>
   <%= react_component("ApplicationStatusButtons", props={ application_id: @application.id, status: @status }) %>
 <% end %>
+
+Application ID: <%= @application.id %>
+Application Status: <%= @application.status %>
+Application Property ID: <%= @application.property_id %>
+Application Info ID: <%= @application.info_id %>
+Application Form: <%= link_to "Preview", rails_blob_path(@application.form, disposition: 'preview') %>

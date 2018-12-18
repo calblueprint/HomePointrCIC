@@ -37,6 +37,8 @@ GEM
       actionpack (= 5.2.1.1)
       activerecord (= 5.2.1.1)
       marcel (~> 0.3.1)
+    activestorage-validator (0.1.0)
+      rails (~> 5.2.0)
     activesupport (5.2.1.1)
       concurrent-ruby (~> 1.0, >= 1.0.2)
       i18n (>= 0.7, < 2)
@@ -249,6 +251,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  activestorage-validator
   aws-sdk-s3
   bcrypt
   bootsnap (>= 1.1.0)
@@ -282,4 +285,4 @@ RUBY VERSION
    ruby 2.5.1p57
 
 BUNDLED WITH
-   1.16.2
+   1.17.1

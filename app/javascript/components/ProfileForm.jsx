@@ -4,6 +4,7 @@ import { Upload, message, Icon, Select, Input, Button, Slider, Switch, DatePicke
 import "antd/dist/antd.css";
 import moment from 'moment';
 import APIRoutes from 'helpers/api_routes';
+import Utils from 'helpers/utils';
 import UploadButton from './UploadButton';
 import ActiveStorageProvider from "react-activestorage-provider";
 
@@ -69,7 +70,7 @@ class ProfileForm extends React.Component {
   handleCreate() {
     let type = this.state.type;
     var request = null;
-    let body = this.convertToDict(this.state.fieldNames, this.state.prevValues);
+    let body = this.convertToDict(this.state.fieldNames.slice(0,8), this.state.prevValues.slice(0,8));
     if (this.state.type === "properties") {
       body = JSON.stringify({property: body})
       request = APIRoutes.properties.create
@@ -265,6 +266,7 @@ class ProfileForm extends React.Component {
     }
     return (
       <div key={index}>
+        Images
         <UploadButton {...buttonProps} />
         <ActiveStorageProvider
           endpoint={{
@@ -276,36 +278,39 @@ class ProfileForm extends React.Component {
           headers={{
             'Content-Type': 'application/json'
           }}
-          render={({ handleUpload, uploads, ready }) => (
-            <div>
-              <input
-                type="file"
-                disabled={!ready}
-                onChange={e => handleUpload(e.currentTarget.files)}
-              />
+          render={Utils.activeStorageUploadRenderer}
+        />
+      </div>
+    )
+  }
 
-              {uploads.map(upload => {
-                switch (upload.state) {
-                  case 'waiting':
-                    return <p key={upload.id}>Waiting to upload {upload.file.name}</p>
-                  case 'uploading':
-                    return (
-                      <p key={upload.id}>
-                        Uploading {upload.file.name}: {upload.progress}%
-                      </p>
-                    )
-                  case 'error':
-                    return (
-                      <p key={upload.id}>
-                        Error uploading {upload.file.name}: {upload.error}
-                      </p>
-                    )
-                  case 'finished':
-                    return <p key={upload.id}>Finished uploading {upload.file.name}</p>
-                }
-              })}
-            </div>
-          )}
+  renderUploadForm(index) {
+    let buttonProps = null;
+    let method = (this.state.mode === 'edit') ? 'PUT' : 'POST';
+    let path = (this.state.mode === "create") ? '/api/properties' : '/api/properties/' + this.state.id.toString();
+    if (this.state.mode === "edit") {
+      buttonProps = {
+        listType: 'picture',
+        defaultFileList: this.state.prevValues[index] === null ? [] : [{uid: this.state.prevValues[index].id, url: this.state.prevValues[index].image, name: this.state.prevValues[index].image.split("/").slice(-1).pop()}],
+        onRemove: (e) => this.onImageRemove(e),
+        className: 'upload-list-inline'
+      }
+    }
+    return (
+      <div key={index}>
+        Property Form
+        <UploadButton {...buttonProps} />
+        <ActiveStorageProvider
+          endpoint={{
+            path: path,
+            model: 'Property',
+            attribute: 'form',
+            method: method,
+          }}
+          headers={{
+            'Content-Type': 'application/json'
+          }}
+          render={Utils.activeStorageUploadRenderer}
         />
       </div>
     )
@@ -313,7 +318,7 @@ class ProfileForm extends React.Component {
 
   renderForm() {
     return (
-      this.state.fieldNames.map((_, index) => {
+      this.state.fieldTypes.map((_, index) => {
         if (this.state.fieldTypes[index] === "textbox") {
           return ( 
             this.renderTextbox(index)
@@ -335,6 +340,10 @@ class ProfileForm extends React.Component {
         } else if (this.state.fieldTypes[index] === "attachment") {
           return (
             this.renderUpload(index)
+          )
+        } else if (this.state.fieldTypes[index] === "form") {
+          return (
+            this.renderUploadForm(index)
           )
         } else {
           return (

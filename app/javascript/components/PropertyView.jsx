@@ -24,7 +24,6 @@ class PropertyView extends React.Component {
   }
 
   renderPhotos() {
-    debugger
     if (this.props.images == null) {
       return (
         <React.Fragment key='photo'>
@@ -34,7 +33,7 @@ class PropertyView extends React.Component {
     } else {
       return (
         <React.Fragment key='photo'>
-          <Avatar size={256} src={this.props.images[0].url}/>
+          <Avatar size={256} shape="square" src={this.props.images[0].url}/>
         </React.Fragment>
       )
     }

@@ -11,9 +11,38 @@ class Api::PropertiesController < ApplicationController
     @property = Property.new(property_params)
     authorize @property
     if @property.save
+      if ActiveStorage::Blob.last.id != $activestoragestart
+        a = $activestoragestart 
+        add_files_to_property(a+1, @property)
+      end
       render json: @property
     else
       render json: { errors: @property.errors.messages }
+    end
+  end
+
+  def add_files_to_property(start, property)
+    imagedone = false
+    formdone = false
+    ActiveStorage::Blob.last.id.downto(start).each do |i|
+      if imagedone and formdone
+        break
+      else
+        a = ActiveStorage::Blob.find(i)
+        if !imagedone
+          if a.image?
+            property.images.attach(a)
+            imagedone = true
+          end
+        end
+
+        if !formdone
+          if !a.image?
+            property.form.attach(a)
+            formdone = true
+          end
+        end
+      end
     end
   end
 
@@ -50,7 +79,8 @@ class Api::PropertiesController < ApplicationController
       :housing_type,
       :date_available,
       :location,
-      :images
+      :images,
+      :form
     )
   end
 end
