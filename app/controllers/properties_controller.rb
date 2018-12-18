@@ -4,10 +4,7 @@ class PropertiesController < ApplicationController
   end
 
   def new
-    $activestoragestart = nil
     $activestoragestart = ActiveStorage::Blob.last.id
-    puts "ASFASDJLASDJKLADJLADJLA:KJ:LASDJLADJ:ALDJ:ALKDJ:ALDJAL:SDKJL:"
-    puts $activestoragestart
     @property = Property.new
     authorize @property
     @mode = "create"

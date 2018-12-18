@@ -6,6 +6,10 @@ class Api::TenantsController < ApplicationController
     authorize @tenant
     if @tenant.save
       Info.create(tenant_id: @tenant.id)
+      a = ActiveStorage::Blob.last
+      if a.image?
+        @tenant.avatar.attach(a)
+      end
       render json: @tenant
     else
       render json: { errors: @tenant.errors.messages }
