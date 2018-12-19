@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Checkbox, Card, Col, Row, Button, Avatar } from "antd";
+import TenantModal from "./modals/TenantModal";
 import "antd/dist/antd.css";
 
 class ListView extends React.Component {
@@ -14,7 +15,7 @@ class ListView extends React.Component {
     }
   }
 
-  componentWillReceiveProps(nextProps){
+  componentWillReceiveProps(nextProps) {
     if (nextProps.resources !== this.props.resources){
       this.setState({resources: nextProps.resources});
     }
@@ -66,10 +67,11 @@ class ListView extends React.Component {
                   avatar={this.renderAvatar(resource.url)}
                 />
                 {this.renderCheckbox(resource.id)}
-                <Button type="default" href={"/tenants/" + resource.id}>
-                  View Info
-                </Button>
+                <TenantModal name={resource.name} email={resource.email} description={resource.description} phone={resource.phone} housed={this.props.housed}/>
               </Card>
+              // <Button type="default" href={"/tenants/" + resource.id}>
+              //     View Info
+              //   </Button>
             )}
           </Row>
         </div>
