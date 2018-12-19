@@ -24,8 +24,8 @@ class LandlordHomePage extends React.Component {
   }
 
   render() {
+    this.setup();
     return [
-      this.setup(),
       <h1>Properties</h1>,
       <Button 
         style={{

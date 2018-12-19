@@ -61,10 +61,9 @@ class ListView extends React.Component {
                 </Button>
               </Card>
             ) : (
-              <Card bordered={false}>
+              <Card title={resource.name} bordered={false}>
                 <Meta
                   avatar={this.renderAvatar(resource.url)}
-                  title={resource.name}
                 />
                 {this.renderCheckbox(resource.id)}
                 <Button type="default" href={"/tenants/" + resource.id}>
