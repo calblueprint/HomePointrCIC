@@ -61,8 +61,12 @@ class ListView extends React.Component {
                 </Button>
               </Card>
             ) : (
-              <Card title={resource.name} bordered={false}>
-                <Checkbox onChange={(e) => this.props.CheckboxChange(e, resource.id)}>Checkbox</Checkbox>
+              <Card bordered={false}>
+                <Meta
+                  avatar={this.renderAvatar(resource.url)}
+                  title={resource.name}
+                />
+                {this.renderCheckbox(resource.id)}
                 <Button type="default" href={"/tenants/" + resource.id}>
                   View Info
                 </Button>

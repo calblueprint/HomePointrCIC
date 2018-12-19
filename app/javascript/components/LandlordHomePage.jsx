@@ -31,7 +31,7 @@ class LandlordHomePage extends React.Component {
         style={{
         width: "20%",
         margin: "1.5% auto",
-        right: "-1000px",
+        left: "80%",
         }}
         key='submit' 
         type="primary" 
