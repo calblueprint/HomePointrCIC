@@ -47,9 +47,18 @@ class PropertyView extends React.Component {
     )
   }
 
+  renderEditButton() {
+    if (this.props.canceledit === null) {
+      return (
+        <div key='editbutton'>
+          {<Button key='button' type="default" onClick={this.handleEdit} >Edit Property</Button>}
+        </div>
+      )
+    }
+  }
+
   render() {
-    return [this.renderNameDescription(), this.renderPhotos(), this.renderTags(),
-      <Button key='button' type="default" onClick={this.handleEdit} >Edit Property</Button>]
+    return [this.renderNameDescription(), this.renderPhotos(), this.renderTags(), this.renderEditButton()]
   }
 }
 

@@ -36,7 +36,7 @@ class ListView extends React.Component {
   }
 
   render() {
-    return this.state.resources.map(resource => {
+    return this.state.resources.map((resource, index) => {
       const { Meta } = Card;
       return (
         <div
@@ -67,7 +67,7 @@ class ListView extends React.Component {
                   avatar={this.renderAvatar(resource.url)}
                 />
                 {this.renderCheckbox(resource.id)}
-                <TenantModal name={resource.name} email={resource.email} description={resource.description} phone={resource.phone} housed={this.props.housed}/>
+                <TenantModal property_id={this.props.property_id} app={this.props.apps[index]} name={resource.name} email={resource.email} description={resource.description} phone={resource.phone} housed={this.props.housed}/>
               </Card>
               // <Button type="default" href={"/tenants/" + resource.id}>
               //     View Info

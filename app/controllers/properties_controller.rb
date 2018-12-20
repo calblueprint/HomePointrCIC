@@ -55,18 +55,21 @@ class PropertiesController < ApplicationController
     @name = (@property.housing_type + " in " + @property.location).titleize
     @description = @property.attributes.values[2]
     
-    @applications = @property.applications
     @tenants = []
     @tenantImages = []
+    @tenantApps = []
     @potentialTenants = []
     @potentialTenantsImages = []
-    @applications.each do |a|
+    @potentialTenantApps = []
+    @property.applications.each do |a|
       if a.status == 'housed'
         @tenants << a.info.tenant
         @tenantImages << {url: url_for(a.info.tenant.avatar)}
+        @tenantApps << a
       elsif a.status == 'received' or a.status == 'interview'
         @potentialTenants << a.info.tenant
         @potentialTenantsImages << {url: url_for(a.info.tenant.avatar)}
+        @potentialTenantApps << a
       end
     end 
   end
