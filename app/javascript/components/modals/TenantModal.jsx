@@ -31,10 +31,14 @@ class TenantModal extends React.Component {
   }
 
   handleButtons() {
-    if (this.props.housed) {
-      return(<ApplicationStatusButtons property_id={this.props.property_id} application_id={this.props.app.id} status={this.props.app.status}/>)
+    if (this.props.housed != null) {
+      if (this.props.housed) {
+        return(<ApplicationStatusButtons property_id={this.props.property_id} application_id={this.props.app.id} status={this.props.app.status}/>)
+      } else {
+        return(<ApplicationStatusButtons property_id={this.props.property_id} application_id={this.props.app.id} status={this.props.app.status}/>)
+      }
     } else {
-      return(<ApplicationStatusButtons property_id={this.props.property_id} application_id={this.props.app.id} status={this.props.app.status}/>)
+      return(null)
     }
   }
 
