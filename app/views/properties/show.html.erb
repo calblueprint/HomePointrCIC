@@ -1,4 +1,4 @@
 <%= form_with(model: @property, local: true) do |form| %>
-  <%= react_component("PropertyView", props={ id: @property.id, name: @name, description: @description, tagValues: @tag_values, images: @images }) %>
+  <%= react_component("PropertyShowPage", props={ id: @property.id, name: @name, description: @description, tagValues: @tag_values, images: @images, tenants: @tenants, tenantImages: @tenantImages, potentialTenants: @potentialTenants, potentialTenantsImages: @potentialTenantsImages}) %>
 <% end %>
 

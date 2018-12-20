@@ -97,10 +97,10 @@ class ApplicationsPairing extends React.Component {
 
   render() {
     const leftComponent = (
-      <ListView resources={this.props.tenants} type="tenant" CheckboxChange={this.onChangeTenant}/>
+      <ListView resources={this.props.tenants} type="tenant" checkbox={true} CheckboxChange={this.onChangeTenant}/>
     );
     const rightComponent = (
-      <ListView resources={this.props.properties} type="property" CheckboxChange={this.onChangeProperty}/>
+      <ListView resources={this.props.properties} type="property" checkbox={true} CheckboxChange={this.onChangeProperty}/>
     );
 
     return (

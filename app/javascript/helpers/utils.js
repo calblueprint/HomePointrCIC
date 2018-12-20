@@ -31,6 +31,16 @@ const Utils = {
       })}
     </div>
   ),
+
+  //combine two dictionaries together 
+  //example: var a = { foo: true }, b = { bar: false };
+  //result: { foo: true, bar: false }
+  extend: (obj, src) => {
+    for (var key in src) {
+      if (src.hasOwnProperty(key)) obj[key] = src[key];
+    }
+    return obj;
+  }
 }
 
 export default Utils;

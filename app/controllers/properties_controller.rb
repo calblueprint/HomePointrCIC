@@ -1,6 +1,13 @@
 class PropertiesController < ApplicationController
   def index
     @properties = PropertyPolicy::Scope.new(current_user, Property).resolve
+    @images = []
+    @properties.each do |p|
+      if p.images.attached? == true
+        image_list = p.images.map{|img| ({ image: url_for(img) })}
+        @images << {url: image_list[0][:image]}
+      end
+    end
   end
 
   def new
@@ -47,6 +54,21 @@ class PropertiesController < ApplicationController
     end
     @name = (@property.housing_type + " in " + @property.location).titleize
     @description = @property.attributes.values[2]
+    
+    @applications = @property.applications
+    @tenants = []
+    @tenantImages = []
+    @potentialTenants = []
+    @potentialTenantsImages = []
+    @applications.each do |a|
+      if a.status == 'housed'
+        @tenants << a.info.tenant
+        @tenantImages << {url: url_for(a.info.tenant.avatar)}
+      elsif a.status == 'received' or a.status == 'interview'
+        @potentialTenants << a.info.tenant
+        @potentialTenantsImages << {url: url_for(a.info.tenant.avatar)}
+      end
+    end 
   end
   
   def edit
