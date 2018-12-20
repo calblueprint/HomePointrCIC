@@ -25,7 +25,7 @@ class ApplicationStatusButtons extends React.Component {
       body: body,
       credentials: 'same-origin',
     }).then((data) => {
-      window.location = '/applications/' + this.props.application_id
+      window.location = '/properties/' + this.props.property_id
     }).catch((data) => {
       console.error(data);
     });
@@ -40,15 +40,15 @@ class ApplicationStatusButtons extends React.Component {
 
   render() {
     console.log(this.props.status)
-    if (this.props.status === 1) {
+    if (this.props.status === "received") {
       return [<Button key="reject" type="danger" onClick={this.handleReject}>Reject</Button>,
               <Button key="interview" type="default" onClick={this.handleInterview}>Interview</Button>,
               <Button key="accept" type="primary" disabled>Accept</Button>]
-    } else if (this.props.status === 2) {
+    } else if (this.props.status === "interview") {
       return [<Button key="reject" type="danger" onClick={this.handleReject}>Reject</Button>,
               <Button key="interview" type="default" disabled>Interview</Button>,
               <Button key="accept" type="primary" onClick={this.handleAccept}>Accept</Button>]
-    } else if (this.props.status === 3) {
+    } else if (this.props.status === "housed") {
       return <Button key="remove" type="danger" onClick={this.removeTenant}>Remove Tenant</Button>
     } else {
       return null
@@ -58,7 +58,7 @@ class ApplicationStatusButtons extends React.Component {
 
 ApplicationStatusButtons.propTypes = {
   application_id: PropTypes.number,
-  status: PropTypes.number
+  status: PropTypes.string,
 };
 
 export default ApplicationStatusButtons
