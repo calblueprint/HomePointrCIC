@@ -57,53 +57,161 @@ class FilterPanel extends React.Component {
       <div 
         style={{
           background: "white",
-          marginLeft: "5%",
+          marginLeft: "10%",
+          marginRight: "10%",
         }}
       >
-        <div>
-          Location
+        <div
+          style={{
+            borderBottom: "1px solid",
+            borderColor: "#E5E5E5",
+            paddingBottom: "15px",
+          }}
+        >
+          <div
+            style={{
+              paddingBottom: "10px",
+              fontWeight: "bold",
+            }}
+          >
+            Location
+          </div>
           <CheckboxGroup 
             options={this.props.location_options} 
             defaultValue={this.state.location}
             onChange={(e) => this.handleCheckbox(e, "location")} 
           />
         </div>
-        <div>
+        <div
+          style={{
+            borderBottom: "1px solid",
+            borderColor: "#E5E5E5",
+            paddingBottom: "15px",
+          }}
+        >
+          <div
+            style={{
+              paddingBottom: "10px",
+              paddingTop: "10px",
+              fontWeight: "bold",
+            }}
+          >
           Property Type
+          </div>
           <CheckboxGroup 
             options={this.props.property_options} 
             defaultValue={this.state.property_type}
             onChange={(e) => this.handleCheckbox(e, "property_type")} 
           />
         </div>
-        <div>
+        <div
+          style={{
+            borderBottom: "1px solid",
+            borderColor: "#E5E5E5",
+            paddingBottom: "15px",
+          }}
+        >
+          <div
+            style={{
+              paddingBottom: "10px",
+              paddingTop: "10px",
+              fontWeight: "bold",
+            }}
+          >
           Housing Type
+          </div>
           <CheckboxGroup 
             options={this.props.housing_options} 
             defaultValue={this.state.housing_type}
             onChange={(e) => this.handleCheckbox(e, "housing_type")} 
           />
         </div>
-        <div>
+        <div
+          style={{
+            borderBottom: "1px solid",
+            borderColor: "#E5E5E5",
+            paddingBottom: "15px",
+          }}
+        >
+          <div
+            style={{
+              paddingBottom: "10px",
+              paddingTop: "10px",
+              fontWeight: "bold",
+            }}
+          >
         Capacity
+        </div>
         <InputNumber min={0} defaultValue={0} onChange={(e) => this.handleCheckbox(e, "capacity")} />
         </div>
-        <div>
+        <div
+          style={{
+            borderBottom: "1px solid",
+            borderColor: "#E5E5E5",
+            paddingBottom: "15px",
+          }}
+        >
+          <div
+            style={{
+              paddingBottom: "10px",
+              paddingTop: "10px",
+              fontWeight: "bold",
+            }}
+          >
         Number of Bedrooms
+        </div>
         <InputNumber min={0} defaultValue={this.state.size} onChange={(e) => this.handleCheckbox(e, "size")} />
         </div>
-        <div>
-        Rent Min<InputNumber min={0} defaultValue={this.state.rent_min} onChange={(e) => this.handleCheckbox(e, "rent_min")} /> 
+        <div
+          style={{
+            borderBottom: "1px solid",
+            borderColor: "#E5E5E5",
+            paddingBottom: "15px",
+          }}
+        >
+          <div
+            style={{
+              paddingBottom: "10px",
+              paddingTop: "10px",
+              fontWeight: "bold",
+            }}
+          >
+        Rent 
+        </div>
+        Min<InputNumber min={0} defaultValue={this.state.rent_min} onChange={(e) => this.handleCheckbox(e, "rent_min")} /> 
         Max<InputNumber min={0} defaultValue={this.state.rent_max} onChange={(e) => this.handleCheckbox(e, "rent_max")} />
         </div>
-        <div>
+        <div
+          style={{
+            paddingBottom: "15px",
+          }}
+        >
+          <div
+            style={{
+              paddingBottom: "10px",
+              paddingTop: "10px",
+              fontWeight: "bold",
+            }}
+          >
         Date Available
+        </div>
         <DatePicker 
           onChange={(date, dateString) => this.handleDatePicker(date, dateString)} 
           defaultValue={moment(this.props.tenant.date_needed)}
         />
         </div>
-      <Button size="small" type="primary" onClick={this.passState}>Apply</Button>
+      <Button 
+        type="primary" 
+        onClick={this.passState}
+      >
+        <div         
+          style={{
+            paddingBottom: "15px",
+          }}
+        >
+          Apply
+        </div>
+      </Button>
     </div>
     );
 
@@ -114,7 +222,8 @@ class FilterPanel extends React.Component {
           <div        
             style={{
             background: "white",
-            marginLeft: "5%",
+            marginLeft: "10%",
+            marginRight: "10%",
             }}
             onClick={this.toggleOpen}
           >
