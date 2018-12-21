@@ -31,8 +31,8 @@ class PropertyShowPage extends React.Component {
     );
     const rightComponent = (
     <Tabs defaultActiveKey="1">
-      <TabPane tab="Your Tenants" key="1"><ListView property_id={this.props.id} apps={this.props.tenantApps} resources={this.state.tenants} type="tenant" housed={true} avatar={true} checkbox={false}/></TabPane>
-      <TabPane tab="Pending Applications" key="2"><ListView property_id={this.props.id} apps={this.props.potentialTenantApps} resources={this.state.potentialTenants} type="tenant" housed={false} avatar={true} checkbox={false}/></TabPane>
+      <TabPane tab="Your Tenants" key="1"><ListView tenant_modal={true} property_id={this.props.id} apps={this.props.tenantApps} resources={this.state.tenants} type="tenant" housed={true} avatar={true} checkbox={false}/></TabPane>
+      <TabPane tab="Pending Applications" key="2"><ListView tenant_modal={true} property_id={this.props.id} apps={this.props.potentialTenantApps} resources={this.state.potentialTenants} type="tenant" housed={false} avatar={true} checkbox={false}/></TabPane>
     </Tabs>);
 
     return (

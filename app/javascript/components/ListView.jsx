@@ -41,10 +41,16 @@ class ListView extends React.Component {
   }
 
   renderTenantModal(resource, index) {
-    if (this.props.apps) {
-      return(<TenantModal property_id={this.props.property_id} app={this.props.apps[index]} name={resource.name} email={resource.email} description={resource.description} phone={resource.phone} housed={this.props.housed}/>)
+    if (!this.props.tenant_modal) {
+      return(<Button type="default" href={"/tenants/" + resource.id}>
+        View Info
+      </Button>)
     } else {
-      return(<TenantModal name={resource.name} email={resource.email} description={resource.description} phone={resource.phone}/>)
+      if (this.props.apps) {
+        return(<TenantModal property_id={this.props.property_id} app={this.props.apps[index]} name={resource.name} email={resource.email} description={resource.description} phone={resource.phone} housed={this.props.housed}/>)
+      } else {
+        return(<TenantModal name={resource.name} email={resource.email} description={resource.description} phone={resource.phone}/>)
+      }
     }
   }
 

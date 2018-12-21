@@ -105,7 +105,7 @@ class ApplicationsPairing extends React.Component {
   render() {
     this.setup(this.state.tenants, this.props.tenantImages);
     const leftComponent = (
-      <ListView resources={this.state.tenants} avatar={true} type="tenant" checkbox={true} CheckboxChange={this.onChangeTenant}/>
+      <ListView resources={this.state.tenants} tenant_modal={true} avatar={true} type="tenant" checkbox={true} CheckboxChange={this.onChangeTenant}/>
     );
     const rightComponent = (
       <ListView resources={this.props.properties} property_modal={true} type="property" checkbox={true} CheckboxChange={this.onChangeProperty}/>

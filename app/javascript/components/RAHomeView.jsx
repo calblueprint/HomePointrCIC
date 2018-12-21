@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import "antd/dist/antd.css";
 import ListView from "./ListView.jsx";
 import Utils from 'helpers/utils';
+import { Button } from 'antd';
 import SplitViewContainer from "./SplitViewContainer.jsx";
 
 class RAHomeView extends React.Component {
@@ -19,20 +20,48 @@ class RAHomeView extends React.Component {
     }
   }
 
+  redirectToNewTenant() {
+    window.location = '/tenants/new'
+  }
+
+  redirectToNewApplications() {
+    window.location = '/applications/new'
+  }
+
 	render() {
     this.setup(this.state.tenants, this.props.tenantImages);
 		const leftComponent = (
-			<ListView resources={this.state.tenants} type="tenant" avatar={true}/>
+			<ListView resources={this.state.tenants} type="tenant" avatar={true} tenant_modal={false}/>
 		);
-		const rightComponent = (
-			<ListView resources={this.props.properties} type="property" property_modal={true}/>
-		);
+		// const rightComponent = (
+		// 	<ListView resources={this.props.properties} type="property" property_modal={true}/>
+		// );
+    const rightComponent = (
+      <Button 
+        style={{
+        bottom: "-2%",
+        width: "50%",
+        // margin: "1.5% auto",
+        left: "24%"
+        }}
+        key='submit' 
+        type="primary" 
+        onClick={this.redirectToNewApplications}>Match Tenants With Available Properties</Button>
+    );
 
-		return (
+		return ([<Button 
+        style={{
+        width: "20%",
+        margin: "1.5% auto",
+        left: "80%",
+        }}
+        key='submit' 
+        type="primary" 
+        onClick={this.redirectToNewTenant}>+ New Tenant</Button>,
 			<SplitViewContainer
 				leftComponent={leftComponent}
 				rightComponent={rightComponent}
-			/>
+			/>]
 		);
 	}
 }
