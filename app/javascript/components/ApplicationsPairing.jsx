@@ -17,7 +17,8 @@ class ApplicationsPairing extends React.Component {
     this.state = {
       selectedProperties: [], //array of strings
       selectedTenant: null,
-      description: null
+      description: null,
+      tenants: props.tenants,
     };
     this.onChangeProperty = this.onChangeProperty.bind(this);
     this.onChangeTenant = this.onChangeTenant.bind(this);
@@ -95,12 +96,19 @@ class ApplicationsPairing extends React.Component {
     )
   }
 
+  setup(obj, images) {
+    for (var i=0; i < images.length; i++) {
+      obj[i] = Utils.extend(obj[i], images[i])
+    }
+  }
+
   render() {
+    this.setup(this.state.tenants, this.props.tenantImages);
     const leftComponent = (
-      <ListView resources={this.props.tenants} type="tenant" checkbox={true} CheckboxChange={this.onChangeTenant}/>
+      <ListView resources={this.state.tenants} avatar={true} type="tenant" checkbox={true} CheckboxChange={this.onChangeTenant}/>
     );
     const rightComponent = (
-      <ListView resources={this.props.properties} type="property" checkbox={true} CheckboxChange={this.onChangeProperty}/>
+      <ListView resources={this.props.properties} property_modal={true} type="property" checkbox={true} CheckboxChange={this.onChangeProperty}/>
     );
 
     return (

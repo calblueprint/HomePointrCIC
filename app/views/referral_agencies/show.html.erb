@@ -1,8 +1,1 @@
-<%= react_component("RAHomeView", {properties: @properties, tenants: @tenants}) %>
-<div>
-  <h3><%= @referral_agency.name %></h3>
-  <p> Tenant IDs: </p>
-  <% @tenants.each do |tenant| %>
-	<p><%= tenant.id %></p>
-  <% end %>
-</div>
+<%= react_component("RAHomeView", {properties: @properties, tenants: @tenants, tenantImages: @tenantImages}) %>
