@@ -22,7 +22,12 @@ class ReferralAgenciesController < ApplicationController
         @tag_values << tag.to_s + ": " + field_values[index].to_s
       }
       @tenants = @referral_agency.tenants
-
+      @tenantImages = []
+      @tenants.each do |t|
+        if t.avatar.attached?
+          @tenantImages << {url: url_for(t.avatar)}
+        end
+      end
     else
       redirect_to '/users/sign_up'
     end

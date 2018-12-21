@@ -1,7 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Checkbox, Card, Col, Row, Button, Avatar } from "antd";
+import { Checkbox, Card, Col, Row, Button, Avatar, Icon } from "antd";
 import TenantModal from "./modals/TenantModal";
+import PropertyModal from "./modals/PropertyModal";
 import "antd/dist/antd.css";
 
 class ListView extends React.Component {
@@ -29,7 +30,11 @@ class ListView extends React.Component {
 
   renderAvatar(url){
     if (this.props.avatar === true) {
-      return (<Avatar size={200} shape="square" src={url} />)
+      if (url === undefined) {
+        return (<Avatar size={200} shape="square" icon="user" />)
+      } else {
+        return (<Avatar size={200} shape="square" src={url} />)
+      }
     } else {
       return null;
     }
@@ -40,6 +45,16 @@ class ListView extends React.Component {
       return(<TenantModal property_id={this.props.property_id} app={this.props.apps[index]} name={resource.name} email={resource.email} description={resource.description} phone={resource.phone} housed={this.props.housed}/>)
     } else {
       return(<TenantModal name={resource.name} email={resource.email} description={resource.description} phone={resource.phone}/>)
+    }
+  }
+
+  renderPropertyModal(resource) {
+    if (this.props.property_modal) {
+      return(<PropertyModal location={resource.location} description={resource.description} />)
+    } else {
+      return(<Button type="default" href={"/properties/" + resource.id}>
+        View Info
+      </Button>)
     }
   }
 
@@ -65,9 +80,7 @@ class ListView extends React.Component {
                   description={resource.description}
                 />
                 {this.renderCheckbox(resource.id)}
-                <Button type="default" href={"/properties/" + resource.id}>
-                  View Info
-                </Button>
+                {this.renderPropertyModal(resource)}
               </Card>
             ) : (
               <Card title={resource.name} bordered={false}>
@@ -77,9 +90,6 @@ class ListView extends React.Component {
                 {this.renderCheckbox(resource.id)}
                 {this.renderTenantModal(resource, index)}
               </Card>
-              // <Button type="default" href={"/tenants/" + resource.id}>
-              //     View Info
-              //   </Button>
             )}
           </Row>
         </div>
@@ -94,6 +104,7 @@ ListView.propTypes = {
 ListView.defaultProps = {
   property_id: null,
   apps: null,
-  housed: null
+  housed: null,
+  property_modal: null
 };
 export default ListView;

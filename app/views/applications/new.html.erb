@@ -1,3 +1,1 @@
-<%= form_with(model: @application, local: true) do |form| %>
-  <%= react_component("ApplicationsPairing", props={ tenants: @tenants, properties: @properties}) %>
-<% end %>
+<%= react_component("ApplicationsPairing", props={ tenants: @tenants, properties: @properties, tenantImages: @tenantImages}) %>
