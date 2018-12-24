@@ -8,6 +8,9 @@ class ApplicationsController < ApplicationController
       end
     end
     @properties = Property.all
+    @housing_type_options = Property.housing_types.keys
+    @property_type_options = Property.property_types.keys
+    @location_options = Property.locations.keys
     @application = Application.new
   end
 

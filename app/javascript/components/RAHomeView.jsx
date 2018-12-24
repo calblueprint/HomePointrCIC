@@ -33,15 +33,11 @@ class RAHomeView extends React.Component {
 		const leftComponent = (
 			<ListView resources={this.state.tenants} type="tenant" avatar={true} tenant_modal={false}/>
 		);
-		// const rightComponent = (
-		// 	<ListView resources={this.props.properties} type="property" property_modal={true}/>
-		// );
     const rightComponent = (
       <Button 
         style={{
         bottom: "-2%",
         width: "50%",
-        // margin: "1.5% auto",
         left: "24%"
         }}
         key='submit' 

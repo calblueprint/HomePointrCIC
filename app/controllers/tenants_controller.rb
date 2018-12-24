@@ -36,10 +36,12 @@ class TenantsController < ApplicationController
     @tenant = Tenant.find(params[:id])
     authorize @tenant
     @applications = @tenant.info.applications
+    @properties = Property.all
+    # delete
     @housing_type_options = Property.housing_types.keys
     @property_type_options = Property.property_types.keys
     @location_options = Property.locations.keys
-    @properties = Property.all
+    # delete
     @status = @tenant.priority
     @name = @tenant.attributes.values[1]
     @description = @tenant.attributes.values[2]

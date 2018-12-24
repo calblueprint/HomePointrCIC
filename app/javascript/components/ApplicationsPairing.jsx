@@ -9,6 +9,7 @@ import Utils from 'helpers/utils';
 import UploadButton from './UploadButton';
 import ActiveStorageProvider from "react-activestorage-provider";
 import SplitViewContainer from "./SplitViewContainer.jsx";
+import PropertyListWrapper from "./PropertyListWrapper.jsx";
 
 class ApplicationsPairing extends React.Component {
 
@@ -107,8 +108,11 @@ class ApplicationsPairing extends React.Component {
     const leftComponent = (
       <ListView resources={this.state.tenants} tenant_modal={true} avatar={true} type="tenant" checkbox={true} CheckboxChange={this.onChangeTenant}/>
     );
+    // const rightComponent = (
+    //   <ListView resources={this.props.properties} property_modal={true} type="property" checkbox={true} CheckboxChange={this.onChangeProperty}/>
+    // );
     const rightComponent = (
-      <ListView resources={this.props.properties} property_modal={true} type="property" checkbox={true} CheckboxChange={this.onChangeProperty}/>
+      <PropertyListWrapper {...this.props} CheckboxChange={this.onChangeProperty}/>
     );
 
     return (
@@ -127,8 +131,13 @@ class ApplicationsPairing extends React.Component {
   }
 }
 
-// ApplicationsPairing.propTypes = {
-  
-// };
+ApplicationsPairing.propTypes = {
+  tenants: PropTypes.array,
+  tenantImages: PropTypes.array,
+  properties: PropTypes.array,
+  housing_options: PropTypes.array,
+  property_options: PropTypes.array,
+  location_options: PropTypes.array 
+};
 
 export default ApplicationsPairing;
