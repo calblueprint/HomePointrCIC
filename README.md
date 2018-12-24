@@ -1,26 +1,2 @@
-# README
-
-This README would normally document whatever steps are necessary to get the
-application up and running.
-
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
-
-# HomePointrCIC
+## HomePointrCIC
+**[HomePointrCIC](https://homepointr.com/)** is a nonprofit based in Scotland that focuses on improving access to suitable housing options and increasing occupancy rates. This webapp is an online platform to streamline the process for referral agencies to match homeless and vulnerable individuals to appropriate housing that landlords provide.
