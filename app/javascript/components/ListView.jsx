@@ -79,9 +79,7 @@ class ListView extends React.Component {
   }
 
   renderApplicationModal(app) {
-    if (this.props.applications) {
-      return(<ApplicationModal application={app}/>)
-    }
+    return(<ApplicationModal application={app}/>)
   }
 
   render() {
@@ -108,7 +106,7 @@ class ListView extends React.Component {
                 />
                 {this.renderCheckbox(resource.id)}
                 {this.renderPropertyModal(resource)}
-                {this.renderApplicationModal(this.props.applications[index])}
+                {this.props.applications ? this.renderApplicationModal(this.props.applications[index]) : null}
               </Card>
             ) : (
               <Card title={resource.name} bordered={false}>

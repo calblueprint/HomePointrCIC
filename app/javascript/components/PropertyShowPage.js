@@ -27,7 +27,7 @@ class PropertyShowPage extends React.Component {
     this.setup(this.state.potentialTenants, this.props.potentialTenantsImages);
     const TabPane = Tabs.TabPane;
     const leftComponent = (
-      <PropertyView canceledit={true} id={this.props.id} name={this.props.name} mode={this.props.mode} description={this.props.description} tagValues={this.props.tagValues} images={this.props.images}/>
+      <PropertyView canceledit={false} id={this.props.id} name={this.props.name} mode={this.props.mode} description={this.props.description} tagValues={this.props.tagValues} images={this.props.images}/>
     );
     const rightComponent = (
     <Tabs defaultActiveKey="1">
