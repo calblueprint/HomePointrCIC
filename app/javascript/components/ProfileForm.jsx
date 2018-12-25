@@ -369,7 +369,7 @@ class ProfileForm extends React.Component {
           width: "20%",
           margin: "1.5% auto"
           }}
-           key='cancel' type="default" href={"/" + this.state.type} >Cancel</Button>]
+           key='cancel' type="default" href={"/"} >Cancel</Button>]
     } else if (this.state.mode === "edit") {
       returnArr = [...this.renderForm(),
           <Button style={{
@@ -379,7 +379,7 @@ class ProfileForm extends React.Component {
           <Button style={{
           width: "20%",
           margin: "1.5% auto"
-          }}key='cancel' type="default" href={"/" + this.state.type} >Cancel</Button>,
+          }}key='cancel' type="default" href={"/"} >Cancel</Button>,
           <Button style={{
           width: "20%",
           margin: "1.5% auto"

@@ -3,6 +3,8 @@ import PropTypes from "prop-types";
 import { Checkbox, Card, Col, Row, Button, Avatar, Icon } from "antd";
 import TenantModal from "./modals/TenantModal";
 import PropertyModal from "./modals/PropertyModal";
+import ApplicationModal from "./modals/ApplicationModal";
+import Utils from 'helpers/utils';
 import "antd/dist/antd.css";
 
 class ListView extends React.Component {
@@ -70,6 +72,18 @@ class ListView extends React.Component {
     }
   }
 
+  renderApplicationStatus(index) {
+    if (this.props.applications) {
+      return Utils.renderStatus(this.props.applications[index].status)
+    }
+  }
+
+  renderApplicationModal(app) {
+    if (this.props.applications) {
+      return(<ApplicationModal application={app}/>)
+    }
+  }
+
   render() {
     return this.state.resources.map((resource, index) => {
       const { Meta } = Card;
@@ -86,6 +100,7 @@ class ListView extends React.Component {
           <Row gutter={16}>
             {this.state.type === "property" ? (
               <Card bordered={false}>
+                {this.renderApplicationStatus(index)}
                 <Meta
                   avatar={this.renderAvatar(resource.url)}
                   title={resource.location}
@@ -93,13 +108,13 @@ class ListView extends React.Component {
                 />
                 {this.renderCheckbox(resource.id)}
                 {this.renderPropertyModal(resource)}
+                {this.renderApplicationModal(this.props.applications[index])}
               </Card>
             ) : (
               <Card title={resource.name} bordered={false}>
                 <Meta
                   avatar={this.renderAvatar(resource.url)}
                 />
-                {this.renderCheckbox(resource.id)}
                 {this.renderTenantSelectButton(resource)}
                 {this.renderTenantModal(resource, index)}
               </Card>
@@ -121,5 +136,6 @@ ListView.defaultProps = {
   housed: null,
   property_modal: null,
   tenantSelect: null,
+  applications: null,
 };
 export default ListView;

@@ -35,22 +35,23 @@ class TenantsController < ApplicationController
   def show
     @tenant = Tenant.find(params[:id])
     authorize @tenant
-    @applications = @tenant.info.applications
-    @properties = Property.all
-    # delete
-    @housing_type_options = Property.housing_types.keys
-    @property_type_options = Property.property_types.keys
-    @location_options = Property.locations.keys
-    # delete
     @status = @tenant.priority
-    @name = @tenant.attributes.values[1]
-    @description = @tenant.attributes.values[2]
-    values = @tenant.attributes.values[3..-3]
-    @avatar = nil
-    if @tenant.avatar.attached? == true
-      @avatar = [{id: @tenant.avatar.id, url: url_for(@tenant.avatar)}]
+    @properties = []
+    @form = []
+    @applications = @tenant.info.applications
+    @applications.each do |a|
+      @properties << a.property
+      if a.form.attached?
+        @form << {form: url_for(a.form)}
+      end
     end
-    field_names = Tenant.column_names[3..-3] + ["avatar"]
+    values = @tenant.attributes.values[3..-3]
+    @avatarURL = nil
+    if @tenant.avatar.attached?
+      @avatarURL = url_for(@tenant.avatar)
+    end
+
+    field_names = Tenant.column_names[3..-3]
     nice_field_names = []
     field_names.each do |field_name|
       nice_field_names << field_name.titleize
