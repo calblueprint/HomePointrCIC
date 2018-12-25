@@ -64,6 +64,12 @@ class ListView extends React.Component {
     }
   }
 
+  renderTenantSelectButton(resource) {
+    if (this.props.tenantSelect) {
+      return(<Button type="default" onClick={(e) => this.props.selectTenantFunc(e, resource)}>Select Tenant</Button>)
+    }
+  }
+
   render() {
     return this.state.resources.map((resource, index) => {
       const { Meta } = Card;
@@ -94,6 +100,7 @@ class ListView extends React.Component {
                   avatar={this.renderAvatar(resource.url)}
                 />
                 {this.renderCheckbox(resource.id)}
+                {this.renderTenantSelectButton(resource)}
                 {this.renderTenantModal(resource, index)}
               </Card>
             )}
@@ -107,10 +114,12 @@ class ListView extends React.Component {
 ListView.propTypes = {
   resources: PropTypes.array
 };
+
 ListView.defaultProps = {
   property_id: null,
   apps: null,
   housed: null,
-  property_modal: null
+  property_modal: null,
+  tenantSelect: null,
 };
 export default ListView;

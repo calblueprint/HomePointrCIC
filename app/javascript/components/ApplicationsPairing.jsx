@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Select, Input, Button, Slider, Switch, DatePicker } from 'antd';
+import { Select, Input, Button, Slider, Icon, Switch, DatePicker } from 'antd';
 import 'antd/dist/antd.css';
 import moment from 'moment';
 import ListView from './ListView.jsx';
@@ -10,6 +10,7 @@ import UploadButton from './UploadButton';
 import ActiveStorageProvider from "react-activestorage-provider";
 import SplitViewContainer from "./SplitViewContainer.jsx";
 import PropertyListWrapper from "./PropertyListWrapper.jsx";
+import RATenantView from "./RATenantView.jsx";
 
 class ApplicationsPairing extends React.Component {
 
@@ -20,10 +21,12 @@ class ApplicationsPairing extends React.Component {
       selectedTenant: null,
       description: null,
       tenants: props.tenants,
+      individualView: false,
     };
     this.onChangeProperty = this.onChangeProperty.bind(this);
-    this.onChangeTenant = this.onChangeTenant.bind(this);
     this.handleMatch = this.handleMatch.bind(this);
+    this.setTenant = this.setTenant.bind(this);
+    this.clearTenant = this.clearTenant.bind(this);
   }
 
   onChangeProperty(e, id) {
@@ -37,19 +40,11 @@ class ApplicationsPairing extends React.Component {
     }
   }
 
-  onChangeTenant(e, id) {
-    if (e.target.checked) {
-      this.state.selectedTenant = id;
-    } else {
-      this.state.selectedTenant = null;
-    }
-  }
-
   handleMatch() {
     var request = null;
     var prop;
     for (prop in this.state.selectedProperties) {
-      let body = {"description": this.state.description, "status": 1, "property_id": this.state.selectedProperties[prop], "info_id": this.state.selectedTenant};
+      let body = {"description": this.state.description, "status": 1, "property_id": this.state.selectedProperties[prop], "info_id": this.state.selectedTenant.id};
       body = JSON.stringify({application: body})
       request = APIRoutes.applications.create
       fetch(request, {
@@ -103,14 +98,37 @@ class ApplicationsPairing extends React.Component {
     }
   }
 
+  setTenant(e, resource) {
+    this.setState({individualView: true});
+    this.setState({selectedTenant: resource});
+  }
+
+  clearTenant() {
+    this.setState({individualView: false});
+    this.setState({selectedTenant: null});
+  }
+
+  makeTagValues(tenant) {
+    return ["Min Rent: " + tenant.rent_min, "Max Rent: " + tenant.rent_max, "Housing Type " + tenant.housing_type, "Property Type " + tenant.property_type, "Size: " + tenant.num_bedrooms, "Location: " + tenant.location, "Date Needed: " + tenant.date_needed]
+  }
+
   render() {
     this.setup(this.state.tenants, this.props.tenantImages);
-    const leftComponent = (
-      <ListView resources={this.state.tenants} tenant_modal={true} avatar={true} type="tenant" checkbox={true} CheckboxChange={this.onChangeTenant}/>
-    );
-    // const rightComponent = (
-    //   <ListView resources={this.props.properties} property_modal={true} type="property" checkbox={true} CheckboxChange={this.onChangeProperty}/>
-    // );
+    this.setup(this.state.tenants, this.props.tenantPriorities);
+    let leftComponent = null;
+    if (this.state.individualView) {
+      //Individual tenant has been selected
+      leftComponent = ([
+        <Button type="primary" onClick={this.clearTenant}><Icon type="left" /> View All Tenants</Button>,
+        <RATenantView id={this.state.selectedTenant.id} name={this.state.selectedTenant.name} mode="ra_matching" description={this.state.selectedTenant.description} avatar={this.state.selectedTenant.url} tagValues={this.makeTagValues(this.state.selectedTenant)} status={this.state.selectedTenant.priority}/>
+      ]);
+    } else {
+      //All tenants shown here
+      leftComponent = (
+        <ListView resources={this.state.tenants} tenant_modal={true} avatar={true} selectTenantFunc={this.setTenant} tenantSelect={true} type="tenant"/>
+      );
+    }
+    //Filtered properties
     const rightComponent = (
       <PropertyListWrapper {...this.props} CheckboxChange={this.onChangeProperty}/>
     );
@@ -134,6 +152,7 @@ class ApplicationsPairing extends React.Component {
 ApplicationsPairing.propTypes = {
   tenants: PropTypes.array,
   tenantImages: PropTypes.array,
+  tenantPriorities: PropTypes.array,
   properties: PropTypes.array,
   housing_options: PropTypes.array,
   property_options: PropTypes.array,

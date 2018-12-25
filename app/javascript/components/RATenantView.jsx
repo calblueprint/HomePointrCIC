@@ -33,7 +33,7 @@ class RATenantView extends React.Component {
     } else {
       return (
         <React.Fragment key='avatar'>
-          <Avatar size={64} src={this.props.avatar[0].url}/>
+          <Avatar size={64} src={this.props.avatar}/>
         </React.Fragment>
       )
     }
@@ -44,31 +44,31 @@ class RATenantView extends React.Component {
 //     3 - rejected
 //     4 - not applied yet
   renderStatus() {
-    if (this.state.status === 0) {
+    if (this.props.status === 0) {
       return (
         <React.Fragment key='status'>
           <h2 style={{color:"green"}}>housed</h2>
         </React.Fragment>
       )
-    } else if (this.state.status === 1) {
+    } else if (this.props.status === 1) {
       return (
         <React.Fragment key='status'>
           <h2 style={{color:"yellow"}}>interviewing with house</h2>
         </React.Fragment>
       )
-    } else if (this.state.status === 2) {
+    } else if (this.props.status === 2) {
       return (
         <React.Fragment key='status'>
           <h2 style={{color:"orange"}}>applied</h2>
         </React.Fragment>
       )
-    } else if (this.state.status === 3) {
+    } else if (this.props.status === 3) {
       return (
         <React.Fragment key='status'>
           <h2 style={{color:"red"}}>rejected</h2>
         </React.Fragment>
       )
-    } else if (this.state.status === 4) {
+    } else if (this.props.status === 4) {
       return (
         <React.Fragment key='status'>
           <h2 style={{color:"red"}}>not applied</h2>
