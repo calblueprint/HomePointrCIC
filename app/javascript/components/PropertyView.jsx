@@ -48,7 +48,7 @@ class PropertyView extends React.Component {
   }
 
   renderEditButton() {
-    if (this.props.canceledit === null) {
+    if (this.props.canceledit === false) {
       return (
         <div key='editbutton'>
           {<Button key='button' type="default" onClick={this.handleEdit} >Edit Property</Button>}
@@ -68,6 +68,10 @@ PropertyView.propTypes = {
   mode: PropTypes.string,
   description: PropTypes.string,
   tagValues: PropTypes.array,
+};
+
+PropertyView.defaultProps = {
+  canceledit: true,
 };
 
 export default PropertyView;

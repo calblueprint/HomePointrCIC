@@ -17,7 +17,7 @@ class FilterPanel extends React.Component {
       property_type: [props.tenant.property_type],
       housing_type: [props.tenant.housing_type],
       date_available: props.tenant.date_needed,
-      isOpen: true,
+      isOpen: false,
     };
     this.handleClick = this.handleClick.bind(this);
     this.handleCheckbox = this.handleCheckbox.bind(this);
@@ -59,6 +59,8 @@ class FilterPanel extends React.Component {
           background: "white",
           marginLeft: "10%",
           marginRight: "10%",
+          padding: "10px",
+          borderStyle: "solid",
         }}
       >
         <div
@@ -235,5 +237,9 @@ class FilterPanel extends React.Component {
     );
   }
 }
+
+FilterPanel.defaultProps = {
+  tenant: {location: "other_location", rent_min: 0, rent_max: 9999, num_bedrooms: 10, property_type: "other_property_type", housing_type: "other_housing_type", date_available: moment().format("YYYY-MM-DD")}
+};
 
 export default FilterPanel;

@@ -58,7 +58,7 @@ class PropertyListWrapper extends React.Component {
         }}
 			>
 				<FilterPanel {...this.props} applyFilter={this.handleFilter} />
-				<ListView resources={this.state.properties} type='property' />
+				<ListView resources={this.state.properties} property_modal={true} type="property" checkbox={true} CheckboxChange={this.props.CheckboxChange}/>
 			</div>
 		);
 	}

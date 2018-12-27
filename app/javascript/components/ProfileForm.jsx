@@ -62,7 +62,7 @@ class ProfileForm extends React.Component {
         "X_CSRF-Token": document.getElementsByName("csrf-token")[0].content
       }
     }).then((response) => { 
-      window.location = '/' + type + '/';
+      window.location = '/';
     })
   }
 
@@ -87,7 +87,7 @@ class ProfileForm extends React.Component {
       body: body,
       credentials: 'same-origin',
     }).then((data) => {
-      window.location = '/' + type + '/';
+      window.location = '/';
     }).catch((data) => {
       console.error(data);
     });
@@ -369,7 +369,7 @@ class ProfileForm extends React.Component {
           width: "20%",
           margin: "1.5% auto"
           }}
-           key='cancel' type="default" href={"/" + this.state.type} >Cancel</Button>]
+           key='cancel' type="default" href={"/"} >Cancel</Button>]
     } else if (this.state.mode === "edit") {
       returnArr = [...this.renderForm(),
           <Button style={{
@@ -379,7 +379,7 @@ class ProfileForm extends React.Component {
           <Button style={{
           width: "20%",
           margin: "1.5% auto"
-          }}key='cancel' type="default" href={"/" + this.state.type} >Cancel</Button>,
+          }}key='cancel' type="default" href={'/' + this.props.type + '/' + this.props.id.toString()} >Cancel</Button>,
           <Button style={{
           width: "20%",
           margin: "1.5% auto"

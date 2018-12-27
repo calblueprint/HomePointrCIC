@@ -58,20 +58,36 @@ class PropertiesController < ApplicationController
     @tenants = []
     @tenantImages = []
     @tenantApps = []
+    @tenantAppsPDF = []
     @potentialTenants = []
     @potentialTenantsImages = []
     @potentialTenantApps = []
+    @potentialTenantAppsPDF = []
     @property.applications.each do |a|
       if a.status == 'housed'
         @tenants << a.info.tenant
         if a.info.tenant.avatar.attached?
           @tenantImages << {url: url_for(a.info.tenant.avatar)}
+        else
+          @tenantImages << {url: nil}
+        end
+        if a.form.attached?
+          @tenantAppsPDF << {url: url_for(a.form)}
+        else
+          @tenantAppsPDF << {url: nil}
         end
         @tenantApps << a
       elsif a.status == 'received' or a.status == 'interview'
         @potentialTenants << a.info.tenant
         if a.info.tenant.avatar.attached?
           @potentialTenantsImages << {url: url_for(a.info.tenant.avatar)}
+        else
+          @potentialTenantsImages << {url: nil}
+        end
+        if a.form.attached?
+          @potentialTenantAppsPDF << {url: url_for(a.form)}
+        else
+          @potentialTenantAppsPDF << {url: nil}
         end
         @potentialTenantApps << a
       end

@@ -40,7 +40,49 @@ const Utils = {
       if (src.hasOwnProperty(key)) obj[key] = src[key];
     }
     return obj;
+  },
+
+  //     0 - matched with a house
+  //     1 - interviewing with a house
+  //     2 - applied
+  //     3 - rejected
+  //     4 - not applied yet
+  renderStatus: (num) => {
+    if (num === 0 || num === "housed") {
+      return (
+        <React.Fragment key='status'>
+          <h2 style={{color:"green"}}>housed</h2>
+        </React.Fragment>
+      )
+    } else if (num === 1 || num === "interview") {
+      return (
+        <React.Fragment key='status'>
+          <h2 style={{color:"yellow"}}>interviewing with house</h2>
+        </React.Fragment>
+      )
+    } else if (num === 2 || num === "received") {
+      return (
+        <React.Fragment key='status'>
+          <h2 style={{color:"orange"}}>applied</h2>
+        </React.Fragment>
+      )
+    } else if (num === 3 || num === "rejected") {
+      return (
+        <React.Fragment key='status'>
+          <h2 style={{color:"red"}}>rejected</h2>
+        </React.Fragment>
+      )
+    } else if (num === 4) {
+      return (
+        <React.Fragment key='status'>
+          <h2 style={{color:"red"}}>not applied</h2>
+        </React.Fragment>
+      )
+    } else {
+      return null
+    }
   }
+  
 }
 
 export default Utils;

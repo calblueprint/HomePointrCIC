@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from "prop-types";
 import 'antd/dist/antd.css';
-import { Modal, Button } from 'antd';
+import { Modal, Button, Icon } from 'antd';
 import ApplicationStatusButtons from './../ApplicationStatusButtons'
 
 class TenantModal extends React.Component {
@@ -42,6 +42,12 @@ class TenantModal extends React.Component {
     }
   }
 
+  renderAttachment() {
+    if (this.props.app) {
+      return(<p>Attachment: <a href={this.props.app.url}><Icon type="paper-clip" />Attachment</a></p>)
+    }
+  }
+
   render() {
     return (
       <div>
@@ -57,6 +63,7 @@ class TenantModal extends React.Component {
           <p>Email: {this.props.email}</p>
           <p>Phone: {this.props.phone}</p>
           <p>Description: {this.props.description}</p>
+          {this.renderAttachment()}
           {this.handleButtons()}
         </Modal>
       </div>
@@ -64,5 +71,8 @@ class TenantModal extends React.Component {
   }
 }
 
+TenantModal.defaultProps = {
+  app: null,
+};
 export default TenantModal;
           

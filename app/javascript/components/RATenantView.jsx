@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import {Avatar, Button, Tag} from 'antd';
 import 'antd/dist/antd.css';
+import Utils from 'helpers/utils';
 
 class RATenantView extends React.Component {
   constructor(props) {
@@ -33,49 +34,9 @@ class RATenantView extends React.Component {
     } else {
       return (
         <React.Fragment key='avatar'>
-          <Avatar size={64} src={this.props.avatar[0].url}/>
+          <Avatar size={64} src={this.props.avatar}/>
         </React.Fragment>
       )
-    }
-  }
-//     0 - matched with a house
-//     1 - interviewing with a house
-//     2 - applied
-//     3 - rejected
-//     4 - not applied yet
-  renderStatus() {
-    if (this.state.status === 0) {
-      return (
-        <React.Fragment key='status'>
-          <h2 style={{color:"green"}}>housed</h2>
-        </React.Fragment>
-      )
-    } else if (this.state.status === 1) {
-      return (
-        <React.Fragment key='status'>
-          <h2 style={{color:"yellow"}}>interviewing with house</h2>
-        </React.Fragment>
-      )
-    } else if (this.state.status === 2) {
-      return (
-        <React.Fragment key='status'>
-          <h2 style={{color:"orange"}}>applied</h2>
-        </React.Fragment>
-      )
-    } else if (this.state.status === 3) {
-      return (
-        <React.Fragment key='status'>
-          <h2 style={{color:"red"}}>rejected</h2>
-        </React.Fragment>
-      )
-    } else if (this.state.status === 4) {
-      return (
-        <React.Fragment key='status'>
-          <h2 style={{color:"red"}}>not applied</h2>
-        </React.Fragment>
-      )
-    } else {
-      return null
     }
   }
 
@@ -89,7 +50,7 @@ class RATenantView extends React.Component {
 
   render() {
     if (this.props.mode === "ra_matching") {
-      return [this.renderNameDescription(), this.renderAvatar(), this.renderStatus(), this.renderTags()]
+      return [this.renderNameDescription(), this.renderAvatar(), Utils.renderStatus(this.props.status), this.renderTags()]
     // } else if (this.props.mode === "ll_applicant") {
     //   return [this.renderNameDescription(), this.renderAvatar(), this.renderStatus(), this.renderTags(),
     //     <Button type="danger">Reject</Button>,
@@ -99,7 +60,7 @@ class RATenantView extends React.Component {
     //   return [this.renderNameDescription(), this.renderAvatar(), this.renderStatus(), this.renderTags(),
     //     <Button type="danger">Remove Tenant</Button>]
     } else if (this.props.mode === "ra_edit") {
-      return [this.renderNameDescription(), this.renderAvatar(), this.renderStatus(), this.renderTags(),
+      return [this.renderNameDescription(), this.renderAvatar(), Utils.renderStatus(this.props.status), this.renderTags(),
         <Button key='button' type="default" onClick={this.handleEdit} >Edit Tenant</Button>]
     } else {
       return null

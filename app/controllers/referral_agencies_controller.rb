@@ -26,6 +26,8 @@ class ReferralAgenciesController < ApplicationController
       @tenants.each do |t|
         if t.avatar.attached?
           @tenantImages << {url: url_for(t.avatar)}
+        else
+          @tenantImages << {url: nil}
         end
       end
     else

@@ -3,6 +3,8 @@ import PropTypes from "prop-types";
 import { Checkbox, Card, Col, Row, Button, Avatar, Icon } from "antd";
 import TenantModal from "./modals/TenantModal";
 import PropertyModal from "./modals/PropertyModal";
+import ApplicationModal from "./modals/ApplicationModal";
+import Utils from 'helpers/utils';
 import "antd/dist/antd.css";
 
 class ListView extends React.Component {
@@ -30,7 +32,7 @@ class ListView extends React.Component {
 
   renderAvatar(url){
     if (this.props.avatar === true) {
-      if (url === undefined) {
+      if (url === undefined || url === null) {
         return (<Avatar size={200} shape="square" icon="user" />)
       } else {
         return (<Avatar size={200} shape="square" src={url} />)
@@ -41,10 +43,16 @@ class ListView extends React.Component {
   }
 
   renderTenantModal(resource, index) {
-    if (this.props.apps) {
-      return(<TenantModal property_id={this.props.property_id} app={this.props.apps[index]} name={resource.name} email={resource.email} description={resource.description} phone={resource.phone} housed={this.props.housed}/>)
+    if (!this.props.tenant_modal) {
+      return(<Button type="default" href={"/tenants/" + resource.id}>
+        View Info
+      </Button>)
     } else {
-      return(<TenantModal name={resource.name} email={resource.email} description={resource.description} phone={resource.phone}/>)
+      if (this.props.applications) {
+        return(<TenantModal property_id={this.props.property_id} app={this.props.applications[index]} name={resource.name} email={resource.email} description={resource.description} phone={resource.phone} housed={this.props.housed}/>)
+      } else {
+        return(<TenantModal name={resource.name} email={resource.email} description={resource.description} phone={resource.phone}/>)
+      }
     }
   }
 
@@ -56,6 +64,22 @@ class ListView extends React.Component {
         View Info
       </Button>)
     }
+  }
+
+  renderTenantSelectButton(resource) {
+    if (this.props.tenantSelect) {
+      return(<Button type="default" onClick={(e) => this.props.selectTenantFunc(e, resource)}>Select Tenant</Button>)
+    }
+  }
+
+  renderApplicationStatus(index) {
+    if (this.props.applications) {
+      return Utils.renderStatus(this.props.applications[index].status)
+    }
+  }
+
+  renderApplicationModal(app) {
+    return(<ApplicationModal application={app}/>)
   }
 
   render() {
@@ -74,6 +98,7 @@ class ListView extends React.Component {
           <Row gutter={16}>
             {this.state.type === "property" ? (
               <Card bordered={false}>
+                {this.renderApplicationStatus(index)}
                 <Meta
                   avatar={this.renderAvatar(resource.url)}
                   title={resource.location}
@@ -81,13 +106,14 @@ class ListView extends React.Component {
                 />
                 {this.renderCheckbox(resource.id)}
                 {this.renderPropertyModal(resource)}
+                {this.props.applications ? this.renderApplicationModal(this.props.applications[index]) : null}
               </Card>
             ) : (
               <Card title={resource.name} bordered={false}>
                 <Meta
                   avatar={this.renderAvatar(resource.url)}
                 />
-                {this.renderCheckbox(resource.id)}
+                {this.renderTenantSelectButton(resource)}
                 {this.renderTenantModal(resource, index)}
               </Card>
             )}
@@ -101,10 +127,13 @@ class ListView extends React.Component {
 ListView.propTypes = {
   resources: PropTypes.array
 };
+
 ListView.defaultProps = {
   property_id: null,
-  apps: null,
+  applications: null,
   housed: null,
-  property_modal: null
+  property_modal: null,
+  tenantSelect: null,
+  applications: null,
 };
 export default ListView;
