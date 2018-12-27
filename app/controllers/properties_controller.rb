@@ -66,12 +66,16 @@ class PropertiesController < ApplicationController
         @tenants << a.info.tenant
         if a.info.tenant.avatar.attached?
           @tenantImages << {url: url_for(a.info.tenant.avatar)}
+        else
+          @tenantImages << {url: nil}
         end
         @tenantApps << a
       elsif a.status == 'received' or a.status == 'interview'
         @potentialTenants << a.info.tenant
         if a.info.tenant.avatar.attached?
           @potentialTenantsImages << {url: url_for(a.info.tenant.avatar)}
+        else
+          @potentialTenantsImages << {url: nil}
         end
         @potentialTenantApps << a
       end

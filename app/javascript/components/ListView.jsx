@@ -32,7 +32,7 @@ class ListView extends React.Component {
 
   renderAvatar(url){
     if (this.props.avatar === true) {
-      if (url === undefined) {
+      if (url === undefined || url === null) {
         return (<Avatar size={200} shape="square" icon="user" />)
       } else {
         return (<Avatar size={200} shape="square" src={url} />)

@@ -101,6 +101,7 @@ class ApplicationsPairing extends React.Component {
   setTenant(e, resource) {
     this.setState({individualView: true});
     this.setState({selectedTenant: resource});
+    window.scrollTo(0, 0);
   }
 
   clearTenant() {
