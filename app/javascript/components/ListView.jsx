@@ -48,8 +48,8 @@ class ListView extends React.Component {
         View Info
       </Button>)
     } else {
-      if (this.props.apps) {
-        return(<TenantModal property_id={this.props.property_id} app={this.props.apps[index]} name={resource.name} email={resource.email} description={resource.description} phone={resource.phone} housed={this.props.housed}/>)
+      if (this.props.applications) {
+        return(<TenantModal property_id={this.props.property_id} app={this.props.applications[index]} name={resource.name} email={resource.email} description={resource.description} phone={resource.phone} housed={this.props.housed}/>)
       } else {
         return(<TenantModal name={resource.name} email={resource.email} description={resource.description} phone={resource.phone}/>)
       }
@@ -130,7 +130,7 @@ ListView.propTypes = {
 
 ListView.defaultProps = {
   property_id: null,
-  apps: null,
+  applications: null,
   housed: null,
   property_modal: null,
   tenantSelect: null,
