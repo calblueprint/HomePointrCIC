@@ -56,7 +56,7 @@ class ApplicationsPairing extends React.Component {
         body: body,
         credentials: 'same-origin',
       }).then((data) => {
-        window.location = '/applications/';
+        window.location = '/';
       }).catch((data) => {
         console.error(data);
       });
