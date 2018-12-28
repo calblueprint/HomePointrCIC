@@ -28,8 +28,9 @@ class PropertiesController < ApplicationController
     end
     num_fields = @field_names.length
     @prev_values = Array.new(num_fields, "")
-    @field_types = ["textbox", "textarea", "textbox", "textbox", "textbox", enums[0], enums[1], "datepicker", enums[2], "attachment", "form"]
+    @field_types = ["textbox", "textarea", "id", "textbox", "textbox", enums[0], enums[1], "datepicker", enums[2], "attachment", "form"]
     # @field_types = ["textbox", "textarea", "textbox", "textbox", "textbox", enums[0], enums[1], "datepicker", enums[2]]
+    @current_userID = current_user.id
   end
 
   def show
@@ -119,6 +120,7 @@ class PropertiesController < ApplicationController
     else
       @prev_values << { image: url_for(@property.form.attachment), id: @property.form.attachment.id }
     end
-    @field_types = ["textbox", "textarea", "textbox", "textbox", "textbox", enums[0], enums[1], "datepicker", enums[2], "attachment", "form"]
+    @field_types = ["textbox", "textarea", "id", "textbox", "textbox", enums[0], enums[1], "datepicker", enums[2], "attachment", "form"]
+    @current_userID = current_user.id
   end
 end

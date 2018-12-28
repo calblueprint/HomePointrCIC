@@ -327,6 +327,8 @@ class ProfileForm extends React.Component {
           return (
             this.renderTextarea(index)
           )
+        } else if (this.state.fieldTypes[index] === "id") {
+          this.state.prevValues[index] = this.props.current_userID;
         } else if (this.state.fieldTypes[index] === "datepicker") {
           return (
             this.renderDatePicker(index)
