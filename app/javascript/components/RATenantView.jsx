@@ -75,6 +75,7 @@ RATenantView.propTypes = {
   description: PropTypes.string,
   tagValues: PropTypes.array,
   status: PropTypes.number,
+  avatar: PropTypes.string,
 };
 
 export default RATenantView;

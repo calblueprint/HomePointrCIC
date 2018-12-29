@@ -238,6 +238,13 @@ class FilterPanel extends React.Component {
   }
 }
 
+FilterPanel.propTypes = {
+  location_options: PropTypes.array,
+  property_options: PropTypes.array,
+  housing_options: PropTypes.array,
+  tenant: PropTypes.object,
+};
+
 FilterPanel.defaultProps = {
   tenant: {location: "other_location", rent_min: 0, rent_max: 9999, num_bedrooms: 10, property_type: "other_property_type", housing_type: "other_housing_type", date_available: moment().format("YYYY-MM-DD")}
 };

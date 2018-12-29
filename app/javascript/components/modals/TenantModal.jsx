@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from "prop-types";
 import 'antd/dist/antd.css';
 import { Modal, Button, Icon } from 'antd';
-import ApplicationStatusButtons from './../ApplicationStatusButtons'
+import ApplicationStatusButtons from './../individual/ApplicationStatusButtons'
 
 class TenantModal extends React.Component {
   constructor(props) {
@@ -71,8 +71,19 @@ class TenantModal extends React.Component {
   }
 }
 
+TenantModal.propTypes = {
+  email: PropTypes.string,
+  phone: PropTypes.string,
+  description: PropTypes.string,
+  name: PropTypes.string,
+  app: PropTypes.object,
+  property_id: PropTypes.number,
+  housed: PropTypes.bool
+};
+
 TenantModal.defaultProps = {
   app: null,
 };
+
 export default TenantModal;
           

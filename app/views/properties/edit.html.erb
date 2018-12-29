@@ -1,6 +1,6 @@
 <h1>Edit Property</h1>
 
 <%= form_with(model: @property, local: true) do |form| %>
-  <%= react_component("ProfileForm", props={ id: @property.id, mode: @mode, type: @type, fieldNames: @field_names, fieldTypes: @field_types, niceFieldNames: @nice_field_names, prevValues: @prev_values, current_userID: @current_userID }) %>
+  <%= react_component("individual/ProfileForm", props={ id: @property.id, mode: @mode, type: @type, fieldNames: @field_names, fieldTypes: @field_types, niceFieldNames: @nice_field_names, prevValues: @prev_values, current_userID: @current_userID }) %>
 <% end %>
 

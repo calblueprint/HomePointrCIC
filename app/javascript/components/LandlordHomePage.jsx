@@ -42,6 +42,8 @@ class LandlordHomePage extends React.Component {
 }
 
 LandlordHomePage.propTypes = {
-  resources: PropTypes.array
+  resources: PropTypes.array,
+  images: PropTypes.array,
+  type: PropTypes.string
 };
 export default LandlordHomePage;

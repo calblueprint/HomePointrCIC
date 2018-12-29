@@ -1,8 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
 import "antd/dist/antd.css";
-import PropertyView from "./PropertyView.jsx";
-import SplitViewContainer from "./SplitViewContainer.jsx";
+import PropertyView from "./individual/PropertyView.jsx";
+import SplitViewContainer from "./individual/SplitViewContainer.jsx";
 import ListView from "./ListView.jsx";
 import Utils from 'helpers/utils';
 import { Icon, Button, Tabs } from "antd";
@@ -59,5 +59,14 @@ PropertyShowPage.propTypes = {
   mode: PropTypes.string,
   description: PropTypes.string,
   tagValues: PropTypes.array,
+  images: PropTypes.array,
+  tenants: PropTypes.array,
+  tenantImages: PropTypes.array, 
+  potentialTenants: PropTypes.array, 
+  potentialTenantsImages: PropTypes.array, 
+  tenantApps: PropTypes.array, 
+  potentialTenantApps: PropTypes.array, 
+  tenantAppsPDF: PropTypes.array,
+  potentialTenantAppsPDF: PropTypes.array,
 };
 export default PropertyShowPage;

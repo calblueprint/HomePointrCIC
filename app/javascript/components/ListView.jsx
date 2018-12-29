@@ -25,13 +25,13 @@ class ListView extends React.Component {
   }
 
   renderCheckbox(id) {
-    if (this.props.checkbox === true) {
+    if (this.props.checkbox) {
       return (<Checkbox onChange={(e) => this.props.CheckboxChange(e, id)}>Checkbox</Checkbox>)
     }
   }
 
   renderAvatar(url){
-    if (this.props.avatar === true) {
+    if (this.props.avatar) {
       if (url === undefined || url === null) {
         return (<Avatar size={200} shape="square" icon="user" />)
       } else {
@@ -125,7 +125,15 @@ class ListView extends React.Component {
 }
 
 ListView.propTypes = {
-  resources: PropTypes.array
+  resources: PropTypes.array,
+  applications: PropTypes.array,
+  tenantSelect: PropTypes.bool,
+  checkbox: PropTypes.bool,
+  avatar: PropTypes.bool,
+  tenant_modal: PropTypes.bool,
+  property_id: PropTypes.number,
+  housed: PropTypes.bool,
+  property_modal: PropTypes.bool,
 };
 
 ListView.defaultProps = {
