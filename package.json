@@ -4,6 +4,9 @@
   "dependencies": {
     "@rails/webpacker": "3.5",
     "antd": "^3.10.4",
+    "babel-cli": "^6.26.0",
+    "babel-plugin-transform-es2015-destructuring": "^6.23.0",
+    "babel-preset-react": "^6.24.1",
     "moment": "^2.22.2",
     "react": "^16.6.1",
     "react-activestorage-provider": "^0.6.0",
@@ -11,9 +14,6 @@
     "react_ujs": "^2.4.4"
   },
   "devDependencies": {
-    "babel-cli": "^6.26.0",
-    "babel-plugin-transform-es2015-destructuring": "^6.23.0",
-    "babel-preset-react": "^6.24.1",
     "webpack": "^2.2.0 || ^3.0.0",
     "webpack-dev-server": "^2.11.3"
   }
