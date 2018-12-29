@@ -19,7 +19,7 @@ def make_landlords
       address: Faker::Address.street_address
     )
     landlord.save
-    landlord.primary_email_record.skip_confirmation!
+    # landlord.primary_email_record.skip_confirmation!
     landlord.primary_email_record.save!
     printf("#{n}/#{NUM_LANDLORDS} Landlords \r")
   end
@@ -37,7 +37,7 @@ def make_referral_agencies
       address: Faker::Address.street_address
     )
     referral_agency.save
-    referral_agency.primary_email_record.skip_confirmation!
+    # referral_agency.primary_email_record.skip_confirmation!
     referral_agency.primary_email_record.save!
     printf("#{n-NUM_LANDLORDS}/#{NUM_REFERRAL_AGENCIES} Referral Agencies \r")
   end
