@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import FilterPanel from "./FilterPanel.jsx";
-import ListView from "./ListView.jsx";
+import ListView from "./../ListView.jsx";
 import moment from 'moment';
 
 class PropertyListWrapper extends React.Component {
@@ -63,5 +63,9 @@ class PropertyListWrapper extends React.Component {
 		);
 	}
 }
+
+PropertyListWrapper.propTypes = {
+  properties: PropTypes.array,
+};
 
 export default PropertyListWrapper;

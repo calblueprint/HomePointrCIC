@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from "prop-types";
 import 'antd/dist/antd.css';
 import { Modal, Button } from 'antd';
-import ApplicationStatusButtons from './../ApplicationStatusButtons'
+import ApplicationStatusButtons from './../individual/ApplicationStatusButtons'
 
 class PropertyModal extends React.Component {
   constructor(props) {
@@ -48,6 +48,11 @@ class PropertyModal extends React.Component {
     );
   }
 }
+
+PropertyModal.propTypes = {
+  location: PropTypes.string,
+  description: PropTypes.string
+};
 
 export default PropertyModal;
           

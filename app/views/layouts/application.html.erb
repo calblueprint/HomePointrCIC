@@ -13,9 +13,9 @@
   <body>
     <% if current_user != nil %>
       <% if current_user.type == "ReferralAgency"%>
-        <%= react_component("NavBar", props={ id: current_user.id, type: "referral_agencies", email: current_user.email }) %>
+        <%= react_component("individual/NavBar", props={ id: current_user.id, type: "referral_agencies", email: current_user.email }) %>
       <% else %>
-        <%= react_component("NavBar", props={ id: current_user.id, type: "landlords", email: current_user.email }) %>
+        <%= react_component("individual/NavBar", props={ id: current_user.id, type: "landlords", email: current_user.email }) %>
       <%end%>
     <%end%>
   <%= yield %>

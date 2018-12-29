@@ -6,10 +6,10 @@ import moment from 'moment';
 import ListView from './ListView.jsx';
 import APIRoutes from 'helpers/api_routes';
 import Utils from 'helpers/utils';
-import UploadButton from './UploadButton';
+import UploadButton from './individual/UploadButton';
 import ActiveStorageProvider from "react-activestorage-provider";
-import SplitViewContainer from "./SplitViewContainer.jsx";
-import PropertyListWrapper from "./PropertyListWrapper.jsx";
+import SplitViewContainer from "./individual/SplitViewContainer.jsx";
+import PropertyListWrapper from "./individual/PropertyListWrapper.jsx";
 import RATenantView from "./RATenantView.jsx";
 
 class ApplicationsPairing extends React.Component {

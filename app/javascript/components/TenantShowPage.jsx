@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import "antd/dist/antd.css";
-import SplitViewContainer from "./SplitViewContainer.jsx";
+import SplitViewContainer from "./individual/SplitViewContainer.jsx";
 import RATenantView from "./RATenantView.jsx";
 import ListView from "./ListView.jsx";
 import Utils from 'helpers/utils';
@@ -47,6 +47,12 @@ class TenantShowPage extends React.Component {
 }
 
 TenantShowPage.propTypes = {
-
+  status: PropTypes.number,
+  applications: PropTypes.array,
+  form: PropTypes.array,
+  tenant: PropTypes.object,
+  properties: PropTypes.array,
+  tagValues: PropTypes.array,
+  url: PropTypes.string
 };
 export default TenantShowPage;

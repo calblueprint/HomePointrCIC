@@ -4,7 +4,6 @@ import { Button } from 'antd';
 import 'antd/dist/antd.css';
 import moment from 'moment';
 import APIRoutes from 'helpers/api_routes';
-import ProfileForm from "./ProfileForm";
 
 class ApplicationStatusButtons extends React.Component {
   constructor(props) {
@@ -58,6 +57,7 @@ class ApplicationStatusButtons extends React.Component {
 
 ApplicationStatusButtons.propTypes = {
   application_id: PropTypes.number,
+  property_id: PropTypes.number,
   status: PropTypes.string,
 };
 

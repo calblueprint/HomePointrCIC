@@ -65,9 +65,10 @@ class PropertyView extends React.Component {
 PropertyView.propTypes = {
   id: PropTypes.number,
   name: PropTypes.string,
-  mode: PropTypes.string,
   description: PropTypes.string,
   tagValues: PropTypes.array,
+  images: PropTypes.array,
+  canceledit: PropTypes.bool,
 };
 
 PropertyView.defaultProps = {

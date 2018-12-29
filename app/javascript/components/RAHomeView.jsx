@@ -4,7 +4,7 @@ import "antd/dist/antd.css";
 import ListView from "./ListView.jsx";
 import Utils from 'helpers/utils';
 import { Button } from 'antd';
-import SplitViewContainer from "./SplitViewContainer.jsx";
+import SplitViewContainer from "./individual/SplitViewContainer.jsx";
 
 class RAHomeView extends React.Component {
 	constructor(props) {
@@ -61,5 +61,11 @@ class RAHomeView extends React.Component {
 		);
 	}
 }
+
+RAHomeView.propTypes = {
+  properties: PropTypes.array,
+  tenants: PropTypes.array,
+  tenantImages: PropTypes.array,
+};
 
 export default RAHomeView;

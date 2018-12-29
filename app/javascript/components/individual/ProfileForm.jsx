@@ -13,9 +13,6 @@ class ProfileForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      type: props.type,
-      mode: props.mode,
-      id: props.id,
       prevValues: props.prevValues, //array of strings
       fieldNames: props.fieldNames, //array of strings
       fieldTypes: props.fieldTypes,  //array of strings
@@ -47,10 +44,10 @@ class ProfileForm extends React.Component {
 
   //api destroy
   handleDestroy() {
-    let id = this.state.id;
-    let type = this.state.type;
+    let id = this.props.id;
+    let type = this.props.type;
     var request = null;
-    if (this.state.type === "properties") {
+    if (this.props.type === "properties") {
       request = APIRoutes.properties.delete(id)
     } else {
       request = APIRoutes.tenants.delete(id)
@@ -68,10 +65,10 @@ class ProfileForm extends React.Component {
 
   //api create
   handleCreate() {
-    let type = this.state.type;
+    let type = this.props.type;
     var request = null;
     let body = this.convertToDict(this.state.fieldNames.slice(0,8), this.state.prevValues.slice(0,8));
-    if (this.state.type === "properties") {
+    if (this.props.type === "properties") {
       body = JSON.stringify({property: body})
       request = APIRoutes.properties.create
     } else {
@@ -95,11 +92,11 @@ class ProfileForm extends React.Component {
 
   //api edit
   handleEdit() {
-    let id = this.state.id;
-    let type = this.state.type;
+    let id = this.props.id;
+    let type = this.props.type;
     var request = null;
     var body = this.convertToDict(this.state.fieldNames, this.state.prevValues)
-    if (this.state.type === "properties") {
+    if (this.props.type === "properties") {
       body = JSON.stringify({property: body})
       request = APIRoutes.properties.update(id)
     } else {
@@ -151,7 +148,7 @@ class ProfileForm extends React.Component {
   }
 
   renderDatePicker(index) {
-    if (this.state.mode == "create") {
+    if (this.props.mode == "create") {
       this.state.prevValues[index] = moment().format("YYYY-MM-DD")
     }
     return (
@@ -190,8 +187,8 @@ class ProfileForm extends React.Component {
   }
 
   renderSlider(index) {
-    let df = (this.state.mode == 'edit') ? [this.state.prevValues[index], this.state.prevValues[index+1]] : [0, 5000]
-    if (this.state.mode == "create") {
+    let df = (this.props.mode == 'edit') ? [this.state.prevValues[index], this.state.prevValues[index+1]] : [0, 5000]
+    if (this.props.mode == "create") {
       this.state.prevValues[index] = 0
       this.state.prevValues[index+1] = 5000
     }
@@ -231,10 +228,10 @@ class ProfileForm extends React.Component {
   onImageRemove(e) {
     // console.log(document.getElementsByName("csrf-token")[0].content)
     // let pic_id = e.uid;
-    // let type = this.state.type;
+    // let type = this.props.type;
     // var request = null;
-    // if (this.state.type === "properties") {
-    //   request = '/api/properties/' + this.state.id + '/delete_image_attachment/' + pic_id
+    // if (this.props.type === "properties") {
+    //   request = '/api/properties/' + this.props.id + '/delete_image_attachment/' + pic_id
     // } else {
     //   request = ''
     // }
@@ -248,14 +245,14 @@ class ProfileForm extends React.Component {
   }
 
   renderUpload(index) {
-    let id = this.state.id;
-    let type = this.state.type;
-    let path = (this.state.mode === "create") ? '/api/' + type : '/api/' + type + '/' + id.toString();
-    let model = (this.state.type === 'properties') ? 'Property' : 'Tenant';
-    let method = (this.state.mode === 'edit') ? 'PUT' : 'POST';
-    let attribute = (this.state.type === 'properties') ? 'images' : 'avatar';
+    let id = this.props.id;
+    let type = this.props.type;
+    let path = (this.props.mode === "create") ? '/api/' + type : '/api/' + type + '/' + id.toString();
+    let model = (this.props.type === 'properties') ? 'Property' : 'Tenant';
+    let method = (this.props.mode === 'edit') ? 'PUT' : 'POST';
+    let attribute = (this.props.type === 'properties') ? 'images' : 'avatar';
     let buttonProps = null;
-    if (this.state.mode === "edit") {
+    if (this.props.mode === "edit") {
       this.state.fileList = this.setupImages(index);
       buttonProps = {
         listType: 'picture',
@@ -286,9 +283,9 @@ class ProfileForm extends React.Component {
 
   renderUploadForm(index) {
     let buttonProps = null;
-    let method = (this.state.mode === 'edit') ? 'PUT' : 'POST';
-    let path = (this.state.mode === "create") ? '/api/properties' : '/api/properties/' + this.state.id.toString();
-    if (this.state.mode === "edit") {
+    let method = (this.props.mode === 'edit') ? 'PUT' : 'POST';
+    let path = (this.props.mode === "create") ? '/api/properties' : '/api/properties/' + this.props.id.toString();
+    if (this.props.mode === "edit") {
       buttonProps = {
         listType: 'picture',
         defaultFileList: this.state.prevValues[index] === null ? [] : [{uid: this.state.prevValues[index].id, url: this.state.prevValues[index].image, name: this.state.prevValues[index].image.split("/").slice(-1).pop()}],
@@ -358,7 +355,7 @@ class ProfileForm extends React.Component {
 
   render() {
     let returnArr = [];
-    if (this.state.mode === "create") {
+    if (this.props.mode === "create") {
       returnArr = [...this.renderForm(),
           <Button 
           style={{
@@ -372,7 +369,7 @@ class ProfileForm extends React.Component {
           margin: "1.5% auto"
           }}
            key='cancel' type="default" href={"/"} >Cancel</Button>]
-    } else if (this.state.mode === "edit") {
+    } else if (this.props.mode === "edit") {
       returnArr = [...this.renderForm(),
           <Button style={{
           width: "20%",
@@ -406,7 +403,8 @@ ProfileForm.propTypes = {
   prevValues: PropTypes.array,
   fieldNames: PropTypes.array,
   fieldTypes: PropTypes.array,
-  niceFieldNames: PropTypes.array
+  niceFieldNames: PropTypes.array,
+  current_userID: PropTypes.number,
 };
 
 export default ProfileForm; 
