@@ -54,8 +54,8 @@ class PropertiesController < ApplicationController
     }
     @images = nil
     if @property.images.attached? == true
-      image_list = @property.images.map{|img| ({ image: url_for(img) })}
-      @images = [{url: image_list[0][:image]}]
+      image_list = @property.images.map{|img| ({ url: url_for(img) })}
+      @images = image_list
     end
     @name = (@property.housing_type + " in " + @property.location).titleize
     @description = @property.attributes.values[2]
