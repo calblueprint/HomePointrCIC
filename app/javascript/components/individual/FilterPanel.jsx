@@ -9,14 +9,14 @@ class FilterPanel extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      location: [this.props.selectedTenant.location],
+      location: [],
       capacity: 0,
-      rent_min: this.props.selectedTenant.rent_min,
-      rent_max: this.props.selectedTenant.rent_max,
-      size: this.props.selectedTenant.num_bedrooms,
-      property_type: [this.props.selectedTenant.property_type],
-      housing_type: [this.props.selectedTenant.housing_type],
-      date_available: this.props.selectedTenant.date_needed,
+      rent_min: 0,
+      rent_max: 9999,
+      size: 10,
+      property_type: [],
+      housing_type: [],
+      date_available: moment().format("YYYY-MM-DD"),
       isOpen: false,
     };
     this.handleClick = this.handleClick.bind(this);
@@ -51,9 +51,32 @@ class FilterPanel extends React.Component {
     this.setState({isOpen: !this.state.isOpen})
   }
 
+  handleState() {
+    this.state.location = [this.props.selectedTenant.location];
+    this.state.capacity = 0;
+    this.state.rent_min = this.props.selectedTenant.rent_min;
+    this.state.rent_max = this.props.selectedTenant.rent_max;
+    this.state.size = this.props.selectedTenant.num_bedrooms;
+    this.state.property_type = [this.props.selectedTenant.property_type];
+    this.state.housing_type = [this.props.selectedTenant.housing_type];
+    this.state.date_available = this.props.selectedTenant.date_needed;
+  }
+
+  // restoreState() {
+  //   this.state.location = [];
+  //   this.state.capacity = 0;
+  //   this.state.rent_min = 0;
+  //   this.state.rent_max = 9999;
+  //   this.state.size = 10;
+  //   this.state.property_type = [];
+  //   this.state.housing_type = [];
+  //   this.state.date_available = moment().format("YYYY-MM-DD");
+  //   render();
+  // }
+
   render() {
     const CheckboxGroup = Checkbox.Group;
-    const menu = (
+    let menu = (
       <div 
         style={{
           background: "white",
@@ -243,10 +266,6 @@ FilterPanel.propTypes = {
   property_options: PropTypes.array,
   housing_options: PropTypes.array,
   selectedTenant: PropTypes.object
-};
-
-FilterPanel.defaultProps = {
-  selectedTenant: {location: "other_location", rent_min: 0, rent_max: 9999, num_bedrooms: 10, property_type: "other_property_type", housing_type: "other_housing_type", date_available: moment().format("YYYY-MM-DD")}
 };
 
 export default FilterPanel;
