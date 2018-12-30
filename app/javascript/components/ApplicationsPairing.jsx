@@ -132,9 +132,14 @@ class ApplicationsPairing extends React.Component {
       );
     }
     //Filtered properties
-    const rightComponent = (
+    let rightComponent = (
       <PropertyListWrapper {...this.props} CheckboxChange={this.onChangeProperty}/>
     );
+    if (this.state.individualView) {
+      rightComponent = (
+        <PropertyListWrapper {...this.props} CheckboxChange={this.onChangeProperty} selectedTenant={this.state.selectedTenant}/>
+      );
+    }
 
     return (
       <div>

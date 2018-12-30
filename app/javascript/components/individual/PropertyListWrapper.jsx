@@ -66,6 +66,7 @@ class PropertyListWrapper extends React.Component {
 
 PropertyListWrapper.propTypes = {
   properties: PropTypes.array,
+  selectedTenant: PropTypes.object,
 };
 
 export default PropertyListWrapper;

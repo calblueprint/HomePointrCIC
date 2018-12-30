@@ -9,14 +9,14 @@ class FilterPanel extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      location: [props.tenant.location],
+      location: [this.props.selectedTenant.location],
       capacity: 0,
-      rent_min: props.tenant.rent_min,
-      rent_max: props.tenant.rent_max,
-      size: props.tenant.num_bedrooms,
-      property_type: [props.tenant.property_type],
-      housing_type: [props.tenant.housing_type],
-      date_available: props.tenant.date_needed,
+      rent_min: this.props.selectedTenant.rent_min,
+      rent_max: this.props.selectedTenant.rent_max,
+      size: this.props.selectedTenant.num_bedrooms,
+      property_type: [this.props.selectedTenant.property_type],
+      housing_type: [this.props.selectedTenant.housing_type],
+      date_available: this.props.selectedTenant.date_needed,
       isOpen: false,
     };
     this.handleClick = this.handleClick.bind(this);
@@ -199,7 +199,7 @@ class FilterPanel extends React.Component {
         </div>
         <DatePicker 
           onChange={(date, dateString) => this.handleDatePicker(date, dateString)} 
-          defaultValue={moment(this.props.tenant.date_needed)}
+          defaultValue={moment(this.state.date_available)}
         />
         </div>
       <Button 
@@ -242,11 +242,11 @@ FilterPanel.propTypes = {
   location_options: PropTypes.array,
   property_options: PropTypes.array,
   housing_options: PropTypes.array,
-  tenant: PropTypes.object,
+  selectedTenant: PropTypes.object
 };
 
 FilterPanel.defaultProps = {
-  tenant: {location: "other_location", rent_min: 0, rent_max: 9999, num_bedrooms: 10, property_type: "other_property_type", housing_type: "other_housing_type", date_available: moment().format("YYYY-MM-DD")}
+  selectedTenant: {location: "other_location", rent_min: 0, rent_max: 9999, num_bedrooms: 10, property_type: "other_property_type", housing_type: "other_housing_type", date_available: moment().format("YYYY-MM-DD")}
 };
 
 export default FilterPanel;
