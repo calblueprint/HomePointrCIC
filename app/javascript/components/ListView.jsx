@@ -30,12 +30,20 @@ class ListView extends React.Component {
     }
   }
 
-  renderAvatar(url){
+  renderAvatar(images, type){
     if (this.props.avatar) {
-      if (url === undefined || url === null) {
-        return (<Avatar size={200} shape="square" icon="user" />)
+      if (images === undefined || images === null) {
+        if (type === "tenant") {
+          return (<Avatar size={200} shape="square" icon="user" />)
+        } else {
+          return (<Avatar size={200} shape="square" icon="home" />)
+        }
       } else {
-        return (<Avatar size={200} shape="square" src={url} />)
+        if (type === "tenant") {
+          return (<Avatar size={200} shape="square" src={images} />)
+        } else {
+          return (<Avatar size={200} shape="square" src={images[0].url} />)
+        }
       }
     } else {
       return null;
@@ -58,7 +66,7 @@ class ListView extends React.Component {
 
   renderPropertyModal(resource) {
     if (this.props.property_modal) {
-      return(<PropertyModal location={resource.location} description={resource.description} />)
+      return(<PropertyModal location={resource.location} description={resource.description} images={resource.images}/>)
     } else {
       return(<Button type="default" href={"/properties/" + resource.id}>
         View Info
@@ -97,13 +105,13 @@ class ListView extends React.Component {
         >
           <Row gutter={16}>
             {this.state.type === "property" ? (
-              <Card bordered={false}>
+              <Card title={resource.location} bordered={false}>
                 {this.renderApplicationStatus(index)}
                 <Meta
-                  avatar={this.renderAvatar(resource.url)}
-                  title={resource.location}
-                  description={resource.description}
+                  avatar={this.renderAvatar(resource.images, "property")}
                 />
+                <div><br></br></div>
+                <p>{resource.description}</p>
                 {this.renderCheckbox(resource.id)}
                 {this.renderPropertyModal(resource)}
                 {this.props.applications ? this.renderApplicationModal(this.props.applications[index]) : null}
@@ -111,7 +119,7 @@ class ListView extends React.Component {
             ) : (
               <Card title={resource.name} bordered={false}>
                 <Meta
-                  avatar={this.renderAvatar(resource.url)}
+                  avatar={this.renderAvatar(resource.url, "tenant")}
                 />
                 {this.renderTenantSelectButton(resource)}
                 {this.renderTenantModal(resource, index)}

@@ -31,11 +31,6 @@ class PropertyView extends React.Component {
         </React.Fragment>
       )
     } else {
-      // return (
-      //   <React.Fragment key='photo'>
-      //     <Avatar size={256} shape="square" src={this.props.images[0].url}/>
-      //   </React.Fragment>
-      // )
       return (
         <Carousel autoplay>
           {this.props.images.map((image, index) => {

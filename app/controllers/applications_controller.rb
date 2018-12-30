@@ -12,6 +12,15 @@ class ApplicationsController < ApplicationController
       end
     end
     @properties = Property.all
+    @propertyImages = []
+    @properties.each do |p|
+      if p.images.attached?
+        image_list = p.images.map{|img| ({ url: url_for(img) })}
+        @propertyImages << {images: image_list}
+      else
+        @propertyImages << {images: nil}
+      end
+    end
     @housing_type_options = Property.housing_types.keys
     @property_type_options = Property.property_types.keys
     @location_options = Property.locations.keys

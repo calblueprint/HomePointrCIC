@@ -21,6 +21,7 @@ class ApplicationsPairing extends React.Component {
       selectedTenant: null,
       description: null,
       tenants: props.tenants,
+      properties: props.properties,
       individualView: false,
     };
     this.onChangeProperty = this.onChangeProperty.bind(this);
@@ -116,6 +117,7 @@ class ApplicationsPairing extends React.Component {
   render() {
     this.setup(this.state.tenants, this.props.tenantImages);
     this.setup(this.state.tenants, this.props.tenantPriorities);
+    this.setup(this.state.properties, this.props.propertyImages);
     let leftComponent = null;
     if (this.state.individualView) {
       //Individual tenant has been selected

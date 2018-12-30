@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from "prop-types";
 import 'antd/dist/antd.css';
-import { Modal, Button } from 'antd';
+import { Modal, Button, Carousel, Avatar } from 'antd';
 import ApplicationStatusButtons from './../individual/ApplicationStatusButtons'
 
 class PropertyModal extends React.Component {
@@ -30,6 +30,26 @@ class PropertyModal extends React.Component {
     });
   }
 
+  renderPhotos() {
+    if (this.props.images == null) {
+      return (
+        <React.Fragment key='photo'>
+          <Avatar size={256} shape="square" icon="home"/>
+        </React.Fragment>
+      )
+    } else {
+      return (
+        <Carousel autoplay>
+          {this.props.images.map((image, index) => {
+            return ( 
+              <div><h3><center><img src={image.url} margin-top="10%" height="320" width="400"/></center></h3></div>
+            )
+          })}
+        </Carousel>
+      )
+    }
+  }
+
   render() {
     return (
       <div>
@@ -42,7 +62,9 @@ class PropertyModal extends React.Component {
           onOk={this.handleOk}
           onCancel={this.handleCancel}
         >
-          <p>Description: {this.props.description}</p>
+        {this.renderPhotos()}
+        <p>Description: {this.props.description}</p>
+        
         </Modal>
       </div>
     );
@@ -51,7 +73,8 @@ class PropertyModal extends React.Component {
 
 PropertyModal.propTypes = {
   location: PropTypes.string,
-  description: PropTypes.string
+  description: PropTypes.string,
+  images: PropTypes.array,
 };
 
 export default PropertyModal;
