@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {Avatar, Button, Tag} from 'antd';
+import {Avatar, Button, Carousel, Tag} from 'antd';
 import 'antd/dist/antd.css';
 
 class PropertyView extends React.Component {
@@ -27,14 +27,18 @@ class PropertyView extends React.Component {
     if (this.props.images == null) {
       return (
         <React.Fragment key='photo'>
-          <Avatar size={256} shape="square" icon="user"/>
+          <Avatar size={256} shape="square" icon="home"/>
         </React.Fragment>
       )
     } else {
       return (
-        <React.Fragment key='photo'>
-          <Avatar size={256} shape="square" src={this.props.images[0].url}/>
-        </React.Fragment>
+        <Carousel autoplay>
+          {this.props.images.map((image, index) => {
+            return ( 
+              <div><h3><center><img src={image.url} margin-top="10%" height="320" width="400"/></center></h3></div>
+            )
+          })}
+        </Carousel>
       )
     }
   }

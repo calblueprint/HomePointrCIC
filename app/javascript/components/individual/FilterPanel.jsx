@@ -9,14 +9,14 @@ class FilterPanel extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      location: [props.tenant.location],
+      location: [],
       capacity: 0,
-      rent_min: props.tenant.rent_min,
-      rent_max: props.tenant.rent_max,
-      size: props.tenant.num_bedrooms,
-      property_type: [props.tenant.property_type],
-      housing_type: [props.tenant.housing_type],
-      date_available: props.tenant.date_needed,
+      rent_min: 0,
+      rent_max: 9999,
+      size: 10,
+      property_type: [],
+      housing_type: [],
+      date_available: moment().format("YYYY-MM-DD"),
       isOpen: false,
     };
     this.handleClick = this.handleClick.bind(this);
@@ -51,9 +51,32 @@ class FilterPanel extends React.Component {
     this.setState({isOpen: !this.state.isOpen})
   }
 
+  handleState() {
+    this.state.location = [this.props.selectedTenant.location];
+    this.state.capacity = 0;
+    this.state.rent_min = this.props.selectedTenant.rent_min;
+    this.state.rent_max = this.props.selectedTenant.rent_max;
+    this.state.size = this.props.selectedTenant.num_bedrooms;
+    this.state.property_type = [this.props.selectedTenant.property_type];
+    this.state.housing_type = [this.props.selectedTenant.housing_type];
+    this.state.date_available = this.props.selectedTenant.date_needed;
+  }
+
+  // restoreState() {
+  //   this.state.location = [];
+  //   this.state.capacity = 0;
+  //   this.state.rent_min = 0;
+  //   this.state.rent_max = 9999;
+  //   this.state.size = 10;
+  //   this.state.property_type = [];
+  //   this.state.housing_type = [];
+  //   this.state.date_available = moment().format("YYYY-MM-DD");
+  //   render();
+  // }
+
   render() {
     const CheckboxGroup = Checkbox.Group;
-    const menu = (
+    let menu = (
       <div 
         style={{
           background: "white",
@@ -199,7 +222,7 @@ class FilterPanel extends React.Component {
         </div>
         <DatePicker 
           onChange={(date, dateString) => this.handleDatePicker(date, dateString)} 
-          defaultValue={moment(this.props.tenant.date_needed)}
+          defaultValue={moment(this.state.date_available)}
         />
         </div>
       <Button 
@@ -242,11 +265,7 @@ FilterPanel.propTypes = {
   location_options: PropTypes.array,
   property_options: PropTypes.array,
   housing_options: PropTypes.array,
-  tenant: PropTypes.object,
-};
-
-FilterPanel.defaultProps = {
-  tenant: {location: "other_location", rent_min: 0, rent_max: 9999, num_bedrooms: 10, property_type: "other_property_type", housing_type: "other_housing_type", date_available: moment().format("YYYY-MM-DD")}
+  selectedTenant: PropTypes.object
 };
 
 export default FilterPanel;

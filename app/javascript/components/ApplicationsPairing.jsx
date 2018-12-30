@@ -21,6 +21,7 @@ class ApplicationsPairing extends React.Component {
       selectedTenant: null,
       description: null,
       tenants: props.tenants,
+      properties: props.properties,
       individualView: false,
     };
     this.onChangeProperty = this.onChangeProperty.bind(this);
@@ -116,6 +117,7 @@ class ApplicationsPairing extends React.Component {
   render() {
     this.setup(this.state.tenants, this.props.tenantImages);
     this.setup(this.state.tenants, this.props.tenantPriorities);
+    this.setup(this.state.properties, this.props.propertyImages);
     let leftComponent = null;
     if (this.state.individualView) {
       //Individual tenant has been selected
@@ -130,9 +132,14 @@ class ApplicationsPairing extends React.Component {
       );
     }
     //Filtered properties
-    const rightComponent = (
+    let rightComponent = (
       <PropertyListWrapper {...this.props} CheckboxChange={this.onChangeProperty}/>
     );
+    if (this.state.individualView) {
+      rightComponent = (
+        <PropertyListWrapper {...this.props} CheckboxChange={this.onChangeProperty} selectedTenant={this.state.selectedTenant}/>
+      );
+    }
 
     return (
       <div>
