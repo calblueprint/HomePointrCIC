@@ -11,7 +11,7 @@ class PropertiesController < ApplicationController
   end
 
   def new
-    if ActiveStorage::Blob != nil
+    if ActiveStorage::Blob.last != nil
       $activestoragestart = ActiveStorage::Blob.last.id
     else
       $activestoragestart = 0
