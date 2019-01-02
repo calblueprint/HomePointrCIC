@@ -5,7 +5,7 @@ class PropertiesController < ApplicationController
     @properties.each do |p|
       if p.images.attached? == true
         image_list = p.images.map{|img| ({ image: url_for(img) })}
-        @images << {url: image_list[0][:image]}
+        @images << {images: image_list[0][:image]}
       end
     end
   end

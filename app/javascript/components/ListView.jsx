@@ -39,7 +39,7 @@ class ListView extends React.Component {
           return (<Avatar size={200} shape="square" icon="home" />)
         }
       } else {
-        if (type === "tenant") {
+        if (type === "tenant" || typeof(images) === "string") {
           return (<Avatar size={200} shape="square" src={images} />)
         } else {
           return (<Avatar size={200} shape="square" src={images[0].url} />)
