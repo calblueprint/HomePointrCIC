@@ -17,7 +17,8 @@ class ProfileForm extends React.Component {
       fieldNames: props.fieldNames, //array of strings
       fieldTypes: props.fieldTypes,  //array of strings
       niceFieldNames: props.niceFieldNames, //array of strings
-      fileList: []
+      fileList: [],
+      disabled: false //to prevent multiple form submissions
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleCreate = this.handleCreate.bind(this);
@@ -65,6 +66,7 @@ class ProfileForm extends React.Component {
 
   //api create
   handleCreate() {
+    this.setState({disabled: true});
     let type = this.props.type;
     var request = null;
     let body = this.convertToDict(this.state.fieldNames.slice(0,8), this.state.prevValues.slice(0,8));
@@ -355,6 +357,7 @@ class ProfileForm extends React.Component {
 
   render() {
     let returnArr = [];
+    var disabled = this.state.disabled ? 'disabled' : ''
     if (this.props.mode === "create") {
       returnArr = [...this.renderForm(),
           <Button 
@@ -362,6 +365,7 @@ class ProfileForm extends React.Component {
           width: "20%",
           margin: "1.5% auto"
           }}
+          disabled={disabled}
       key='submit' type="primary" onClick={this.handleCreate}>Submit</Button>,
           <Button 
           style={{
