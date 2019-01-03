@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import "antd/dist/antd.css";
 import ListView from "./ListView.jsx";
 import Utils from 'helpers/utils';
-import { Button } from "antd";
+import { Button, Avatar } from "antd";
 
 class LandlordHomePage extends React.Component {
   constructor(props) {
@@ -23,10 +23,18 @@ class LandlordHomePage extends React.Component {
     }
   }
 
+  renderView() {
+    if (this.state.resources.length === 0) {
+      return(<Avatar shape="square" src="/assets/leaves.png" size={350}/>)
+    } else {
+      return(<ListView resources={this.state.resources} type="property" avatar={true} checkbox={false}/>)
+    }
+  }
+
   render() {
     this.setup();
     return [
-      <h1>Properties</h1>,
+      <div class="LLHome"><h1>Properties</h1></div>,
       <Button 
         style={{
         width: "20%",
@@ -36,7 +44,7 @@ class LandlordHomePage extends React.Component {
         key='submit' 
         type="primary" 
         onClick={this.redirectToNewProperty}>+ New Property</Button>,
-      <ListView resources={this.state.resources} type="property" avatar={true} checkbox={false}/>
+      this.renderView()
     ];
   }
 }
