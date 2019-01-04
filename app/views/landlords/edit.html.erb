@@ -1,13 +1,3 @@
-<%= form_for @landlord do |f| %>
-  <%= f.label :email%>
-  <%= f.text_field :email%>
-  <%= f.label :password%>
-  <%= f.text_field :password%>
-  <%= f.label :name%>
-  <%= f.text_field :name%>
-  <%= f.label :address%>
-  <%= f.text_field :address%>
-  <%= f.label :phone%>
-  <%= f.text_field :phone%>
-  <%= f.submit %>
+<%= form_with(model: @landlord, local: true) do |form| %>
+  <%= react_component("individual/ProfileForm", props={ id: @landlord.id, mode: @mode, type: @type, fieldNames: @field_names, fieldTypes: @field_types, niceFieldNames: @nice_field_names, prevValues: @prev_values }) %>
 <% end %>

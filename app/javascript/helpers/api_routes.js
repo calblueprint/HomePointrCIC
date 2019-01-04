@@ -14,9 +14,24 @@ class ApiRoutes {
       delete: (id) => '/api/tenants/' + id,
     }
   }
+
   get users() {
     return {
       delete: () => '/users/sign_out'
+    }
+  }
+
+  get landlords() {
+    return {
+      update: (id) => '/landlords/' + id,
+      delete: (id) => '/landlords/' + id,
+    }
+  }
+
+  get referral_agencies() {
+    return {
+      update: (id) => '/referral_agencies/' + id,
+      delete: (id) => '/referral_agencies/' + id,
     }
   }
 

@@ -11,25 +11,33 @@ class LandlordsController < ApplicationController
 
   def show
   	if user_signed_in? 
-  	  @landlord = Landlord.find(params[:id])
-      @email = @landlord.email
-      authorize @landlord
-  	  @properties = @landlord.properties
+  	  redirect_to '/'
   	else
   		redirect_to '/users/sign_up'
   	end
   end
 
   def edit
+    @mode = "edit"
+    @type = "landlords"
+    @nice_field_names = []
+    @field_names = Landlord.column_names[11..-2] + ["password", "email"]
+    @field_names.each do |i|
+      @nice_field_names << i.titleize
+    end
     @landlord = Landlord.find(params[:id])
     authorize @landlord
+    @prev_values = @landlord.attributes.values[11..-2] 
+    @prev_values << nil
+    @prev_values << @landlord.email
+    @field_types = ["textbox", "textbox", "textbox", "password", "textbox"]
   end 
 
   def update
 	  @landlord = Landlord.find(params[:id])
     authorize @landlord
 	  if @landlord.update(landlord_params)
-	  	redirect_to landlord_path(@landlord)
+	  	redirect_to root_path
 	  else
 	  	render json: { errors: @landlord.errors.messages }
 	  end 

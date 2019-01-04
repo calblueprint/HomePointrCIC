@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Upload, message, Icon, Select, Input, Button, Slider, Switch, DatePicker } from 'antd';
+import { Upload, message, Form, Icon, Select, Input, Button, Slider, Switch, DatePicker } from 'antd';
 import "antd/dist/antd.css";
 import moment from 'moment';
 import APIRoutes from 'helpers/api_routes';
@@ -50,6 +50,10 @@ class ProfileForm extends React.Component {
     var request = null;
     if (this.props.type === "properties") {
       request = APIRoutes.properties.delete(id)
+    } else if (this.props.type === "landlords") {
+      request = APIRoutes.landlords.delete(id)
+    } else if (this.props.type === "referral_agencies") {
+      request = APIRoutes.referral_agencies.delete(id)
     } else {
       request = APIRoutes.tenants.delete(id)
     }
@@ -101,6 +105,12 @@ class ProfileForm extends React.Component {
     if (this.props.type === "properties") {
       body = JSON.stringify({property: body})
       request = APIRoutes.properties.update(id)
+    } else if (this.props.type === "landlords") {
+      body = JSON.stringify({landlord: body})
+      request = APIRoutes.landlords.update(id)
+    } else if (this.props.type === "referral_agencies") {
+      body = JSON.stringify({referral_agency: body})
+      request = APIRoutes.referral_agencies.update(id)
     } else {
       body = JSON.stringify({tenant: body})
       request = APIRoutes.tenants.update(id)
@@ -130,6 +140,20 @@ class ProfileForm extends React.Component {
       key={index}>
         <label>{this.state.niceFieldNames[index]}</label>
         <Input size="large" defaultValue={this.state.prevValues[index]} onChange={(e) => this.handleChange(index, e)} />
+      </div>
+    )
+  }
+
+  renderPassword(index) {
+    return (
+      <div 
+      style={{
+        width: "50%",
+        margin: "1.5% auto"
+      }}
+      key={index}>
+        <label>New Password</label>
+        <Input type="password" size="large" defaultValue={this.state.prevValues[index]} onChange={(e) => this.handleChange(index, e)} />
       </div>
     )
   }
@@ -335,6 +359,10 @@ class ProfileForm extends React.Component {
         } else if (this.state.fieldTypes[index] === "slider") {
           return (
             this.renderSlider(index)
+          )
+        } else if (this.state.fieldTypes[index] === "password") {
+          return (
+            this.renderPassword(index)
           )
         } else if (this.state.fieldTypes[index] === "_slider") {
           return null
