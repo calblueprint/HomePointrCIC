@@ -36,8 +36,20 @@ class ReferralAgenciesController < ApplicationController
   end
 
   def edit
+    @mode = "edit"
+    @type = "referral_agencies"
+    @nice_field_names = []
+    @field_names = ReferralAgency.column_names[11..-2] + ["password", "email"]
+    @field_names.each do |i|
+      @nice_field_names << i.titleize
+    end
     @referral_agency = ReferralAgency.find(params[:id])
     authorize @referral_agency
+    @prev_values = @referral_agency.attributes.values[11..-2] 
+    @prev_values << nil
+    @prev_values << @referral_agency.email
+    @field_types = ["textbox", "textbox", "textbox", "password", "textbox"]
+    @current_userID = current_user.id
   end 
 
   def update
@@ -45,7 +57,7 @@ class ReferralAgenciesController < ApplicationController
 	  @referral_agency = ReferralAgency.find(params[:id])
     authorize @referral_agency
     if @referral_agency.update(referral_agency_params)
-	    redirect_to referral_agency_path(@referral_agency)
+	    redirect_to root_path
     else
       render json: { errors: @referral_agency.errors.messages }
     end 
