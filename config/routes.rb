@@ -26,10 +26,10 @@ Rails.application.routes.draw do
   end
 
   namespace :api do
-    resources :landlords, :referral_agencies, :infos, :applications
-      resources :properties, :tenants do
-        member do
-          delete 'delete_image_attachment/:image_id', :action => 'delete_image_attachment'
+    resources :landlords, :referral_agencies, :infos, :applications, :tenants
+      resources :properties do
+        collection do 
+          delete 'delete_image_attachment/:image_id', to: 'properties#delete_image_attachment'
         end
       end
     end

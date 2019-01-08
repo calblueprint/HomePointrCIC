@@ -3,8 +3,13 @@ class Api::PropertiesController < ApplicationController
   skip_before_action :verify_authenticity_token
 
   def delete_image_attachment
-    @image = ActiveStorage::Blob.find_signed(params[:image_id])
-    @image.purge
+    @image = ActiveStorage::Attachment.find(params[:image_id])
+    if @image.purge
+      head :ok
+    else
+      puts @image.errors.messages
+      render json: { errors: @image.errors.messages }
+    end
   end
 
   def create

@@ -1,8 +1,8 @@
 class Property < ApplicationRecord
 	# locations not set
 	belongs_to :landlord
-	has_many_attached :images
-	has_one_attached :form
+	has_many_attached :images, dependent: :destroy
+	has_one_attached :form, dependent: :destroy
 	has_many :infos, :through => :applications
 	has_many :applications, dependent: :destroy
 	enum housing_type: { other_housing_type: 0, supported_housing: 1, temporary_hostel: 2, sheltered_housing: 3, private_sector_leasing: 4, private_property: 5, care_home: 6, retired_housing: 7, council_housing: 8, housing_association: 9, student_housing: 10, mid_market_rent: 11, housing_first: 12, rehab_center: 13, refuge_center: 14, youth_hostel: 15 }
