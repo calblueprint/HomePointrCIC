@@ -6,6 +6,8 @@ class PropertiesController < ApplicationController
       if p.images.attached? == true
         image_list = p.images.map{|img| ({ image: url_for(img) })}
         @images << {images: image_list[0][:image]}
+      else
+        @images << {images: nil}
       end
     end
   end

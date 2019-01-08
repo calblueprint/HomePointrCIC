@@ -18,6 +18,7 @@ class ProfileForm extends React.Component {
       fieldTypes: props.fieldTypes,  //array of strings
       niceFieldNames: props.niceFieldNames, //array of strings
       fileList: [],
+      imageRemoveList: [],
       disabled: false //to prevent multiple form submissions
     };
     this.handleChange = this.handleChange.bind(this);
@@ -115,6 +116,7 @@ class ProfileForm extends React.Component {
       body = JSON.stringify({tenant: body})
       request = APIRoutes.tenants.update(id)
     }
+    this.removeImages(this.state.imageRemoveList);
     fetch(request, {
       method: 'PUT',
       headers: {
@@ -128,6 +130,22 @@ class ProfileForm extends React.Component {
     }).catch((data) => {
       console.error(data);
     });
+  }
+
+  removeImages(imageList) {
+    var i;
+    for (i = 0; i < imageList.length; i++) {
+      let request = APIRoutes.properties.delete_image(imageList[i]);
+      fetch(request, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+          "X_CSRF-Token": document.getElementsByName("csrf-token")[0].content
+        }
+      }).catch((data) => {
+        console.error(data);
+      });
+    }
   }
 
   renderTextbox(index) {
@@ -251,25 +269,6 @@ class ProfileForm extends React.Component {
     }
   }
 
-  onImageRemove(e) {
-    // console.log(document.getElementsByName("csrf-token")[0].content)
-    // let pic_id = e.uid;
-    // let type = this.props.type;
-    // var request = null;
-    // if (this.props.type === "properties") {
-    //   request = '/api/properties/' + this.props.id + '/delete_image_attachment/' + pic_id
-    // } else {
-    //   request = ''
-    // }
-    // fetch(request, {
-    //   method: 'DELETE',
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //     "X_CSRF-Token": document.getElementsByName("csrf-token")[0].content
-    //   }
-    // })
-  }
-
   renderUpload(index) {
     let id = this.props.id;
     let type = this.props.type;
@@ -283,7 +282,7 @@ class ProfileForm extends React.Component {
       buttonProps = {
         listType: 'picture',
         defaultFileList: this.state.fileList,
-        onRemove: (e) => this.onImageRemove(e),
+        onRemove: (e) => this.state.imageRemoveList.push(e.uid),
         className: 'upload-list-inline',
       };
     }
