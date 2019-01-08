@@ -3,14 +3,14 @@ import PropTypes from "prop-types";
 
 const SplitViewContainer = props => (
 	<div
-		style={{
+		key="splitViewContainer" style={{
 			display: "flex",
 			justifyContent: "space-around",
 			flexDirection: "row",
 			height: "90%"
 		}}
 	>
-		<div
+		<div key="left"
 			style={{
 				width: "50%"
 			}}
@@ -18,7 +18,7 @@ const SplitViewContainer = props => (
 			{props.leftComponent}
 		</div>
 
-		<div
+		<div key="right"
 			style={{
 				width: "50%"
 			}}

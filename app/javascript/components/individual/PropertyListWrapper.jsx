@@ -52,7 +52,7 @@ class PropertyListWrapper extends React.Component {
 	
 	render() {
 		return (
-			<div
+			<div key="PropertyListWrapper"
         style={{
 	        paddingTop: "5%",
         }}

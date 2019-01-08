@@ -32,13 +32,15 @@ class PropertyView extends React.Component {
       )
     } else {
       return (
-        <Carousel autoplay>
-          {this.props.images.map((image, index) => {
-            return ( 
-              <div><h3><center><img src={image.url} margin-top="10%" height="320" width="400"/></center></h3></div>
-            )
-          })}
-        </Carousel>
+        <div key="carousel" style={{backgroundColor: "#545454"}}>
+          <Carousel autoplay>
+            {this.props.images.map((image, index) => {
+              return ( 
+                <div key={index}><h3><center><img src={image.url} margin-top="10%" height="320" width="400"/></center></h3></div>
+              )
+            })}
+          </Carousel>
+        </div>
       )
     }
   }

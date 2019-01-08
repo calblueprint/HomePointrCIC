@@ -38,7 +38,6 @@ class ApplicationStatusButtons extends React.Component {
 // rejected: 0, received: 1, interview: 2, housed: 3
 
   render() {
-    console.log(this.props.status)
     if (this.props.status === "received") {
       return [<Button key="reject" type="danger" onClick={this.handleReject}>Reject</Button>,
               <Button key="interview" type="default" onClick={this.handleInterview}>Interview</Button>,

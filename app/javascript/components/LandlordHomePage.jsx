@@ -34,7 +34,7 @@ class LandlordHomePage extends React.Component {
   render() {
     this.setup();
     return [
-      <div class="LLHome"><h1>Properties</h1></div>,
+      <div className="LLHome"><h1>Properties</h1></div>,
       <Button 
         style={{
         width: "20%",

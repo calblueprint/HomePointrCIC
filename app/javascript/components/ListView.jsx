@@ -52,7 +52,7 @@ class ListView extends React.Component {
 
   renderTenantModal(resource, index) {
     if (!this.props.tenant_modal) {
-      return(<Button type="default" href={"/tenants/" + resource.id}>
+      return(<Button key={resource.id} type="default" href={"/tenants/" + resource.id}>
         View Info
       </Button>)
     } else {
@@ -68,7 +68,7 @@ class ListView extends React.Component {
     if (this.props.property_modal) {
       return(<PropertyModal location={resource.location} description={resource.description} images={resource.images}/>)
     } else {
-      return(<Button type="default" href={"/properties/" + resource.id}>
+      return(<Button key={resource.id} type="default" href={"/properties/" + resource.id}>
         View Info
       </Button>)
     }
@@ -102,6 +102,7 @@ class ListView extends React.Component {
             marginRight: "20%",
             marginTop: "2%"
           }}
+          key={index}
         >
           <Row gutter={16}>
             {this.state.type === "property" ? (

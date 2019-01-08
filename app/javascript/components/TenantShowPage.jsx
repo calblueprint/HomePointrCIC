@@ -25,11 +25,11 @@ class TenantShowPage extends React.Component {
   render() {
     this.setup(this.state.applications, this.props.form);
     const leftComponent = (
-      <RATenantView id={this.props.tenant.id} name={this.props.tenant.name} mode="ra_edit" description={this.props.tenant.description} avatar={this.props.url} tagValues={this.props.tagValues} status={this.props.status}/>
+      <RATenantView key={this.props.tenant.id} id={this.props.tenant.id} name={this.props.tenant.name} mode="ra_edit" description={this.props.tenant.description} avatar={this.props.url} tagValues={this.props.tagValues} status={this.props.status}/>
     );
     const rightComponent = ([
       <h1>Applications</h1>, 
-      <ListView applications={this.state.applications} resources={this.props.properties} property_modal={true} type="property"/>
+      <ListView key={this.props.tenant.id} applications={this.state.applications} resources={this.props.properties} property_modal={true} type="property"/>
     ]);
 
     return (
