@@ -413,7 +413,7 @@ class ProfileForm extends React.Component {
           <Button style={{
           width: "20%",
           margin: "1.5% auto"
-          }}key='delete' type="danger" onClick={this.handleDestroy}>Delete</Button>]
+          }}key='delete' type="danger" onClick={this.handleDestroy}>Delete</Button>, ]
     }
     return (
       <div

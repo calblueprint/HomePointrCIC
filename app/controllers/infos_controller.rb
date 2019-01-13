@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class InfosController < ApplicationController
   def create
     info = Info.new(info_params)
@@ -9,7 +11,7 @@ class InfosController < ApplicationController
   end
 
   private
-    
+
   def info_params
     params.require(:info).permit(
       :tenant_id

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Api::ReferralAgenciesController < ApplicationController
   # def show
   #   if user_signed_in? and current_user.type == 'ReferralAgency'

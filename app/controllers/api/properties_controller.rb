@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Api::PropertiesController < ApplicationController
   respond_to :json
   skip_before_action :verify_authenticity_token
@@ -17,8 +19,8 @@ class Api::PropertiesController < ApplicationController
     authorize @property
     if @property.save
       if ActiveStorage::Blob.last.id != $activestoragestart
-        a = $activestoragestart 
-        add_files_to_property(a+1, @property)
+        a = $activestoragestart
+        add_files_to_property(a + 1, @property)
       end
       render json: @property
     else
@@ -30,19 +32,19 @@ class Api::PropertiesController < ApplicationController
     imagedone = false
     formdone = false
     ActiveStorage::Blob.last.id.downto(start).each do |i|
-      if imagedone and formdone
+      if imagedone && formdone
         break
       else
         a = ActiveStorage::Blob.find(i)
-        if !imagedone
+        unless imagedone
           if a.image?
             property.images.attach(a)
             imagedone = true
           end
         end
 
-        if !formdone
-          if !a.image?
+        unless formdone
+          unless a.image?
             property.form.attach(a)
             formdone = true
           end
@@ -72,7 +74,7 @@ class Api::PropertiesController < ApplicationController
   end
 
   private
-    
+
   def property_params
     params.require(:property).permit(
       :capacity,

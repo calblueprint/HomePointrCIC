@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AppPolicy < ApplicationPolicy
   attr_reader :user, :app
 
@@ -7,26 +9,24 @@ class AppPolicy < ApplicationPolicy
   end
 
   def self.permitted_attributes
-    if user.type == 'ReferralAgency' 
-      [:status, :property_id, :info_id]
+    if user.type == 'ReferralAgency'
+      %i[status property_id info_id]
     else
       [:status]
     end
   end
 
-  # Returns true if a Referral Agency is viewing one of their own tenants' applications, 
+  # Returns true if a Referral Agency is viewing one of their own tenants' applications,
   # or if a Landlord is viewing the application of a tenant that has applied to one of their properties.
   def show?
-    if user.type == 'ReferralAgency' 
+    if user.type == 'ReferralAgency'
       user.tenants.include?(app.info.tenant)
     else
       user.properties.each do |property|
-        if property.applications.include?(app)
-          return true
-        end
+        return true if property.applications.include?(app)
       end
-      return false
-    end 
+      false
+    end
   end
 
   def create?

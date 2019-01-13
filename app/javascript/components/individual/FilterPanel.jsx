@@ -237,6 +237,18 @@ class FilterPanel extends React.Component {
           Apply
         </div>
       </Button>
+      <Button 
+        type="danger" 
+        onClick={this.toggleOpen}
+      >
+        <div         
+          style={{
+            paddingBottom: "15px",
+          }}
+        >
+          Cancel
+        </div>
+      </Button>
     </div>
     );
 

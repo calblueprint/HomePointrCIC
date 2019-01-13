@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Application < ApplicationRecord
   enum status: { rejected: 0, received: 1, interview: 2, housed: 3 }
   has_one_attached :form
@@ -10,11 +12,11 @@ class Application < ApplicationRecord
   def self.policy_class
     AppPolicy
   end
-  
-  def hidden  
-  """
-  Returns whether this application should be hidden or not.
-  """
+
+  def hidden
+    ''"
+    Returns whether this application should be hidden or not.
+    "''
     status_key = status.to_s
     status = Application.statuses[status_key]
     if status == 0

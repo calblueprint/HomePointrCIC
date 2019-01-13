@@ -1,5 +1,6 @@
-class Api::ApplicationsController < ApplicationController
+# frozen_string_literal: true
 
+class Api::ApplicationsController < ApplicationController
   def show
     application = Application.find(params[:id])
     render json: application
@@ -17,7 +18,7 @@ class Api::ApplicationsController < ApplicationController
     end
   end
 
-  #request sent here api/applications/22/update
+  # request sent here api/applications/22/update
   def update
     @application = Application.find(params[:id])
     authorize @application
@@ -32,7 +33,7 @@ class Api::ApplicationsController < ApplicationController
 
   def application_params
     if current_user.type == 'ReferralAgency'
-      params.require(:application).permit([:status, :property_id, :info_id, :description, :form])
+      params.require(:application).permit(%i[status property_id info_id description form])
     else
       params.require(:application).permit([:status])
     end

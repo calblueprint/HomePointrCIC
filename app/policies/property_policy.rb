@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class PropertyPolicy < ApplicationPolicy
   attr_reader :user, :property
 
@@ -40,8 +42,8 @@ class PropertyPolicy < ApplicationPolicy
 
     def resolve
       if user.type == 'ReferralAgency'
-        scope.all 
-      else 
+        scope.all
+      else
         scope.where(landlord: user)
       end
     end

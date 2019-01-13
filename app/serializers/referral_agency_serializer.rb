@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # class ReferralAgencySerializer < ActiveModel::Serializer
 #   attributes :ra_tenants,
 #              :email,
@@ -8,5 +10,5 @@
 #   def ra_tenants
 #     tenants = object.tenants
 #   end
-    
+
 # end

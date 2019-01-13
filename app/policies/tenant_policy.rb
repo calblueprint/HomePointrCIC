@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class TenantPolicy
   attr_reader :user, :tenant
 
@@ -6,23 +8,21 @@ class TenantPolicy
     @tenant = tenant
   end
 
-  # Returns true if a landlord if viewing a tenant that has applied to one of their properties, 
+  # Returns true if a landlord if viewing a tenant that has applied to one of their properties,
   # or if a referral agency is viewing one of their own tenants.
   def show?
     if user.type == 'Landlord'
       tenant.info.applications.each do |app|
-        if app.property.landlord == user
-          return true
-        end
+        return true if app.property.landlord == user
       end
-      return false
-    else 
-      user.tenants.include?(tenant) 
-    end  
+      false
+    else
+      user.tenants.include?(tenant)
+    end
   end
 
   def index?
-    true 
+    true
   end
 
   def create?
@@ -34,7 +34,7 @@ class TenantPolicy
   end
 
   def update?
-    user.type == 'ReferralAgency' && user.tenants.include?(tenant) 
+    user.type == 'ReferralAgency' && user.tenants.include?(tenant)
   end
 
   def edit?
@@ -44,4 +44,4 @@ class TenantPolicy
   def destroy?
     create?
   end
-end 
+end

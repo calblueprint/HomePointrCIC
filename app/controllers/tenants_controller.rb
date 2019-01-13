@@ -1,5 +1,6 @@
-class TenantsController < ApplicationController
+# frozen_string_literal: true
 
+class TenantsController < ApplicationController
   def index
     if ReferralAgency.exists?(current_user.id)
       user = ReferralAgency.find(current_user.id)
@@ -13,23 +14,21 @@ class TenantsController < ApplicationController
   def new
     @tenant = Tenant.new
     authorize @tenant
-    @mode = "create"
-    @type = "tenants"
+    @mode = 'create'
+    @type = 'tenants'
     enums = []
     # @field_names = Tenant.column_names[1..-3] + ["avatar"]
     @field_names = Tenant.column_names[1..-3]
     @nice_field_names = []
     @field_names.each do |i|
       @nice_field_names << i.titleize
-      if Tenant.defined_enums.keys.include? i
-        enums << Tenant.defined_enums[i].keys
-      end
+      enums << Tenant.defined_enums[i].keys if Tenant.defined_enums.key?(i)
     end
     num_fields = @field_names.length
-    @prev_values = Array.new(num_fields, "")
+    @prev_values = Array.new(num_fields, '')
     # @prev_values << @tenant.avatar
-    @field_types = ["textbox", "textarea", "textbox", "textbox", "textbox", "slider", "_slider", enums[0], enums[1], "textbox", enums[2], "id", "datepicker", "attachment"]
-    # @field_types = ["textbox", "textarea", "textbox", "textbox", "textbox", "slider", "_slider", enums[0], enums[1], "textbox", enums[2], "textbox", "datepicker"]  
+    @field_types = ['textbox', 'textarea', 'textbox', 'textbox', 'textbox', 'slider', '_slider', enums[0], enums[1], 'textbox', enums[2], 'id', 'datepicker', 'attachment']
+    # @field_types = ["textbox", "textarea", "textbox", "textbox", "textbox", "slider", "_slider", enums[0], enums[1], "textbox", enums[2], "textbox", "datepicker"]
     @current_userID = current_user.id
   end
 
@@ -42,15 +41,11 @@ class TenantsController < ApplicationController
     @applications = @tenant.info.applications
     @applications.each do |a|
       @properties << a.property
-      if a.form.attached?
-        @form << {form: url_for(a.form)}
-      end
+      @form << { form: url_for(a.form) } if a.form.attached?
     end
     values = @tenant.attributes.values[3..-3]
     @avatarURL = nil
-    if @tenant.avatar.attached?
-      @avatarURL = url_for(@tenant.avatar)
-    end
+    @avatarURL = url_for(@tenant.avatar) if @tenant.avatar.attached?
 
     field_names = Tenant.column_names[3..-3]
     nice_field_names = []
@@ -58,32 +53,30 @@ class TenantsController < ApplicationController
       nice_field_names << field_name.titleize
     end
     @tag_values = []
-    nice_field_names.each_with_index {| tag, index |
-      @tag_values << tag.to_s + ": " + values[index].to_s
-    }
+    nice_field_names.each_with_index do |tag, index|
+      @tag_values << tag.to_s + ': ' + values[index].to_s
+    end
   end
 
   def edit
-    @mode = "edit"
-    @type = "tenants"
+    @mode = 'edit'
+    @type = 'tenants'
     enums = []
-    @field_names = Tenant.column_names[1..-3] + ["avatar"]
+    @field_names = Tenant.column_names[1..-3] + ['avatar']
     @nice_field_names = []
     @field_names.each do |i|
       @nice_field_names << i.titleize
-      if Tenant.defined_enums.keys.include? i
-        enums << Tenant.defined_enums[i].keys
-      end
+      enums << Tenant.defined_enums[i].keys if Tenant.defined_enums.key?(i)
     end
     @tenant = Tenant.find(params[:id])
     authorize @tenant
     @prev_values = @tenant.attributes.values[1..-3]
-    if @tenant.avatar.attached? == false
-      @prev_values << @tenant.avatar
-    else
-      @prev_values << [{id: @tenant.avatar.id, url: url_for(@tenant.avatar)}]
-    end
-    @field_types = ["textbox", "textarea", "textbox", "textbox", "textbox", "slider", "_slider", enums[0], enums[1], "textbox", enums[2], "id", "datepicker", "attachment"]
+    @prev_values << if @tenant.avatar.attached? == false
+                      @tenant.avatar
+                    else
+                      [{ id: @tenant.avatar.id, url: url_for(@tenant.avatar) }]
+                    end
+    @field_types = ['textbox', 'textarea', 'textbox', 'textbox', 'textbox', 'slider', '_slider', enums[0], enums[1], 'textbox', enums[2], 'id', 'datepicker', 'attachment']
     @current_userID = current_user.id
   end
 

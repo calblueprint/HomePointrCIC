@@ -12,7 +12,10 @@ const SplitViewContainer = props => (
 	>
 		<div key="left"
 			style={{
-				width: "50%"
+				width: "48%",
+				height: "100vh",
+				overflow: "scroll",
+				borderLeft: "2px solid gray"
 			}}
 		>
 			{props.leftComponent}
@@ -20,7 +23,11 @@ const SplitViewContainer = props => (
 
 		<div key="right"
 			style={{
-				width: "50%"
+				width: "48%",
+				height: "100vh",
+				overflow: "scroll",
+				paddingLeft: "10px",
+				borderLeft: "2px solid gray"
 			}}
 		>
 			{props.rightComponent}

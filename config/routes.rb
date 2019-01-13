@@ -1,34 +1,36 @@
+# frozen_string_literal: true
+
 Rails.application.routes.draw do
   get 'home/index'
   get 'errors/show'
-  resources :referral_agencies, :only => [:create, :show, :update, :edit, :destroy]
-  resources :landlords, :only => [:create, :show, :update, :edit, :destroy]
-  resources :properties, :only => [:new, :create, :update, :index, :edit, :show, :destroy]
-  resources :tenants, :only => [:new, :create, :edit, :update, :show, :index, :destroy]
-  resources :applications, :only => [:index, :new, :create, :edit, :update, :show, :destroy]
+  resources :referral_agencies, only: %i[create show update edit destroy]
+  resources :landlords, only: %i[create show update edit destroy]
+  resources :properties, only: %i[new create update index edit show destroy]
+  resources :tenants, only: %i[new create edit update show index destroy]
+  resources :applications, only: %i[index new create edit update show destroy]
   # resources :properties, :only => [:create, :update, :show, :destroy]
   resources :properties
   # resources :tenants, :only => [:create, :update, :show, :destroy]
   resources :tenants
-  resources :applications, :only => [:create, :show, :destroy]
-  resources :infos, :only => [:create]
+  resources :applications, only: %i[create show destroy]
+  resources :infos, only: [:create]
   devise_for :users, controllers: {
-        sessions: 'sessions',
-        registrations: "registrations"
-      }
+    sessions: 'sessions',
+    registrations: 'registrations'
+  }
   devise_scope :user do
-  authenticated do 
-    root 'home#index', as: :authenticated_root
-  end
+    authenticated do
+      root 'home#index', as: :authenticated_root
+    end
 
-  unauthenticated do
-    root 'sessions#new', as: :unauthenticated_root
-  end
+    unauthenticated do
+      root 'sessions#new', as: :unauthenticated_root
+    end
 
-  namespace :api do
-    resources :landlords, :referral_agencies, :infos, :applications, :tenants
+    namespace :api do
+      resources :landlords, :referral_agencies, :infos, :applications, :tenants
       resources :properties do
-        collection do 
+        collection do
           delete 'delete_image_attachment/:image_id', to: 'properties#delete_image_attachment'
         end
       end

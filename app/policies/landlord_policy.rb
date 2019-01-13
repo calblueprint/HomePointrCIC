@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class LandlordPolicy
   attr_reader :user, :landlord
 
@@ -7,7 +9,7 @@ class LandlordPolicy
   end
 
   def show?
-    user.type == 'ReferralAgency' || user.id == landlord.id 
+    user.type == 'ReferralAgency' || user.id == landlord.id
   end
 
   def edit?
@@ -15,10 +17,10 @@ class LandlordPolicy
   end
 
   def update?
-  	user.type == 'Landlord' && user.id == landlord.id 
-  end 
+    user.type == 'Landlord' && user.id == landlord.id
+  end
 
   def destroy?
-  	update?
-  end 
+    update?
+  end
 end

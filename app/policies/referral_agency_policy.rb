@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class ReferralAgencyPolicy
   attr_reader :user, :referral_agency
 
@@ -10,20 +12,17 @@ class ReferralAgencyPolicy
   # or if a Landlord is viewing a Referral Agency that has a tenant
   # that has applied to one of their properties.
   def show?
-    if user.type == 'ReferralAgency' 
+    if user.type == 'ReferralAgency'
       return user.id == referral_agency.id
-    else 
+    else
       user.properties.each do |property|
-        if property.applications 
-          property.applications.each do |app|
-            if app.info.tenant.referral_agency == referral_agency
-              return true
-            end
-          end
+        next unless property.applicationsproperty.applications&.each do |app|
+          return true if app.info.tenant.referral_agency == referral_agency
         end
       end
-    end 
-    return false
+    end
+
+    false
   end
 
   def edit?
@@ -31,14 +30,12 @@ class ReferralAgencyPolicy
   end
 
   def update?
-    if user.type == 'ReferralAgency' 
-      return user.id == referral_agency.id
-    end
-    return false
+    return user.id == referral_agency.id if user.type == 'ReferralAgency'
+
+    false
   end
 
   def destroy?
     update?
   end
-
 end

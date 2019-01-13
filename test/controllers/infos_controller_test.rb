@@ -1,9 +1,10 @@
+# frozen_string_literal: true
+
 require 'test_helper'
 
 class InfosControllerTest < ActionDispatch::IntegrationTest
-  test "should get create" do
+  test 'should get create' do
     get infos_create_url
     assert_response :success
   end
-
 end

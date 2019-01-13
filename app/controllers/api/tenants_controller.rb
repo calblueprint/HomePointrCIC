@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Api::TenantsController < ApplicationController
   respond_to :json
 
@@ -8,9 +10,7 @@ class Api::TenantsController < ApplicationController
       Info.create(tenant_id: @tenant.id)
       if ActiveStorage::Blob.last.id != $activestoragestart
         a = ActiveStorage::Blob.last
-        if a.image?
-          @tenant.avatar.attach(a)
-        end
+        @tenant.avatar.attach(a) if a.image?
       end
       render json: @tenant
     else
@@ -24,7 +24,7 @@ class Api::TenantsController < ApplicationController
     if @tenant.update(tenant_params)
       render json: @tenant
     else
-      render json: { errors: @tenant.errors.messages }
+      render component: 'ErrorMessage', message: @tenant.errors.messages
     end
   end
 
@@ -39,7 +39,7 @@ class Api::TenantsController < ApplicationController
   end
 
   private
-    
+
   def tenant_params
     params.require(:tenant).permit(
       :name,
