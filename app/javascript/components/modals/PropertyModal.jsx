@@ -38,6 +38,7 @@ class PropertyModal extends React.Component {
         </React.Fragment>
       )
     } else {
+      debugger
       return (
         <div key="carousel" style={{backgroundColor: "#545454"}}>
           <Carousel autoplay>

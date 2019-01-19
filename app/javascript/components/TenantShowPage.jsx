@@ -12,6 +12,7 @@ class TenantShowPage extends React.Component {
     super(props);
     this.state = {
       applications: props.applications,
+      properties: props.properties,
       // potentialTenants: props.potentialTenants
     }
   }
@@ -24,12 +25,13 @@ class TenantShowPage extends React.Component {
 
   render() {
     this.setup(this.state.applications, this.props.form);
+    this.setup(this.state.properties, this.props.propertyimages);
     const leftComponent = (
       <RATenantView key={this.props.tenant.id} id={this.props.tenant.id} name={this.props.tenant.name} mode="ra_edit" description={this.props.tenant.description} avatar={this.props.url} tagValues={this.props.tagValues} status={this.props.status}/>
     );
     const rightComponent = ([
       <h1>Applications</h1>, 
-      <ListView key={this.props.tenant.id} applications={this.state.applications} resources={this.props.properties} property_modal={true} type="property"/>
+      <ListView key={this.props.tenant.id} applications={this.state.applications} resources={this.state.properties} property_modal={true} type="property"/>
     ]);
 
     return (

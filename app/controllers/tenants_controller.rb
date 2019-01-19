@@ -39,8 +39,15 @@ class TenantsController < ApplicationController
     @properties = []
     @form = []
     @applications = @tenant.info.applications
+    @propertyimages = []
     @applications.each do |a|
       @properties << a.property
+      if a.property.images.attached? == true
+        image_list = a.property.images.map { |img| { url: url_for(img) } }
+        @propertyimages << { images: image_list }
+      else
+        @propertyimages << { images: nil }
+      end
       @form << { form: url_for(a.form) } if a.form.attached?
     end
     values = @tenant.attributes.values[3..-3]
