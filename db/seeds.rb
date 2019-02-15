@@ -74,7 +74,6 @@ def make_tenants
       description: Faker::HowIMetYourMother.quote,
       email: "tenant#{n}@gmail.com",
       phone: Faker::PhoneNumber.cell_phone.delete('-'),
-      nino: Faker::IDNumber.valid,
       rent_min: Faker::Number.between(500, 1000),
       rent_max: Faker::Number.between(2000, 3000),
       housing_type: n % 13,
