@@ -76,7 +76,7 @@ class ListView extends React.Component {
 
   renderTenantSelectButton(resource) {
     if (this.props.tenantSelect) {
-      return(<Button type="default" onClick={(e) => this.props.selectTenantFunc(e, resource)}>Select Tenant</Button>)
+      return(<Button type="default" onClick={(e) => this.props.selectTenantFunc(e, resource)}>Select Client</Button>)
     }
   }
 

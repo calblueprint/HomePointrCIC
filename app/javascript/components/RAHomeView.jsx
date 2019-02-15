@@ -32,7 +32,7 @@ class RAHomeView extends React.Component {
   checkDisable(leftComponent) {
     if (this.props.tenants.length == 0) {
       this.state.disabled = true;
-      return(<center><h1>You must create a new tenant first!</h1></center>)
+      return(<center><h1>You must create a new client first!</h1></center>)
     } else {
       return(<ListView resources={this.state.tenants} type="tenant" avatar={true} tenant_modal={false}/>)
     }
@@ -52,7 +52,7 @@ class RAHomeView extends React.Component {
         disabled={disabled}
         key='submit' 
         type="primary" 
-        onClick={this.redirectToNewApplications}>Match Tenants With Available Properties</Button>
+        onClick={this.redirectToNewApplications}>Match Clients With Available Properties</Button>
     );
 
 		return ([<Button 
@@ -63,7 +63,7 @@ class RAHomeView extends React.Component {
         }}
         key='submit' 
         type="primary" 
-        onClick={this.redirectToNewTenant}>+ New Tenant</Button>,
+        onClick={this.redirectToNewTenant}>+ New Client</Button>,
 			<SplitViewContainer
 				leftComponent={leftComponent}
 				rightComponent={rightComponent}
