@@ -68,7 +68,7 @@ class ApplicationsPairing extends React.Component {
     const { TextArea } = Input;
     return (
       <div>
-        <label>Add a note to about the tenant.</label>
+        <label>Add a note to about the client.</label>
         <TextArea rows ={4} onChange={(e) => this.state.description = e.target.value} autosize={true}/>
       </div>
     )
@@ -122,7 +122,7 @@ class ApplicationsPairing extends React.Component {
     if (this.state.individualView) {
       //Individual tenant has been selected
       leftComponent = ([
-        <Button type="primary" onClick={this.clearTenant}><Icon type="left" /> View All Tenants</Button>,
+        <Button type="primary" onClick={this.clearTenant}><Icon type="left" /> View All Clients</Button>,
         <RATenantView id={this.state.selectedTenant.id} name={this.state.selectedTenant.name} mode="ra_matching" description={this.state.selectedTenant.description} avatar={this.state.selectedTenant.url} tagValues={this.makeTagValues(this.state.selectedTenant)} status={this.state.selectedTenant.priority}/>
       ]);
     } else {

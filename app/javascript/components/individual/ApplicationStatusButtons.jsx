@@ -47,7 +47,7 @@ class ApplicationStatusButtons extends React.Component {
               <Button key="interview" type="default" disabled>Interview</Button>,
               <Button key="accept" type="primary" onClick={this.handleAccept}>Accept</Button>]
     } else if (this.props.status === "housed") {
-      return <Button key="remove" type="danger" onClick={this.removeTenant}>Remove Tenant</Button>
+      return <Button key="remove" type="danger" onClick={this.removeTenant}>Remove Client</Button>
     } else {
       return null
     }
