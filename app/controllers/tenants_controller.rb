@@ -27,7 +27,7 @@ class TenantsController < ApplicationController
     num_fields = @field_names.length
     @prev_values = Array.new(num_fields, '')
     # @prev_values << @tenant.avatar
-    @field_types = ['textbox', 'textarea', 'textbox', 'textbox', 'textbox', 'slider', '_slider', enums[0], enums[1], 'textbox', enums[2], 'id', 'datepicker', 'attachment']
+    @field_types = ['textbox', 'textarea', 'textbox', 'textbox', 'slider', '_slider', enums[0], enums[1], 'textbox', enums[2], 'id', 'datepicker', 'attachment']
     # @field_types = ["textbox", "textarea", "textbox", "textbox", "textbox", "slider", "_slider", enums[0], enums[1], "textbox", enums[2], "textbox", "datepicker"]
     @current_userID = current_user.id
   end
@@ -83,7 +83,7 @@ class TenantsController < ApplicationController
                     else
                       [{ id: @tenant.avatar.id, url: url_for(@tenant.avatar) }]
                     end
-    @field_types = ['textbox', 'textarea', 'textbox', 'textbox', 'textbox', 'slider', '_slider', enums[0], enums[1], 'textbox', enums[2], 'id', 'datepicker', 'attachment']
+    @field_types = ['textbox', 'textarea', 'textbox', 'textbox', 'slider', '_slider', enums[0], enums[1], 'textbox', enums[2], 'id', 'datepicker', 'attachment']
     @current_userID = current_user.id
   end
 

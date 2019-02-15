@@ -238,24 +238,10 @@ class ProfileForm extends React.Component {
   }
 
   renderSlider(index) {
-    let df = (this.props.mode == 'edit') ? [this.state.prevValues[index], this.state.prevValues[index+1]] : [0, 5000]
     if (this.props.mode == "create") {
       this.state.prevValues[index] = 0
       this.state.prevValues[index+1] = 5000
     }
-    // return (
-    //   <div 
-    //   style={{
-    //     width: "50%",
-    //     margin: "1.5% auto"
-    //   }}
-    //   key={index}>
-    //     <label>{this.state.niceFieldNames[index]} - {this.state.niceFieldNames[index+1]}</label>
-    //     <Slider range defaultValue={df}
-    //             onChange={(e) => [this.state.prevValues[index], this.state.prevValues[index+1]] = [e[0], e[1]]}
-    //             max={5000}/>
-    //   </div>
-    // );
     return (
       <div 
       style={{
