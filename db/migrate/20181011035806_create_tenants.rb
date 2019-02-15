@@ -7,7 +7,6 @@ class CreateTenants < ActiveRecord::Migration[5.2]
       t.text :description
       t.string :email
       t.string :phone
-      t.string :nino
       t.integer :rent_min
       t.integer :rent_max
       t.integer :housing_type

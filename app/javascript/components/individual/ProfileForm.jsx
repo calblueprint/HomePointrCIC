@@ -6,6 +6,7 @@ import moment from 'moment';
 import APIRoutes from 'helpers/api_routes';
 import Utils from 'helpers/utils';
 import UploadButton from './UploadButton';
+import SliderBar from './SliderBar';
 import ActiveStorageProvider from "react-activestorage-provider";
 
 class ProfileForm extends React.Component {
@@ -25,6 +26,7 @@ class ProfileForm extends React.Component {
     this.handleCreate = this.handleCreate.bind(this);
     this.handleEdit = this.handleEdit.bind(this);
     this.handleDestroy = this.handleDestroy.bind(this);
+    this.sliderChanges = this.sliderChanges.bind(this);
   }
 
   /* takes in two arrays (our array of field names and our array of values)
@@ -230,12 +232,30 @@ class ProfileForm extends React.Component {
     )
   }
 
+  sliderChanges(low, high, index) {
+    this.state.prevValues[index] = low
+    this.state.prevValues[index+1] = high
+  }
+
   renderSlider(index) {
     let df = (this.props.mode == 'edit') ? [this.state.prevValues[index], this.state.prevValues[index+1]] : [0, 5000]
     if (this.props.mode == "create") {
       this.state.prevValues[index] = 0
       this.state.prevValues[index+1] = 5000
     }
+    // return (
+    //   <div 
+    //   style={{
+    //     width: "50%",
+    //     margin: "1.5% auto"
+    //   }}
+    //   key={index}>
+    //     <label>{this.state.niceFieldNames[index]} - {this.state.niceFieldNames[index+1]}</label>
+    //     <Slider range defaultValue={df}
+    //             onChange={(e) => [this.state.prevValues[index], this.state.prevValues[index+1]] = [e[0], e[1]]}
+    //             max={5000}/>
+    //   </div>
+    // );
     return (
       <div 
       style={{
@@ -244,9 +264,11 @@ class ProfileForm extends React.Component {
       }}
       key={index}>
         <label>{this.state.niceFieldNames[index]} - {this.state.niceFieldNames[index+1]}</label>
-        <Slider range defaultValue={df}
-                onChange={(e) => [this.state.prevValues[index], this.state.prevValues[index+1]] = [e[0], e[1]]}
-                max={5000}/>
+        <SliderBar  lowValue={this.state.prevValues[index]} 
+                    highValue={this.state.prevValues[index+1]}
+                    index={index}
+                    updateFunc={this.sliderChanges}
+        />
       </div>
     );
   }

@@ -95,7 +95,6 @@ class TenantsController < ApplicationController
       :description,
       :email,
       :phone,
-      :nino,
       :rent_min,
       :rent_max,
       :housing_type,
