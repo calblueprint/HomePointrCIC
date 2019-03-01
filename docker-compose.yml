@@ -7,7 +7,6 @@ x-default_env: &env
     - GEM_PATH=/gems
     - GEM_HOME=/gems
     - PATH=/usr/local/bundle/bin:/usr/local/bundle/gems/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/gems/bin
-    - WEBPACKER_DEV_SERVER_HOST=sh
 version: '3.4'
 services:
   db:
@@ -44,7 +43,7 @@ services:
       - db
       - spring
       # Uncomment this line if you'd like to enable Webpack Dev Server
-      # - sh
+      - sh
   sh:
     build: .
     command: ./bin/webpack-dev-server
