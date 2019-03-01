@@ -1,0 +1,10 @@
+FROM ethanlee/whales-t
+WORKDIR /app
+ENV GEM_PATH=/gems
+ENV BUNDLE_PATH=/gems
+ENV GEM_HOME=/gems
+COPY . .
+RUN apk add --no-cache git python2
+RUN bundle install
+RUN npm install
+CMD ["bundle", "exec", "rails", "server"]
