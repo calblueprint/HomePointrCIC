@@ -7,7 +7,7 @@ x-default_env: &env
     - GEM_PATH=/gems
     - GEM_HOME=/gems
     - PATH=/usr/local/bundle/bin:/usr/local/bundle/gems/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/gems/bin
-version: '3.4'
+version: "3.4"
 services:
   db:
     image: postgres:10-alpine
@@ -18,9 +18,9 @@ services:
   spring:
     build: .
     volumes:
-      - .:/app
-      - spring-vol:/spring
-      - gems:/gems
+      - .:/app:delegated
+      - spring-vol:/spring:delegated
+      - gems:/gems:delegated
     command: spring server
     environment:
       - DATABASE_URL=postgres://root@db:5432
@@ -34,9 +34,11 @@ services:
     command: unbuffer bundle exec rails s -p 1337 -b '0.0.0.0'
     <<: *env
     volumes:
-      - .:/app
-      - spring-vol:/spring
-      - gems:/gems
+      - .:/app:delegated
+      - spring-vol:/spring:delegated
+      - gems:/gems:delegated
+      - npm-cache:/root/.npm:delegated
+      - node-modules:/app/node_modules:delegated
     ports:
       - "1337:1337"
     depends_on:
@@ -49,12 +51,16 @@ services:
     command: ./bin/webpack-dev-server
     <<: *env
     volumes:
-      - .:/app
-      - spring-vol:/spring
-      - gems:/gems
+      - .:/app:delegated
+      - spring-vol:/spring:delegated
+      - gems:/gems:delegated
+      - npm-cache:/root/.npm:delegated
+      - node-modules:/app/node_modules:delegated
     ports:
       - "3035:3035" # for Webpack Dev Server, if run from sh
 volumes:
   spring-vol:
   postgres-vol:
   gems:
+  npm-cache:
+  node-modules:
