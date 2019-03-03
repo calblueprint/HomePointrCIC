@@ -57,6 +57,7 @@ def make_properties
       housing_type: n % 13,
       property_type: n % 10,
       location: n % 6,
+      address: Faker::Address.street_address,
       date_available: Date.today
     )
     property.images.attach(io: File.open('app/assets/images/house1.png'), filename: 'house1.png')
