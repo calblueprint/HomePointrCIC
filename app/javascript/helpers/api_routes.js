@@ -18,7 +18,8 @@ class ApiRoutes {
 
   get users() {
     return {
-      delete: () => '/users/sign_out'
+      // create: () => '/users/sign_in',
+      delete: () => '/users/sign_out',
     }
   }
 
