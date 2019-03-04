@@ -103,7 +103,7 @@ class FilterPanel extends React.Component {
           </div>
           <CheckboxGroup 
             options={this.props.location_options} 
-            defaultValue={this.state.location}
+            defaultValue={this.props.selectedTenant ? this.props.selectedTenant.location : this.state.location}
             onChange={(e) => this.handleCheckbox(e, "location")} 
           />
         </div>
@@ -125,7 +125,7 @@ class FilterPanel extends React.Component {
           </div>
           <CheckboxGroup 
             options={this.props.property_options} 
-            defaultValue={this.state.property_type}
+            defaultValue={this.props.selectedTenant ? this.props.selectedTenant.property_type : this.state.property_type}
             onChange={(e) => this.handleCheckbox(e, "property_type")} 
           />
         </div>
@@ -147,7 +147,7 @@ class FilterPanel extends React.Component {
           </div>
           <CheckboxGroup 
             options={this.props.housing_options} 
-            defaultValue={this.state.housing_type}
+            defaultValue={this.props.selectedTenant ? this.props.selectedTenant.housing_type : this.state.housing_type}
             onChange={(e) => this.handleCheckbox(e, "housing_type")} 
           />
         </div>
@@ -185,7 +185,11 @@ class FilterPanel extends React.Component {
           >
         Number of Bedrooms
         </div>
-        <InputNumber min={0} defaultValue={this.state.size} onChange={(e) => this.handleCheckbox(e, "size")} />
+          <InputNumber 
+            min={0} 
+            defaultValue={this.props.selectedTenant ? this.props.selectedTenant.num_bedrooms : this.state.size} 
+            onChange={(e) => this.handleCheckbox(e, "size")} 
+          />
         </div>
         <div
           style={{
@@ -203,8 +207,18 @@ class FilterPanel extends React.Component {
           >
         Rent 
         </div>
-        Min<InputNumber min={0} defaultValue={this.state.rent_min} onChange={(e) => this.handleCheckbox(e, "rent_min")} /> 
-        Max<InputNumber min={0} defaultValue={this.state.rent_max} onChange={(e) => this.handleCheckbox(e, "rent_max")} />
+          Min
+          <InputNumber 
+            min={0}
+            defaultValue={this.props.selectedTenant ? this.props.selectedTenant.rent_min : this.state.rent_min}
+            onChange={(e) => this.handleCheckbox(e, "rent_min")}
+          /> 
+          Max
+          <InputNumber
+            min={0}
+            defaultValue={this.props.selectedTenant ? this.props.selectedTenant.rent_max : this.state.rent_max}
+            onChange={(e) => this.handleCheckbox(e, "rent_max")}
+          />
         </div>
         <div
           style={{
@@ -222,7 +236,7 @@ class FilterPanel extends React.Component {
         </div>
         <DatePicker 
           onChange={(date, dateString) => this.handleDatePicker(date, dateString)} 
-          defaultValue={moment(this.state.date_available)}
+          defaultValue={this.props.selectedTenant ? moment(this.props.selectedTenant.date_needed) : moment(this.state.date_available)}
         />
         </div>
       <Button 
