@@ -12,7 +12,7 @@ class LogInPage extends React.Component {
    this.state = {
      email: '',
      password: '',
-     remember_me: false,
+     remember_me: 0,
      errorMessage: '',
      hasError: false
    }
@@ -28,33 +28,45 @@ class LogInPage extends React.Component {
    }
  }
 
- handleSubmit = (e) => {
-   e.preventDefault();
-   const login_route = ‘/users/sign_in’;
+ handleRememberMe = (event) => {
+   this.setState({ remember_me: !this.state.remember_me });
+ }
+
+ handleSubmit = (event) => {
+   event.preventDefault();
+   const login_route = '/users/sign_in';
    let payload = {
      email: this.state.email,
      password: this.state.password,
-     // remember_me: this.state.remember_me
+     remember_me: this.state.remember_me
    }
    payload = JSON.stringify({ user: payload });
    console.log(payload)
    debugger
    fetch(login_route, {
-     method: ‘POST’,
+     method: 'POST',
      headers: {
-       ‘Content-Type’: ‘application/json’,
-       “X_CSRF-Token”: document.getElementsByName(“csrf-token”)[0].content
+       'Content-Type': 'application/json',
+       "X_CSRF-Token": document.getElementsByName("csrf-token")[0].content
      },
      body: payload,
-     credentials: ‘same-origin’,
-   }).then((response) => {
-     window.location = ‘/’;
+     credentials: 'same-origin',
    }).catch((response) => {
      this.setState({
        hasError: true,
-       errorMessage: ‘Wrong email or password’});
+       errorMessage: 'Wrong email or password'});
+   }).then((response) => {
+     window.location = '/';
    });
   }
+
+ renderErrorMsg = () => {
+   if (this.state.hasError) {
+     return (
+       <div><p>{ this.state.errorMessage }</p></div>
+     );
+   }
+ }
 
  render() {
    return (
@@ -79,8 +91,9 @@ class LogInPage extends React.Component {
                onChange={this.handleChange}
              />
          </Form.Item>
+         { this.renderErrorMsg() }
          <Form.Item>
-             <Checkbox>Remember me</Checkbox>
+             <Checkbox onChange={this.handleRememberMe}>Remember me</Checkbox>
            <a className="login-form-forgot" href="">Forgot password</a>
            <Button type="primary" htmlType="submit" className="login-form-button">
              Log in
