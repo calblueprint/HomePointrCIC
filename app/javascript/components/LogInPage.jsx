@@ -3,7 +3,8 @@ import PropTypes from "prop-types";
 import "antd/dist/antd.css";
 import Utils from 'helpers/utils';
 import { Form, Icon, Input, Button, Checkbox } from 'antd';
-import APIRoutes from 'helpers/api_routes';
+import '../../assets/stylesheets/loginpage.css';
+var logo = require('../../assets/images/logo.png');
 
 class LogInPage extends React.Component {
  constructor(props) {
@@ -11,7 +12,7 @@ class LogInPage extends React.Component {
    this.state = {
      email: '',
      password: '',
-     remember: false,
+     remember_me: false,
      errorMessage: '',
      hasError: false
    }
@@ -27,8 +28,9 @@ class LogInPage extends React.Component {
    }
  }
 
- handleSubmit = () => {
-   const login_route = '/users/sign_in';
+ handleSubmit = (e) => {
+   e.preventDefault();
+   const login_route = ‘/users/sign_in’;
    let payload = {
      email: this.state.email,
      password: this.state.password,
@@ -38,26 +40,27 @@ class LogInPage extends React.Component {
    console.log(payload)
    debugger
    fetch(login_route, {
-     method: 'POST',
+     method: ‘POST’,
      headers: {
-       // 'Content-Type': 'application/json',
-       "X_CSRF-Token": document.getElementsByName("csrf-token")[0].content
+       ‘Content-Type’: ‘application/json’,
+       “X_CSRF-Token”: document.getElementsByName(“csrf-token”)[0].content
      },
      body: payload,
-     credentials: 'same-origin',
+     credentials: ‘same-origin’,
    }).then((response) => {
-     window.location = '/';
+     window.location = ‘/’;
    }).catch((response) => {
      this.setState({
        hasError: true,
-       errorMessage: 'Wrong email or password'});
+       errorMessage: ‘Wrong email or password’});
    });
   }
 
-  render() {
+ render() {
    return (
-     <div style={{width:'480px', margin:'auto', padding: '80px'}}>
+     <div className="frame">
        <Form onSubmit={this.handleSubmit}>
+         <img src={logo} className="logo"></img>
          <Form.Item>
              <Input
                type="string"
@@ -78,8 +81,8 @@ class LogInPage extends React.Component {
          </Form.Item>
          <Form.Item>
              <Checkbox>Remember me</Checkbox>
-           <a style={{float: 'right'}} href="">Forgot password</a>
-           <Button type="primary" htmlType="submit" style={{width: '100%'}}>
+           <a className="login-form-forgot" href="">Forgot password</a>
+           <Button type="primary" htmlType="submit" className="login-form-button">
              Log in
            </Button>
            Or <a href="">register now!</a>
@@ -90,6 +93,5 @@ class LogInPage extends React.Component {
  }
 
 }
-
 
 export default LogInPage;
