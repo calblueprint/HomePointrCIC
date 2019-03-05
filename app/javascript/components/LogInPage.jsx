@@ -98,7 +98,7 @@ class LogInPage extends React.Component {
            <Button type="primary" htmlType="submit" className="login-form-button">
              Log in
            </Button>
-           Or <a href="">register now!</a>
+           Or <a href="/users/sign_up">register now!</a>
          </Form.Item>
        </Form>
      </div>
