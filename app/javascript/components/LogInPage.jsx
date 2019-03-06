@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import "antd/dist/antd.css";
 import Utils from 'helpers/utils';
 import { Form, Icon, Input, Button, Checkbox } from 'antd';
+import APIRoutes from 'helpers/api_routes';
 import '../../assets/stylesheets/loginpage.css';
 var logo = require('../../assets/images/logo.png');
 
@@ -29,7 +30,7 @@ class LogInPage extends React.Component {
  }
 
  handleRememberMe = (event) => {
-   this.setState({ remember_me: !this.state.remember_me });
+   this.setState({ remember_me: 1 - this.state.remember_me });
  }
 
  handleSubmit = (event) => {
@@ -41,8 +42,6 @@ class LogInPage extends React.Component {
      remember_me: this.state.remember_me
    }
    payload = JSON.stringify({ user: payload });
-   console.log(payload)
-   debugger
    fetch(login_route, {
      method: 'POST',
      headers: {
