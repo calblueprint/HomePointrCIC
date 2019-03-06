@@ -1,1 +1,3 @@
-<%= react_component("individual/ProfileForm", props={ id: @landlord.id, mode: @mode, type: @type, fieldNames: @field_names, fieldTypes: @field_types, niceFieldNames: @nice_field_names, prevValues: @prev_values }) %>
+<%= form_with(model: @landlord, local: true) do |form| %>
+  <%= react_component("individual/ProfileForm", props={ id: @landlord.id, mode: @mode, type: @type, fieldNames: @field_names, fieldTypes: @field_types, niceFieldNames: @nice_field_names, prevValues: @prev_values }) %>
+<% end %>
