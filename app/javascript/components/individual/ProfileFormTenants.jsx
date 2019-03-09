@@ -1,0 +1,374 @@
+// import {
+//   Form, Input, Tooltip, Icon, Cascader, Select, Row, Col, Checkbox, Button, AutoComplete,
+// } from 'antd';
+import React from "react";
+import PropTypes from "prop-types";
+import { Upload, message, Form, Icon, Select, Input, Button, Slider, Switch, DatePicker, InputNumber, Row, Col } from 'antd';
+import "antd/dist/antd.css";
+import moment from 'moment';
+import APIRoutes from 'helpers/api_routes';
+import Utils from 'helpers/utils';
+import UploadButton from './UploadButton';
+import SliderBar from './SliderBar';
+import ActiveStorageProvider from "react-activestorage-provider";
+
+class ProfileFormTenants extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      tenant: props.tenant,
+      category_house: props.categories.housing_type,
+      category_property: props.categories.property_type.
+      id: this.props.tenant.id,
+      name: this.props.tenant.name,
+      description: this.props.tenant.description,
+      email: this.props.tenant.email,
+      phone: this.props.tenant.phone,
+      rent_min: this.props.tenant.rent_min,
+      rent_max: this.props.tenant.rent_max,
+      housing_type: this.props.tenant.housing_type,
+      property_type: this.props.tenant.property_type,
+      num_bedrooms: this.props.tenant.num_bedrooms,
+      location: this.props.tenant.location,
+      referral_agency_id: this.props.tenant.referral_agency_id,
+      date_needed: this.props.tenant.date_needed,
+      avatar: this.props.tenant.avatar,
+      // prevValues: props.prevValues, //array of strings
+      // fieldNames: props.fieldNames, //array of strings
+      // fieldTypes: props.fieldTypes,  //array of strings
+      // niceFieldNames: props.niceFieldNames, //array of strings
+      fileList: [],
+      imageRemoveList: [],
+      disabled: false //to prevent multiple form submissions
+    };
+    this.handleChange = this.handleChange.bind(this);
+    // this.handleCreate = this.handleCreate.bind(this);
+    this.handleEdit = this.handleEdit.bind(this);
+    this.handleDestroy = this.handleDestroy.bind(this);
+    this.sliderChanges = this.sliderChanges.bind(this);
+    this.inputChangeMin = this.inputChangeMin.bind(this);
+    this.inputChangeMax = this.inputChangeMax.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+    console.log(this.state.category_house);
+    console.log(this.state.category_property);
+  }
+
+  componentDidMount = () => { this.Data(); }
+
+  Data = () => {
+    const tenant_route = APIRoutes.tenants.update(this.props.tenant_id);
+    // Promise.all([
+    //   Requester.get(tenant_route),
+    // ]).then(
+    //   response => {
+    //     const [tenant_response] = response;
+    //     this.setState({
+    //       tenant: tenant_response,
+    //       componentDidMount: true
+    //     });
+    //   },
+    //   error => {
+    //     console.error(error);
+    //     this.setState({ apiError: true })
+    //   }
+    // );
+
+    // fetch(tenant_route, {
+    //   method: 'GET',
+    //   headers: {
+    //     'Content-Type': 'application/json',
+    //     "X_CSRF-Token": document.getElementsByName("csrf-token")[0].content
+    //   },
+    //   credentials: 'same-origin',
+    // }).then((data) => {
+    //   this.setState({ tenant: data });
+    //   console.log("tenant data: " + this.state.tenant);
+    // }).catch((data) => {
+    //   console.error(data);
+    // });
+
+
+    // request = APIRoutes.tenants.categories;
+    // (request, {
+    //   method: 'GET',
+    //   headers: {
+    //     'Content-Type': 'application/json',
+    //     "X_CSRF-Token": document.getElementsByName("csrf-token")[0].content
+    //   }
+    // }).then((response) => {
+    //   this.setState({categories: response});
+    //   console.log(this.state.categories)
+    // })
+
+
+  }
+
+  convertToDict() {
+    const tenant = this.state.tenant;
+    keys = ["name", "description", "email", "phone", "rent_min", "rent_max", "housing_type", "property_type", "num_bedrooms", "location", "referral_agency_id", "date_needed"];
+    values = [tenant.name, tenant.description, tenant.email, tenant.phone, tenant.rent_min, tenant.rent_max, tenant.housing_type, tenant.property_type, tenant.num_bedrooms, tenant.location, tenant.referral_agency_id, tenant.date_needed];
+    let result = keys.reduce((obj, k, i) => ({...obj, [k]: values[i] }), {})
+    return result
+  }
+
+  //updates our values
+  handleChange = (index, e) => {
+    // this.state.prevValues[index] = e.target.value
+    // this.setState({prevValues: this.state.prevValues})
+    this.setState({tenant: this.state.tenant})
+  }
+
+  //api destroy
+  handleDestroy() {
+    let id = this.props.tenant_id;
+    // let type = this.props.type;
+    var request = null;
+    // if (this.props.type === "properties") {
+    //   request = APIRoutes.properties.delete(id)
+    // } else if (this.props.type === "landlords") {
+    //   request = APIRoutes.landlords.delete(id)
+    // } else if (this.props.type === "referral_agencies") {
+    //   request = APIRoutes.referral_agencies.delete(id)
+    // } else {
+      request = APIRoutes.tenants.delete(id)
+    // }
+    (request, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        "X_CSRF-Token": document.getElementsByName("csrf-token")[0].content
+      }
+    }).then((response) => {
+      window.location = '/';
+    })
+  }
+
+  //api create
+  // handleCreate() {
+  //   this.setState({disabled: true});
+  //   let type = this.props.type;
+  //   var request = null;
+  //   // let body = this.convertToDict(this.state.fieldNames.slice(0,8), this.state.prevValues.slice(0,8));
+  //   // if (this.props.type === "properties") {
+  //   //   body = JSON.stringify({property: body})
+  //   //   request = APIRoutes.properties.create
+  //   // } else {
+  //     body = JSON.stringify({tenant: body})
+  //     request = APIRoutes.tenants.create
+  //   }
+  //   (request, {
+  //     method: 'POST',
+  //     headers: {
+  //       'Content-Type': 'application/json',
+  //       "X_CSRF-Token": document.getElementsByName("csrf-token")[0].content
+  //     },
+  //     body: body,
+  //     credentials: 'same-origin',
+  //   }).then((data) => {
+  //     window.location = '/';
+  //   }).catch((data) => {
+  //     console.error(data);
+  //   });
+  // }
+
+  //api edit
+  handleEdit() {
+    let id = this.props.tenant_id;
+    // let type = this.props.type;
+    var request = null;
+    var body = this.convertToDict()
+    // if (this.props.type === "properties") {
+    //   body = JSON.stringify({property: body})
+    //   request = APIRoutes.properties.update(id)
+    // } else if (this.props.type === "landlords") {
+    //   body = JSON.stringify({landlord: body})
+    //   request = APIRoutes.landlords.update(id)
+    // } else if (this.props.type === "referral_agencies") {
+    //   body = JSON.stringify({referral_agency: body})
+    //   request = APIRoutes.referral_agencies.update(id)
+    // } else {
+      body = JSON.stringify({tenant: body})
+      request = APIRoutes.tenants.update(id)
+    // }
+    this.removeImages(this.state.imageRemoveList);
+    (request, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        "X_CSRF-Token": document.getElementsByName("csrf-token")[0].content
+      },
+      body: body,
+      credentials: 'same-origin',
+    }).then((data) => {
+      window.location = '/' + type + '/' + id.toString();
+    }).catch((data) => {
+      console.error(data);
+    });
+
+  }
+
+  removeImages(imageList) {
+    var i;
+    for (i = 0; i < imageList.length; i++) {
+      let request = APIRoutes.properties.delete_image(imageList[i]);
+      (request, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+          "X_CSRF-Token": document.getElementsByName("csrf-token")[0].content
+        }
+      }).catch((data) => {
+        console.error(data);
+      });
+    }
+  }
+
+  sliderChanges([value1, value2]) {
+    this.setState({rent_min: value1, rent_max: value2});
+  }
+
+  inputChangeMin(value) {
+    this.setState({rent_min: value});
+    console.log(this.state.rent_min);
+  }
+
+  inputChangeMax(value) {
+    this.setState({rent_max: value});
+    console.log(this.state.rent_max);
+  }
+
+  housingChange(value) {
+    this.setState({housing_type: value});
+  }
+
+  handleChange(event) {
+    const work = this.state.tenant;
+    tenant[event.target.name] = event.target.value;
+    this.setState({ tenant: tenant });
+  }
+
+
+  render() {
+    const { getFieldDecorator } = this.props.form;
+    const marks = {
+      0: "$0",
+      2500: "$2500",
+      5000: "$5000"
+    }
+    // const formItemLayout = {
+    //   labelCol: {
+    //     xs: { span: 24 },
+    //     sm: { span: 8 },
+    //   },
+    //   wrapperCol: {
+    //     xs: { span: 24 },
+    //     sm: { span: 16 },
+    //   },
+    // };
+
+    return (
+      <div>
+        <Form onSubmit={this.handleSubmit}>
+          <Form.Item
+            label="Name"
+          >
+            {getFieldDecorator('name', {
+              initialValue: this.state.name,
+              rules: [{
+                required: true, message: 'Please input your Name!',
+              }],
+            })(
+              <Input />
+            )}
+          </Form.Item>
+          <Form.Item
+            label="Description"
+          >
+            {getFieldDecorator('description', {
+              initialValue: this.state.description,
+              rules: [{
+                required: true, message: 'Please input your description!',
+              }],
+            })(
+              <Input />
+            )}
+          </Form.Item>
+          <Form.Item
+            label="Email"
+          >
+            {getFieldDecorator('email', {
+              initialValue: this.state.email,
+              rules: [{
+                required: true, message: 'Please input your email!',
+              }, {
+                type: 'email', message: 'The inputis not valid email!'
+              }],
+            })(
+              <Input />
+            )}
+          </Form.Item>
+          <Form.Item
+            label="Phone Number"
+          >
+            {getFieldDecorator('phone', {
+              initialValue: this.state.phone,
+              rules: [{
+                required: true, message: 'Please input your phone number!',
+              }],
+            })(
+              <Input />
+            )}
+          </Form.Item>
+
+          <Form.Item
+            label="Rent"
+          >
+            <Row>
+              <Col span={4}>
+                <InputNumber
+                  min={0}
+                  max={5000}
+                  style={{ marginLeft: 16}}
+                  value={this.state.rent_min}
+                  onChange={this.handleChange}
+                />
+              </Col>
+              <Col span={8}>
+                <Slider
+                  range marks={marks}
+                  min={0}
+                  max={5000}
+                  value={typeof this.state.rent_min === 'number' && typeof this.state.rent_max === 'number'? [this.state.rent_min, this.state.rent_max] : [0, 5000]}
+                  onChange={this.sliderChanges}/>
+              </Col>
+              <Col span={4}>
+                <InputNumber
+                  min={0}
+                  max={5000}
+                  style={{ marginLeft: 16 }}
+                  value={this.state.rent_max}
+                  onChange={this.handleChange}
+                />
+              </Col>
+            </Row>
+          </Form.Item>
+
+          <Form.Item
+            label="Housing Type"
+          >
+            <Select defaultValue="other_housing_type" onChange={this.handleChange}>
+            {
+              Object.keys(this.state.housing_type).map((obj, i) => {
+                return <Select.Option key={i} value={obj}/>
+              })
+            }
+            </Select>
+          </Form.Item>
+        </Form>
+      </div>
+    )
+  }
+}
+
+// const WrappedProfileFormTenants = Form.create({name: 'profileTenants'})(ProfileFormTenants);
+export default Form.create()(ProfileFormTenants);

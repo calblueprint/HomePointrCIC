@@ -14,20 +14,20 @@ class TenantsController < ApplicationController
   def new
     @tenant = Tenant.new
     authorize @tenant
-    @mode = 'create'
-    @type = 'tenants'
+    # @mode = 'create'
+    # @type = 'tenants'
     enums = []
     # @field_names = Tenant.column_names[1..-3] + ["avatar"]
-    @field_names = Tenant.column_names[1..-3]
-    @nice_field_names = []
-    @field_names.each do |i|
-      @nice_field_names << i.titleize
-      enums << Tenant.defined_enums[i].keys if Tenant.defined_enums.key?(i)
-    end
-    num_fields = @field_names.length
-    @prev_values = Array.new(num_fields, '')
+    # @field_names = Tenant.column_names[1..-3]
+    # @nice_field_names = []
+    # @field_names.each do |i|
+    #   @nice_field_names << i.titleize
+    #   enums << Tenant.defined_enums[i].keys if Tenant.defined_enums.key?(i)
+    # end
+    # num_fields = @field_names.length
+    # @prev_values = Array.new(num_fields, '')
     # @prev_values << @tenant.avatar
-    @field_types = ['textbox', 'textarea', 'textbox', 'textbox', 'slider', '_slider', enums[0], enums[1], 'textbox', enums[2], 'id', 'datepicker', 'attachment']
+    # @field_types = ['textbox', 'textarea', 'textbox', 'textbox', 'slider', '_slider', enums[0], enums[1], 'textbox', enums[2], 'id', 'datepicker', 'attachment']
     # @field_types = ["textbox", "textarea", "textbox", "textbox", "textbox", "slider", "_slider", enums[0], enums[1], "textbox", enums[2], "textbox", "datepicker"]
     @current_userID = current_user.id
   end
@@ -54,37 +54,45 @@ class TenantsController < ApplicationController
     @avatarURL = nil
     @avatarURL = url_for(@tenant.avatar) if @tenant.avatar.attached?
 
-    field_names = Tenant.column_names[3..-3]
-    nice_field_names = []
-    field_names.each do |field_name|
-      nice_field_names << field_name.titleize
-    end
-    @tag_values = []
-    nice_field_names.each_with_index do |tag, index|
-      @tag_values << tag.to_s + ': ' + values[index].to_s
-    end
+    # field_names = Tenant.column_names[3..-3]
+    # nice_field_names = []
+    # field_names.each do |field_name|
+    #   nice_field_names << field_name.titleize
+    # end
+    # @tag_values = []
+    # nice_field_names.each_with_index do |tag, index|
+    #   @tag_values << tag.to_s + ': ' + values[index].to_s
+    # end
   end
 
   def edit
     @mode = 'edit'
     @type = 'tenants'
     enums = []
-    @field_names = Tenant.column_names[1..-3] + ['avatar']
-    @nice_field_names = []
-    @field_names.each do |i|
-      @nice_field_names << i.titleize
-      enums << Tenant.defined_enums[i].keys if Tenant.defined_enums.key?(i)
-    end
+    # @field_names = Tenant.column_names[1..-3] + ['avatar']
+    # @nice_field_names = []
+    # @field_names.each do |i|
+    #   @nice_field_names << i.titleize
+    #   enums << Tenant.defined_enums[i].keys if Tenant.defined_enums.key?(i)
+    # end
     @tenant = Tenant.find(params[:id])
     authorize @tenant
-    @prev_values = @tenant.attributes.values[1..-3]
-    @prev_values << if @tenant.avatar.attached? == false
-                      @tenant.avatar
-                    else
-                      [{ id: @tenant.avatar.id, url: url_for(@tenant.avatar) }]
-                    end
-    @field_types = ['textbox', 'textarea', 'textbox', 'textbox', 'slider', '_slider', enums[0], enums[1], 'textbox', enums[2], 'id', 'datepicker', 'attachment']
+    # @prev_values = @tenant.attributes.values[1..-3]
+    # @prev_values << if @tenant.avatar.attached? == false
+    #                   @tenant.avatar
+    #                 else
+    #                   [{ id: @tenant.avatar.id, url: url_for(@tenant.avatar) }]
+    #                 end
+    # @field_types = ['textbox', 'textarea', 'textbox', 'textbox', 'slider', '_slider', enums[0], enums[1], 'textbox', enums[2], 'id', 'datepicker', 'attachment']
     @current_userID = current_user.id
+  end
+
+  def get_tenant_category_enums
+    categories = {
+      housing_type: Tenant.housing_type,
+      property_type: Tenant.property_type
+    }
+    render json: categories
   end
 
   private
