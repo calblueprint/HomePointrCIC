@@ -20,19 +20,6 @@ class ProfileFormTenants extends React.Component {
       category_house: props.categories.housing_type,
       category_property: props.categories.property_type,
       category_location: props.categories.location,
-      id: this.props.tenant.id,
-      name: this.props.tenant.name,
-      description: this.props.tenant.description,
-      email: this.props.tenant.email,
-      phone: this.props.tenant.phone,
-      rent_min: this.props.tenant.rent_min,
-      rent_max: this.props.tenant.rent_max,
-      housing_type: this.props.tenant.housing_type,
-      property_type: this.props.tenant.property_type,
-      num_bedrooms: this.props.tenant.num_bedrooms,
-      location: this.props.tenant.location,
-      referral_agency_id: this.props.tenant.referral_agency_id,
-      date_needed: this.props.tenant.date_needed,
       avatar: this.props.tenant.avatar,
       fileList: [],
       imageRemoveList: [],
@@ -65,7 +52,7 @@ class ProfileFormTenants extends React.Component {
   }
   //api destroy
   handleDestroy() {
-    let id = this.props.tenant_id;
+    let id = this.state.tenant.id;
     // let type = this.props.type;
     var request = null;
     // if (this.props.type === "properties") {
@@ -190,6 +177,7 @@ class ProfileFormTenants extends React.Component {
       5000: "$5000"
     }
     const Option = Select.Option;
+    const { tenant } = this.state;
     // const formItemLayout = {
     //   labelCol: {
     //     xs: { span: 24 },
@@ -207,7 +195,7 @@ class ProfileFormTenants extends React.Component {
             label="Name"
           >
             {getFieldDecorator('name', {
-              initialValue: this.state.name,
+              initialValue: tenant.name,
               rules: [{
                 required: true, message: 'Please input your Name!',
               }],
@@ -219,7 +207,7 @@ class ProfileFormTenants extends React.Component {
             label="Description"
           >
             {getFieldDecorator('description', {
-              initialValue: this.state.description,
+              initialValue: tenant.description,
               rules: [{
                 required: true, message: 'Please input your description!',
               }],
@@ -231,7 +219,7 @@ class ProfileFormTenants extends React.Component {
             label="Email"
           >
             {getFieldDecorator('email', {
-              initialValue: this.state.email,
+              initialValue: tenant.email,
               rules: [{
                 required: true, message: 'Please input your email!',
               }, {
@@ -245,7 +233,7 @@ class ProfileFormTenants extends React.Component {
             label="Phone Number"
           >
             {getFieldDecorator('phone', {
-              initialValue: this.state.phone,
+              initialValue: tenant.phone,
               rules: [{
                 required: true, message: 'Please input your phone number!',
               }],
@@ -262,7 +250,7 @@ class ProfileFormTenants extends React.Component {
                   min={0}
                   max={5000}
                   style={{ marginLeft: 16}}
-                  value={this.state.rent_min}
+                  value={tenant.rent_min}
                   onChange={this.handleChange}
                 />
               </Col>
@@ -271,7 +259,7 @@ class ProfileFormTenants extends React.Component {
                   range marks={marks}
                   min={0}
                   max={5000}
-                  value={typeof this.state.rent_min === 'number' && typeof this.state.rent_max === 'number'? [this.state.rent_min, this.state.rent_max] : [0, 5000]}
+                  value={typeof tenant.rent_min === 'number' && typeof tenant.rent_max === 'number'? [tenant.rent_min, tenant.rent_max] : [0, 5000]}
                   onChange={this.sliderChanges}/>
               </Col>
               <Col span={4}>
@@ -279,7 +267,7 @@ class ProfileFormTenants extends React.Component {
                   min={0}
                   max={5000}
                   style={{ marginLeft: 16 }}
-                  value={this.state.rent_max}
+                  value={tenant.rent_max}
                   onChange={this.handleChange}
                 />
               </Col>
@@ -314,31 +302,45 @@ class ProfileFormTenants extends React.Component {
               min={0}
               max={10}
               style={{ marginLeft: 16 }}
-              value={this.state.num_bedrooms}
+              value={tenant.num_bedrooms}
               onChange={this.handleChange}
             />
           </Form.Item>
           <Form.Item
             label="Location"
           >
-            <Select defaultValue="Other Location" onChange={this.handleChange}>
-            {
-              this.state.category_location.map((obj, i) => {
-                return <Option key={i} value={obj}>{obj}</Option>
-              })
-            }
-            </Select>
+            {getFieldDecorator('date_needed', {
+              rules: [{
+                required: true, message: 'Please pick the date needed!',
+              }],
+            })(
+              <Select defaultValue="Other Location" onChange={this.handleChange}>
+              {
+                this.state.category_location.map((obj, i) => {
+                  return <Option key={i} value={obj}>{obj}</Option>
+                })
+              }
+              </Select>
+            )}
           </Form.Item>
           <Form.Item
             label="Date Needed"
           >
             {getFieldDecorator('date_needed', {
               rules: [{
-                required: true, message: 'Please input your Name!',
+                required: true, message: 'Please pick the date needed!',
               }],
             })(
-              <DatePicker />
+              <DatePicker onChange={this.handleChange} defaultValue={moment(tenant.date_needed, "YYYY-MM-DD")}/>
             )}
+          </Form.Item>
+          <Form.Item
+            wrapperCol={{
+              xs: { span: 24, offset: 0 },
+              sm: { span: 16, offset: 8 },
+            }}
+          >
+            <Button type="primary" htmlType="submit">Submit</Button>
           </Form.Item>
         </Form>
       </div>
