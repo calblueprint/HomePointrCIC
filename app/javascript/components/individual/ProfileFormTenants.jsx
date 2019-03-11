@@ -19,6 +19,7 @@ class ProfileFormTenants extends React.Component {
       categories: props.categories,
       category_house: props.categories.housing_type,
       category_property: props.categories.property_type,
+      category_location: props.categories.location,
       id: this.props.tenant.id,
       name: this.props.tenant.name,
       description: this.props.tenant.description,
@@ -33,10 +34,6 @@ class ProfileFormTenants extends React.Component {
       referral_agency_id: this.props.tenant.referral_agency_id,
       date_needed: this.props.tenant.date_needed,
       avatar: this.props.tenant.avatar,
-      // prevValues: props.prevValues, //array of strings
-      // fieldNames: props.fieldNames, //array of strings
-      // fieldTypes: props.fieldTypes,  //array of strings
-      // niceFieldNames: props.niceFieldNames, //array of strings
       fileList: [],
       imageRemoveList: [],
       disabled: false //to prevent multiple form submissions
@@ -52,49 +49,7 @@ class ProfileFormTenants extends React.Component {
     console.log(this.state.category_house);
     console.log(this.state.category_property);
   }
-  componentDidMount = () => { this.Data(); }
-  Data = () => {
-    const tenant_route = APIRoutes.tenants.update(this.props.tenant_id);
-    // Promise.all([
-    //   Requester.get(tenant_route),
-    // ]).then(
-    //   response => {
-    //     const [tenant_response] = response;
-    //     this.setState({
-    //       tenant: tenant_response,
-    //       componentDidMount: true
-    //     });
-    //   },
-    //   error => {
-    //     console.error(error);
-    //     this.setState({ apiError: true })
-    //   }
-    // );
-    // fetch(tenant_route, {
-    //   method: 'GET',
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //     "X_CSRF-Token": document.getElementsByName("csrf-token")[0].content
-    //   },
-    //   credentials: 'same-origin',
-    // }).then((data) => {
-    //   this.setState({ tenant: data });
-    //   console.log("tenant data: " + this.state.tenant);
-    // }).catch((data) => {
-    //   console.error(data);
-    // });
-    // request = APIRoutes.tenants.categories;
-    // (request, {
-    //   method: 'GET',
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //     "X_CSRF-Token": document.getElementsByName("csrf-token")[0].content
-    //   }
-    // }).then((response) => {
-    //   this.setState({categories: response});
-    //   console.log(this.state.categories)
-    // })
-  }
+
   convertToDict() {
     const tenant = this.state.tenant;
     keys = ["name", "description", "email", "phone", "rent_min", "rent_max", "housing_type", "property_type", "num_bedrooms", "location", "referral_agency_id", "date_needed"];
@@ -234,6 +189,7 @@ class ProfileFormTenants extends React.Component {
       2500: "$2500",
       5000: "$5000"
     }
+    const Option = Select.Option;
     // const formItemLayout = {
     //   labelCol: {
     //     xs: { span: 24 },
@@ -332,13 +288,53 @@ class ProfileFormTenants extends React.Component {
           <Form.Item
             label="Housing Type"
           >
-            <Select defaultValue="other_housing_type" onChange={this.handleChange}>
+            <Select defaultValue="Other Housing Type" onChange={this.handleChange}>
             {
-              Object.keys(this.state.category_house).map((obj, i) => {
-                return <Select.Option key={i} value={obj}/>
+              this.state.category_house.map((obj, i) => {
+                return <Option key={i} value={obj}>{obj}</Option>
               })
             }
             </Select>
+          </Form.Item>
+          <Form.Item
+            label="Property Type"
+          >
+            <Select defaultValue="Other Property Type" onChange={this.handleChange}>
+            {
+              this.state.category_property.map((obj, i) => {
+                return <Option key={i} value={obj}>{obj}</Option>
+              })
+            }
+            </Select>
+          </Form.Item>
+          <Form.Item
+            label="Number of Bedrooms"
+          >
+            <InputNumber
+              min={0}
+              max={10}
+              style={{ marginLeft: 16 }}
+              value={this.state.num_bedrooms}
+              onChange={this.handleChange}
+            />
+          </Form.Item>
+          <Form.Item
+            label="Location"
+          >
+            <Select defaultValue="Other Location" onChange={this.handleChange}>
+            {
+              this.state.category_location.map((obj, i) => {
+                return <Option key={i} value={obj}>{obj}</Option>
+              })
+            }
+            </Select>
+          </Form.Item>
+          <Form.Item
+            label="Date Needed"
+          >
+            {getFieldDecorator('date_needed', config)(
+              <DatePicker />
+            )}
           </Form.Item>
         </Form>
       </div>
