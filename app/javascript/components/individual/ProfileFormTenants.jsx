@@ -30,26 +30,20 @@ class ProfileFormTenants extends React.Component {
     this.handleEdit = this.handleEdit.bind(this);
     this.handleDestroy = this.handleDestroy.bind(this);
     this.sliderChanges = this.sliderChanges.bind(this);
-    this.inputChangeMin = this.inputChangeMin.bind(this);
-    this.inputChangeMax = this.inputChangeMax.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.handleChangeDate = this.handleChangeDate.bind(this);
     console.log(this.state.category_house);
     console.log(this.state.category_property);
   }
 
   convertToDict() {
     const tenant = this.state.tenant;
-    keys = ["name", "description", "email", "phone", "rent_min", "rent_max", "housing_type", "property_type", "num_bedrooms", "location", "referral_agency_id", "date_needed"];
-    values = [tenant.name, tenant.description, tenant.email, tenant.phone, tenant.rent_min, tenant.rent_max, tenant.housing_type, tenant.property_type, tenant.num_bedrooms, tenant.location, tenant.referral_agency_id, tenant.date_needed];
+    const keys = ["name", "description", "email", "phone", "rent_min", "rent_max", "housing_type", "property_type", "num_bedrooms", "location", "referral_agency_id", "date_needed"];
+    const values = [tenant.name, tenant.description, tenant.email, tenant.phone, tenant.rent_min, tenant.rent_max, tenant.housing_type, tenant.property_type, tenant.num_bedrooms, tenant.location, tenant.referral_agency_id, tenant.date_needed];
     let result = keys.reduce((obj, k, i) => ({...obj, [k]: values[i] }), {})
     return result
   }
-  //updates our values
-  handleChange = (index, e) => {
-    // this.state.prevValues[index] = e.target.value
-    // this.setState({prevValues: this.state.prevValues})
-    this.setState({tenant: this.state.tenant})
-  }
+
   //api destroy
   handleDestroy() {
     let id = this.state.tenant.id;
@@ -103,7 +97,7 @@ class ProfileFormTenants extends React.Component {
   // }
   //api edit
   handleEdit() {
-    let id = this.props.tenant_id;
+    let id = this.state.tenant.id;
     // let type = this.props.type;
     var request = null;
     var body = this.convertToDict()
@@ -121,7 +115,7 @@ class ProfileFormTenants extends React.Component {
       request = APIRoutes.tenants.update(id)
     // }
     this.removeImages(this.state.imageRemoveList);
-    (request, {
+    fetch(request, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -130,7 +124,7 @@ class ProfileFormTenants extends React.Component {
       body: body,
       credentials: 'same-origin',
     }).then((data) => {
-      window.location = '/' + type + '/' + id.toString();
+      window.location = '/' + "tenants" + '/' + id.toString();
     }).catch((data) => {
       console.error(data);
     });
@@ -151,22 +145,19 @@ class ProfileFormTenants extends React.Component {
     }
   }
   sliderChanges([value1, value2]) {
-    this.setState({rent_min: value1, rent_max: value2});
+    const tenant = this.state.tenant;
+    tenant["rent_min"] = value1;
+    tenant["rent_max"] = value2;
+    this.setState({ tenant: tenant });
   }
-  inputChangeMin(value) {
-    this.setState({rent_min: value});
-    console.log(this.state.rent_min);
+  handleChange(attr) {
+    const tenant = this.state.tenant;
+    tenant[attr] = event.target.value;
+    this.setState({ tenant: tenant });
   }
-  inputChangeMax(value) {
-    this.setState({rent_max: value});
-    console.log(this.state.rent_max);
-  }
-  housingChange(value) {
-    this.setState({housing_type: value});
-  }
-  handleChange(event) {
-    const work = this.state.tenant;
-    tenant[event.target.name] = event.target.value;
+  handleChangeDate(date) {
+    const tenant = this.state.tenant;
+    tenant["date_needed"] = date.format("YYYY-MM-DD");
     this.setState({ tenant: tenant });
   }
   render() {
@@ -190,7 +181,7 @@ class ProfileFormTenants extends React.Component {
     // };
     return (
       <div>
-        <Form onSubmit={this.handleSubmit}>
+        <Form onSubmit={this.handleEdit}>
           <Form.Item
             label="Name"
           >
@@ -200,7 +191,7 @@ class ProfileFormTenants extends React.Component {
                 required: true, message: 'Please input your Name!',
               }],
             })(
-              <Input />
+              <Input onChange={() => this.handleChange("name")}/>
             )}
           </Form.Item>
           <Form.Item
@@ -212,7 +203,7 @@ class ProfileFormTenants extends React.Component {
                 required: true, message: 'Please input your description!',
               }],
             })(
-              <Input />
+              <Input onChange={() => this.handleChange("description")}/>
             )}
           </Form.Item>
           <Form.Item
@@ -223,10 +214,10 @@ class ProfileFormTenants extends React.Component {
               rules: [{
                 required: true, message: 'Please input your email!',
               }, {
-                type: 'email', message: 'The inputis not valid email!'
+                type: 'email', message: 'The input is not a valid email!'
               }],
             })(
-              <Input />
+              <Input onChange={() => this.handleChange("email")}/>
             )}
           </Form.Item>
           <Form.Item
@@ -236,87 +227,61 @@ class ProfileFormTenants extends React.Component {
               initialValue: tenant.phone,
               rules: [{
                 required: true, message: 'Please input your phone number!',
-              }],
+              }]
             })(
-              <Input />
+              <Input onChange={() => this.handleChange("phone")}/>
             )}
           </Form.Item>
           <Form.Item
             label="Rent"
           >
-            <Row>
-              <Col span={4}>
-                <InputNumber
-                  min={0}
-                  max={5000}
-                  style={{ marginLeft: 16}}
-                  value={tenant.rent_min}
-                  onChange={this.handleChange}
-                />
-              </Col>
-              <Col span={8}>
-                <Slider
-                  range marks={marks}
-                  min={0}
-                  max={5000}
-                  value={typeof tenant.rent_min === 'number' && typeof tenant.rent_max === 'number'? [tenant.rent_min, tenant.rent_max] : [0, 5000]}
-                  onChange={this.sliderChanges}/>
-              </Col>
-              <Col span={4}>
-                <InputNumber
-                  min={0}
-                  max={5000}
-                  style={{ marginLeft: 16 }}
-                  value={tenant.rent_max}
-                  onChange={this.handleChange}
-                />
-              </Col>
-            </Row>
+            {getFieldDecorator('rent', {
+              rules: [{
+                required: true, message: 'Please select your range for rent!',
+              }],
+            })(
+              <Row>
+                <Col span={4}>
+                  <InputNumber
+                    min={0}
+                    max={5000}
+                    style={{ marginLeft: 16}}
+                    value={tenant.rent_min}
+                    onChange={() => this.handleChange("rent_min")}
+                  />
+                </Col>
+                <Col span={8}>
+                  <Slider
+                    range marks={marks}
+                    min={0}
+                    max={5000}
+                    defaultValue={typeof tenant.rent_min === 'number' && typeof tenant.rent_max === 'number'? [tenant.rent_min, tenant.rent_max] : [0, 5000]}
+                    onChange={this.sliderChanges}/>
+                </Col>
+                <Col span={4}>
+                  <InputNumber
+                    min={0}
+                    max={5000}
+                    style={{ marginLeft: 16 }}
+                    value={tenant.rent_max}
+                    onChange={() => this.handleChange("rent_max")}
+                  />
+                </Col>
+              </Row>
+            )}
           </Form.Item>
           <Form.Item
             label="Housing Type"
-          >
-            <Select defaultValue="Other Housing Type" onChange={this.handleChange}>
-            {
-              this.state.category_house.map((obj, i) => {
-                return <Option key={i} value={obj}>{obj}</Option>
-              })
-            }
-            </Select>
-          </Form.Item>
-          <Form.Item
-            label="Property Type"
-          >
-            <Select defaultValue="Other Property Type" onChange={this.handleChange}>
-            {
-              this.state.category_property.map((obj, i) => {
-                return <Option key={i} value={obj}>{obj}</Option>
-              })
-            }
-            </Select>
-          </Form.Item>
-          <Form.Item
-            label="Number of Bedrooms"
-          >
-            <InputNumber
-              min={0}
-              max={10}
-              style={{ marginLeft: 16 }}
-              value={tenant.num_bedrooms}
-              onChange={this.handleChange}
-            />
-          </Form.Item>
-          <Form.Item
-            label="Location"
-          >
-            {getFieldDecorator('date_needed', {
+            >
+            {getFieldDecorator('housing_type', {
+              initialValue: tenant.housing_type,
               rules: [{
-                required: true, message: 'Please pick the date needed!',
+                required: true, message: 'Please pick a number of bedrooms!',
               }],
             })(
-              <Select defaultValue="Other Location" onChange={this.handleChange}>
+              <Select onChange={() => this.handleChange("housing_type")}>
               {
-                this.state.category_location.map((obj, i) => {
+                this.state.category_house.map((obj, i) => {
                   return <Option key={i} value={obj}>{obj}</Option>
                 })
               }
@@ -324,14 +289,68 @@ class ProfileFormTenants extends React.Component {
             )}
           </Form.Item>
           <Form.Item
+            label="Property Type"
+          >
+            {getFieldDecorator('property_type', {
+              initialValue: tenant.property_type,
+              rules: [{
+                required: true, message: 'Please pick a number of bedrooms!',
+              }],
+            })(
+              <Select onChange={() => this.handleChange("property_type")}>
+              {
+                this.state.category_property.map((obj, i) => {
+                  return <Option key={i} value={obj}>{obj}</Option>
+                })
+              }
+              </Select>
+            )}
+          </Form.Item>
+          <Form.Item
+            label="Number of Bedrooms"
+          >
+            {getFieldDecorator('num_bedrooms', {
+              initialValue: tenant.num_bedrooms,
+              rules: [{
+                required: true, message: 'Please pick a number of bedrooms!',
+              }],
+            })(
+              <InputNumber
+                min={0}
+                max={10}
+                style={{ marginLeft: 16 }}
+                onChange={() => this.handleChange("num_bedrooms")}
+              />
+            )}
+          </Form.Item>
+          <Form.Item
+            label="Location"
+          >
+          {getFieldDecorator('location', {
+            initialValue: tenant.location,
+            rules: [{
+              required: true, message: 'Please pick a number of bedrooms!',
+            }],
+          })(
+            <Select onChange={() => this.handleChange("location")}>
+            {
+              this.state.category_location.map((obj, i) => {
+                return <Option key={i} value={obj}>{obj}</Option>
+              })
+            }
+            </Select>
+          )}
+          </Form.Item>
+          <Form.Item
             label="Date Needed"
           >
             {getFieldDecorator('date_needed', {
+              initialValue: moment(tenant.date_needed, "YYYY-MM-DD"),
               rules: [{
                 required: true, message: 'Please pick the date needed!',
               }],
             })(
-              <DatePicker onChange={this.handleChange} defaultValue={moment(tenant.date_needed, "YYYY-MM-DD")}/>
+              <DatePicker onChange={this.handleChangeDate}/>
             )}
           </Form.Item>
           <Form.Item
