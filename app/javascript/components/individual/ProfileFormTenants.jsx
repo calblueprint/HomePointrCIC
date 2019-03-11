@@ -11,14 +11,14 @@ import Utils from 'helpers/utils';
 import UploadButton from './UploadButton';
 import SliderBar from './SliderBar';
 import ActiveStorageProvider from "react-activestorage-provider";
-
 class ProfileFormTenants extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       tenant: props.tenant,
+      categories: props.categories,
       category_house: props.categories.housing_type,
-      category_property: props.categories.property_type.
+      category_property: props.categories.property_type,
       id: this.props.tenant.id,
       name: this.props.tenant.name,
       description: this.props.tenant.description,
@@ -52,9 +52,7 @@ class ProfileFormTenants extends React.Component {
     console.log(this.state.category_house);
     console.log(this.state.category_property);
   }
-
   componentDidMount = () => { this.Data(); }
-
   Data = () => {
     const tenant_route = APIRoutes.tenants.update(this.props.tenant_id);
     // Promise.all([
@@ -72,7 +70,6 @@ class ProfileFormTenants extends React.Component {
     //     this.setState({ apiError: true })
     //   }
     // );
-
     // fetch(tenant_route, {
     //   method: 'GET',
     //   headers: {
@@ -86,8 +83,6 @@ class ProfileFormTenants extends React.Component {
     // }).catch((data) => {
     //   console.error(data);
     // });
-
-
     // request = APIRoutes.tenants.categories;
     // (request, {
     //   method: 'GET',
@@ -99,10 +94,7 @@ class ProfileFormTenants extends React.Component {
     //   this.setState({categories: response});
     //   console.log(this.state.categories)
     // })
-
-
   }
-
   convertToDict() {
     const tenant = this.state.tenant;
     keys = ["name", "description", "email", "phone", "rent_min", "rent_max", "housing_type", "property_type", "num_bedrooms", "location", "referral_agency_id", "date_needed"];
@@ -110,14 +102,12 @@ class ProfileFormTenants extends React.Component {
     let result = keys.reduce((obj, k, i) => ({...obj, [k]: values[i] }), {})
     return result
   }
-
   //updates our values
   handleChange = (index, e) => {
     // this.state.prevValues[index] = e.target.value
     // this.setState({prevValues: this.state.prevValues})
     this.setState({tenant: this.state.tenant})
   }
-
   //api destroy
   handleDestroy() {
     let id = this.props.tenant_id;
@@ -142,7 +132,6 @@ class ProfileFormTenants extends React.Component {
       window.location = '/';
     })
   }
-
   //api create
   // handleCreate() {
   //   this.setState({disabled: true});
@@ -170,7 +159,6 @@ class ProfileFormTenants extends React.Component {
   //     console.error(data);
   //   });
   // }
-
   //api edit
   handleEdit() {
     let id = this.props.tenant_id;
@@ -204,9 +192,7 @@ class ProfileFormTenants extends React.Component {
     }).catch((data) => {
       console.error(data);
     });
-
   }
-
   removeImages(imageList) {
     var i;
     for (i = 0; i < imageList.length; i++) {
@@ -222,32 +208,25 @@ class ProfileFormTenants extends React.Component {
       });
     }
   }
-
   sliderChanges([value1, value2]) {
     this.setState({rent_min: value1, rent_max: value2});
   }
-
   inputChangeMin(value) {
     this.setState({rent_min: value});
     console.log(this.state.rent_min);
   }
-
   inputChangeMax(value) {
     this.setState({rent_max: value});
     console.log(this.state.rent_max);
   }
-
   housingChange(value) {
     this.setState({housing_type: value});
   }
-
   handleChange(event) {
     const work = this.state.tenant;
     tenant[event.target.name] = event.target.value;
     this.setState({ tenant: tenant });
   }
-
-
   render() {
     const { getFieldDecorator } = this.props.form;
     const marks = {
@@ -265,7 +244,6 @@ class ProfileFormTenants extends React.Component {
     //     sm: { span: 16 },
     //   },
     // };
-
     return (
       <div>
         <Form onSubmit={this.handleSubmit}>
@@ -319,7 +297,6 @@ class ProfileFormTenants extends React.Component {
               <Input />
             )}
           </Form.Item>
-
           <Form.Item
             label="Rent"
           >
@@ -352,13 +329,12 @@ class ProfileFormTenants extends React.Component {
               </Col>
             </Row>
           </Form.Item>
-
           <Form.Item
             label="Housing Type"
           >
             <Select defaultValue="other_housing_type" onChange={this.handleChange}>
             {
-              Object.keys(this.state.housing_type).map((obj, i) => {
+              Object.keys(this.state.category_house).map((obj, i) => {
                 return <Select.Option key={i} value={obj}/>
               })
             }
@@ -369,6 +345,5 @@ class ProfileFormTenants extends React.Component {
     )
   }
 }
-
 // const WrappedProfileFormTenants = Form.create({name: 'profileTenants'})(ProfileFormTenants);
 export default Form.create()(ProfileFormTenants);

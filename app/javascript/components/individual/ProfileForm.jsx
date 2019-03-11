@@ -30,7 +30,7 @@ class ProfileForm extends React.Component {
   }
 
   /* takes in two arrays (our array of field names and our array of values)
-   * and combines the corresponding field and value as a key value pair to be 
+   * and combines the corresponding field and value as a key value pair to be
    * returned as a dictionary that will be sent in our JSON requests.
    */
   convertToDict(keys, values) {
@@ -66,7 +66,7 @@ class ProfileForm extends React.Component {
         'Content-Type': 'application/json',
         "X_CSRF-Token": document.getElementsByName("csrf-token")[0].content
       }
-    }).then((response) => { 
+    }).then((response) => {
       window.location = '/';
     })
   }
@@ -152,7 +152,7 @@ class ProfileForm extends React.Component {
 
   renderTextbox(index) {
     return (
-      <div 
+      <div
       style={{
         width: "50%",
         margin: "1.5% auto"
@@ -166,7 +166,7 @@ class ProfileForm extends React.Component {
 
   renderPassword(index) {
     return (
-      <div 
+      <div
       style={{
         width: "50%",
         margin: "1.5% auto"
@@ -181,9 +181,9 @@ class ProfileForm extends React.Component {
   renderTextarea(index) {
     const { TextArea } = Input;
     return (
-      <div 
+      <div
       style={{
-        width: "50%",  
+        width: "50%",
         margin: "1.5% auto"
       }}
       key={index}>
@@ -198,17 +198,17 @@ class ProfileForm extends React.Component {
       this.state.prevValues[index] = moment().format("YYYY-MM-DD")
     }
     return (
-      <div 
+      <div
       style={{
         width: "50%",
-        textAlign: "center", 
+        textAlign: "center",
         display: "flex",
         flexDirection: "column",
         margin: "1.5% auto"
       }}
       key={index}>
         <label>{this.state.niceFieldNames[index]}</label>
-        <DatePicker defaultValue={this.state.prevValues[index] == "" ? moment() : moment(this.state.prevValues[index])} 
+        <DatePicker defaultValue={this.state.prevValues[index] == "" ? moment() : moment(this.state.prevValues[index])}
                     onChange={(date, dateString) => this.state.prevValues[index] = dateString} />
       </div>
     )
@@ -217,15 +217,15 @@ class ProfileForm extends React.Component {
   renderDropdown(index) {
     const Option = Select.Option;
     return (
-      <div 
+      <div
       style={{
-        width: "50%",  
+        width: "50%",
         margin: "1.5% auto"
       }}
       key={index}>
         <label>{this.state.niceFieldNames[index]}</label>
         <Select defaultValue={this.state.prevValues[index]} onChange={(e) => this.state.prevValues[index] = e}>
-          {this.state.fieldTypes[index].map(option => 
+          {this.state.fieldTypes[index].map(option =>
             <Option key={index} value={option}>{option}</Option>)}
         </Select>
       </div>
@@ -243,14 +243,14 @@ class ProfileForm extends React.Component {
       this.state.prevValues[index+1] = 5000
     }
     return (
-      <div 
+      <div
       style={{
         width: "50%",
         margin: "1.5% auto"
       }}
       key={index}>
         <label>{this.state.niceFieldNames[index]} - {this.state.niceFieldNames[index+1]}</label>
-        <SliderBar  lowValue={this.state.prevValues[index]} 
+        <SliderBar  lowValue={this.state.prevValues[index]}
                     highValue={this.state.prevValues[index+1]}
                     index={index}
                     updateFunc={this.sliderChanges}
@@ -350,7 +350,7 @@ class ProfileForm extends React.Component {
     return (
       this.state.fieldTypes.map((_, index) => {
         if (this.state.fieldTypes[index] === "textbox") {
-          return ( 
+          return (
             this.renderTextbox(index)
           )
         } else if (this.state.fieldTypes[index] === "textarea") {
@@ -395,14 +395,14 @@ class ProfileForm extends React.Component {
     var disabled = this.state.disabled ? 'disabled' : ''
     if (this.props.mode === "create") {
       returnArr = [...this.renderForm(),
-          <Button 
+          <Button
           style={{
           width: "20%",
           margin: "1.5% auto"
           }}
           disabled={disabled}
       key='submit' type="primary" onClick={this.handleCreate}>Submit</Button>,
-          <Button 
+          <Button
           style={{
           width: "20%",
           margin: "1.5% auto"
@@ -425,8 +425,8 @@ class ProfileForm extends React.Component {
     }
     return (
       <div
-      style={{  
-        textAlign: "center", 
+      style={{
+        textAlign: "center",
             }}
       >
       {returnArr}
@@ -446,4 +446,6 @@ ProfileForm.propTypes = {
   current_userID: PropTypes.number,
 };
 
-export default ProfileForm; 
+
+
+export default ProfileForm;
