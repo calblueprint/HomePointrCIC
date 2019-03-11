@@ -45,12 +45,24 @@ class TenantsController < ApplicationController
      authorize @tenant
      @current_userID = current_user.id
      @categories = get_tenant_category_enums()
-   end
-
+  end
    def get_tenant_category_enums
+     @nice_housing_type = []
+     @nice_property_type = []
+     @nice_location = []
+     Tenant.housing_types.keys.each do |i|
+       @nice_housing_type << i.titleize
+     end
+     Tenant.property_types.keys.each do |i|
+       @nice_property_type << i.titleize
+     end
+     Tenant.property_types.keys.each do |i|
+       @nice_location << i.titleize
+     end
      categories = {
-       housing_type: Tenant.housing_types.keys,
-       property_type: Tenant.property_types.keys
+       housing_type: @nice_housing_type,
+       property_type: @nice_property_type,
+       location: @nice_location
      }
      # render json: categories
    end
