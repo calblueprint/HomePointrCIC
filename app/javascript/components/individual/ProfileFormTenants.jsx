@@ -37,13 +37,6 @@ class ProfileFormTenants extends React.Component {
     console.log(this.state.category_property);
   }
 
-  convertToDict() {
-    const tenant = this.state.tenant;
-    keys = ["name", "description", "email", "phone", "rent_min", "rent_max", "housing_type", "property_type", "num_bedrooms", "location", "referral_agency_id", "date_needed"];
-    values = [tenant.name, tenant.description, tenant.email, tenant.phone, tenant.rent_min, tenant.rent_max, tenant.housing_type, tenant.property_type, tenant.num_bedrooms, tenant.location, tenant.referral_agency_id, tenant.date_needed];
-    let result = keys.reduce((obj, k, i) => ({...obj, [k]: values[i] }), {})
-    return result
-  }
   //updates our values
   handleChange = (index, e) => {
     // this.state.prevValues[index] = e.target.value
@@ -223,7 +216,7 @@ class ProfileFormTenants extends React.Component {
               rules: [{
                 required: true, message: 'Please input your email!',
               }, {
-                type: 'email', message: 'The inputis not valid email!'
+                type: 'email', message: 'The input is not valid email!'
               }],
             })(
               <Input />

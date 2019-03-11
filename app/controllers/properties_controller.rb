@@ -102,29 +102,29 @@ class PropertiesController < ApplicationController
   end
 
   def edit
-    @mode = 'edit'
-    @type = 'properties'
-    enums = []
-    @nice_field_names = []
-    @field_names = Property.column_names[1..-1] + %w[images form]
-    @field_names.each do |i|
-      @nice_field_names << i.titleize
-      enums << Property.defined_enums[i].keys if Property.defined_enums.key?(i)
-    end
     @property = Property.find(params[:id])
     authorize @property
-    @prev_values = @property.attributes.values[1..-1]
-    if @property.images.attached? == false
-      @prev_values << @property.images
-    else
-      @prev_values << @property.images.map { |img| { image: url_for(img), id: img.id } }
-    end
-    if @property.form.attached? == false
-      @prev_values << nil
-    else
-      @prev_values << { image: url_for(@property.form.attachment), id: @property.form.attachment.id }
-    end
-    @field_types = ['textbox', 'textarea', 'id', 'textbox', 'textbox', enums[0], enums[1], 'datepicker', enums[2], 'textbox', 'attachment', 'form']
     @current_userID = current_user.id
+    @categories = get_property_category_enums()
+ end
+  def get_property_category_enums
+    @nice_housing_type = []
+    @nice_property_type = []
+    @nice_location = []
+    Property.housing_types.keys.each do |i|
+      @nice_housing_type << i.titleize
+    end
+    Property.property_types.keys.each do |i|
+      @nice_property_type << i.titleize
+    end
+    Property.locations.keys.each do |i|
+      @nice_location << i.titleize
+    end
+    categories = {
+      housing_type: @nice_housing_type,
+      property_type: @nice_property_type,
+      location: @nice_location
+    }
+    # render json: categories
   end
 end
