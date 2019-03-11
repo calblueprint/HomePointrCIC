@@ -332,7 +332,11 @@ class ProfileFormTenants extends React.Component {
           <Form.Item
             label="Date Needed"
           >
-            {getFieldDecorator('date_needed', config)(
+            {getFieldDecorator('date_needed', {
+              rules: [{
+                required: true, message: 'Please input your Name!',
+              }],
+            })(
               <DatePicker />
             )}
           </Form.Item>

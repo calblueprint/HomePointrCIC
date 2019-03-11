@@ -56,7 +56,7 @@ class TenantsController < ApplicationController
      Tenant.property_types.keys.each do |i|
        @nice_property_type << i.titleize
      end
-     Tenant.property_types.keys.each do |i|
+     Tenant.locations.keys.each do |i|
        @nice_location << i.titleize
      end
      categories = {
