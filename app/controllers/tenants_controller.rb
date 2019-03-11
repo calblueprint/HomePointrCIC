@@ -38,6 +38,7 @@ class TenantsController < ApplicationController
     values = @tenant.attributes.values[3..-3]
     @avatarURL = nil
     @avatarURL = url_for(@tenant.avatar) if @tenant.avatar.attached?
+    render json:@tenant
   end
 
   def edit
@@ -60,9 +61,12 @@ class TenantsController < ApplicationController
        @nice_location << i.titleize
      end
      categories = {
-       housing_type: @nice_housing_type,
-       property_type: @nice_property_type,
-       location: @nice_location
+       housing_types: Tenant.housing_types.keys,
+       property_types: Tenant.property_types.keys,
+       locations: Tenant.locations.keys,
+       nice_housing_types: @nice_housing_type,
+       nice_property_types: @nice_property_type,
+       nice_locations: @nice_location
      }
      # render json: categories
    end

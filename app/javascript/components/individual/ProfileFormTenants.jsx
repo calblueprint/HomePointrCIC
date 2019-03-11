@@ -17,9 +17,12 @@ class ProfileFormTenants extends React.Component {
     this.state = {
       tenant: props.tenant,
       categories: props.categories,
-      category_house: props.categories.housing_type,
-      category_property: props.categories.property_type,
-      category_location: props.categories.location,
+      nice_housing_types: props.categories.nice_housing_types,
+      nice_property_types: props.categories.nice_property_types,
+      nice_locations: props.categories.nice_locations,
+      housing_types: props.categories.housing_types,
+      property_types: props.categories.property_types,
+      locations: props.categories.locations,
       avatar: this.props.tenant.avatar,
       fileList: [],
       imageRemoveList: [],
@@ -32,6 +35,7 @@ class ProfileFormTenants extends React.Component {
     this.sliderChanges = this.sliderChanges.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleChangeDate = this.handleChangeDate.bind(this);
+    this.handleChangeSelect = this.handleChangeSelect.bind(this);
     console.log(this.state.category_house);
     console.log(this.state.category_property);
   }
@@ -98,22 +102,10 @@ class ProfileFormTenants extends React.Component {
   //api edit
   handleEdit() {
     let id = this.state.tenant.id;
-    // let type = this.props.type;
     var request = null;
     var body = this.convertToDict()
-    // if (this.props.type === "properties") {
-    //   body = JSON.stringify({property: body})
-    //   request = APIRoutes.properties.update(id)
-    // } else if (this.props.type === "landlords") {
-    //   body = JSON.stringify({landlord: body})
-    //   request = APIRoutes.landlords.update(id)
-    // } else if (this.props.type === "referral_agencies") {
-    //   body = JSON.stringify({referral_agency: body})
-    //   request = APIRoutes.referral_agencies.update(id)
-    // } else {
       body = JSON.stringify({tenant: body})
       request = APIRoutes.tenants.update(id)
-    // }
     this.removeImages(this.state.imageRemoveList);
     fetch(request, {
       method: 'PUT',
@@ -124,9 +116,9 @@ class ProfileFormTenants extends React.Component {
       body: body,
       credentials: 'same-origin',
     }).then((data) => {
-      window.location = '/' + "tenants" + '/' + id.toString();
+      window.location = '/tenants/' + id.toString();
     }).catch((data) => {
-      console.error(data);
+      window.location = '/tenants/' + id.toString() + '/edit';
     });
   }
   removeImages(imageList) {
@@ -159,6 +151,13 @@ class ProfileFormTenants extends React.Component {
     const tenant = this.state.tenant;
     tenant["date_needed"] = date.format("YYYY-MM-DD");
     this.setState({ tenant: tenant });
+  }
+  handleChangeSelect(attr, value) {
+    const tenant = this.state.tenant;
+    tenant[attr] = value;
+    this.setState({ tenant: tenant })
+    console.log(attr);
+    console.log(value);
   }
   render() {
     const { getFieldDecorator } = this.props.form;
@@ -279,10 +278,10 @@ class ProfileFormTenants extends React.Component {
                 required: true, message: 'Please pick a number of bedrooms!',
               }],
             })(
-              <Select onChange={() => this.handleChange("housing_type")}>
+              <Select onChange={(value) => this.handleChangeSelect("housing_type", value)}>
               {
-                this.state.category_house.map((obj, i) => {
-                  return <Option key={i} value={obj}>{obj}</Option>
+                this.state.nice_housing_types.map((obj, i) => {
+                  return <Option key={i} value={this.state.housing_types[i]}>{obj}</Option>
                 })
               }
               </Select>
@@ -297,10 +296,10 @@ class ProfileFormTenants extends React.Component {
                 required: true, message: 'Please pick a number of bedrooms!',
               }],
             })(
-              <Select onChange={() => this.handleChange("property_type")}>
+              <Select onChange={(value) => this.handleChangeSelect("property_type", value)}>
               {
-                this.state.category_property.map((obj, i) => {
-                  return <Option key={i} value={obj}>{obj}</Option>
+                this.state.nice_property_types.map((obj, i) => {
+                  return <Option key={i} value={this.state.property_types[i]}>{obj}</Option>
                 })
               }
               </Select>
@@ -319,6 +318,7 @@ class ProfileFormTenants extends React.Component {
                 min={0}
                 max={10}
                 style={{ marginLeft: 16 }}
+                value={tenant.num_bedrooms}
                 onChange={() => this.handleChange("num_bedrooms")}
               />
             )}
@@ -332,10 +332,10 @@ class ProfileFormTenants extends React.Component {
               required: true, message: 'Please pick a number of bedrooms!',
             }],
           })(
-            <Select onChange={() => this.handleChange("location")}>
+            <Select onChange={(value) => this.handleChangeSelect("location", value)}>
             {
-              this.state.category_location.map((obj, i) => {
-                return <Option key={i} value={obj}>{obj}</Option>
+              this.state.nice_locations.map((obj, i) => {
+                return <Option key={i} value={this.state.locations[i]}>{obj}</Option>
               })
             }
             </Select>

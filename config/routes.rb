@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   get 'home/index'
   get 'errors/show'
   get 'tenants/:id/edit' => 'tenants#edit'
+  get 'tenants/:id' => 'tenants#show'
   get '/tenants/categories' => 'tenants#get_tenant_category_enums'
 
   resources :referral_agencies, only: %i[create show update edit destroy]
