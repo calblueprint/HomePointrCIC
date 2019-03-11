@@ -1,8 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {message, Button} from 'antd';
-import APIRoutes from 'helpers/api_routes';
-import 'antd/dist/antd.css';
+import { message, Button } from "antd";
+import APIRoutes from "helpers/api_routes";
+import "antd/dist/antd.css";
 
 class ErrorMessage extends React.Component {
   constructor(props) {
@@ -10,9 +10,7 @@ class ErrorMessage extends React.Component {
   }
 
   render() {
-    return (
-      message.error(this.props.message);
-    )
+    return message.error(this.props.message);
   }
 }
 
