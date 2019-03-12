@@ -6,6 +6,7 @@ import moment from 'moment';
 import APIRoutes from 'helpers/api_routes';
 import Utils from 'helpers/utils';
 import UploadButton from './UploadButton';
+import PicturesWall from './PicturesWall';
 import SliderBar from './SliderBar';
 import ActiveStorageProvider from "react-activestorage-provider";
 
@@ -288,16 +289,16 @@ class ProfileForm extends React.Component {
     if (this.props.mode === "edit") {
       this.state.fileList = this.setupImages(index);
       buttonProps = {
-        listType: 'picture',
-        defaultFileList: this.state.fileList,
-        onRemove: (e) => this.state.imageRemoveList.push(e.uid),
+        listType: 'picture-card',
+        fileList: this.state.fileList,
+        onRemoveRequest: (e) => this.state.imageRemoveList.push(e.uid),
         className: 'upload-list-inline',
       };
     }
     return (
       <div key={index}>
         Images
-        <UploadButton {...buttonProps} />
+        <PicturesWall {...buttonProps} />
         <ActiveStorageProvider
           endpoint={{
             path: path,
@@ -321,15 +322,15 @@ class ProfileForm extends React.Component {
     if (this.props.mode === "edit") {
       buttonProps = {
         listType: 'picture',
-        defaultFileList: this.state.prevValues[index] === null ? [] : [{uid: this.state.prevValues[index].id, url: this.state.prevValues[index].image, name: this.state.prevValues[index].image.split("/").slice(-1).pop()}],
-        onRemove: (e) => this.onImageRemove(e),
+        fileList: this.state.prevValues[index] === null ? [] : [{uid: this.state.prevValues[index].id, url: this.state.prevValues[index].image, name: this.state.prevValues[index].image.split("/").slice(-1).pop()}],
+        onRemoveRequest: (e) => this.state.imageRemoveList.push(e.uid),
         className: 'upload-list-inline'
       }
     }
     return (
       <div key={index}>
         Property Form
-        <UploadButton {...buttonProps} />
+        <PicturesWall {...buttonProps} />
         <ActiveStorageProvider
           endpoint={{
             path: path,
