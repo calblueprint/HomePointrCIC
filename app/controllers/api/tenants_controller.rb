@@ -19,7 +19,7 @@ class Api::TenantsController < ApplicationController
   end
 
   def update
-    # @tenant = Tenant.find(params[:id])
+    @tenant = Tenant.find(params[:id])
     # authorize @tenant
     # if @tenant.update(tenant_params)
     #   render json: @tenant
@@ -30,7 +30,6 @@ class Api::TenantsController < ApplicationController
     # avatar_attr = tenant_attr.delete("avatar")
     # @tenant = Tenant.find(params[:id])
     puts("--------------AVATAR ATACHING NEW-------------")
-    puts @tenant.avatar.name
     saved = @tenant.update(tenant_params)
     # puts(avatar_attr)
     if saved

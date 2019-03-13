@@ -125,7 +125,7 @@ class ProfileFormTenants extends React.Component {
       console.log(this.state.tenant.avatar.name)
       // window.location = '/tenants/' + id.toString();
     }).catch((data) => {
-      window.location = '/tenants/' + id.toString() + '/edit';
+      window.location = '/';
     });
   }
   removeImages(imageList) {
