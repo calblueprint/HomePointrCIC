@@ -58,7 +58,16 @@ def make_properties
       property_type: n % 10,
       location: n % 6,
       address: Faker::Address.street_address,
-      date_available: Date.today
+      date_available: Date.today,
+      number_of_bedrooms: Faker::Number.between(1, 10),
+      number_of_bathrooms: Faker::Number.between(1, 10),
+      floor_number: Faker::Number.between(1, 10),
+      mobility_aids: Faker::Boolean.boolean,
+      furniture: Faker::Boolean.boolean,
+      utilities_included: Faker::Boolean.boolean,
+      accessible_shower: Faker::Boolean.boolean,
+      car_parking: Faker::Boolean.boolean,
+      lift_access: Faker::Boolean.boolean
     )
     property.images.attach(io: File.open('app/assets/images/house1.png'), filename: 'house1.png')
     property.images.attach(io: File.open('app/assets/images/house2.png'), filename: 'house2.png')
@@ -82,7 +91,13 @@ def make_tenants
       location: n % 6,
       num_bedrooms: Faker::Number.number(1),
       referral_agency_id: Faker::Number.between(NUM_LANDLORDS + 1, NUM_REFERRAL_AGENCIES + NUM_LANDLORDS),
-      date_needed: Date.today
+      date_needed: Date.today,
+      number_of_bedrooms: Faker::Number.between(1, 10),
+      number_of_bathrooms: Faker::Number.between(1, 10),
+      mobility_aids: Faker::Boolean.boolean,
+      accessible_shower: Faker::Boolean.boolean,
+      car_parking: Faker::Boolean.boolean,
+      lift_access: Faker::Boolean.boolean
     )
     tenant.avatar.attach(io: File.open('app/assets/images/avatar.jpg'), filename: 'avatar.jpg')
     tenant.save
