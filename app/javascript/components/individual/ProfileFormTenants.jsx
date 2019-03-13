@@ -11,6 +11,9 @@ import Utils from 'helpers/utils';
 import UploadButton from './UploadButton';
 import SliderBar from './SliderBar';
 import ActiveStorageProvider from "react-activestorage-provider";
+import PicturesWall from './PicturesWall';
+import Avatar from './Avatar';
+
 class ProfileFormTenants extends React.Component {
   constructor(props) {
     super(props);
@@ -36,14 +39,14 @@ class ProfileFormTenants extends React.Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleChangeDate = this.handleChangeDate.bind(this);
     this.handleChangeSelect = this.handleChangeSelect.bind(this);
-    console.log(this.state.category_house);
-    console.log(this.state.category_property);
+    this.renderUpload = this.renderUpload.bind(this);
+    this.setFile = this.setFile.bind(this);
   }
 
   convertToDict() {
     const tenant = this.state.tenant;
-    const keys = ["name", "description", "email", "phone", "rent_min", "rent_max", "housing_type", "property_type", "num_bedrooms", "location", "referral_agency_id", "date_needed"];
-    const values = [tenant.name, tenant.description, tenant.email, tenant.phone, tenant.rent_min, tenant.rent_max, tenant.housing_type, tenant.property_type, tenant.num_bedrooms, tenant.location, tenant.referral_agency_id, tenant.date_needed];
+    const keys = ["name", "description", "email", "phone", "rent_min", "rent_max", "housing_type", "property_type", "num_bedrooms", "location", "referral_agency_id", "date_needed", "avatar"];
+    const values = [tenant.name, tenant.description, tenant.email, tenant.phone, tenant.rent_min, tenant.rent_max, tenant.housing_type, tenant.property_type, tenant.num_bedrooms, tenant.location, tenant.referral_agency_id, tenant.date_needed, tenant.avatar];
     let result = keys.reduce((obj, k, i) => ({...obj, [k]: values[i] }), {})
     return result
   }
@@ -107,6 +110,9 @@ class ProfileFormTenants extends React.Component {
       body = JSON.stringify({tenant: body})
       request = APIRoutes.tenants.update(id)
     this.removeImages(this.state.imageRemoveList);
+    console.log("TENANT HANDLEEDIT");
+    console.log(this.state.tenant.avatar);
+    console.log(this.state.tenant.avatar.name);
     fetch(request, {
       method: 'PUT',
       headers: {
@@ -116,7 +122,8 @@ class ProfileFormTenants extends React.Component {
       body: body,
       credentials: 'same-origin',
     }).then((data) => {
-      window.location = '/tenants/' + id.toString();
+      console.log(this.state.tenant.avatar.name)
+      // window.location = '/tenants/' + id.toString();
     }).catch((data) => {
       window.location = '/tenants/' + id.toString() + '/edit';
     });
@@ -159,6 +166,47 @@ class ProfileFormTenants extends React.Component {
     console.log(attr);
     console.log(value);
   }
+
+  setFile(e) {
+    const files = e.target.files;
+    if (!files || !files[0]) {
+      return;
+    }
+    this.setState({ avatar: files[0] });
+  }
+
+  renderUpload() {
+    let buttonProps = null;
+      buttonProps = {
+        listType: 'picture-card',
+        fileList: this.state.fileList,
+        onRemoveRequest: (e) => this.state.imageRemoveList.push(e.uid),
+        className: 'upload-list-inline',
+        onChange: (fileList) => this.handleChangeImage(fileList)
+      };
+
+      // <ActiveStorageProvider
+      //   endpoint={{
+      //     path: '/api/tenants/' + this.state.tenant.id.toString(),
+      //     model: "Tenant",
+      //     attribute: 'avatar',
+      //     method: "PUT",
+      //   }}
+      //   headers={{
+      //     'Content-Type': 'application/json'
+      //   }}
+      //   render={Utils.activeStorageUploadRenderer}
+      // />
+
+    return (
+      <div>
+        Images
+        <PicturesWall {...buttonProps} />
+      </div>
+    )
+  }
+
+
   render() {
     const { getFieldDecorator } = this.props.form;
     const marks = {
@@ -168,16 +216,7 @@ class ProfileFormTenants extends React.Component {
     }
     const Option = Select.Option;
     const { tenant } = this.state;
-    // const formItemLayout = {
-    //   labelCol: {
-    //     xs: { span: 24 },
-    //     sm: { span: 8 },
-    //   },
-    //   wrapperCol: {
-    //     xs: { span: 24 },
-    //     sm: { span: 16 },
-    //   },
-    // };
+
     return (
       <div>
         <Form onSubmit={this.handleEdit}>
@@ -354,10 +393,11 @@ class ProfileFormTenants extends React.Component {
             )}
           </Form.Item>
           <Form.Item
-            wrapperCol={{
-              xs: { span: 24, offset: 0 },
-              sm: { span: 16, offset: 8 },
-            }}
+            label="Upload Avatar"
+          >
+            <Avatar tenant={this.state.tenant}/>
+          </Form.Item>
+          <Form.Item
           >
             <Button type="primary" htmlType="submit">Submit</Button>
           </Form.Item>

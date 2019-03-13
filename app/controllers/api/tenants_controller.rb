@@ -19,12 +19,29 @@ class Api::TenantsController < ApplicationController
   end
 
   def update
-    @tenant = Tenant.find(params[:id])
-    authorize @tenant
-    if @tenant.update(tenant_params)
+    # @tenant = Tenant.find(params[:id])
+    # authorize @tenant
+    # if @tenant.update(tenant_params)
+    #   render json: @tenant
+    # else
+    #   render component: 'ErrorMessage', message: @tenant.errors.messages
+    # end
+
+    # avatar_attr = tenant_attr.delete("avatar")
+    # @tenant = Tenant.find(params[:id])
+    puts("--------------AVATAR ATACHING NEW-------------")
+    puts @tenant.avatar.name
+    saved = @tenant.update(tenant_params)
+    # puts(avatar_attr)
+    if saved
+      if ActiveStorage::Blob.last.id != $activestoragestart
+        a = ActiveStorage::Blob.last
+        @tenant.avatar.attach(a) if a.image?
+      end
+      flash[:success] = "Tenant updated successfully!"
       render json: @tenant
     else
-      render component: 'ErrorMessage', message: @tenant.errors.messages
+      flash[:danger] = "Tenant failed to update."
     end
   end
 
