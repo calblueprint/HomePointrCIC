@@ -66,7 +66,7 @@ class ListView extends React.Component {
 
   renderPropertyModal(resource) {
     if (this.props.property_modal) {
-      return(<PropertyModal location={resource.location} description={resource.description} images={resource.images}/>)
+      return(<PropertyModal property={resource}/>)
     } else {
       return(<Button key={resource.id} type="default" href={"/properties/" + resource.id}>
         View Info
