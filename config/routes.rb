@@ -12,7 +12,7 @@ Rails.application.routes.draw do
   resources :properties
   # resources :tenants, :only => [:create, :update, :show, :destroy]
   resources :tenants
-  resources :applications, only: %i[create show destroy]
+  # resources :applications, only: %i[create show destroy]
   resources :infos, only: [:create]
   devise_for :users, controllers: {
     sessions: 'sessions',
