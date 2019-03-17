@@ -1,6 +1,18 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
+  namespace :admin do
+      resources :users
+      resources :emails
+      resources :applications
+      resources :infos
+      resources :properties
+      resources :tenants
+      resources :landlords
+      resources :referral_agencies
+
+      root to: "users#index"
+    end
   get 'home/index'
   get 'errors/show'
   resources :referral_agencies, only: %i[create show update edit destroy]
