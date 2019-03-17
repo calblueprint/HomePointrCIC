@@ -1,6 +1,6 @@
 import { Upload, Icon, message } from 'antd';
 import React from "react";
-import '../../../assets/stylesheets/avatar.css';
+// import '../../../assets/stylesheets/avatar.css';
 
 
 class Avatar extends React.Component {

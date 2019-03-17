@@ -29,7 +29,7 @@ class Api::TenantsController < ApplicationController
 
     # avatar_attr = tenant_attr.delete("avatar")
     # @tenant = Tenant.find(params[:id])
-    puts("--------------AVATAR ATACHING NEW-------------")
+    puts("--------------AVATAR ATTACHING NEW-------------")
     saved = @tenant.update(tenant_params)
     # puts(avatar_attr)
     if saved
