@@ -9,10 +9,8 @@ class PropertyDashboard < Administrate::BaseDashboard
   # on pages throughout the dashboard.
   ATTRIBUTE_TYPES = {
     landlord: Field::BelongsTo,
-    images_attachments: Field::HasMany.with_options(class_name: "ActiveStorage::Attachment"),
-    images_blobs: Field::HasMany.with_options(class_name: "ActiveStorage::Blob"),
-    form_attachment: Field::HasOne,
-    form_blob: Field::HasOne,
+    images: Field::ActiveStorage,
+    form: Field::ActiveStorage,
     infos: Field::HasMany,
     applications: Field::HasMany,
     id: Field::Number,
@@ -43,19 +41,16 @@ class PropertyDashboard < Administrate::BaseDashboard
   # Feel free to add, remove, or rearrange items.
   COLLECTION_ATTRIBUTES = [
     :landlord,
-    :images_attachments,
-    :images_blobs,
-    :form_attachment,
+    :images,
+    :form,
   ].freeze
 
   # SHOW_PAGE_ATTRIBUTES
   # an array of attributes that will be displayed on the model's show page.
   SHOW_PAGE_ATTRIBUTES = [
     :landlord,
-    :images_attachments,
-    :images_blobs,
-    :form_attachment,
-    :form_blob,
+    :images,
+    :form,
     :infos,
     :applications,
     :id,
@@ -84,10 +79,8 @@ class PropertyDashboard < Administrate::BaseDashboard
   # on the model's form (`new` and `edit`) pages.
   FORM_ATTRIBUTES = [
     :landlord,
-    :images_attachments,
-    :images_blobs,
-    :form_attachment,
-    :form_blob,
+    :images,
+    :form,
     :infos,
     :applications,
     :capacity,

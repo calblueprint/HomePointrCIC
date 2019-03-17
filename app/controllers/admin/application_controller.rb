@@ -10,6 +10,10 @@ module Admin
 
     def authenticate_admin
       # TODO Add authentication logic here.
+      if current_user.email != 'user11@gmail.com'
+        flash[:error] = 'You must be logged in to access this section'
+        redirect_to unauthenticated_root_path
+      end
     end
 
     # Override this value to specify the number of elements to display at a time

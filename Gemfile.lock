@@ -55,6 +55,9 @@ GEM
       momentjs-rails (~> 2.8)
       sass-rails (~> 5.0)
       selectize-rails (~> 0.6)
+    administrate-field-active_storage (0.1.5)
+      administrate (>= 0.2.0.rc1)
+      rails (>= 5.2)
     archive-zip (0.11.0)
       io-like (~> 0.3.0)
     arel (9.0.0)
@@ -289,6 +292,7 @@ PLATFORMS
 
 DEPENDENCIES
   administrate
+  administrate-field-active_storage
   aws-sdk-s3
   bcrypt
   bootsnap (>= 1.1.0)

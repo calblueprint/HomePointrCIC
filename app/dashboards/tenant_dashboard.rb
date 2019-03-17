@@ -10,8 +10,7 @@ class TenantDashboard < Administrate::BaseDashboard
   ATTRIBUTE_TYPES = {
     referral_agency: Field::BelongsTo,
     info: Field::HasOne,
-    avatar_attachment: Field::HasOne,
-    avatar_blob: Field::HasOne,
+    avatar: Field::ActiveStorage,
     id: Field::Number,
     name: Field::String,
     description: Field::Text,
@@ -42,8 +41,7 @@ class TenantDashboard < Administrate::BaseDashboard
   COLLECTION_ATTRIBUTES = [
     :referral_agency,
     :info,
-    :avatar_attachment,
-    :avatar_blob,
+    :avatar,
   ].freeze
 
   # SHOW_PAGE_ATTRIBUTES
@@ -51,8 +49,7 @@ class TenantDashboard < Administrate::BaseDashboard
   SHOW_PAGE_ATTRIBUTES = [
     :referral_agency,
     :info,
-    :avatar_attachment,
-    :avatar_blob,
+    :avatar,
     :id,
     :name,
     :description,
@@ -81,8 +78,7 @@ class TenantDashboard < Administrate::BaseDashboard
   FORM_ATTRIBUTES = [
     :referral_agency,
     :info,
-    :avatar_attachment,
-    :avatar_blob,
+    :avatar,
     :name,
     :description,
     :email,
