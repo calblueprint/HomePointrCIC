@@ -83,8 +83,8 @@ class SignUpPage extends React.Component {
    });
   }
 
-  handleCancel = () => {
-
+  redirectToLogin = () => {
+    window.location = '/users/sign_in'
   }
 
   handlePageSwitch = () => {
@@ -256,7 +256,7 @@ class SignUpPage extends React.Component {
           <Row gutter={32} className="buttons-container">
             {/* BUTTON 1 */}
             <Col span={12}>
-              <Button className="button" onClick={this.handleCancel} className="button">
+              <Button className="button" onClick={this.redirectToLogin} className="button">
                 Cancel
               </Button>
             </Col>
