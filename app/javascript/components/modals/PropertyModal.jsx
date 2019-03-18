@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from "prop-types";
 import 'antd/dist/antd.css';
-import { Modal, Button, Carousel, Avatar, Layout, Row, Col} from 'antd';
+import { Modal, Button, Carousel, Avatar, Layout, Row, Col, Icon} from 'antd';
 import ApplicationStatusButtons from './../individual/ApplicationStatusButtons'
+import '../../../assets/stylesheets/modal.css';
 
 class PropertyModal extends React.Component {
   constructor(props) {
@@ -34,7 +35,7 @@ class PropertyModal extends React.Component {
     if (this.props.property.images == null) {
       return (
         <React.Fragment key='photo'>
-          <Avatar size={256} shape="square" icon="home"/>
+          <Avatar size={256} shape="rectangle" icon="home"/>
         </React.Fragment>
       )
     } else {
@@ -52,18 +53,41 @@ class PropertyModal extends React.Component {
     }
   }
 
-  renderDescription() {
-    <div>
-      <p>Description: {this.props.property.description}</p>
-      <Row gutter={16}>
-        <Col span={12}>
-          <p>Description: {this.props.property.description}</p>
-        </Col>
-        <Col span={12}>
-          <p>Capacity: {this.props.property.capacity}</p>
-        </Col>
-      </Row>
-    </div>
+  renderBooleans(includes_true) {
+    var includes = "";
+    var discludes = "";
+    if (this.props.property.furniture) {
+      includes += "Furniture, ";
+    } else {
+      discludes += "Furniture, ";
+    }
+    if (this.props.property.utilities_included) {
+      includes += "Utilities, ";
+    } else {
+      discludes += "Utilities, ";
+    }
+    if (this.props.property.accessible_shower) {
+      includes += "Accessible Shower, ";
+    } else {
+      discludes += "Accessible Shower, ";
+    }
+    if (this.props.property.car_parking) {
+      includes += "Car Parking, ";
+    } else {
+      discludes += "Car Parking, ";
+    }
+    if (includes.length >= 2) {
+      includes = includes.slice(0, includes.length-2);
+    }
+    if (discludes.length >= 2) {
+      discludes = discludes.slice(0, discludes.length-2);
+    }
+    if(includes_true) {
+      return(<div> {includes} </div>);
+    }
+    else {
+      return(<div> {discludes} </div>);
+    }
   }
 
   render() {
@@ -77,46 +101,69 @@ class PropertyModal extends React.Component {
           visible={this.state.visible}
           onOk={this.handleOk}
           onCancel={this.handleCancel}
+          width="900px"
         >
-        {this.renderPhotos()}
-        <div id="description_wrapper">
-          <div id="left">
-            <h1> Basic </h1>
-              <h2> Housing Type </h2>
-                <p> {this.props.property.housing_type} </p>
-              <h2> Property Type </h2>
-                <p> {this.props.property.property_type} </p>
-              <h2> Date Available </h2>
-                <p> {this.props.property.date_available} </p>
-              <h2> Location </h2>
-                <p> {this.props.property.location} </p>
-            <h1> Summary </h1>
-              <p> {this.props.description} </p>
-            <h1> Additional Paperwork </h1>
-              <p> add forms... </p>
+        {/*
+        look at the renderPhotos thing!
+        <img className="image" style={{backgroundImage: `url(${this.props.property.images[0].url})`}}> </img>
+        */}
+          <div className="left">
+            <h1> <Icon type="home" /> Basic </h1>
+              <Row>
+                <Col span={12}>Housing Type</Col>
+                <Col span={12}>Property Type</Col>
+              </Row>
+              <Row>
+                <Col span={12}>{this.props.property.housing_type}</Col>
+                <Col span={12}>{this.props.property.property_type}</Col>
+              </Row>
+              <Row>
+                <Col span={12}>Date Available</Col>
+                <Col span={12}>Location</Col>
+              </Row>
+              <Row>
+                <Col span={12}>{this.props.property.date_available}</Col>
+                <Col span={12}>{this.props.property.location}</Col>
+              </Row>
+            <h1> <Icon type="align-center" /> Summary </h1>
+              <Row>
+                <Col span={12}>{this.props.description}</Col>
+              </Row>
+            <h1> <Icon type="paper-clip" /> Additional Paperwork </h1>
+              <Row>
+                <Col span={12}>add forms...</Col>
+              </Row>
           </div>
-          <div id="right">
-            <h1> Living Details </h1>
-              <h2> Capacity </h2>
-                <p> {this.props.property.capacity} </p>
-              <h2> Openings </h2>
-                <p> {this.props.property.openings} </p>
-              <h2> Rent </h2>
-                <p> {this.props.property.rent} </p>
-              <h2> Bedrooms </h2>
-                <p> {this.props.property.num_bedrooms} </p>
-              <h2> Bathrooms </h2>
-                //<p> {this.props.property.num_bathrooms} </p>
-              <h2> On Floor </h2> //could be multiple available...
-                //<p> {this.props.property.floor} </p>
-            <h1> Includes </h1>
-              //<p> {this.props.description} </p>
-            <h1> Does Not Include </h1>
-              //<p> add forms... </p>
+          <div className="right">
+            <h1> <Icon type="home" /> Living Details </h1>
+            <Row>
+              <Col span={8}>Capacity</Col>
+              <Col span={8}>Openings</Col>
+              <Col span={8}>Rent</Col>
+            </Row>
+            <Row>
+              <Col span={8}>{this.props.property.capacity}</Col>
+              <Col span={8}>{this.props.property.openings}</Col>
+              <Col span={8}>${this.props.property.rent}</Col>
+            </Row>
+            <Row>
+              <Col span={8}>Bedrooms</Col>
+              <Col span={8}>Bathrooms</Col>
+              <Col span={8}>Floor Number</Col>
+            </Row>
+            <Row>
+              <Col span={8}>{this.props.property.number_of_bedrooms}</Col>
+              <Col span={8}>{this.props.property.number_of_bathrooms}</Col>
+              <Col span={8}>{this.props.property.floor_number}</Col>
+            </Row>
+            <Row>
+            <h1> <Icon type="check-circle" /> Includes </h1>
+                {this.renderBooleans(true)}
+            <h1> <Icon type="close-circle" /> Does Not Include </h1>
+                {this.renderBooleans(false)}
+              </Row>
           </div>
-        </div>
 
-        //{this.renderDescription()}
         </Modal>
       </div>
     );
