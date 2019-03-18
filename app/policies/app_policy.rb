@@ -10,7 +10,7 @@ class AppPolicy < ApplicationPolicy
 
   def self.permitted_attributes
     if user.type == 'ReferralAgency'
-      %i[status property_id info_id]
+      %i[status property_id tenant_id]
     else
       [:status]
     end
@@ -20,7 +20,7 @@ class AppPolicy < ApplicationPolicy
   # or if a Landlord is viewing the application of a tenant that has applied to one of their properties.
   def show?
     if user.type == 'ReferralAgency'
-      user.tenants.include?(app.info.tenant)
+      user.tenants.include?(app.tenant)
     else
       user.properties.each do |property|
         return true if property.applications.include?(app)
@@ -30,7 +30,7 @@ class AppPolicy < ApplicationPolicy
   end
 
   def create?
-    user.type == 'ReferralAgency' && user.tenants.include?(app.info.tenant)
+    user.type == 'ReferralAgency' && user.tenants.include?(app.tenant)
   end
 
   def new?

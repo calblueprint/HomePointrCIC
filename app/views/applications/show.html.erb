@@ -1,9 +1,0 @@
-<%= form_with(model: @applications, local: true) do |form| %>
-  <%= react_component("individual/ApplicationStatusButtons", props={ application_id: @application.id, status: @status }) %>
-<% end %>
-
-Application ID: <%= @application.id %>
-Application Status: <%= @application.status %>
-Application Property ID: <%= @application.property_id %>
-Application Info ID: <%= @application.info_id %>
-Application Form: <%= link_to "Preview", rails_blob_path(@application.form, disposition: 'preview') %>

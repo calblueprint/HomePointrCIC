@@ -9,7 +9,7 @@ class TenantDashboard < Administrate::BaseDashboard
   # on pages throughout the dashboard.
   ATTRIBUTE_TYPES = {
     referral_agency: Field::BelongsTo,
-    info: Field::HasOne,
+    tenant: Field::HasOne,
     avatar: Field::ActiveStorage,
     id: Field::Number,
     name: Field::String,
@@ -40,7 +40,7 @@ class TenantDashboard < Administrate::BaseDashboard
   # Feel free to add, remove, or rearrange items.
   COLLECTION_ATTRIBUTES = [
     :referral_agency,
-    :info,
+    :tenant,
     :avatar,
   ].freeze
 
@@ -48,7 +48,7 @@ class TenantDashboard < Administrate::BaseDashboard
   # an array of attributes that will be displayed on the model's show page.
   SHOW_PAGE_ATTRIBUTES = [
     :referral_agency,
-    :info,
+    :tenant,
     :avatar,
     :id,
     :name,
@@ -77,7 +77,7 @@ class TenantDashboard < Administrate::BaseDashboard
   # on the model's form (`new` and `edit`) pages.
   FORM_ATTRIBUTES = [
     :referral_agency,
-    :info,
+    :tenant,
     :avatar,
     :name,
     :description,

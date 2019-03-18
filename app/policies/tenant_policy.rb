@@ -12,7 +12,7 @@ class TenantPolicy
   # or if a referral agency is viewing one of their own tenants.
   def show?
     if user.type == 'Landlord'
-      tenant.info.applications.each do |app|
+      tenant.applications.each do |app|
         return true if app.property.landlord == user
       end
       false

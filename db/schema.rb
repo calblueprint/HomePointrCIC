@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_03_13_195458) do
+ActiveRecord::Schema.define(version: 2019_03_17_225533) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -40,12 +40,12 @@ ActiveRecord::Schema.define(version: 2019_03_13_195458) do
     t.integer "status"
     t.text "description"
     t.bigint "property_id"
-    t.bigint "info_id"
+    t.bigint "tenant_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["info_id", "property_id"], name: "index_applications_on_info_id_and_property_id", unique: true
-    t.index ["info_id"], name: "index_applications_on_info_id"
     t.index ["property_id"], name: "index_applications_on_property_id"
+    t.index ["tenant_id", "property_id"], name: "index_applications_on_tenant_id_and_property_id", unique: true
+    t.index ["tenant_id"], name: "index_applications_on_tenant_id"
   end
 
   create_table "emails", force: :cascade do |t|
@@ -58,11 +58,13 @@ ActiveRecord::Schema.define(version: 2019_03_13_195458) do
     t.datetime "confirmation_sent_at"
   end
 
-  create_table "infos", force: :cascade do |t|
-    t.bigint "tenant_id"
+  create_table "notifications", force: :cascade do |t|
+    t.integer "status"
+    t.boolean "read"
+    t.bigint "application_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["tenant_id"], name: "index_infos_on_tenant_id"
+    t.index ["application_id"], name: "index_notifications_on_application_id"
   end
 
   create_table "properties", force: :cascade do |t|

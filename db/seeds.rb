@@ -101,7 +101,6 @@ def make_tenants
     )
     tenant.avatar.attach(io: File.open('app/assets/images/avatar.jpg'), filename: 'avatar.jpg')
     tenant.save
-    Info.create(tenant_id: tenant.id)
     printf("#{n}/#{NUM_TENTANTS} Tenants \r")
   end
   puts "\n"
@@ -124,7 +123,7 @@ def make_received_apps
     application = Application.create(
       status: 1,
       property_id: n % 5 + 1,
-      info_id: n,
+      tenant_id: n,
       description: 'received description'
     )
     application.save
@@ -140,7 +139,7 @@ def make_rejected_apps
     application = Application.create(
       status: 0,
       property_id: n % 5 + 2,
-      info_id: n,
+      tenant_id: n,
       description: 'rejected description'
     )
     application.save
@@ -168,7 +167,7 @@ def make_special_apps(start, fin, stat_num, custom)
       application = Application.create(
         status: new_stat,
         property_id: p,
-        info_id: n,
+        tenant_id: n,
         description: 'special description'
       )
       application.save
