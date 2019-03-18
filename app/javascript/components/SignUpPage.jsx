@@ -4,6 +4,7 @@ import "antd/dist/antd.css";
 import Utils from 'helpers/utils';
 import { Form, Icon, Input, Button, Checkbox, Select, Col, Row } from 'antd';
 import APIRoutes from 'helpers/api_routes';
+//import ErrorMessage from './individual/ErrorMessage.jsx';
 import '../../assets/stylesheets/entrypages.css';
 var logo = require('../../assets/images/logo.png');
 
@@ -18,10 +19,10 @@ class SignUpPage extends React.Component {
        password: '',
        password_confirmation: '',
        phone: '',
-       address: '',
-       errorMessage: '',
-       hasError: false,
+       address: ''
      },
+     errorMessage: '',
+     hasError: false,
      page: 0
    }
  }
@@ -48,7 +49,7 @@ class SignUpPage extends React.Component {
  renderErrorMsg = () => {
    if (this.state.hasError) {
      return (
-       <div><p>{ this.state.errorMessage }</p></div>
+       <div className="errormsg"><p>{this.state.errorMessage}</p></div>
      );
    }
  }
@@ -67,7 +68,10 @@ class SignUpPage extends React.Component {
    }
 
    if (state.password !== state.password_confirmation) {
-     alert("Passwords must match");
+     this.setState({
+       hasError: true,
+       errorMessage: 'Passwords must match'});
+     this.renderErrorMsg();
    } else {
      payload = JSON.stringify({ user: payload });
      fetch(sign_up_route, {
@@ -116,6 +120,7 @@ class SignUpPage extends React.Component {
                 <Input
                 type="string"
                 name="name"
+                value={this.state.inputs.name}
                 onChange={this.handleChange}
                 />
               </Form.Item>
@@ -126,6 +131,7 @@ class SignUpPage extends React.Component {
                 <Input
                 type="string"
                 name="email"
+                value={this.state.inputs.email}
                 onChange={this.handleChange}
                 />
               </Form.Item>
@@ -140,6 +146,7 @@ class SignUpPage extends React.Component {
                 <Input
                 type="password"
                 name="password"
+                value={this.state.inputs.password}
                 onChange={this.handleChange}
                 />
               </Form.Item>
@@ -150,6 +157,7 @@ class SignUpPage extends React.Component {
                 <Input
                 type="password"
                 name="password_confirmation"
+                value={this.state.inputs.password_confirmation}
                 onChange={this.handleChange}
                 />
               </Form.Item>
@@ -164,6 +172,7 @@ class SignUpPage extends React.Component {
                 <Input
                 type="string"
                 name="phone"
+                value={this.state.inputs.phone}
                 onChange={this.handleChange}
                 />
             </Form.Item>
@@ -174,6 +183,7 @@ class SignUpPage extends React.Component {
                 <Input
                 type="string"
                 name="address"
+                value={this.state.inputs.address}
                 onChange={this.handleChange}
                 />
               </Form.Item>
