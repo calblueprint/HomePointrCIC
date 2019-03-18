@@ -15,6 +15,7 @@ class TenantsController < ApplicationController
     @tenant = Tenant.new
     authorize @tenant
     @current_userID = current_user.id
+    @categories = get_tenant_category_enums()
   end
 
   def show

@@ -1,5 +1,5 @@
 <h1>Create A New Client</h1>
 
 <%= form_with(model: @tenant, local: true) do |form| %>
-  <%= react_component("individual/ProfileFormTenants", props={ id: @tenant.id, mode: @mode, type: @type, fieldNames: @field_names, fieldTypes: @field_types, niceFieldNames: @nice_field_names, prevValues: @prev_values, current_userID: @current_userID }) %>
+  <%= react_component("individual/CreateFormTenants", props={ current_userID: @current_userID, categories: @categories}) %>
 <% end %>

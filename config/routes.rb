@@ -3,6 +3,7 @@
 Rails.application.routes.draw do
   get 'home/index'
   get 'errors/show'
+  get '/tenants/new' => 'tenants#new'
   get 'tenants/:id/edit' => 'tenants#edit'
   get 'tenants/:id' => 'tenants#show'
   get '/tenants/categories' => 'tenants#get_tenant_category_enums'
