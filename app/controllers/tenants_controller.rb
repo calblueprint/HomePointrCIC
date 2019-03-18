@@ -39,7 +39,6 @@ class TenantsController < ApplicationController
     values = @tenant.attributes.values[3..-3]
     @avatarURL = nil
     @avatarURL = url_for(@tenant.avatar) if @tenant.avatar.attached?
-    render json:@tenant
   end
 
   def edit

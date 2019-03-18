@@ -527,6 +527,18 @@ class CreateFormTenants extends React.Component {
     return (
       <div>
         <div>Step 6: Upload default client form</div>
+        <ActiveStorageProvider
+          endpoint={{
+            path: '/api/tenants',
+            model: 'Tenant',
+            attribute: 'form',
+            method: 'POST',
+          }}
+          headers={{
+            'Content-Type': 'application/json'
+          }}
+          render={Utils.activeStorageUploadRenderer}
+        />
         <Button onClick={() => {this.nextButton(5)}}>Previous</Button>
         <Button type="primary" onClick={() => {this.handleCreate()}}>Create</Button>
       </div>
