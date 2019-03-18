@@ -65,22 +65,27 @@ class SignUpPage extends React.Component {
      phone: state.phone,
      address: state.address
    }
-   payload = JSON.stringify({ user: payload });
-   fetch(sign_up_route, {
-     method: 'POST',
-     headers: {
-       'Content-Type': 'application/json',
-       "X_CSRF-Token": document.getElementsByName("csrf-token")[0].content
-     },
-     body: payload,
-     credentials: 'same-origin',
-   }).catch((response) => {
-     this.setState({
-       hasError: true,
-       errorMessage: 'Missing or inadequate input'});
-   }).then((response) => {
-     window.location = '/';
-   });
+
+   if (state.password !== state.password_confirmation) {
+     alert("Passwords must match");
+   } else {
+     payload = JSON.stringify({ user: payload });
+     fetch(sign_up_route, {
+       method: 'POST',
+       headers: {
+         'Content-Type': 'application/json',
+         "X_CSRF-Token": document.getElementsByName("csrf-token")[0].content
+       },
+       body: payload,
+       credentials: 'same-origin',
+     }).catch((response) => {
+       this.setState({
+         hasError: true,
+         errorMessage: 'Missing or inadequate input'});
+     }).then((response) => {
+       window.location = '/';
+     });
+   }
   }
 
   redirectToLogin = () => {
