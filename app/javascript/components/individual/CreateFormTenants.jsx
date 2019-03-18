@@ -255,7 +255,8 @@ class CreateFormTenants extends React.Component {
           )}
           </Form.Item>
         </Form>
-        <Button onClick={() => {this.nextButton(2)}}>Next</Button>
+        <Button onClick={() => {window.location = '/'}}>Cancel</Button>
+        <Button type="primary" onClick={() => {this.nextButton(2)}}>Next</Button>
       </div>
     )
   }
@@ -396,7 +397,8 @@ class CreateFormTenants extends React.Component {
             )}
           </Form.Item>
         </Form>
-        <Button onClick={() => {this.nextButton(3)}}>Next</Button>
+        <Button onClick={() => {this.nextButton(1)}}>Previous</Button>
+        <Button type="primary" onClick={() => {this.nextButton(3)}}>Next</Button>
       </div>
     )
   }
@@ -470,7 +472,8 @@ class CreateFormTenants extends React.Component {
             )}
           </Form.Item>
         </Form>
-        <Button onClick={() => {this.nextButton(4)}}>Next</Button>
+        <Button onClick={() => {this.nextButton(2)}}>Previous</Button>
+        <Button type="primary" onClick={() => {this.nextButton(4)}}>Next</Button>
       </div>
     )
   }
@@ -495,7 +498,8 @@ class CreateFormTenants extends React.Component {
             )}
           </Form.Item>
         </Form>
-        <Button onClick={() => {this.nextButton(5)}}>Next</Button>
+        <Button onClick={() => {this.nextButton(3)}}>Previous</Button>
+        <Button type="primary" onClick={() => {this.nextButton(5)}}>Next</Button>
       </div>
     )
   }
@@ -512,7 +516,8 @@ class CreateFormTenants extends React.Component {
             <Avatar tenant={this.state.tenant}/>
           </Form.Item>
         </Form>
-        <Button onClick={() => {this.nextButton(6)}}>Next</Button>
+        <Button onClick={() => {this.nextButton(4)}}>Previous</Button>
+        <Button type="primary" onClick={() => {this.nextButton(6)}}>Next</Button>
       </div>
     )
   }
@@ -522,7 +527,8 @@ class CreateFormTenants extends React.Component {
     return (
       <div>
         <div>Step 6: Upload default client form</div>
-        <Button onClick={() => {this.handleCreate()}}>Submit</Button>
+        <Button onClick={() => {this.nextButton(5)}}>Previous</Button>
+        <Button type="primary" onClick={() => {this.handleCreate()}}>Create</Button>
       </div>
     )
   }

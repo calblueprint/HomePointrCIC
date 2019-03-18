@@ -338,7 +338,7 @@ class ProfileFormTenants extends React.Component {
                 max={10}
                 style={{ marginLeft: 16 }}
                 value={tenant.num_bedrooms}
-                onChange={() => this.handleChange("num_bedrooms")}
+                onChange={(value) => this.handleChangeSelect("num_bedrooms", value)}
               />
             )}
           </Form.Item>
@@ -356,7 +356,7 @@ class ProfileFormTenants extends React.Component {
                 max={10}
                 style={{ marginLeft: 16 }}
                 value={tenant.number_of_bathrooms}
-                onChange={() => this.handleChange("number_of_bathrooms")}
+                onChange={(value) => this.handleChangeSelect("number_of_bathrooms", value)}
               />
             )}
           </Form.Item>
