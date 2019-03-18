@@ -92,7 +92,6 @@ def make_tenants
       num_bedrooms: Faker::Number.number(1),
       referral_agency_id: Faker::Number.between(NUM_LANDLORDS + 1, NUM_REFERRAL_AGENCIES + NUM_LANDLORDS),
       date_needed: Date.today,
-      number_of_bedrooms: Faker::Number.between(1, 10),
       number_of_bathrooms: Faker::Number.between(1, 10),
       mobility_aids: Faker::Boolean.boolean,
       accessible_shower: Faker::Boolean.boolean,

@@ -43,34 +43,35 @@ class TenantsController < ApplicationController
   end
 
   def edit
+     puts "TENANT EDIT"
      @tenant = Tenant.find(params[:id])
      authorize @tenant
      @current_userID = current_user.id
      @categories = get_tenant_category_enums()
   end
-   def get_tenant_category_enums
-     @nice_housing_type = []
-     @nice_property_type = []
-     @nice_location = []
-     Tenant.housing_types.keys.each do |i|
-       @nice_housing_type << i.titleize
-     end
-     Tenant.property_types.keys.each do |i|
-       @nice_property_type << i.titleize
-     end
-     Tenant.locations.keys.each do |i|
-       @nice_location << i.titleize
-     end
-     categories = {
-       housing_types: Tenant.housing_types.keys,
-       property_types: Tenant.property_types.keys,
-       locations: Tenant.locations.keys,
-       nice_housing_types: @nice_housing_type,
-       nice_property_types: @nice_property_type,
-       nice_locations: @nice_location
-     }
-     # render json: categories
+ def get_tenant_category_enums
+   @nice_housing_type = []
+   @nice_property_type = []
+   @nice_location = []
+   Tenant.housing_types.keys.each do |i|
+     @nice_housing_type << i.titleize
    end
+   Tenant.property_types.keys.each do |i|
+     @nice_property_type << i.titleize
+   end
+   Tenant.locations.keys.each do |i|
+     @nice_location << i.titleize
+   end
+   categories = {
+     housing_types: Tenant.housing_types.keys,
+     property_types: Tenant.property_types.keys,
+     locations: Tenant.locations.keys,
+     nice_housing_types: @nice_housing_type,
+     nice_property_types: @nice_property_type,
+     nice_locations: @nice_location
+   }
+   # render json: categories
+ end
 
   private
 
@@ -87,7 +88,12 @@ class TenantsController < ApplicationController
       :num_bedrooms,
       :location,
       :referral_agency_id,
-      :date_needed
+      :date_needed,
+      :number_of_bathrooms,
+      :mobility_aids,
+      :accessible_shower,
+      :car_parking,
+      :lift_access
     )
   end
 end

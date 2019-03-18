@@ -45,8 +45,8 @@ class ProfileFormTenants extends React.Component {
 
   convertToDict() {
     const tenant = this.state.tenant;
-    const keys = ["name", "description", "email", "phone", "rent_min", "rent_max", "housing_type", "property_type", "num_bedrooms", "location", "referral_agency_id", "date_needed", "avatar"];
-    const values = [tenant.name, tenant.description, tenant.email, tenant.phone, tenant.rent_min, tenant.rent_max, tenant.housing_type, tenant.property_type, tenant.num_bedrooms, tenant.location, tenant.referral_agency_id, tenant.date_needed, tenant.avatar];
+    const keys = ["name", "description", "email", "phone", "rent_min", "rent_max", "housing_type", "property_type", "num_bedrooms", "location", "referral_agency_id", "date_needed", "avatar", "number_of_bathrooms", "mobility_aids", "accessible_shower", "car_parking", "lift_access"];
+    const values = [tenant.name, tenant.description, tenant.email, tenant.phone, tenant.rent_min, tenant.rent_max, tenant.housing_type, tenant.property_type, tenant.num_bedrooms, tenant.location, tenant.referral_agency_id, tenant.date_needed, tenant.avatar, tenant.number_of_bathrooms, tenant.mobility_aids, tenant.accessible_shower, tenant.car_parking, tenant.lift_access];
     let result = keys.reduce((obj, k, i) => ({...obj, [k]: values[i] }), {})
     return result
   }
@@ -75,44 +75,16 @@ class ProfileFormTenants extends React.Component {
       window.location = '/';
     })
   }
-  //api create
-  // handleCreate() {
-  //   this.setState({disabled: true});
-  //   let type = this.props.type;
-  //   var request = null;
-  //   // let body = this.convertToDict(this.state.fieldNames.slice(0,8), this.state.prevValues.slice(0,8));
-  //   // if (this.props.type === "properties") {
-  //   //   body = JSON.stringify({property: body})
-  //   //   request = APIRoutes.properties.create
-  //   // } else {
-  //     body = JSON.stringify({tenant: body})
-  //     request = APIRoutes.tenants.create
-  //   }
-  //   (request, {
-  //     method: 'POST',
-  //     headers: {
-  //       'Content-Type': 'application/json',
-  //       "X_CSRF-Token": document.getElementsByName("csrf-token")[0].content
-  //     },
-  //     body: body,
-  //     credentials: 'same-origin',
-  //   }).then((data) => {
-  //     window.location = '/';
-  //   }).catch((data) => {
-  //     console.error(data);
-  //   });
-  // }
+
   //api edit
   handleEdit() {
     let id = this.state.tenant.id;
     var request = null;
     var body = this.convertToDict()
-      body = JSON.stringify({tenant: body})
-      request = APIRoutes.tenants.update(id)
+    body = JSON.stringify({tenant: body})
+    request = APIRoutes.tenants.update(id)
     this.removeImages(this.state.imageRemoveList);
-    console.log("TENANT HANDLEEDIT");
-    console.log(this.state.tenant.avatar);
-    console.log(this.state.tenant.avatar.name);
+    console.log("TENANT HANDLE_EDIT");
     fetch(request, {
       method: 'PUT',
       headers: {
@@ -165,6 +137,7 @@ class ProfileFormTenants extends React.Component {
     this.setState({ tenant: tenant })
     console.log(attr);
     console.log(value);
+    console.log(tenant);
   }
 
   setFile(e) {
@@ -205,6 +178,13 @@ class ProfileFormTenants extends React.Component {
       </div>
     )
   }
+
+  //AVATAR -- DON'T DELETE
+  // <Form.Item
+  //   label="Upload Avatar"
+  // >
+  //   <Avatar tenant={this.state.tenant}/>
+  // </Form.Item>
 
 
   render() {
@@ -363,6 +343,24 @@ class ProfileFormTenants extends React.Component {
             )}
           </Form.Item>
           <Form.Item
+            label="Number of Bathrooms"
+          >
+            {getFieldDecorator('number_of_bathrooms', {
+              initialValue: tenant.number_of_bathrooms,
+              rules: [{
+                required: true, message: 'Please pick a number of bedrooms!',
+              }],
+            })(
+              <InputNumber
+                min={0}
+                max={10}
+                style={{ marginLeft: 16 }}
+                value={tenant.number_of_bathrooms}
+                onChange={() => this.handleChange("number_of_bathrooms")}
+              />
+            )}
+          </Form.Item>
+          <Form.Item
             label="Location"
           >
           {getFieldDecorator('location', {
@@ -390,6 +388,66 @@ class ProfileFormTenants extends React.Component {
               }],
             })(
               <DatePicker onChange={this.handleChangeDate}/>
+            )}
+          </Form.Item>
+          <Form.Item
+            label="Mobility Aids"
+          >
+            {getFieldDecorator('mobility_aids', {
+              initialValue: tenant.mobility_aids,
+              rules: [{
+                required: true, message: 'Please select a response!',
+              }],
+            })(
+              <Select onChange={(value) => this.handleChangeSelect("mobility_aids", value)}>
+                <Option value={true}>Yes</Option>
+                <Option value={false}>No</Option>
+              </Select>
+            )}
+          </Form.Item>
+          <Form.Item
+            label="Accessible Shower"
+          >
+            {getFieldDecorator('accessible_shower', {
+              initialValue: tenant.accessible_shower,
+              rules: [{
+                required: true, message: 'Please select a response!',
+              }],
+            })(
+              <Select onChange={(value) => this.handleChangeSelect("accessible_shower", value)}>
+                <Option value={true}>Yes</Option>
+                <Option value={false}>No</Option>
+              </Select>
+            )}
+          </Form.Item>
+          <Form.Item
+            label="Car Parking"
+          >
+            {getFieldDecorator('car_parking', {
+              initialValue: tenant.car_parking,
+              rules: [{
+                required: true, message: 'Please select a response!',
+              }],
+            })(
+              <Select onChange={(value) => this.handleChangeSelect("car_parking", value)}>
+                <Option value={true}>Yes</Option>
+                <Option value={false}>No</Option>
+              </Select>
+            )}
+          </Form.Item>
+          <Form.Item
+            label="Lift Access"
+          >
+            {getFieldDecorator('lift_access', {
+              initialValue: tenant.lift_access,
+              rules: [{
+                required: true, message: 'Please select a response!',
+              }],
+            })(
+              <Select onChange={(value) => this.handleChangeSelect("lift_access", value)}>
+                <Option value={true}>Yes</Option>
+                <Option value={false}>No</Option>
+              </Select>
             )}
           </Form.Item>
           <Form.Item

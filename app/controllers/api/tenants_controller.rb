@@ -5,7 +5,7 @@ class Api::TenantsController < ApplicationController
 
   def create
     @tenant = Tenant.new(tenant_params)
-    authorize @tenant
+    # authorize @tenant
     if @tenant.save
       Info.create(tenant_id: @tenant.id)
       if ActiveStorage::Blob.last.id != $activestoragestart
@@ -29,7 +29,7 @@ class Api::TenantsController < ApplicationController
 
     # avatar_attr = tenant_attr.delete("avatar")
     # @tenant = Tenant.find(params[:id])
-    puts("--------------AVATAR ATTACHING NEW-------------")
+    puts("--------------TENANT UPDATE-------------")
     saved = @tenant.update(tenant_params)
     # puts(avatar_attr)
     if saved
@@ -70,7 +70,12 @@ class Api::TenantsController < ApplicationController
       :location,
       :referral_agency_id,
       :date_needed,
-      :avatar
+      :avatar,
+      :number_of_bathrooms,
+      :mobility_aids,
+      :accessible_shower,
+      :car_parking,
+      :lift_access
     )
   end
 end
