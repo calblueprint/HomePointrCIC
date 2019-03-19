@@ -10,8 +10,23 @@ class TenantCard extends React.Component {
     }
   }
 
-  renderStatusTag = () => {
+  tenantStatusHelper = (statusNum) => {
+    const statuses = {
+      0: "Accepted",
+      1: "Interviewing",
+      2: "Applied",
+      3: "Rejected",
+      4: "No Applications"
+    }
+    return statuses[statusNum];
+  }
 
+  renderStatusTag = () => {
+    if (this.state.displayTag) {
+      return(
+        <p>{this.tenantStatusHelper(this.state.tenant.status)}</p>
+      )
+    }
   }
 
 
@@ -20,10 +35,8 @@ class TenantCard extends React.Component {
     return(
       <div className="card">
         {this.state.tenant.name}
-        {this.state.tenant.}
-
-
-
+        {this.state.tenant.email}
+        {this.renderStatusTag()}
       </div>
     );
 

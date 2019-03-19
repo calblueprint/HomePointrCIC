@@ -32,6 +32,10 @@ class ReferralAgenciesController < ApplicationController
                            { url: nil }
                          end
       end
+      @tenantStatuses = []
+      @tenants.each do |t|
+        @tenantStatuses << { status: t.priority }
+      end
     else
       redirect_to '/users/sign_up'
     end

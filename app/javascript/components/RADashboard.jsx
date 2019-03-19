@@ -25,6 +25,7 @@ class RADashboard extends React.Component {
 
   render() {
     this.setup(this.state.tenants, this.props.tenantImages);
+		this.setup(this.state.tenants, this.props.tenantStatuses);
     return (
       <div>
         <Button
@@ -37,7 +38,13 @@ class RADashboard extends React.Component {
           type="primary"
           onClick={this.redirectToNewTenant}>+ New Client
         </Button>
-        <ListView resources={this.state.tenants} type="tenant" avatar={true} tenant_modal={false}/>
+        <ListView
+					resources={this.state.tenants}
+					type="tenant"
+					avatar={true}
+					tenant_modal={false}
+					displayTag={true}
+				/>
       </div>
     );
   }

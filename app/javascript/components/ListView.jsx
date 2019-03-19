@@ -6,6 +6,7 @@ import PropertyModal from "./modals/PropertyModal";
 import ApplicationModal from "./modals/ApplicationModal";
 import Utils from 'helpers/utils';
 import "antd/dist/antd.css";
+import TenantCard from "./individual/TenantCard";
 
 class ListView extends React.Component {
   constructor(props) {
@@ -15,6 +16,7 @@ class ListView extends React.Component {
       type: props.type,
       checkbox: props.checkbox,
       avatar: props.avatar,
+      displayTag: props.displayTag
     }
   }
 
@@ -118,13 +120,14 @@ class ListView extends React.Component {
                 {this.props.applications ? this.renderApplicationModal(this.props.applications[index]) : null}
               </Card>
             ) : (
-              <Card title={resource.name} bordered={false}>
-                <Meta
-                  avatar={this.renderAvatar(resource.url, "tenant")}
-                />
-                {this.renderTenantSelectButton(resource)}
-                {this.renderTenantModal(resource, index)}
-              </Card>
+              <TenantCard tenant={resource} displayTag={this.state.displayTag}/>
+              // <Card title={resource.name} bordered={false}>
+              //   <Meta
+              //     avatar={this.renderAvatar(resource.url, "tenant")}
+              //   />
+              //   {this.renderTenantSelectButton(resource)}
+              //   {this.renderTenantModal(resource, index)}
+              // </Card>
             )}
           </Row>
         </div>
