@@ -168,7 +168,7 @@ class PropertyModal extends React.Component {
                     <Col span={8} className="title1">Floor Number</Col>
                   </Row>
                   <Row gutter={32}>
-                    <Col span={8} className="text1">{this.props.property.number_of_bedrooms}</Col>
+                    <Col span={8} className="text1">{this.props.property.num_bedrooms}</Col>
                     <Col span={8} className="text1">{this.props.property.number_of_bathrooms}</Col>
                     <Col span={8} className="text1">{this.props.property.floor_number}</Col>
                   </Row>
