@@ -1,23 +1,22 @@
 .container {
-  width: 650px;
+  width: 600px;
   display: flex;
   flex-direction: column;
   margin-left: auto;
   margin-right: auto;
-  margin-top: 70px;
-
+  margin-top: 50px;
+  margin-bottom: 50px;
 }
 
 .grid-container {
   display: grid;
   grid-template-columns: auto auto;
   grid-column-gap: 50px;
-  grid-row-gap: 5px;
   margin-top: 10px;
-  margin-bottom: 50px;
 }
 
 .buttons {
+  margin-top: 20px;
   align-self: flex-end;
   float: right;
   width: 330px;
@@ -31,5 +30,8 @@
 .next {
   margin-left: 30px;
   width: 150px;
-
 }
+/* .slider {
+  padding-left: 20px;
+  padding-right: 20px;
+} */

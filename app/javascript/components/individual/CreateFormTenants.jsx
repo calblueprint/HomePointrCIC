@@ -261,6 +261,61 @@ class CreateFormTenants extends React.Component {
             </Select>
           )}
           </Form.Item>
+          <Form.Item
+            label="Family Size"
+          >
+            {getFieldDecorator('family_size', {
+              initialValue: tenant.family_size,
+              rules: [{
+                required: true, message: 'Please pick you family size!',
+              }],
+            })(
+              <InputNumber
+                min={0}
+                max={30}
+                value={tenant.family_size}
+                onChange={(value) => this.handleChangeSelect("family_size", value)}
+              />
+            )}
+          </Form.Item>
+          <Form.Item
+            label="Current Living Arrangements"
+          >
+            {getFieldDecorator('living_arrangements', {
+              initialValue: tenant.living_arrangements,
+              rules: [{
+                required: true, message: 'Please input your current living arrangements!',
+              }]
+            })(
+              <Input onChange={() => this.handleChange("living_arrangements")}/>
+            )}
+          </Form.Item>
+          <Form.Item
+            label="Household Income"
+          >
+            {getFieldDecorator('income', {
+              initialValue: tenant.income,
+              rules: [{
+                required: true, message: 'Please input your household income!',
+              }]
+            })(
+              <Input onChange={() => this.handleChange("income")}/>
+            )}
+          </Form.Item>
+          <Form.Item
+            label="Receiving Benefits?"
+          >
+            {getFieldDecorator('benefits', {
+              rules: [{
+                required: true, message: 'Please select a response!',
+              }],
+            })(
+              <Select placeholder="Select One" onChange={(value) => this.handleChangeSelect("benefits", value)}>
+                <Option value={true}>Yes</Option>
+                <Option value={false}>No</Option>
+              </Select>
+            )}
+          </Form.Item>
         </Form>
         <div className="buttons">
           <Button className="previous" onClick={() => {window.location = '/'}}>Cancel</Button>
@@ -280,133 +335,134 @@ class CreateFormTenants extends React.Component {
     const Option = Select.Option;
     const { tenant } = this.state;
     return (
-      <div>
-        <div>Step 2: Housing preferences</div>
+      <div className="container">
+        <h3>Step 2: Housing preferences</h3>
         <Form>
-          <Form.Item
-            label="Rent"
-          >
-            {getFieldDecorator('rent', {
-              rules: [{
-                required: true, message: 'Please select your range for rent!',
-              }],
-            })(
-              <Row>
-                <Col span={4}>
-                  <InputNumber
-                    min={0}
-                    max={5000}
-                    style={{ marginLeft: 16}}
-                    value={tenant.rent_min}
-                    onChange={() => this.handleChange("rent_min")}
-                  />
-                </Col>
-                <Col span={8}>
-                  <Slider
-                    range marks={marks}
-                    min={0}
-                    max={5000}
-                    defaultValue={typeof tenant.rent_min === 'number' && typeof tenant.rent_max === 'number'? [tenant.rent_min, tenant.rent_max] : [0, 5000]}
-                    onChange={this.sliderChanges}/>
-                </Col>
-                <Col span={4}>
-                  <InputNumber
-                    min={0}
-                    max={5000}
-                    style={{ marginLeft: 16 }}
-                    value={tenant.rent_max}
-                    onChange={() => this.handleChange("rent_max")}
-                  />
-                </Col>
-              </Row>
-            )}
-          </Form.Item>
-          <Form.Item
-            label="Housing Type"
+          <div className="grid-container">
+            <Form.Item
+              label="Housing Type"
+              >
+              {getFieldDecorator('housing_type', {
+                rules: [{
+                  required: true, message: 'Please pick a number of bedrooms!',
+                }],
+              })(
+                <Select placeholder="Select One" onChange={(value) => this.handleChangeSelect("housing_type", value)}>
+                {
+                  this.state.nice_housing_types.map((obj, i) => {
+                    return <Option key={i} value={this.state.housing_types[i]}>{obj}</Option>
+                  })
+                }
+                </Select>
+              )}
+            </Form.Item>
+            <Form.Item
+              label="Property Type"
             >
-            {getFieldDecorator('housing_type', {
-              rules: [{
-                required: true, message: 'Please pick a number of bedrooms!',
-              }],
-            })(
-              <Select placeholder="Select One" onChange={(value) => this.handleChangeSelect("housing_type", value)}>
-              {
-                this.state.nice_housing_types.map((obj, i) => {
-                  return <Option key={i} value={this.state.housing_types[i]}>{obj}</Option>
-                })
-              }
-              </Select>
-            )}
-          </Form.Item>
-          <Form.Item
-            label="Property Type"
-          >
-            {getFieldDecorator('property_type', {
-              rules: [{
-                required: true, message: 'Please pick a number of bedrooms!',
-              }],
-            })(
-              <Select placeholder="Select One" onChange={(value) => this.handleChangeSelect("property_type", value)}>
-              {
-                this.state.nice_property_types.map((obj, i) => {
-                  return <Option key={i} value={this.state.property_types[i]}>{obj}</Option>
-                })
-              }
-              </Select>
-            )}
-          </Form.Item>
-          <Form.Item
-            label="Number of Bedrooms"
-          >
-            {getFieldDecorator('num_bedrooms', {
-              initialValue: tenant.num_bedrooms,
-              rules: [{
-                required: true, message: 'Please pick a number of bedrooms!',
-              }],
-            })(
-              <InputNumber
-                min={0}
-                max={10}
-                style={{ marginLeft: 16 }}
-                value={tenant.num_bedrooms}
-                onChange={(value) => this.handleChangeSelect("num_bedrooms", value)}
-              />
-            )}
-          </Form.Item>
-          <Form.Item
-            label="Number of Bathrooms"
-          >
-            {getFieldDecorator('number_of_bathrooms', {
-              initialValue: tenant.number_of_bathrooms,
-              rules: [{
-                required: true, message: 'Please pick a number of bathrooms!',
-              }],
-            })(
-              <InputNumber
-                min={0}
-                max={10}
-                style={{ marginLeft: 16 }}
-                value={tenant.number_of_bathrooms}
-                onChange={(value) => this.handleChangeSelect("number_of_bathrooms", value)}
-              />
-            )}
-          </Form.Item>
-          <Form.Item
-            label="Date Needed"
-          >
-            {getFieldDecorator('date_needed', {
-              initialValue: moment(tenant.date_needed, "YYYY-MM-DD"),
-              rules: [{
-                required: true, message: 'Please pick the date needed!',
-              }],
-            })(
-              <DatePicker onChange={this.handleChangeDate}/>
-            )}
-          </Form.Item>
+              {getFieldDecorator('property_type', {
+                rules: [{
+                  required: true, message: 'Please pick a number of bedrooms!',
+                }],
+              })(
+                <Select placeholder="Select One" onChange={(value) => this.handleChangeSelect("property_type", value)}>
+                {
+                  this.state.nice_property_types.map((obj, i) => {
+                    return <Option key={i} value={this.state.property_types[i]}>{obj}</Option>
+                  })
+                }
+                </Select>
+              )}
+            </Form.Item>
+            <Form.Item
+              label="Number of Bedrooms"
+            >
+              {getFieldDecorator('num_bedrooms', {
+                initialValue: tenant.num_bedrooms,
+                rules: [{
+                  required: true, message: 'Please pick a number of bedrooms!',
+                }],
+              })(
+                <InputNumber
+                  min={0}
+                  max={10}
+                  value={tenant.num_bedrooms}
+                  onChange={(value) => this.handleChangeSelect("num_bedrooms", value)}
+                />
+              )}
+            </Form.Item>
+            <Form.Item
+              label="Number of Bathrooms"
+            >
+              {getFieldDecorator('number_of_bathrooms', {
+                initialValue: tenant.number_of_bathrooms,
+                rules: [{
+                  required: true, message: 'Please pick a number of bathrooms!',
+                }],
+              })(
+                <InputNumber
+                  min={0}
+                  max={10}
+                  value={tenant.number_of_bathrooms}
+                  onChange={(value) => this.handleChangeSelect("number_of_bathrooms", value)}
+                />
+              )}
+            </Form.Item>
+            <Form.Item
+              label="Date Needed"
+            >
+              {getFieldDecorator('date_needed', {
+                initialValue: moment(tenant.date_needed, "YYYY-MM-DD"),
+                rules: [{
+                  required: true, message: 'Please pick the date needed!',
+                }],
+              })(
+                <DatePicker onChange={this.handleChangeDate}/>
+              )}
+            </Form.Item>
+            <Form.Item
+              label="Rent"
+            >
+              {getFieldDecorator('rent', {
+                rules: [{
+                  required: true, message: 'Please select your range for rent!',
+                }],
+              })(
+                <Row gutter={10}>
+                  <Col span={6}>
+                    <InputNumber
+                      min={0}
+                      max={5000}
+                      style={{ width: 80 }}
+                      value={tenant.rent_min}
+                      onChange={() => this.handleChange("rent_min")}
+                    />
+                  </Col>
+                  <Col className="slider" span={12}>
+                    <Slider
+                      range marks={marks}
+                      min={0}
+                      max={5000}
+                      style={{ width: 200, paddingLeft: 10 }}
+                      defaultValue={typeof tenant.rent_min === 'number' && typeof tenant.rent_max === 'number'? [tenant.rent_min, tenant.rent_max] : [0, 5000]}
+                      onChange={this.sliderChanges}/>
+                  </Col>
+                  <Col span={6}>
+                    <InputNumber
+                      min={0}
+                      max={5000}
+                      style={{ width: 80 }}
+                      value={tenant.rent_max}
+                      onChange={() => this.handleChange("rent_max")}
+                    />
+                  </Col>
+                </Row>
+              )}
+            </Form.Item>
+          </div>
         </Form>
         <div className="buttons">
-          <Button onClick={() => {this.nextButton(1)}}>Previous</Button>
-          <Button type="primary" onClick={() => {this.nextButton(3)}}>Next</Button>
+          <Button className="previous" onClick={() => {this.nextButton(1)}}>Previous</Button>
+          <Button className="next" type="primary" onClick={() => {this.nextButton(3)}}>Next</Button>
         </div>
       </div>
     )

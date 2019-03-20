@@ -262,7 +262,6 @@ class ProfileFormTenants extends React.Component {
               <InputNumber
                 min={0}
                 max={30}
-                style={{ marginLeft: 16 }}
                 value={tenant.family_size}
                 onChange={(value) => this.handleChangeSelect("family_size", value)}
               />
