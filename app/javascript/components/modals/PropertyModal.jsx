@@ -101,67 +101,90 @@ class PropertyModal extends React.Component {
           visible={this.state.visible}
           onOk={this.handleOk}
           onCancel={this.handleCancel}
-          width="900px"
+          width="1008px"
+          footer={null}
         >
         {/*
         look at the renderPhotos thing!
         <img className="image" style={{backgroundImage: `url(${this.props.property.images[0].url})`}}> </img>
         */}
-          <div className="left">
-            <h1> <Icon type="home" /> Basic </h1>
-              <Row>
-                <Col span={12}>Housing Type</Col>
-                <Col span={12}>Property Type</Col>
-              </Row>
-              <Row>
-                <Col span={12}>{this.props.property.housing_type}</Col>
-                <Col span={12}>{this.props.property.property_type}</Col>
-              </Row>
-              <Row>
-                <Col span={12}>Date Available</Col>
-                <Col span={12}>Location</Col>
-              </Row>
-              <Row>
-                <Col span={12}>{this.props.property.date_available}</Col>
-                <Col span={12}>{this.props.property.location}</Col>
-              </Row>
-            <h1> <Icon type="align-center" /> Summary </h1>
-              <Row>
-                <Col span={12}>{this.props.description}</Col>
-              </Row>
-            <h1> <Icon type="paper-clip" /> Additional Paperwork </h1>
-              <Row>
-                <Col span={12}>add forms...</Col>
-              </Row>
-          </div>
-          <div className="right">
-            <h1> <Icon type="home" /> Living Details </h1>
-            <Row>
-              <Col span={8}>Capacity</Col>
-              <Col span={8}>Openings</Col>
-              <Col span={8}>Rent</Col>
-            </Row>
-            <Row>
-              <Col span={8}>{this.props.property.capacity}</Col>
-              <Col span={8}>{this.props.property.openings}</Col>
-              <Col span={8}>${this.props.property.rent}</Col>
-            </Row>
-            <Row>
-              <Col span={8}>Bedrooms</Col>
-              <Col span={8}>Bathrooms</Col>
-              <Col span={8}>Floor Number</Col>
-            </Row>
-            <Row>
-              <Col span={8}>{this.props.property.number_of_bedrooms}</Col>
-              <Col span={8}>{this.props.property.number_of_bathrooms}</Col>
-              <Col span={8}>{this.props.property.floor_number}</Col>
-            </Row>
-            <Row>
-            <h1> <Icon type="check-circle" /> Includes </h1>
-                {this.renderBooleans(true)}
-            <h1> <Icon type="close-circle" /> Does Not Include </h1>
-                {this.renderBooleans(false)}
-              </Row>
+          <div className="flex-container">
+            <div className="flex-item">
+              <div className="section">
+                <h1> <Icon type="home" className="icon"/> Basic </h1>
+                <div className="subsection">
+                <Row gutter={32}>
+                  <Col span={12} className="title1">Housing Type</Col>
+                  <Col span={12} className="title1">Property Type</Col>
+                </Row>
+                <Row gutter={32}>
+                  <Col span={12} className="text1">{this.props.property.housing_type}</Col>
+                  <Col span={12} className="text1">{this.props.property.property_type}</Col>
+                </Row>
+                <Row gutter={32}>
+                  <Col span={12} className="title1">Date Available</Col>
+                  <Col span={12} className="title1">Location</Col>
+                </Row>
+                <Row gutter={32}>
+                  <Col span={12} className="text1">{this.props.property.date_available}</Col>
+                  <Col span={12} className="text1">{this.props.property.location}</Col>
+                </Row>
+                </div>
+              </div>
+              <div className="section">
+                <h1> <Icon type="align-center" className="icon"/> Summary </h1>
+                <div className="subsection">
+                  <Row gutter={32}>
+                    <Col span={12}>{this.props.description}</Col>
+                  </Row>
+                </div>
+              </div>
+              <div className="section">
+                <h1> <Icon type="paper-clip" className="icon"/> Additional Paperwork </h1>
+                <div className="subsection">
+                  <Row gutter={32}>
+                    <Col span={12}>add forms...</Col>
+                  </Row>
+                </div>
+              </div>
+            </div>
+            <div className="flex-item">
+              <div className="section">
+                <h1> <Icon type="home" className="icon"/> Living Details </h1>
+                <div className="subsection">
+                  <Row gutter={32}>
+                    <Col span={8} className="title1">Capacity</Col>
+                    <Col span={8} className="title1">Openings</Col>
+                    <Col span={8} className="title1">Rent</Col>
+                  </Row>
+                  <Row gutter={32}>
+                    <Col span={8} className="text1">{this.props.property.capacity}</Col>
+                    <Col span={8} className="text1">{this.props.property.openings}</Col>
+                    <Col span={8} className="text1">${this.props.property.rent}</Col>
+                  </Row>
+                  <Row gutter={32}>
+                    <Col span={8} className="title1">Bedrooms</Col>
+                    <Col span={8} className="title1">Bathrooms</Col>
+                    <Col span={8} className="title1">Floor Number</Col>
+                  </Row>
+                  <Row gutter={32}>
+                    <Col span={8} className="text1">{this.props.property.number_of_bedrooms}</Col>
+                    <Col span={8} className="text1">{this.props.property.number_of_bathrooms}</Col>
+                    <Col span={8} className="text1">{this.props.property.floor_number}</Col>
+                  </Row>
+                </div>
+              </div>
+              <div className="section">
+                <Row gutter={32}>
+                  <h1> <Icon type="check-circle" className="icon"/> Includes </h1>
+                      {this.renderBooleans(true)}
+                </Row>
+                <Row gutter={32}>
+                  <h1> <Icon type="close-circle" className="icon"/> Does Not Include </h1>
+                      {this.renderBooleans(false)}
+                </Row>
+              </div>
+            </div>
           </div>
 
         </Modal>
