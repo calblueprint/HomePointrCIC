@@ -13,6 +13,7 @@ import SliderBar from './SliderBar';
 import ActiveStorageProvider from "react-activestorage-provider";
 import PicturesWall from './PicturesWall';
 import Avatar from './Avatar';
+import '../../../assets/stylesheets/createFormTenant.css';
 
 class CreateFormTenants extends React.Component {
   constructor(props) {
@@ -27,16 +28,23 @@ class CreateFormTenants extends React.Component {
         rent_max: 5000,
         housing_type: "other_housing_type",
         property_type: "other_property_type",
-        num_bedrooms: 0,
+        num_bedrooms: 1,
         location: "other_location",
         referral_agency_id: this.props.current_userID,
         date_needed: new Date(),
         avatar: null,
-        number_of_bathrooms: 0,
+        number_of_bathrooms: 1,
         mobility_aids: true,
         accessible_shower: true,
         car_parking: true,
-        lift_access: true
+        lift_access: true,
+        family_size: 1,
+        living_arrangements: '',
+        income: '',
+        benefits: true,
+        local_council: true,
+        ex_offender: true,
+        local_area_link: '',
       },
       categories: props.categories,
       nice_housing_types: props.categories.nice_housing_types,
@@ -195,9 +203,9 @@ class CreateFormTenants extends React.Component {
     const { getFieldDecorator } = this.props.form;
     const Option = Select.Option;
     return (
-      <div>
-        <div>Step 1: blah blah blah</div>
-        <Form>
+      <div className="container">
+        <h3>Step 1: blah blah blah</h3>
+        <Form className="grid-container">
           <Form.Item
             label="Name"
           >
@@ -240,12 +248,11 @@ class CreateFormTenants extends React.Component {
             label="Location"
           >
           {getFieldDecorator('location', {
-            initialValue: tenant.location,
             rules: [{
               required: true, message: 'Please pick a number of bedrooms!',
             }],
           })(
-            <Select onChange={(value) => this.handleChangeSelect("location", value)}>
+            <Select placeholder="Select One" onChange={(value) => this.handleChangeSelect("location", value)}>
             {
               this.state.nice_locations.map((obj, i) => {
                 return <Option key={i} value={this.state.locations[i]}>{obj}</Option>
@@ -255,8 +262,10 @@ class CreateFormTenants extends React.Component {
           )}
           </Form.Item>
         </Form>
-        <Button onClick={() => {window.location = '/'}}>Cancel</Button>
-        <Button type="primary" onClick={() => {this.nextButton(2)}}>Next</Button>
+        <div className="buttons">
+          <Button className="previous" onClick={() => {window.location = '/'}}>Cancel</Button>
+          <Button className="next" type="primary" onClick={() => {this.nextButton(2)}}>Next</Button>
+        </div>
       </div>
     )
   }
@@ -316,12 +325,11 @@ class CreateFormTenants extends React.Component {
             label="Housing Type"
             >
             {getFieldDecorator('housing_type', {
-              initialValue: tenant.housing_type,
               rules: [{
                 required: true, message: 'Please pick a number of bedrooms!',
               }],
             })(
-              <Select onChange={(value) => this.handleChangeSelect("housing_type", value)}>
+              <Select placeholder="Select One" onChange={(value) => this.handleChangeSelect("housing_type", value)}>
               {
                 this.state.nice_housing_types.map((obj, i) => {
                   return <Option key={i} value={this.state.housing_types[i]}>{obj}</Option>
@@ -334,12 +342,11 @@ class CreateFormTenants extends React.Component {
             label="Property Type"
           >
             {getFieldDecorator('property_type', {
-              initialValue: tenant.property_type,
               rules: [{
                 required: true, message: 'Please pick a number of bedrooms!',
               }],
             })(
-              <Select onChange={(value) => this.handleChangeSelect("property_type", value)}>
+              <Select placeholder="Select One" onChange={(value) => this.handleChangeSelect("property_type", value)}>
               {
                 this.state.nice_property_types.map((obj, i) => {
                   return <Option key={i} value={this.state.property_types[i]}>{obj}</Option>
@@ -397,8 +404,10 @@ class CreateFormTenants extends React.Component {
             )}
           </Form.Item>
         </Form>
-        <Button onClick={() => {this.nextButton(1)}}>Previous</Button>
-        <Button type="primary" onClick={() => {this.nextButton(3)}}>Next</Button>
+        <div className="buttons">
+          <Button onClick={() => {this.nextButton(1)}}>Previous</Button>
+          <Button type="primary" onClick={() => {this.nextButton(3)}}>Next</Button>
+        </div>
       </div>
     )
   }
@@ -415,12 +424,11 @@ class CreateFormTenants extends React.Component {
             label="Mobility Aids"
           >
             {getFieldDecorator('mobility_aids', {
-              initialValue: tenant.mobility_aids,
               rules: [{
                 required: true, message: 'Please select a response!',
               }],
             })(
-              <Select onChange={(value) => this.handleChangeSelect("mobility_aids", value)}>
+              <Select placeholder="Select One" onChange={(value) => this.handleChangeSelect("mobility_aids", value)}>
                 <Option value={true}>Yes</Option>
                 <Option value={false}>No</Option>
               </Select>
@@ -430,12 +438,11 @@ class CreateFormTenants extends React.Component {
             label="Accessible Shower"
           >
             {getFieldDecorator('accessible_shower', {
-              initialValue: tenant.accessible_shower,
               rules: [{
                 required: true, message: 'Please select a response!',
               }],
             })(
-              <Select onChange={(value) => this.handleChangeSelect("accessible_shower", value)}>
+              <Select placeholder="Select One" onChange={(value) => this.handleChangeSelect("accessible_shower", value)}>
                 <Option value={true}>Yes</Option>
                 <Option value={false}>No</Option>
               </Select>
@@ -445,12 +452,11 @@ class CreateFormTenants extends React.Component {
             label="Car Parking"
           >
             {getFieldDecorator('car_parking', {
-              initialValue: tenant.car_parking,
               rules: [{
                 required: true, message: 'Please select a response!',
               }],
             })(
-              <Select onChange={(value) => this.handleChangeSelect("car_parking", value)}>
+              <Select placeholder="Select One" onChange={(value) => this.handleChangeSelect("car_parking", value)}>
                 <Option value={true}>Yes</Option>
                 <Option value={false}>No</Option>
               </Select>
@@ -460,12 +466,11 @@ class CreateFormTenants extends React.Component {
             label="Lift Access"
           >
             {getFieldDecorator('lift_access', {
-              initialValue: tenant.lift_access,
               rules: [{
                 required: true, message: 'Please select a response!',
               }],
             })(
-              <Select onChange={(value) => this.handleChangeSelect("lift_access", value)}>
+              <Select placeholder="Select One" onChange={(value) => this.handleChangeSelect("lift_access", value)}>
                 <Option value={true}>Yes</Option>
                 <Option value={false}>No</Option>
               </Select>

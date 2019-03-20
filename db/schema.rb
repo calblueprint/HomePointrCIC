@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_03_18_030611) do
+ActiveRecord::Schema.define(version: 2019_03_20_040931) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -108,6 +108,13 @@ ActiveRecord::Schema.define(version: 2019_03_18_030611) do
     t.boolean "accessible_shower"
     t.boolean "car_parking"
     t.boolean "lift_access"
+    t.integer "family_size"
+    t.string "living_arrangements"
+    t.string "income"
+    t.boolean "benefits"
+    t.boolean "local_council"
+    t.boolean "ex_offender"
+    t.string "local_area_link"
     t.index ["referral_agency_id"], name: "index_tenants_on_referral_agency_id"
   end
 

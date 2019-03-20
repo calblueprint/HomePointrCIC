@@ -251,6 +251,63 @@ class ProfileFormTenants extends React.Component {
             )}
           </Form.Item>
           <Form.Item
+            label="Family Size"
+          >
+            {getFieldDecorator('family_size', {
+              initialValue: tenant.family_size,
+              rules: [{
+                required: true, message: 'Please pick you family size!',
+              }],
+            })(
+              <InputNumber
+                min={0}
+                max={30}
+                style={{ marginLeft: 16 }}
+                value={tenant.family_size}
+                onChange={(value) => this.handleChangeSelect("family_size", value)}
+              />
+            )}
+          </Form.Item>
+          <Form.Item
+            label="Household Income"
+          >
+            {getFieldDecorator('income', {
+              initialValue: tenant.income,
+              rules: [{
+                required: true, message: 'Please input your household income!',
+              }]
+            })(
+              <Input onChange={() => this.handleChange("income")}/>
+            )}
+          </Form.Item>
+          <Form.Item
+            label="Current Living Arrangements"
+          >
+            {getFieldDecorator('living_arrangements', {
+              initialValue: tenant.living_arrangements,
+              rules: [{
+                required: true, message: 'Please input your current living arrangements!',
+              }]
+            })(
+              <Input onChange={() => this.handleChange("living_arrangements")}/>
+            )}
+          </Form.Item>
+          <Form.Item
+            label="Receiving Benefits?"
+          >
+            {getFieldDecorator('benefits', {
+              initialValue: tenant.benefits,
+              rules: [{
+                required: true, message: 'Please select a response!',
+              }],
+            })(
+              <Select onChange={(value) => this.handleChangeSelect("benefits", value)}>
+                <Option value={true}>Yes</Option>
+                <Option value={false}>No</Option>
+              </Select>
+            )}
+          </Form.Item>
+          <Form.Item
             label="Rent"
           >
             {getFieldDecorator('rent', {
@@ -448,6 +505,45 @@ class ProfileFormTenants extends React.Component {
                 <Option value={true}>Yes</Option>
                 <Option value={false}>No</Option>
               </Select>
+            )}
+          </Form.Item>
+          <Form.Item
+            label="Ex-offender?"
+          >
+            {getFieldDecorator('ex_offender', {
+              initialValue: tenant.ex_offender,
+              rules: [{
+                required: true, message: 'Please select a response!',
+              }],
+            })(
+              <Select onChange={(value) => this.handleChangeSelect("ex_offender", value)}>
+                <Option value={true}>Yes</Option>
+                <Option value={false}>No</Option>
+              </Select>
+            )}
+          </Form.Item>
+          <Form.Item
+            label="Status of Local Council"
+          >
+            {getFieldDecorator('local_council', {
+              initialValue: tenant.local_council,
+              rules: [{
+                required: true, message: 'Please input your status of local council!',
+              }],
+            })(
+              <Input onChange={() => this.handleChange("local_council")}/>
+            )}
+          </Form.Item>
+          <Form.Item
+            label="Describe any links to local area"
+          >
+            {getFieldDecorator('local_area_link', {
+              initialValue: tenant.local_area_link,
+              rules: [{
+                required: true, message: 'Please input your links to local area!',
+              }],
+            })(
+              <Input onChange={() => this.handleChange("local_area_link")}/>
             )}
           </Form.Item>
           <Form.Item

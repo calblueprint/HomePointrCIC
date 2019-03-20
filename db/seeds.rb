@@ -96,7 +96,14 @@ def make_tenants
       mobility_aids: Faker::Boolean.boolean,
       accessible_shower: Faker::Boolean.boolean,
       car_parking: Faker::Boolean.boolean,
-      lift_access: Faker::Boolean.boolean
+      lift_access: Faker::Boolean.boolean,
+      family_size: Faker::Number.number(1),
+      living_arrangements: Faker::HowIMetYourMother.quote,
+      income: Faker::Number.between(20000, 90000),
+      benefits: Faker::Boolean.boolean,
+      local_council: Faker::HowIMetYourMother.quote,
+      ex_offender: Faker::Boolean.boolean,
+      local_area_link: Faker::HowIMetYourMother.quote
     )
     tenant.avatar.attach(io: File.open('app/assets/images/avatar.jpg'), filename: 'avatar.jpg')
     tenant.save
