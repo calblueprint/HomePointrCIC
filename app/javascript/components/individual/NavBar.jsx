@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Avatar, Button } from "antd";
 import APIRoutes from "helpers/api_routes";
+import NotificationBell from "./NotificationBell.jsx";
 import "antd/dist/antd.css";
 
 class NavBar extends React.Component {
@@ -56,6 +57,7 @@ class NavBar extends React.Component {
         {[
           this.renderEmail(),
           this.renderAvatar(),
+          <NotificationBell count={1} />,
           <Button
             key="edit"
             type="default"
