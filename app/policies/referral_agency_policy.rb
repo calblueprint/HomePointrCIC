@@ -17,7 +17,7 @@ class ReferralAgencyPolicy
     else
       user.properties.each do |property|
         next unless property.applicationsproperty.applications&.each do |app|
-          return true if app.info.tenant.referral_agency == referral_agency
+          return true if app.tenant.referral_agency == referral_agency
         end
       end
     end

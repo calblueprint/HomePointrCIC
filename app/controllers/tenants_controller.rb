@@ -24,7 +24,7 @@ class TenantsController < ApplicationController
     @status = @tenant.priority
     @properties = []
     @form = []
-    @applications = @tenant.info.applications
+    @applications = @tenant.applications
     @propertyimages = []
     @applications.each do |a|
       @properties << a.property

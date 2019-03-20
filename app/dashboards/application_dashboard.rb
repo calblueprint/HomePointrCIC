@@ -11,7 +11,7 @@ class ApplicationDashboard < Administrate::BaseDashboard
     form_attachment: Field::HasOne,
     form_blob: Field::HasOne,
     property: Field::BelongsTo,
-    info: Field::BelongsTo,
+    tenant: Field::BelongsTo,
     id: Field::Number,
     status: Field::String.with_options(searchable: false),
     description: Field::Text,
@@ -28,7 +28,7 @@ class ApplicationDashboard < Administrate::BaseDashboard
     :form_attachment,
     :form_blob,
     :property,
-    :info,
+    :tenant,
   ].freeze
 
   # SHOW_PAGE_ATTRIBUTES
@@ -37,7 +37,7 @@ class ApplicationDashboard < Administrate::BaseDashboard
     :form_attachment,
     :form_blob,
     :property,
-    :info,
+    :tenant,
     :id,
     :status,
     :description,
@@ -52,7 +52,7 @@ class ApplicationDashboard < Administrate::BaseDashboard
     :form_attachment,
     :form_blob,
     :property,
-    :info,
+    :tenant,
     :status,
     :description,
   ].freeze

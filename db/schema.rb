@@ -40,12 +40,12 @@ ActiveRecord::Schema.define(version: 2019_03_20_040931) do
     t.integer "status"
     t.text "description"
     t.bigint "property_id"
-    t.bigint "info_id"
+    t.bigint "tenant_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["info_id", "property_id"], name: "index_applications_on_info_id_and_property_id", unique: true
-    t.index ["info_id"], name: "index_applications_on_info_id"
     t.index ["property_id"], name: "index_applications_on_property_id"
+    t.index ["tenant_id", "property_id"], name: "index_applications_on_tenant_id_and_property_id", unique: true
+    t.index ["tenant_id"], name: "index_applications_on_tenant_id"
   end
 
   create_table "emails", force: :cascade do |t|
@@ -56,13 +56,6 @@ ActiveRecord::Schema.define(version: 2019_03_20_040931) do
     t.string "confirmation_token"
     t.datetime "confirmed_at"
     t.datetime "confirmation_sent_at"
-  end
-
-  create_table "infos", force: :cascade do |t|
-    t.bigint "tenant_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["tenant_id"], name: "index_infos_on_tenant_id"
   end
 
   create_table "properties", force: :cascade do |t|
