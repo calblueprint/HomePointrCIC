@@ -6,7 +6,7 @@ class CreateApplications < ActiveRecord::Migration[5.2]
       t.integer :status
       t.text :description
       t.references :property, index: true
-      t.references :info, index: true
+      t.references :tenant, index: true
       t.timestamps
     end
   end

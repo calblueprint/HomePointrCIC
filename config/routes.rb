@@ -1,6 +1,17 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
+  namespace :admin do
+      resources :users
+      resources :emails
+      resources :applications
+      resources :properties
+      resources :tenants
+      resources :landlords
+      resources :referral_agencies
+
+      root to: "users#index"
+    end
   get 'home/index'
   get 'errors/show'
   get 'tenants/:id/edit' => 'tenants#edit'
@@ -17,7 +28,6 @@ Rails.application.routes.draw do
   # resources :tenants, :only => [:create, :update, :show, :destroy]
   resources :tenants
   # resources :applications, only: %i[create show destroy]
-  resources :infos, only: [:create]
   devise_for :users, controllers: {
     sessions: 'sessions',
     registrations: 'registrations'
@@ -32,7 +42,7 @@ Rails.application.routes.draw do
     end
 
     namespace :api do
-      resources :landlords, :referral_agencies, :infos, :applications, :tenants
+      resources :landlords, :referral_agencies, :applications, :tenants
       resources :properties do
         collection do
           delete 'delete_image_attachment/:image_id', to: 'properties#delete_image_attachment'

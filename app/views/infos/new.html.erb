@@ -1,5 +1,0 @@
-<%= form_for @info do |f| %>
-  <%= f.label :tenant_id %><br>
-  <%= f.select(:tenant_id, Tenant.all.pluck(:name, :id)) %>
-  <%= f.submit %>
-<% end %>
