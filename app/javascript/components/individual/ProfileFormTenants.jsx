@@ -45,8 +45,8 @@ class ProfileFormTenants extends React.Component {
 
   convertToDict() {
     const tenant = this.state.tenant;
-    const keys = ["name", "description", "email", "phone", "rent_min", "rent_max", "housing_type", "property_type", "num_bedrooms", "location", "referral_agency_id", "date_needed", "avatar"];
-    const values = [tenant.name, tenant.description, tenant.email, tenant.phone, tenant.rent_min, tenant.rent_max, tenant.housing_type, tenant.property_type, tenant.num_bedrooms, tenant.location, tenant.referral_agency_id, tenant.date_needed, tenant.avatar];
+    const keys = ["name", "description", "email", "phone", "rent_min", "rent_max", "housing_type", "property_type", "number_of_bedrooms", "location", "referral_agency_id", "date_needed", "avatar"];
+    const values = [tenant.name, tenant.description, tenant.email, tenant.phone, tenant.rent_min, tenant.rent_max, tenant.housing_type, tenant.property_type, tenant.number_of_bedrooms, tenant.location, tenant.referral_agency_id, tenant.date_needed, tenant.avatar];
     let result = keys.reduce((obj, k, i) => ({...obj, [k]: values[i] }), {})
     return result
   }
@@ -103,16 +103,16 @@ class ProfileFormTenants extends React.Component {
   //   });
   // }
   //api edit
-  handleEdit() {
+  handleEdit = (event) => {
+    event.preventDefault();
     let id = this.state.tenant.id;
     var request = null;
     var body = this.convertToDict()
       body = JSON.stringify({tenant: body})
       request = APIRoutes.tenants.update(id)
     this.removeImages(this.state.imageRemoveList);
+    
     console.log("TENANT HANDLEEDIT");
-    console.log(this.state.tenant.avatar);
-    console.log(this.state.tenant.avatar.name);
     fetch(request, {
       method: 'PUT',
       headers: {
@@ -125,7 +125,7 @@ class ProfileFormTenants extends React.Component {
       console.log(this.state.tenant.avatar.name)
       // window.location = '/tenants/' + id.toString();
     }).catch((data) => {
-      window.location = '/';
+      window.location = '/tenants/' + id.toString() + '/edit';
     });
   }
   removeImages(imageList) {
@@ -347,8 +347,8 @@ class ProfileFormTenants extends React.Component {
           <Form.Item
             label="Number of Bedrooms"
           >
-            {getFieldDecorator('num_bedrooms', {
-              initialValue: tenant.num_bedrooms,
+            {getFieldDecorator('number_of_bedrooms', {
+              initialValue: tenant.number_of_bedrooms,
               rules: [{
                 required: true, message: 'Please pick a number of bedrooms!',
               }],
@@ -357,8 +357,8 @@ class ProfileFormTenants extends React.Component {
                 min={0}
                 max={10}
                 style={{ marginLeft: 16 }}
-                value={tenant.num_bedrooms}
-                onChange={() => this.handleChange("num_bedrooms")}
+                value={tenant.number_of_bedrooms}
+                onChange={() => this.handleChange("number_of_bedrooms")}
               />
             )}
           </Form.Item>

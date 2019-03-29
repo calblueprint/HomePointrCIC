@@ -1,7 +1,7 @@
 import { Upload, Icon, message } from 'antd';
 import React from "react";
 // import '../../../assets/stylesheets/avatar.css';
-
+import { AttachmentUpload } from "./attachment_upload"
 
 class Avatar extends React.Component {
 
@@ -34,9 +34,12 @@ class Avatar extends React.Component {
       }));
     }
     this.state.tenant["avatar"] = info.file;
+
+    if (info.file) {
+      const upload = new AttachmentUpload(info.file)
+      upload.start()
+    }
     console.log("IN HANDLECHANGE IN AVATAR")
-    console.log(info.file);
-    console.log(info.file.name);
   }
 
   render() {
@@ -62,8 +65,9 @@ class Avatar extends React.Component {
         showUploadList={false}
         onChange={this.handleChange}
         customRequest={dummyRequest}
+        // action="/rails/active_storage/direct_uploads"
       >
-        {imageUrl ? <img src={imageUrl} alt="avatar" /> : uploadButton}
+        {imageUrl ? <img src={imageUrl} alt="avatar" width="250px"/> : uploadButton}
       </Upload>
     );
   }
