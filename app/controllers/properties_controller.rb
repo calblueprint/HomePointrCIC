@@ -73,9 +73,9 @@ class PropertiesController < ApplicationController
     @potentialTenantAppsPDF = []
     @property.applications.each do |a|
       if a.status == 'housed'
-        @tenants << a.info.tenant
-        @tenantImages << if a.info.tenant.avatar.attached?
-                           { url: url_for(a.info.tenant.avatar) }
+        @tenants << a.tenant
+        @tenantImages << if a.tenant.avatar.attached?
+                           { url: url_for(a.tenant.avatar) }
                          else
                            { url: nil }
                          end
@@ -86,9 +86,9 @@ class PropertiesController < ApplicationController
                           end
         @tenantApps << a
       elsif (a.status == 'received') || (a.status == 'interview')
-        @potentialTenants << a.info.tenant
-        @potentialTenantsImages << if a.info.tenant.avatar.attached?
-                                     { url: url_for(a.info.tenant.avatar) }
+        @potentialTenants << a.tenant
+        @potentialTenantsImages << if a.tenant.avatar.attached?
+                                     { url: url_for(a.tenant.avatar) }
                                    else
                                      { url: nil }
                                    end

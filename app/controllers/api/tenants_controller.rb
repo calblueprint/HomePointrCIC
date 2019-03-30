@@ -7,7 +7,6 @@ class Api::TenantsController < ApplicationController
     @tenant = Tenant.new(tenant_params)
     authorize @tenant
     if @tenant.save
-      Info.create(tenant_id: @tenant.id)
       if ActiveStorage::Blob.last.id != $activestoragestart
         a = ActiveStorage::Blob.last
         @tenant.avatar.attach(a) if a.image?
