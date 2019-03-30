@@ -63,41 +63,41 @@ class PropertiesController < ApplicationController
     @name = (@property.housing_type + ' in ' + @property.location).titleize
     @description = @property.attributes.values[2]
 
-    @tenants = []
-    @tenantImages = []
-    @tenantApps = []
-    @tenantAppsPDF = []
-    @potentialTenants = []
-    @potentialTenantsImages = []
-    @potentialTenantApps = []
-    @potentialTenantAppsPDF = []
+    @propertys = []
+    @propertyImages = []
+    @propertyApps = []
+    @propertyAppsPDF = []
+    @potentialpropertys = []
+    @potentialpropertysImages = []
+    @potentialpropertyApps = []
+    @potentialpropertyAppsPDF = []
     @property.applications.each do |a|
       if a.status == 'housed'
-        @tenants << a.tenant
-        @tenantImages << if a.tenant.avatar.attached?
-                           { url: url_for(a.tenant.avatar) }
+        @propertys << a.property
+        @propertyImages << if a.property.avatar.attached?
+                           { url: url_for(a.property.avatar) }
                          else
                            { url: nil }
                          end
-        @tenantAppsPDF << if a.form.attached?
+        @propertyAppsPDF << if a.form.attached?
                             { url: url_for(a.form) }
                           else
                             { url: nil }
                           end
-        @tenantApps << a
+        @propertyApps << a
       elsif (a.status == 'received') || (a.status == 'interview')
-        @potentialTenants << a.tenant
-        @potentialTenantsImages << if a.tenant.avatar.attached?
-                                     { url: url_for(a.tenant.avatar) }
+        @potentialpropertys << a.property
+        @potentialpropertysImages << if a.property.avatar.attached?
+                                     { url: url_for(a.property.avatar) }
                                    else
                                      { url: nil }
                                    end
-        @potentialTenantAppsPDF << if a.form.attached?
+        @potentialpropertyAppsPDF << if a.form.attached?
                                      { url: url_for(a.form) }
                                    else
                                      { url: nil }
                                    end
-        @potentialTenantApps << a
+        @potentialpropertyApps << a
       end
     end
   end
@@ -108,10 +108,10 @@ class PropertiesController < ApplicationController
     @property = Property.find(params[:id])
     authorize @property
     @current_userID = current_user.id
-    @categories = get_tenant_category_enums()
+    @categories = get_property_category_enums()
   end
 
-  def get_tenant_category_enums
+  def get_property_category_enums
     @nice_housing_type = []
     @nice_property_type = []
     @nice_location = []
@@ -125,9 +125,9 @@ class PropertiesController < ApplicationController
      @nice_location << i.titleize
     end
     categories = {
-      housing_types: Tenant.housing_types.keys,
-      property_types: Tenant.property_types.keys,
-      locations: Tenant.locations.keys,
+      housing_types: property.housing_types.keys,
+      property_types: property.property_types.keys,
+      locations: property.locations.keys,
       nice_housing_types: @nice_housing_type,
       nice_property_types: @nice_property_type,
       nice_locations: @nice_location
