@@ -5,6 +5,7 @@ class ApiRoutes {
       update: (id) => '/api/properties/' + id,
       delete: (id) => '/api/properties/' + id,
       delete_image: (image_id) => '/api/properties/delete_image_attachment/' + image_id,
+      categories: `/properties/categories`,
     }
   }
 
