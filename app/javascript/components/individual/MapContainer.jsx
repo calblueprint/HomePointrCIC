@@ -1,13 +1,20 @@
 import React from "react";
 import PropTypes from "prop-types";
 import {Map, InfoWindow, Marker, GoogleApiWrapper} from 'google-maps-react';
+import { Card } from 'antd';
+
+const { Meta } = Card;
 
 export class MapContainer extends React.Component {
-  state = {
-    activeMarker: {},
-    selectedPlace: {},
-    showingInfoWindow: false
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      activeMarker: {},
+      selectedPlace: {},
+      showingInfoWindow: false
+    };
+    this.markersList = this.markersList.bind(this);
+  }
 
   onMarkerClick = (props, marker) =>
     this.setState({
@@ -30,6 +37,23 @@ export class MapContainer extends React.Component {
       });
   };
 
+  markersList() {
+    return this.props.filtered_properties.map((data) => {
+      //testing purposes
+      const min = 37.778519;
+      const max = 38;
+      const rand = min + Math.random() * (max - min);
+      return (
+        <Marker
+          name={data.address}
+          onClick={this.onMarkerClick}
+          position={{ lat: rand, lng: -122.40564 }}
+        />
+      )
+    })
+  }
+
+
   render() {
     return (
       <Map
@@ -37,25 +61,28 @@ export class MapContainer extends React.Component {
         google={this.props.google}
         onClick={this.onMapClicked}
         style={{ height: '100%', position: 'relative', width: '50%' }}
-        zoom={14}>
-        <Marker
-          name="SOMA"
-          onClick={this.onMarkerClick}
-          position={{ lat: 37.778519, lng: -122.40564 }}
-        />
-
-        <Marker
-          name="Dolores park"
-          onClick={this.onMarkerClick}
-          position={{ lat: 37.759703, lng: -122.428093 }}
-        />
+        zoom={14}
+        initialCenter={{
+          lat: 37.778519,
+          lng: -122.40564
+        }}
+      >
+        
+        {this.markersList()}
 
         <InfoWindow
           marker={this.state.activeMarker}
           onClose={this.onInfoWindowClose}
           visible={this.state.showingInfoWindow}>
           <div>
-            <h1>{this.state.selectedPlace.name}</h1>
+            <Card
+              title={this.state.selectedPlace.name}
+              style={{ width: 240 }}
+            >
+              <p>Card content</p>
+              <p>Card content</p>
+              <p>Card content</p>
+            </Card>
           </div>
         </InfoWindow>
       </Map>

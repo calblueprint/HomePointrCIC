@@ -23,6 +23,7 @@ class ApplicationsPairing extends React.Component {
       description: null,
       tenants: props.tenants,
       properties: props.properties,
+      filtered_properties: props.properties,
       individualView: false,
       show_map: false,
       leftComponent: null,
@@ -33,6 +34,7 @@ class ApplicationsPairing extends React.Component {
     this.setTenant = this.setTenant.bind(this);
     this.clearTenant = this.clearTenant.bind(this);
     this.toggleMap = this.toggleMap.bind(this);
+    this.setFilteredProperties = this.setFilteredProperties.bind(this);
   }
 
   toggleMap() {
@@ -114,6 +116,10 @@ class ApplicationsPairing extends React.Component {
     window.scrollTo(0, 0);
   }
 
+  setFilteredProperties(lst) {
+    this.setState({filtered_properties: lst});
+  }
+
   clearTenant() {
     this.setState({individualView: false});
     this.setState({selectedTenant: null});
@@ -129,8 +135,7 @@ class ApplicationsPairing extends React.Component {
     this.setup(this.state.properties, this.props.propertyImages);
     let leftComponent = null;
     if (this.state.show_map) {
-      console.log('show map');
-      leftComponent = <MapContainer/>
+      leftComponent = <MapContainer filtered_properties={this.state.filtered_properties}/>
     } else {
       if (this.state.individualView) {
         //Individual tenant has been selected
@@ -147,11 +152,11 @@ class ApplicationsPairing extends React.Component {
     }
     //Filtered properties
     let rightComponent = (
-      <PropertyListWrapper {...this.props} toggleMap={this.toggleMap} CheckboxChange={this.onChangeProperty}/>
+      <PropertyListWrapper {...this.props} setFilteredProperties={this.setFilteredProperties} toggleMap={this.toggleMap} CheckboxChange={this.onChangeProperty}/>
     );
     if (this.state.individualView) {
       rightComponent = (
-        <PropertyListWrapper {...this.props} toggleMap={this.toggleMap} CheckboxChange={this.onChangeProperty} selectedTenant={this.state.selectedTenant}/>
+        <PropertyListWrapper {...this.props} setFilteredProperties={this.setFilteredProperties} toggleMap={this.toggleMap} CheckboxChange={this.onChangeProperty} selectedTenant={this.state.selectedTenant}/>
       );
     }
 
