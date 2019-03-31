@@ -10,14 +10,8 @@ class PropertyListWrapper extends React.Component {
     super(props);
     this.state = {
       properties: props.properties,
-      show_map: false,
     }
     this.handleFilter = this.handleFilter.bind(this);
-    this.toggleMap = this.toggleMap.bind(this);
-  }
-
-  toggleMap() {
-    this.setState({show_map: !this.state.show_map})
   }
 
   handleFilter(filters) {
@@ -65,7 +59,7 @@ class PropertyListWrapper extends React.Component {
         }}
       >
         <FilterPanel {...this.props} applyFilter={this.handleFilter} />
-        Show Map <Switch checkedChildren={<Icon type="check" />} unCheckedChildren={<Icon type="close" />} onChange={this.toggleMap}/>
+        Show Map <Switch checkedChildren={<Icon type="check" />} unCheckedChildren={<Icon type="close" />} onChange={this.props.toggleMap}/>
         <ListView avatar={true} resources={this.state.properties} property_modal={true} type="property" checkbox={true} CheckboxChange={this.props.CheckboxChange}/>
       </div>
     );

@@ -11,6 +11,7 @@ import ActiveStorageProvider from "react-activestorage-provider";
 import SplitViewContainer from "./individual/SplitViewContainer.jsx";
 import PropertyListWrapper from "./individual/PropertyListWrapper.jsx";
 import RATenantView from "./RATenantView.jsx";
+import MapContainer from './individual/MapContainer';
 
 class ApplicationsPairing extends React.Component {
 
@@ -23,11 +24,19 @@ class ApplicationsPairing extends React.Component {
       tenants: props.tenants,
       properties: props.properties,
       individualView: false,
+      show_map: false,
+      leftComponent: null,
+      rightComponent: null,
     };
     this.onChangeProperty = this.onChangeProperty.bind(this);
     this.handleMatch = this.handleMatch.bind(this);
     this.setTenant = this.setTenant.bind(this);
     this.clearTenant = this.clearTenant.bind(this);
+    this.toggleMap = this.toggleMap.bind(this);
+  }
+
+  toggleMap() {
+    this.setState({show_map: !this.state.show_map})
   }
 
   onChangeProperty(e, id) {
@@ -119,25 +128,30 @@ class ApplicationsPairing extends React.Component {
     this.setup(this.state.tenants, this.props.tenantPriorities);
     this.setup(this.state.properties, this.props.propertyImages);
     let leftComponent = null;
-    if (this.state.individualView) {
-      //Individual tenant has been selected
-      leftComponent = ([
-        <Button type="primary" onClick={this.clearTenant}><Icon type="left" /> View All Clients</Button>,
-        <RATenantView id={this.state.selectedTenant.id} name={this.state.selectedTenant.name} mode="ra_matching" description={this.state.selectedTenant.description} avatar={this.state.selectedTenant.url} tagValues={this.makeTagValues(this.state.selectedTenant)} status={this.state.selectedTenant.priority}/>
-      ]);
+    if (this.state.show_map) {
+      console.log('show map');
+      leftComponent = <MapContainer/>
     } else {
-      //All tenants shown here
-      leftComponent = (
-        <ListView resources={this.state.tenants} tenant_modal={true} avatar={true} selectTenantFunc={this.setTenant} tenantSelect={true} type="tenant"/>
-      );
+      if (this.state.individualView) {
+        //Individual tenant has been selected
+        leftComponent = ([
+          <Button type="primary" onClick={this.clearTenant}><Icon type="left" /> View All Clients</Button>,
+          <RATenantView id={this.state.selectedTenant.id} name={this.state.selectedTenant.name} mode="ra_matching" description={this.state.selectedTenant.description} avatar={this.state.selectedTenant.url} tagValues={this.makeTagValues(this.state.selectedTenant)} status={this.state.selectedTenant.priority}/>
+        ]);
+      } else {
+        //All tenants shown here
+        leftComponent = (
+          <ListView resources={this.state.tenants} tenant_modal={true} avatar={true} selectTenantFunc={this.setTenant} tenantSelect={true} type="tenant"/>
+        );
+      }
     }
     //Filtered properties
     let rightComponent = (
-      <PropertyListWrapper {...this.props} CheckboxChange={this.onChangeProperty}/>
+      <PropertyListWrapper {...this.props} toggleMap={this.toggleMap} CheckboxChange={this.onChangeProperty}/>
     );
     if (this.state.individualView) {
       rightComponent = (
-        <PropertyListWrapper {...this.props} CheckboxChange={this.onChangeProperty} selectedTenant={this.state.selectedTenant}/>
+        <PropertyListWrapper {...this.props} toggleMap={this.toggleMap} CheckboxChange={this.onChangeProperty} selectedTenant={this.state.selectedTenant}/>
       );
     }
 
