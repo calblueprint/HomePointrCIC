@@ -31,6 +31,8 @@ class ProfileFormTenants extends React.Component {
       imageRemoveList: [],
       disabled: false //to prevent multiple form submissions
     };
+    this.componentDidMount = this.componentDidMount.bind(this);
+    this.handleAuto = this.handleAuto.bind(this)
     this.handleChange = this.handleChange.bind(this);
     // this.handleCreate = this.handleCreate.bind(this);
     this.handleEdit = this.handleEdit.bind(this);
@@ -154,6 +156,21 @@ class ProfileFormTenants extends React.Component {
     tenant[attr] = event.target.value;
     this.setState({ tenant: tenant });
   }
+  handleAuto() {
+    var places = require('places.js');
+    var placesAutocomplete = places({
+      appId: 'plT4Z8MULV0O',
+      apiKey: '48e619128b523ff86727e917eb1fa1d3',
+      // container: document.querySelectorAll('div.ant-row.ant-form-item')[0].children[1].querySelector('div').querySelector('span').querySelector('input')
+      container: document.querySelector('#address')
+    });
+    placesAutocomplete.on('change', (e) => {
+      const new_tenant = this.state.tenant;
+      new_tenant['name'] = e.suggestion.value;
+      this.setState({ tenant: new_tenant });
+      document.querySelector('#address').value = e.suggestion.value;
+    });
+  }
   handleChangeDate(date) {
     const tenant = this.state.tenant;
     tenant["date_needed"] = date.format("YYYY-MM-DD");
@@ -206,6 +223,24 @@ class ProfileFormTenants extends React.Component {
     )
   }
 
+  componentDidMount() {
+    this.handleAuto();
+  }
+
+  // componentDidUpdate() {
+  //   var places = require('places.js');
+  //   var placesAutocomplete = places({
+  //     appId: 'plT4Z8MULV0O',
+  //     apiKey: '48e619128b523ff86727e917eb1fa1d3',
+  //     // container: document.querySelectorAll('div.ant-row.ant-form-item')[0].children[1].querySelector('div').querySelector('span').querySelector('input')
+  //     container: document.querySelector('#address')
+  //   });
+  //   placesAutocomplete.on('change', (e) => {
+  //     const new_tenant = this.state.tenant;
+  //     new_tenant['name'] = e.suggestion.value;
+  //     this.setState({ tenant: new_tenant });
+  //   });
+  // }
 
   render() {
     const { getFieldDecorator } = this.props.form;
@@ -220,6 +255,18 @@ class ProfileFormTenants extends React.Component {
     return (
       <div>
         <Form onSubmit={this.handleEdit}>
+          <Form.Item
+            label="Address"
+          >
+            {getFieldDecorator('address', {
+              initialValue: tenant.name,
+              rules: [{
+                required: true, message: 'Please input address!',
+              }],
+            })(
+              <Input id="address"/>
+            )}
+          </Form.Item>
           <Form.Item
             label="Name"
           >
