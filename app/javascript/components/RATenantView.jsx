@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {Avatar, Button, Tag} from 'antd';
+import {Avatar, Button, Tag, Row, Col, Icon} from 'antd';
 import 'antd/dist/antd.css';
 import Utils from 'helpers/utils';
 
@@ -12,14 +12,14 @@ class RATenantView extends React.Component {
 
   handleEdit() {
     //switch to the ProfileForm Edit
-    window.location = '/tenants/' + this.props.id + '/edit'
+    //what is this?
+    //window.location = '/tenants/' + this.props.id + '/edit'
   }
 
-  renderNameDescription() {
+  renderName() {
     return (
-      <div key='name_description'>
-        <h1> {this.props.name} </h1>
-        <p> {this.props.description} </p>
+      <div key='name'>
+        <h1> {this.props.tenant.name} </h1>
       </div>
     )
   }
@@ -48,9 +48,72 @@ class RATenantView extends React.Component {
     )
   }
 
+  renderDetails() {
+    return(
+      <div className = "details">
+        <h1> <Icon type="home" /> Basic </h1>
+          <Row>
+            <Col span={12}>Email</Col>
+            <Col span={12}>Phone</Col>
+          </Row>
+          <Row>
+            <Col span={12}>{this.props.tenant.email}</Col>
+            <Col span={12}>{this.props.tenant.phone}</Col>
+          </Row>
+          <Row>
+            <Col span={12}>Location</Col>
+            <Col span={12}>Family Size</Col>
+          </Row>
+          <Row>
+            <Col span={12}>--</Col>
+            <Col span={12}>--</Col>
+          </Row>
+          <Row>
+            <Col span={12}>Household Income</Col>
+            <Col span={12}>Receving Benefits?</Col>
+          </Row>
+          <Row>
+            <Col span={12}>--</Col>
+            <Col span={12}>--</Col>
+          </Row>
+          <Row>
+            <Col span={24}>Current Living Arrangements</Col>
+          </Row>
+          <Row>
+            <Col span={24}>--</Col>
+          </Row>
+          <h1> <Icon type="home" /> Housing Preferences </h1>
+                <Row>
+                  <Col span={8}>Property</Col>
+                  <Col span={8}>Housing</Col>
+                  <Col span={8}>Start Date (Date needed?)</Col>
+                </Row>
+                <Row>
+                  <Col span={8}>{this.props.tenant.property_type}</Col>
+                  <Col span={8}>{this.props.tenant.housing_type}</Col>
+                  <Col span={8}>${this.props.tenant.date_needed}</Col>
+                </Row>
+                <Row>
+                  <Col span={8}>Rent Min</Col>
+                  <Col span={8}>Rent Max</Col>
+                  <Col span={8}>Number of Bedrooms</Col>
+                </Row>
+                <Row>
+                  <Col span={8}>{this.props.tenant.rent_min}</Col>
+                  <Col span={8}>{this.props.tenant.rent_max}</Col>
+                  <Col span={8}>{this.props.tenant.num_bedrooms}</Col>
+                </Row>
+          <h1> <Icon type="align-center" /> Description </h1>
+            <p> {this.props.tenant.description} </p>
+          <h1> <Icon type="paper-clip" /> Client Form </h1>
+            <p> <Col span={12}>add forms...</Col> </p>
+      </div>
+    )
+  }
+
   render() {
     if (this.props.mode === "ra_matching") {
-      return [this.renderNameDescription(), this.renderAvatar(), Utils.renderStatus(this.props.status), this.renderTags()]
+      return [this.renderName(), this.renderAvatar(), Utils.renderStatus(this.props.status)]
     // } else if (this.props.mode === "ll_applicant") {
     //   return [this.renderNameDescription(), this.renderAvatar(), this.renderStatus(), this.renderTags(),
     //     <Button type="danger">Reject</Button>,
@@ -60,8 +123,10 @@ class RATenantView extends React.Component {
     //   return [this.renderNameDescription(), this.renderAvatar(), this.renderStatus(), this.renderTags(),
     //     <Button type="danger">Remove Tenant</Button>]
     } else if (this.props.mode === "ra_edit") {
-      return [this.renderNameDescription(), this.renderAvatar(), Utils.renderStatus(this.props.status), this.renderTags(),
-        <Button key='button' type="default" onClick={this.handleEdit} >Edit Client</Button>]
+      return [this.renderAvatar(), <Row>
+                <Col span={12}>{this.props.tenant.name}</Col>
+                <Col span={12}> <Button key='button' type="default" onClick={this.handleEdit} >Edit</Button> </Col>
+              </Row>, Utils.renderStatus(this.props.status), this.renderDetails()]
     } else {
       return null
     }
