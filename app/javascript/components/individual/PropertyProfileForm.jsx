@@ -13,6 +13,7 @@ import SliderBar from './SliderBar';
 import ActiveStorageProvider from "react-activestorage-provider";
 import PicturesWall from './PicturesWall';
 import Avatar from './Avatar';
+import '../../../assets/stylesheets/PropertyProfileForm.css';
 
 class PropertyProfileForm extends React.Component {
   constructor(props) {
@@ -35,7 +36,6 @@ class PropertyProfileForm extends React.Component {
     // this.handleCreate = this.handleCreate.bind(this);
     this.handleEdit = this.handleEdit.bind(this);
     this.handleDestroy = this.handleDestroy.bind(this);
-    this.sliderChanges = this.sliderChanges.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleChangeDate = this.handleChangeDate.bind(this);
     this.handleChangeSelect = this.handleChangeSelect.bind(this);
@@ -184,9 +184,9 @@ class PropertyProfileForm extends React.Component {
     const { property } = this.state;
 
     return (
-      <div>
+      <div className="container">
         <Form onSubmit={this.handleEdit}>
-          <h3>Basic</h3>
+          <h2>Basic</h2>
           <Form.Item
             label="Property Name"
           >
@@ -286,7 +286,7 @@ class PropertyProfileForm extends React.Component {
               />
             )}
           </Form.Item>
-          <h3>Details</h3>
+          <h2>Details</h2>
           <Form.Item
             label="Number of bathrooms"
           >
@@ -400,7 +400,7 @@ class PropertyProfileForm extends React.Component {
               </Select>
             )}
           </Form.Item>
-          <h3>Description</h3>
+          <h2>Description</h2>
           <Form.Item
             label="Summary"
           >
@@ -410,22 +410,26 @@ class PropertyProfileForm extends React.Component {
                 required: true, message: 'Please input the summary!',
               }],
             })(
-              <Input onChange={() => this.handleChange("description")}/>
+              <Input.TextArea 
+                rows={10}
+                onChange={() => this.handleChange("description")}
+              />
             )}
           </Form.Item>
-          <h3>Photos</h3>
+          <h2>Photos</h2>
           <Form.Item
             label="Add image"
           >
             <Avatar property={this.state.property}/>
           </Form.Item>
-          <h3>Additional paperwork</h3>
+          <h2>Additional paperwork</h2>
           <Form.Item
             label="Upload file"
           >
             <Avatar property={this.state.property}/>
           </Form.Item>
         </Form>
+          <Button className="submit" type="primary" htmlType="submit">Submit</Button>
       </div>
     )
   }

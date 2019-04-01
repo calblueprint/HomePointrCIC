@@ -116,18 +116,18 @@ class PropertiesController < ApplicationController
     @nice_property_type = []
     @nice_location = []
     Property.housing_types.keys.each do |i|
-     @nice_housing_type << i.titleize
+      @nice_housing_type << i.titleize
     end
     Property.property_types.keys.each do |i|
-     @nice_property_type << i.titleize
+      @nice_property_type << i.titleize
     end
     Property.locations.keys.each do |i|
-     @nice_location << i.titleize
+      @nice_location << i.titleize
     end
     categories = {
-      housing_types: property.housing_types.keys,
-      property_types: property.property_types.keys,
-      locations: property.locations.keys,
+      housing_types: Property.housing_types.keys,
+      property_types: Property.property_types.keys,
+      locations: Property.locations.keys,
       nice_housing_types: @nice_housing_type,
       nice_property_types: @nice_property_type,
       nice_locations: @nice_location

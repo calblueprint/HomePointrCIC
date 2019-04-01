@@ -1,5 +1,3 @@
-<h1>Edit Property</h1>
-
 <%= form_with(model: @property, local: true) do |form| %>
   <%= react_component("individual/PropertyProfileForm", props={ property_id: @property.id, current_userID: @current_userID, property: @property, categories: @categories}) %>
 <% end %>

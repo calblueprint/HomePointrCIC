@@ -81,7 +81,6 @@ class CreatePropertyForm extends React.Component {
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleCreate = this.handleCreate.bind(this);
-    this.sliderChanges = this.sliderChanges.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleChangeDate = this.handleChangeDate.bind(this);
     this.handleChangeSelect = this.handleChangeSelect.bind(this);
@@ -212,7 +211,7 @@ class CreatePropertyForm extends React.Component {
     const Option = Select.Option;
     return (
       <div className="container">
-        <h3>Step 1: Tell us about your space.</h3>
+        <h2>Step 1: Tell us about your space.</h2>
         <Form className="grid-container">
           <Form.Item
             label="Property Name"
@@ -328,7 +327,7 @@ class CreatePropertyForm extends React.Component {
     const { property } = this.state;
     return (
       <div className="container">
-        <h3>Step 2: Couple more details.</h3>
+        <h2>Step 2: Couple more details.</h2>
         <Form>
           <div className="grid-container">
             <Form.Item
@@ -459,9 +458,9 @@ class CreatePropertyForm extends React.Component {
     const { getFieldDecorator } = this.props.form;
     const Option = Select.Option;
     return (
-      <div>
-        <h3>Step 3: Set the scene.</h3>
-        <h4>Write a quick summary of your place. You can highlight what's special about your space and the neighborhood.</h4>
+      <div className="container">
+        <h2>Step 3: Set the scene.</h2>
+        <h3>Write a quick summary of your place. You can highlight what's special about your space and the neighborhood.</h3>
         <Form>
           <Form.Item
             label="Summary"
@@ -472,15 +471,19 @@ class CreatePropertyForm extends React.Component {
                 required: true, message: 'Please input the summary!',
               }],
             })(
-              <Input
+              <Input.TextArea
+                rows={10}
                 placeholder="Share what makes your property special, like favorite food spots, public transportation
                 in the area, parks, or a unqiue landmark."
-                onChange={() => this.handleChange("description")}/>
+                onChange={() => this.handleChange("description")}
+              />
             )}
           </Form.Item>
         </Form>
-        <Button onClick={() => {this.nextButton(2)}}>Previous</Button>
-        <Button type="primary" onClick={() => {this.nextButton(4)}}>Next</Button>
+        <div className="buttons">
+          <Button className="previous" onClick={() => {this.nextButton(2)}}>Previous</Button>
+          <Button className="next" type="primary" onClick={() => {this.nextButton(4)}}>Next</Button>
+        </div>
       </div>
     )
   }
@@ -488,9 +491,9 @@ class CreatePropertyForm extends React.Component {
   renderStageFour() {
     const { property } = this.state;
     return (
-      <div>
-        <h3>Step 4: Bring it to life.</h3>
-        <h4>Photos help guests imagine staying in your place. You can start with one and add more after you publish.</h4>
+      <div className="container">
+        <h2>Step 4: Bring it to life.</h2>
+        <h3>Photos help guests imagine staying in your place. You can start with one and add more after you publish.</h3>
         <Form>
           <Form.Item
             label="Add image"
@@ -498,8 +501,10 @@ class CreatePropertyForm extends React.Component {
             <Avatar property={this.state.property}/>
           </Form.Item>
         </Form>
-        <Button onClick={() => {this.nextButton(3)}}>Previous</Button>
-        <Button type="primary" onClick={() => {this.nextButton(5)}}>Next</Button>
+        <div className="buttons">
+          <Button className="previous" onClick={() => {this.nextButton(3)}}>Previous</Button>
+          <Button className="next" type="primary" onClick={() => {this.nextButton(5)}}>Next</Button>
+        </div>
       </div>
     )
   }
@@ -507,8 +512,9 @@ class CreatePropertyForm extends React.Component {
   renderStageFive() {
     const { property } = this.state;
     return (
-      <div>
-        <div>Step 5: Additional paperwork (Optional)</div>
+      <div className="container">
+        <h2>Step 5: Additional paperwork (Optional)</h2>
+        <h3>Do you require potential clients to fill out any additional paperwork outside of the general client form?</h3>
         <Form>
           <Form.Item
             label="Upload file"
@@ -516,8 +522,10 @@ class CreatePropertyForm extends React.Component {
             <Avatar property={this.state.property}/>
           </Form.Item>
         </Form>
-        <Button onClick={() => {this.nextButton(4)}}>Previous</Button>
-        <Button type="primary" onClick={() => {this.nextButton(6)}}>Next</Button>
+        <div className="buttons">
+          <Button className="previous" onClick={() => {this.nextButton(4)}}>Previous</Button>
+          <Button className="next" type="primary" onClick={() => {this.handleCreate()}}>Submit</Button>
+        </div>
       </div>
     )
   }

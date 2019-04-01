@@ -24,10 +24,9 @@
   flex-direction: row;
 }
 
-.previous {
-  width: 150px;
-}
-.next {
-  margin-left: 30px;
+.submit {
+  align-self: flex-end;
+  display: flex;
+  flex-direction: row;
   width: 150px;
 }

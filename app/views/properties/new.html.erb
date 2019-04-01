@@ -1,5 +1,3 @@
-<h1>Create New Property</h1>
-
 <%= form_with(model: @property, local: true) do |form| %>
   <%= react_component("individual/CreatePropertyForm", props={ current_userID: @current_userID, categories: @categories}) %>
 <% end %>
