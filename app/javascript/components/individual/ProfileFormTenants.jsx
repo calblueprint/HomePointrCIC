@@ -122,8 +122,7 @@ class ProfileFormTenants extends React.Component {
       body: body,
       credentials: 'same-origin',
     }).then((data) => {
-      console.log(this.state.tenant.avatar.name)
-      // window.location = '/tenants/' + id.toString();
+      window.location = '/tenants/' + id.toString();
     }).catch((data) => {
       window.location = '/tenants/' + id.toString() + '/edit';
     });
@@ -395,7 +394,19 @@ class ProfileFormTenants extends React.Component {
           <Form.Item
             label="Upload Avatar"
           >
-            <Avatar tenant={this.state.tenant}/>
+            <ActiveStorageProvider
+              endpoint={{
+                path: '/api/tenants/' + this.state.tenant.id.toString(),
+                model: "Tenant",
+                attribute: 'avatar',
+                method: "PUT",
+              }}
+              multiple={true}
+              headers={{
+                'Content-Type': 'application/json'
+              }}
+              render={Utils.activeStorageUploadRenderer}
+            />
           </Form.Item>
           <Form.Item
           >
