@@ -28,13 +28,13 @@ class RATenantView extends React.Component {
     if (this.props.avatar == null) {
       return (
         <React.Fragment key='avatar'>
-          <Avatar size={64} icon="user"/>
+          <Avatar size={280} icon="user"/>
         </React.Fragment>
       )
     } else {
       return (
         <React.Fragment key='avatar'>
-          <Avatar size={64} src={this.props.avatar}/>
+          <Avatar size={280} className="avatar" src={this.props.avatar}/>
         </React.Fragment>
       )
     }
@@ -50,8 +50,9 @@ class RATenantView extends React.Component {
 
   renderDetails() {
     return(
-      <div className = "details">
-        <h1> <Icon type="home" /> Basic </h1>
+      <div className="details">
+        <div className="section">
+          <h1> <Icon type="home" /> Basic </h1>
           <Row>
             <Col span={12}>Email</Col>
             <Col span={12}>Phone</Col>
@@ -82,31 +83,38 @@ class RATenantView extends React.Component {
           <Row>
             <Col span={24}>--</Col>
           </Row>
+        </div>
+        <div className="section">
           <h1> <Icon type="home" /> Housing Preferences </h1>
-                <Row>
-                  <Col span={8}>Property</Col>
-                  <Col span={8}>Housing</Col>
-                  <Col span={8}>Start Date (Date needed?)</Col>
-                </Row>
-                <Row>
-                  <Col span={8}>{this.props.tenant.property_type}</Col>
-                  <Col span={8}>{this.props.tenant.housing_type}</Col>
-                  <Col span={8}>${this.props.tenant.date_needed}</Col>
-                </Row>
-                <Row>
-                  <Col span={8}>Rent Min</Col>
-                  <Col span={8}>Rent Max</Col>
-                  <Col span={8}>Number of Bedrooms</Col>
-                </Row>
-                <Row>
-                  <Col span={8}>{this.props.tenant.rent_min}</Col>
-                  <Col span={8}>{this.props.tenant.rent_max}</Col>
-                  <Col span={8}>{this.props.tenant.num_bedrooms}</Col>
-                </Row>
+          <Row>
+            <Col span={8}>Property</Col>
+            <Col span={8}>Housing</Col>
+            <Col span={8}>Start Date (Date needed?)</Col>
+          </Row>
+          <Row>
+            <Col span={8}>{this.props.tenant.property_type}</Col>
+            <Col span={8}>{this.props.tenant.housing_type}</Col>
+            <Col span={8}>${this.props.tenant.date_needed}</Col>
+          </Row>
+          <Row>
+            <Col span={8}>Rent Min</Col>
+            <Col span={8}>Rent Max</Col>
+            <Col span={8}>Number of Bedrooms</Col>
+          </Row>
+          <Row>
+            <Col span={8}>{this.props.tenant.rent_min}</Col>
+            <Col span={8}>{this.props.tenant.rent_max}</Col>
+            <Col span={8}>{this.props.tenant.num_bedrooms}</Col>
+          </Row>
+        </div>
+        <div className="section">
           <h1> <Icon type="align-center" /> Description </h1>
-            <p> {this.props.tenant.description} </p>
+          <p> {this.props.tenant.description} </p>
+        </div>
+        <div className="section">
           <h1> <Icon type="paper-clip" /> Client Form </h1>
-            <p> <Col span={12}>add forms...</Col> </p>
+          <p> <Col span={12}>add forms...</Col> </p>
+        </div>
       </div>
     )
   }
@@ -124,8 +132,8 @@ class RATenantView extends React.Component {
     //     <Button type="danger">Remove Tenant</Button>]
     } else if (this.props.mode === "ra_edit") {
       return [this.renderAvatar(), <Row>
-                <Col span={12}>{this.props.tenant.name}</Col>
-                <Col span={12}> <Button key='button' type="default" onClick={this.handleEdit} >Edit</Button> </Col>
+                <Col span={12} className="title1">{this.props.tenant.name}</Col>
+                <Col span={12}> <Button key='button' type="default" onClick={this.handleEdit} className="editButton">Edit</Button> </Col>
               </Row>, Utils.renderStatus(this.props.status), this.renderDetails()]
     } else {
       return null

@@ -1,0 +1,39 @@
+h1 {
+  font-size: 18px;
+  font-weight: normal;
+  margin-bottom: 8px;
+  margin-top: 24px;
+}
+
+.title1 {
+  font-size: 24px;
+  font-weight: 500;
+  margin-top: 42px;
+}
+
+.icon {
+  font-size: 16px;
+  margin: 16px;
+}
+
+.avatar {
+ left: 50%;
+ transform: translate(-50%);
+}
+
+.editButton {
+  margin-top: 42px;
+  float: right;
+}
+
+.section:not(:last-child) {
+  border-bottom: 1px solid #D9D9D9;
+}
+
+.section:last-child {
+  border-bottom: 0px solid #D9D9D9;
+}
+
+.subsection {
+  margin-left: 32px;
+}
