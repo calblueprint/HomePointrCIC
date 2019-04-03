@@ -68,6 +68,7 @@ ActiveRecord::Schema.define(version: 2019_03_13_195458) do
   create_table "properties", force: :cascade do |t|
     t.integer "capacity"
     t.text "description"
+    t.integer "number_of_openings"
     t.bigint "landlord_id"
     t.integer "rent"
     t.integer "size"

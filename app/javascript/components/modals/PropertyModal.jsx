@@ -135,7 +135,7 @@ class PropertyModal extends React.Component {
                 <h1> <Icon type="align-center" className="icon"/> Summary </h1>
                 <div className="subsection">
                   <Row gutter={32}>
-                    <Col span={12}>{this.props.description}</Col>
+                    <Col span={12}>{this.props.property.description}</Col>
                   </Row>
                 </div>
               </div>
@@ -143,7 +143,7 @@ class PropertyModal extends React.Component {
                 <h1> <Icon type="paper-clip" className="icon"/> Additional Paperwork </h1>
                 <div className="subsection">
                   <Row gutter={32}>
-                    <Col span={12}>add forms...</Col>
+                    <Col span={12}>{this.props.form ? this.props.form : 'None'}</Col>
                   </Row>
                 </div>
               </div>
@@ -159,7 +159,7 @@ class PropertyModal extends React.Component {
                   </Row>
                   <Row gutter={32}>
                     <Col span={8} className="text1">{this.props.property.capacity}</Col>
-                    <Col span={8} className="text1">{this.props.property.openings}</Col>
+                    <Col span={8} className="text1">{this.props.property.number_of_openings}</Col>
                     <Col span={8} className="text1">${this.props.property.rent}</Col>
                   </Row>
                   <Row gutter={32}>
@@ -168,7 +168,7 @@ class PropertyModal extends React.Component {
                     <Col span={8} className="title1">Floor Number</Col>
                   </Row>
                   <Row gutter={32}>
-                    <Col span={8} className="text1">{this.props.property.num_bedrooms}</Col>
+                    <Col span={8} className="text1">{this.props.property.number_of_bedrooms}</Col>
                     <Col span={8} className="text1">{this.props.property.number_of_bathrooms}</Col>
                     <Col span={8} className="text1">{this.props.property.floor_number}</Col>
                   </Row>
