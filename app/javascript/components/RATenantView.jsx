@@ -52,68 +52,76 @@ class RATenantView extends React.Component {
     return(
       <div className="details">
         <div className="section">
-          <h1> <Icon type="home" /> Basic </h1>
-          <Row>
-            <Col span={12}>Email</Col>
-            <Col span={12}>Phone</Col>
-          </Row>
-          <Row>
-            <Col span={12}>{this.props.tenant.email}</Col>
-            <Col span={12}>{this.props.tenant.phone}</Col>
-          </Row>
-          <Row>
-            <Col span={12}>Location</Col>
-            <Col span={12}>Family Size</Col>
-          </Row>
-          <Row>
-            <Col span={12}>--</Col>
-            <Col span={12}>--</Col>
-          </Row>
-          <Row>
-            <Col span={12}>Household Income</Col>
-            <Col span={12}>Receving Benefits?</Col>
-          </Row>
-          <Row>
-            <Col span={12}>--</Col>
-            <Col span={12}>--</Col>
-          </Row>
-          <Row>
-            <Col span={24}>Current Living Arrangements</Col>
-          </Row>
-          <Row>
-            <Col span={24}>--</Col>
-          </Row>
+          <h1> <Icon type="home" className="icon"/> Basic </h1>
+          <div className="subsection">
+            <Row>
+              <Col span={12} className="title2">Email</Col>
+              <Col span={12} className="title2">Phone</Col>
+            </Row>
+            <Row>
+              <Col span={12} className="text1">{this.props.tenant.email}</Col>
+              <Col span={12} className="text1">{this.props.tenant.phone}</Col>
+            </Row>
+            <Row>
+              <Col span={12} className="title2">Location</Col>
+              <Col span={12} className="title2">Family Size</Col>
+            </Row>
+            <Row>
+              <Col span={12} className="text1">--</Col>
+              <Col span={12} className="text1">--</Col>
+            </Row>
+            <Row>
+              <Col span={12} className="title2">Household Income</Col>
+              <Col span={12} className="title2">Receving Benefits?</Col>
+            </Row>
+            <Row>
+              <Col span={12} className="text1">--</Col>
+              <Col span={12} className="text1">--</Col>
+            </Row>
+            <Row>
+              <Col span={24} className="title2">Current Living Arrangements</Col>
+            </Row>
+            <Row>
+              <Col span={24} className="text1">--</Col>
+            </Row>
+          </div>
         </div>
         <div className="section">
-          <h1> <Icon type="home" /> Housing Preferences </h1>
-          <Row>
-            <Col span={8}>Property</Col>
-            <Col span={8}>Housing</Col>
-            <Col span={8}>Start Date (Date needed?)</Col>
-          </Row>
-          <Row>
-            <Col span={8}>{this.props.tenant.property_type}</Col>
-            <Col span={8}>{this.props.tenant.housing_type}</Col>
-            <Col span={8}>${this.props.tenant.date_needed}</Col>
-          </Row>
-          <Row>
-            <Col span={8}>Rent Min</Col>
-            <Col span={8}>Rent Max</Col>
-            <Col span={8}>Number of Bedrooms</Col>
-          </Row>
-          <Row>
-            <Col span={8}>{this.props.tenant.rent_min}</Col>
-            <Col span={8}>{this.props.tenant.rent_max}</Col>
-            <Col span={8}>{this.props.tenant.num_bedrooms}</Col>
-          </Row>
+          <h1> <Icon type="home" className="icon"/> Housing Preferences </h1>
+          <div className="subsection">
+            <Row>
+              <Col span={8} className="title2">Start Date</Col>
+              <Col span={8} className="title2">Property</Col>
+              <Col span={8} className="title2">Housing</Col>
+            </Row>
+            <Row>
+              <Col span={8} className="text1">${this.props.tenant.date_needed}</Col>
+              <Col span={8} className="text1">{this.props.tenant.property_type}</Col>
+              <Col span={8} className="text1">{this.props.tenant.housing_type}</Col>
+            </Row>
+            <Row>
+              <Col span={8} className="title2">Rent Min</Col>
+              <Col span={8} className="title2">Rent Max</Col>
+              <Col span={8} className="title2">Number of Bedrooms</Col>
+            </Row>
+            <Row>
+              <Col span={8} className="text1">{this.props.tenant.rent_min}</Col>
+              <Col span={8} className="text1">{this.props.tenant.rent_max}</Col>
+              <Col span={8} className="text1">{this.props.tenant.num_bedrooms}</Col>
+            </Row>
+          </div>
         </div>
         <div className="section">
-          <h1> <Icon type="align-center" /> Description </h1>
-          <p> {this.props.tenant.description} </p>
+          <h1> <Icon type="align-center" className="icon"/> Description </h1>
+          <div className="subsection">
+            <p> {this.props.tenant.description} </p>
+          </div>
         </div>
         <div className="section">
-          <h1> <Icon type="paper-clip" /> Client Form </h1>
-          <p> <Col span={12}>add forms...</Col> </p>
+          <h1> <Icon type="paper-clip" className="icon"/> Client Form </h1>
+          <div className="subsection">
+            <p> add forms... </p>
+          </div>
         </div>
       </div>
     )
