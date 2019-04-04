@@ -48,8 +48,10 @@ end
 
 def make_properties
   1.upto(NUM_PROPERTIES) do |n|
+    cap = Faker::Number.between(1, 25)
     property = Property.create(
-      capacity: Faker::Number.between(1, 25),
+      capacity: cap,
+      number_of_openings: cap,
       description: Faker::HowIMetYourMother.quote,
       landlord_id: Faker::Number.between(1, NUM_LANDLORDS),
       rent: Faker::Number.between(500, 3000),
@@ -71,6 +73,7 @@ def make_properties
     )
     property.images.attach(io: File.open('app/assets/images/house1.png'), filename: 'house1.png')
     property.images.attach(io: File.open('app/assets/images/house2.png'), filename: 'house2.png')
+    property.form.attach(io: File.open('app/assets/images/sample.pdf'), filename: 'sample.pdf')
     property.save
     printf("#{n}/#{NUM_PROPERTIES} Properties \r")
   end

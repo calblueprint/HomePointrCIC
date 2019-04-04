@@ -44,7 +44,7 @@ class PropertyModal extends React.Component {
           <Carousel autoplay>
             {this.props.property.images.map((image, index) => {
               return (
-                <div key={index}><h3><center><img src={image.url} margin-top="10%" height="320" width="400"/></center></h3></div>
+                <div key={index}><h3><center>{this.props.property.location}<img src={image.url} margin-top="10%" height="320" width="400"/></center></h3></div>
               )
             })}
           </Carousel>
@@ -97,7 +97,7 @@ class PropertyModal extends React.Component {
           View Info
         </Button>
         <Modal
-          title={this.props.property.location}
+          title={this.renderPhotos()}
           visible={this.state.visible}
           onOk={this.handleOk}
           onCancel={this.handleCancel}
@@ -143,7 +143,7 @@ class PropertyModal extends React.Component {
                 <h1> <Icon type="paper-clip" className="icon"/> Additional Paperwork </h1>
                 <div className="subsection">
                   <Row gutter={32}>
-                    <Col span={12}>{this.props.form ? this.props.form : 'None'}</Col>
+                    <Col span={12}>{this.props.property.form ? <a href={this.props.property.form} target="_blank">Housing Form</a> : 'None'}</Col>
                   </Row>
                 </div>
               </div>
