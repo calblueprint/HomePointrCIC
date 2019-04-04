@@ -4,7 +4,7 @@ import "antd/dist/antd.css";
 import Utils from 'helpers/utils';
 import { Form, Icon, Input, Button, Checkbox } from 'antd';
 import APIRoutes from 'helpers/api_routes';
-import '../../assets/stylesheets/loginpage.css';
+import '../../assets/stylesheets/entrypages.css';
 var logo = require('../../assets/images/logo.png');
 
 class LogInPage extends React.Component {
@@ -69,9 +69,9 @@ class LogInPage extends React.Component {
 
  render() {
    return (
-     <div className="frame">
+     <div className="small-frame">
        <Form onSubmit={this.handleSubmit}>
-         <img src={logo} className="logo"></img>
+        <div className="logo"/>
          <Form.Item>
              <Input
                type="string"
@@ -94,7 +94,7 @@ class LogInPage extends React.Component {
          <Form.Item>
              <Checkbox onChange={this.handleRememberMe}>Remember me</Checkbox>
            <a className="login-form-forgot" href="">Forgot password</a>
-           <Button type="primary" htmlType="submit" className="login-form-button">
+           <Button type="primary" htmlType="submit" className="button">
              Log in
            </Button>
            Or <a href="/users/sign_up">register now!</a>
@@ -103,7 +103,6 @@ class LogInPage extends React.Component {
      </div>
    );
  }
-
 }
 
 export default LogInPage;
