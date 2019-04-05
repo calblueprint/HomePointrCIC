@@ -188,15 +188,15 @@ class PropertyProfileForm extends React.Component {
         <Form onSubmit={this.handleEdit}>
           <h2>Basic</h2>
           <Form.Item
-            label="Property Name"
+            label="Address"
           >
-            {getFieldDecorator('name', {
-              initialValue: property.name,
+            {getFieldDecorator('address', {
+              initialValue: property.address,
               rules: [{
-                required: true, message: 'Please input the property name!',
+                required: true, message: 'Please input the address!',
               }],
             })(
-              <Input onChange={() => this.handleChange("name")}/>
+              <Input onChange={() => this.handleChange("address")}/>
             )}
           </Form.Item>
           <Form.Item

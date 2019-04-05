@@ -20,26 +20,25 @@ class CreatePropertyForm extends React.Component {
     super(props);
     this.state = {
       property: {
-        name: '',
-        capacity: 0,
+        capacity: null,
         description: '',
         landlord_id: this.props.current_userID,
-        rent: 0,
-        size: 1,
-        property_type: "other_property_type",
-        housing_type: "other_housing_type",
+        rent: null,
+        size: null,
+        property_type: null,
+        housing_type: null,
         date_available: new Date(),
-        location: "other_location",
+        location: null,
         address: '',
-        number_of_bedrooms: 0,
-        number_of_bathrooms: 0,
-        floor_number: 0,
-        mobility_aids: false,
-        furniture: false,
-        utilities_included: false,
-        accessible_shower: false,
-        car_parking: false,
-        lift_access: false,
+        number_of_bedrooms: null,
+        number_of_bathrooms: null,
+        floor_number: null,
+        mobility_aids: null,
+        furniture: null,
+        utilities_included: null,
+        accessible_shower: null,
+        car_parking: null,
+        lift_access: null,
 
         // name: '',
         // description: '',
@@ -214,15 +213,15 @@ class CreatePropertyForm extends React.Component {
         <h2>Step 1: Tell us about your space.</h2>
         <Form className="grid-container">
           <Form.Item
-            label="Property Name"
+            label="Address"
           >
-            {getFieldDecorator('name', {
-              initialValue: property.name,
+            {getFieldDecorator('address', {
+              initialValue: property.address,
               rules: [{
-                required: true, message: 'Please input the property name!',
+                required: true, message: 'Please input the address!',
               }],
             })(
-              <Input onChange={() => this.handleChange("name")}/>
+              <Input onChange={() => this.handleChange("address")}/>
             )}
           </Form.Item>
           <Form.Item
@@ -241,6 +240,7 @@ class CreatePropertyForm extends React.Component {
             label="Housing type"
           >
             {getFieldDecorator('housing_type', {
+              initialValue: property.housing_type ? property.housing_type : "Select one",
               rules: [{
                 required: true, message: 'Please select housing type!',
               }],
@@ -258,6 +258,7 @@ class CreatePropertyForm extends React.Component {
             label="Property type"
           >
             {getFieldDecorator('property_type', {
+              initialValue: property.property_type ? property.property_type : "Select one",
               rules: [{
                 required: true, message: 'Please select a property type!',
               }],
@@ -363,6 +364,7 @@ class CreatePropertyForm extends React.Component {
               label="Are there mobility aids?"
             >
               {getFieldDecorator('mobility_aids', {
+                initialValue: property.mobility_aids == null ? "Select one" : property.mobility_aids,
                 rules: [{
                   required: true, message: 'Please select a response!',
                 }],
@@ -377,6 +379,7 @@ class CreatePropertyForm extends React.Component {
               label="Is there lift access?"
             >
               {getFieldDecorator('lift_access', {
+                initialValue: property.lift_access == null ? "Select one" : property.lift_access,
                 rules: [{
                   required: true, message: 'Please select a response!',
                 }],
@@ -391,6 +394,7 @@ class CreatePropertyForm extends React.Component {
               label="Is the shower accessible?"
             >
               {getFieldDecorator('accessible_shower', {
+                initialValue: property.accessible_shower == null ? "Select one" : property.accessible_shower,
                 rules: [{
                   required: true, message: 'Please select a response!',
                 }],
@@ -405,6 +409,7 @@ class CreatePropertyForm extends React.Component {
               label="Are utilities included?"
             >
               {getFieldDecorator('utilities_included', {
+                initialValue: property.utilities_included == null ? "Select one" : property.utilities_included,
                 rules: [{
                   required: true, message: 'Please select a response!',
                 }],
@@ -419,6 +424,7 @@ class CreatePropertyForm extends React.Component {
               label="Is it furnished?"
             >
               {getFieldDecorator('furniture', {
+                initialValue: property.furniture == null ? "Select one" : property.furniture,
                 rules: [{
                   required: true, message: 'Please select a response!',
                 }],
@@ -433,6 +439,7 @@ class CreatePropertyForm extends React.Component {
               label="Is there car parking available?"
             >
               {getFieldDecorator('car_parking', {
+                initialValue: property.car_parking == null ? "Select one" : property.car_parking,
                 rules: [{
                   required: true, message: 'Please select a response!',
                 }],
