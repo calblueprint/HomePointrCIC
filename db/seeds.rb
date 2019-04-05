@@ -99,7 +99,7 @@ def make_tenants
       car_parking: Faker::Boolean.boolean,
       lift_access: Faker::Boolean.boolean
     )
-    tenant.avatar.attach(io: File.open('app/assets/images/avatar.jpg'), filename: 'avatar.jpg')
+    tenant.avatar.attach(io: File.open('app/assets/images/avatar2.jpg'), filename: 'avatar2.jpg')
     tenant.save
     printf("#{n}/#{NUM_TENTANTS} Tenants \r")
   end

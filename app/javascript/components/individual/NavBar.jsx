@@ -49,8 +49,9 @@ class NavBar extends React.Component {
     return (
       <div
         style={{
-          background: "#ECECEC",
-          height: "10%"
+          background: "#FFFFFF",
+          height: "64px",
+          borderBottom: "1px solid #C4C4C4"
         }}
       >
         {[

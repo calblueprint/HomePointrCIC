@@ -6,6 +6,8 @@ import PropertyModal from "./modals/PropertyModal";
 import ApplicationModal from "./modals/ApplicationModal";
 import Utils from 'helpers/utils';
 import "antd/dist/antd.css";
+import TenantCard from "./individual/TenantCard";
+import '../../assets/stylesheets/tenantcard.css';
 
 class ListView extends React.Component {
   constructor(props) {
@@ -15,6 +17,7 @@ class ListView extends React.Component {
       type: props.type,
       checkbox: props.checkbox,
       avatar: props.avatar,
+      displayTag: props.displayTag
     }
   }
 
@@ -94,16 +97,7 @@ class ListView extends React.Component {
     return this.state.resources.map((resource, index) => {
       const { Meta } = Card;
       return (
-        <div
-          style={{
-            background: "#ECECEC",
-            padding: "30px",
-            marginLeft: "20%",
-            marginRight: "20%",
-            marginTop: "2%"
-          }}
-          key={index}
-        >
+        <div>
           <Row gutter={16}>
             {this.state.type === "property" ? (
               <Card title={resource.location} bordered={false}>
@@ -118,13 +112,7 @@ class ListView extends React.Component {
                 {this.props.applications ? this.renderApplicationModal(this.props.applications[index]) : null}
               </Card>
             ) : (
-              <Card title={resource.name} bordered={false}>
-                <Meta
-                  avatar={this.renderAvatar(resource.url, "tenant")}
-                />
-                {this.renderTenantSelectButton(resource)}
-                {this.renderTenantModal(resource, index)}
-              </Card>
+              <TenantCard tenant={resource} displayTag={this.state.displayTag}/>
             )}
           </Row>
         </div>

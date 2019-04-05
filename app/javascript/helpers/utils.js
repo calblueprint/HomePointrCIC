@@ -1,15 +1,14 @@
 import React from "react";
+import { Upload, Icon, message } from 'antd';
+import Avatar from '../components/individual/Avatar.jsx';
 
 const Utils = {
-  activeStorageUploadRenderer: ({ handleUpload, uploads, ready }) => (
-    <div>
-      <input
-        type="file"
-        disabled={!ready}
-        onChange={e => handleUpload(e.currentTarget.files)}
-      />
+  activeStorageUploadRenderer: ({ handleUpload, uploads, ready }) => {
+    return(<div>
+      <Avatar handleUpload={handleUpload} uploads={uploads}/>
 
       {uploads.map(upload => {
+        // console.log(upload)
         switch (upload.state) {
           case 'waiting':
             return <p key={upload.id}>Waiting to upload {upload.file.name}</p>
@@ -29,10 +28,10 @@ const Utils = {
             return <p key={upload.id}>Finished uploading {upload.file.name}</p>
         }
       })}
-    </div>
-  ),
+    </div>)
+  },
 
-  //combine two dictionaries together 
+  //combine two dictionaries together
   //example: var a = { foo: true }, b = { bar: false };
   //result: { foo: true, bar: false }
   extend: (obj, src) => {
@@ -82,7 +81,7 @@ const Utils = {
       return null
     }
   }
-  
+
 }
 
 export default Utils;
