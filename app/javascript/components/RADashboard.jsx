@@ -27,24 +27,38 @@ class RADashboard extends React.Component {
     this.setup(this.state.tenants, this.props.tenantImages);
 		this.setup(this.state.tenants, this.props.tenantStatuses);
     return (
-      <div>
-        <Button
-          style={{
-            width: "20%",
-            margin: "1.5% auto",
-            left: "80%",
-          }}
-          key='submit'
-          type="primary"
-          onClick={this.redirectToNewTenant}>+ New Client
-        </Button>
-        <ListView
-					resources={this.state.tenants}
-					type="tenant"
-					avatar={true}
-					tenant_modal={false}
-					displayTag={true}
-				/>
+      <div style={{
+				display: "flex",
+				flexDirection: "row",
+				justifyContent: "center",
+			}}>
+				<div>
+					<h2 style={{
+						marginTop: "88px",
+						marginBottom: "42px",
+						marginLeft: "10%",
+					}}>Client Dashboard</h2>
+	        <ListView
+						resources={this.state.tenants}
+						type="tenant"
+						avatar={true}
+						tenant_modal={false}
+						displayTag={true}
+					/>
+				</div>
+				<div>
+	        <Button
+	          style={{
+	            width: "208px",
+	            margin: "1.5% auto",
+							marginTop: "154px",
+	            left: "80%",
+	          }}
+	          key='submit'
+	          type="primary"
+	          onClick={this.redirectToNewTenant}>+ Add new client
+	        </Button>
+				</div>
       </div>
     );
   }

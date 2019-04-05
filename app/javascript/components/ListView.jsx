@@ -7,6 +7,7 @@ import ApplicationModal from "./modals/ApplicationModal";
 import Utils from 'helpers/utils';
 import "antd/dist/antd.css";
 import TenantCard from "./individual/TenantCard";
+import '../../assets/stylesheets/tenantcard.css';
 
 class ListView extends React.Component {
   constructor(props) {
@@ -92,20 +93,20 @@ class ListView extends React.Component {
     return(<ApplicationModal application={app}/>)
   }
 
+  // style={{
+  //   background: "#ECECEC",
+  //   padding: "30px",
+  //   marginLeft: "20%",
+  //   marginRight: "20%",
+  //   marginTop: "2%"
+  // }}
+  // key={index}
+
   render() {
     return this.state.resources.map((resource, index) => {
       const { Meta } = Card;
       return (
-        <div
-          style={{
-            background: "#ECECEC",
-            padding: "30px",
-            marginLeft: "20%",
-            marginRight: "20%",
-            marginTop: "2%"
-          }}
-          key={index}
-        >
+        <div>
           <Row gutter={16}>
             {this.state.type === "property" ? (
               <Card title={resource.location} bordered={false}>

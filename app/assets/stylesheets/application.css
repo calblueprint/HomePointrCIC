@@ -14,7 +14,38 @@
  *= require_self
  */
 @import 'antd/dist/antd.css';
+@import url('https://rsms.me/inter/inter.css');
+
+/* @supports (font-variation-settings: normal) {
+  html { font-family: 'Inter var', sans-serif; }
+} */
 
 body {
-	font-family: "Avenir Next" !important;
+	font-family: 'Inter', sans-serif !important;
+	font-size: 14px;
+}
+
+h1 {
+	font-size: 24px;
+	font-weight: normal;
+	margin-left: 10%;
+	margin-top: 10%;
+}
+
+h2 {
+	font-size: 18px;
+	font-weight: normal;
+	margin-bottom: 42px;
+}
+
+h3 {
+	text-transform: uppercase;
+	font-size: 10px;
+	margin-bottom: 4px;
+	color: rgba(0,0,0,0.5);
+}
+
+.tag {
+  margin-right: 20%;
+  cursor: default;
 }
