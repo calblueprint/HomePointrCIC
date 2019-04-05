@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_02_27_041328) do
+ActiveRecord::Schema.define(version: 2019_03_13_195458) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -40,12 +40,12 @@ ActiveRecord::Schema.define(version: 2019_02_27_041328) do
     t.integer "status"
     t.text "description"
     t.bigint "property_id"
-    t.bigint "info_id"
+    t.bigint "tenant_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["info_id", "property_id"], name: "index_applications_on_info_id_and_property_id", unique: true
-    t.index ["info_id"], name: "index_applications_on_info_id"
     t.index ["property_id"], name: "index_applications_on_property_id"
+    t.index ["tenant_id", "property_id"], name: "index_applications_on_tenant_id_and_property_id", unique: true
+    t.index ["tenant_id"], name: "index_applications_on_tenant_id"
   end
 
   create_table "emails", force: :cascade do |t|
@@ -56,13 +56,6 @@ ActiveRecord::Schema.define(version: 2019_02_27_041328) do
     t.string "confirmation_token"
     t.datetime "confirmed_at"
     t.datetime "confirmation_sent_at"
-  end
-
-  create_table "infos", force: :cascade do |t|
-    t.bigint "tenant_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["tenant_id"], name: "index_infos_on_tenant_id"
   end
 
   create_table "properties", force: :cascade do |t|
@@ -76,6 +69,15 @@ ActiveRecord::Schema.define(version: 2019_02_27_041328) do
     t.date "date_available"
     t.integer "location"
     t.string "address"
+    t.integer "number_of_bedrooms"
+    t.integer "number_of_bathrooms"
+    t.integer "floor_number"
+    t.boolean "mobility_aids"
+    t.boolean "furniture"
+    t.boolean "utilities_included"
+    t.boolean "accessible_shower"
+    t.boolean "car_parking"
+    t.boolean "lift_access"
     t.index ["landlord_id"], name: "index_properties_on_landlord_id"
   end
 
@@ -94,6 +96,12 @@ ActiveRecord::Schema.define(version: 2019_02_27_041328) do
     t.date "date_needed"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "number_of_bedrooms"
+    t.integer "number_of_bathrooms"
+    t.boolean "mobility_aids"
+    t.boolean "accessible_shower"
+    t.boolean "car_parking"
+    t.boolean "lift_access"
     t.index ["referral_agency_id"], name: "index_tenants_on_referral_agency_id"
   end
 

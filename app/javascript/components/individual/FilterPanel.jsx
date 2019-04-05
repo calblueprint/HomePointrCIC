@@ -49,30 +49,22 @@ class FilterPanel extends React.Component {
 
   toggleOpen = () => {
     this.setState({isOpen: !this.state.isOpen})
+    this.handleState()
   }
 
   handleState() {
-    this.state.location = [this.props.selectedTenant.location];
-    this.state.capacity = 0;
-    this.state.rent_min = this.props.selectedTenant.rent_min;
-    this.state.rent_max = this.props.selectedTenant.rent_max;
-    this.state.size = this.props.selectedTenant.num_bedrooms;
-    this.state.property_type = [this.props.selectedTenant.property_type];
-    this.state.housing_type = [this.props.selectedTenant.housing_type];
-    this.state.date_available = this.props.selectedTenant.date_needed;
+    if (this.props.selectedTenant) {
+      this.setState({
+        location: [this.props.selectedTenant.location],
+        rent_min: this.props.selectedTenant.rent_min,
+        rent_max: this.props.selectedTenant.rent_max,
+        size: this.props.selectedTenant.num_bedrooms,
+        property_type: [this.props.selectedTenant.property_type],
+        housing_type: [this.props.selectedTenant.housing_type],
+        date_available: moment(this.props.selectedTenant.date_needed),
+      })
+    }
   }
-
-  // restoreState() {
-  //   this.state.location = [];
-  //   this.state.capacity = 0;
-  //   this.state.rent_min = 0;
-  //   this.state.rent_max = 9999;
-  //   this.state.size = 10;
-  //   this.state.property_type = [];
-  //   this.state.housing_type = [];
-  //   this.state.date_available = moment().format("YYYY-MM-DD");
-  //   render();
-  // }
 
   render() {
     const CheckboxGroup = Checkbox.Group;

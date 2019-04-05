@@ -45,7 +45,7 @@ class ApplicationsPairing extends React.Component {
     var request = null;
     var prop;
     for (prop in this.state.selectedProperties) {
-      let body = {"description": this.state.description, "status": 1, "property_id": this.state.selectedProperties[prop], "info_id": this.state.selectedTenant.id};
+      let body = {"description": this.state.description, "status": 1, "property_id": this.state.selectedProperties[prop], "tenant_id": this.state.selectedTenant.id};
       body = JSON.stringify({application: body})
       request = APIRoutes.applications.create
       fetch(request, {

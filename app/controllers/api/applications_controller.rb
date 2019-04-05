@@ -33,7 +33,7 @@ class Api::ApplicationsController < ApplicationController
 
   def application_params
     if current_user.type == 'ReferralAgency'
-      params.require(:application).permit(%i[status property_id info_id description form])
+      params.require(:application).permit(%i[status property_id tenant_id description form])
     else
       params.require(:application).permit([:status])
     end
