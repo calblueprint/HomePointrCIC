@@ -48,7 +48,6 @@ class TenantCard extends React.Component {
   render() {
     return(
       <div onClick={this.redirectToTenantPage} className="tenant-card">
-
         <div className="avatar">{this.renderAvatar()}</div>
         <div className="content-container">
           <div className="header-container">

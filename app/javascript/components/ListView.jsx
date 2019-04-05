@@ -93,15 +93,6 @@ class ListView extends React.Component {
     return(<ApplicationModal application={app}/>)
   }
 
-  // style={{
-  //   background: "#ECECEC",
-  //   padding: "30px",
-  //   marginLeft: "20%",
-  //   marginRight: "20%",
-  //   marginTop: "2%"
-  // }}
-  // key={index}
-
   render() {
     return this.state.resources.map((resource, index) => {
       const { Meta } = Card;
@@ -122,13 +113,6 @@ class ListView extends React.Component {
               </Card>
             ) : (
               <TenantCard tenant={resource} displayTag={this.state.displayTag}/>
-              // <Card title={resource.name} bordered={false}>
-              //   <Meta
-              //     avatar={this.renderAvatar(resource.url, "tenant")}
-              //   />
-              //   {this.renderTenantSelectButton(resource)}
-              //   {this.renderTenantModal(resource, index)}
-              // </Card>
             )}
           </Row>
         </div>
