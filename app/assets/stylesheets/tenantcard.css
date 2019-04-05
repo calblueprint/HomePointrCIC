@@ -8,6 +8,13 @@
   border-radius: 4px;
   margin-left: 10%;
   margin-bottom: 32px;
+  box-shadow: 0px 0px 0px 0px #D3D3D3;
+  transition: box-shadow 0.05s linear;
+}
+
+.tenant-card:hover {
+  cursor: pointer;
+  box-shadow: 0px 0px 0px 2px #D3D3D3;
 }
 
 .avatar {

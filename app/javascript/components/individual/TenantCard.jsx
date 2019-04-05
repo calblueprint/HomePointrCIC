@@ -41,9 +41,13 @@ class TenantCard extends React.Component {
     )
   }
 
+  redirectToTenantPage = () => {
+    window.location='/tenants/' + this.state.tenant.id;
+  }
+
   render() {
     return(
-      <div className="tenant-card">
+      <div onClick={this.redirectToTenantPage} className="tenant-card">
 
         <div className="avatar">{this.renderAvatar()}</div>
         <div className="content-container">

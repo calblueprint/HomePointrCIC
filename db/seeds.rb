@@ -84,7 +84,7 @@ def make_tenants
       referral_agency_id: Faker::Number.between(NUM_LANDLORDS + 1, NUM_REFERRAL_AGENCIES + NUM_LANDLORDS),
       date_needed: Date.today
     )
-    tenant.avatar.attach(io: File.open('app/assets/images/avatar.jpg'), filename: 'avatar.jpg')
+    tenant.avatar.attach(io: File.open('app/assets/images/avatar2.jpg'), filename: 'avatar2.jpg')
     tenant.save
     Info.create(tenant_id: tenant.id)
     printf("#{n}/#{NUM_TENTANTS} Tenants \r")
