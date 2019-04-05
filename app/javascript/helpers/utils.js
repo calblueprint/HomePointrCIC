@@ -31,7 +31,7 @@ const Utils = {
     </div>)
   },
 
-  //combine two dictionaries together 
+  //combine two dictionaries together
   //example: var a = { foo: true }, b = { bar: false };
   //result: { foo: true, bar: false }
   extend: (obj, src) => {
@@ -81,7 +81,7 @@ const Utils = {
       return null
     }
   }
-  
+
 }
 
 export default Utils;
