@@ -3,8 +3,9 @@
   flex-direction: row;
   justify-content: space-between; */
   width: 610px;
-  height: 144px;
+  height: 146px;
   border: 1px solid #C4C4C4;
+  outline-offset: 2px;
   border-radius: 4px;
   margin-left: 10%;
   margin-bottom: 32px;
@@ -31,12 +32,13 @@
 .header-container {
   display: inline-block;
   margin-top: 22px;
+  margin-bottom: 26px;
+  width: 400px;
 }
 
 .title {
   display: inline-block;
-  width: 240px;
-  height: 18px;
+  width: 175px;
 }
 
 .content-container {
@@ -49,8 +51,12 @@
   display: block;
 }
 
+.chips-container {
+  display: inline-block;
+}
+
 .status-tag {
   display: inline-block;
   padding-top: 7px;
-  padding-bottom: 13px;
+  float: right;
 }

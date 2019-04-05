@@ -28,14 +28,14 @@ body {
 h1 {
   font-size: 24px;
   font-weight: normal;
-  margin-left: 10%;
   margin-top: 10%;
 }
 
 h2 {
   font-size: 18px;
   font-weight: normal;
-  margin-bottom: 42px;
+  line-height: 22px;
+  margin: 0;
 }
 
 h3 {
@@ -45,7 +45,21 @@ h3 {
   color: rgba(0,0,0,0.5);
 }
 
+p {
+  font-size: 14px;
+  font-weight: normal;
+  line-height: 22px;
+  margin: 0;
+}
+
 .tag {
-  margin-right: 20%;
   cursor: default;
+  font-size: 13px;
+  height: 28px;
+  padding: 2px 12px 4px 12px;
+}
+
+.icon {
+  font-size: 16px;
+  margin-right: 6px;
 }

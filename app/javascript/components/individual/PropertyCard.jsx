@@ -5,11 +5,11 @@ import Utils from "helpers/utils";
 import '../../../assets/stylesheets/tenantcard.css';
 import '../../../assets/stylesheets/application.css';
 
-class TenantCard extends React.Component {
+class PropertyCard extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      tenant: this.props.tenant,
+      property: this.props.property,
       displayTag: this.props.displayTag
     }
   }
@@ -72,4 +72,4 @@ class TenantCard extends React.Component {
 
 }
 
-export default TenantCard;
+export default PropertyCard;
