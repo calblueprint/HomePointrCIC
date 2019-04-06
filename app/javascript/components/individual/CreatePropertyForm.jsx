@@ -74,8 +74,6 @@ class CreatePropertyForm extends React.Component {
       housing_types: props.categories.housing_types,
       property_types: props.categories.property_types,
       locations: props.categories.locations,
-      files: this.props.property.files,
-      images: this.props.property.images,
       fileList: [],
       imageRemoveList: [],
       disabled: false, //to prevent multiple form submissions
@@ -506,7 +504,7 @@ class CreatePropertyForm extends React.Component {
         <h3>Photos help guests imagine staying in your place. You can start with one and add more after you publish.</h3>
         <Form>
           <Form.Item
-            label="Add image"
+            label="Add images"
           >
             <ActiveStorageProvider
               endpoint={{
@@ -539,7 +537,7 @@ class CreatePropertyForm extends React.Component {
         <h3>Do you require potential clients to fill out any additional paperwork outside of the general client form?</h3>
         <Form>
           <Form.Item
-            label="Upload file"
+            label="Upload files"
           >
             <ActiveStorageProvider
               endpoint={{
