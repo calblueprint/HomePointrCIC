@@ -204,7 +204,7 @@ class CreateFormTenants extends React.Component {
     const Option = Select.Option;
     return (
       <div className="container">
-        <h3>Step 1: blah blah blah</h3>
+        <div>Step 1: blah blah blah</div>
         <Form className="grid-container">
           <Form.Item
             label="Name"
@@ -336,7 +336,7 @@ class CreateFormTenants extends React.Component {
     const { tenant } = this.state;
     return (
       <div className="container">
-        <h3>Step 2: Housing preferences</h3>
+        <div>Step 2: Housing preferences</div>
         <Form>
           <div className="grid-container">
             <Form.Item
