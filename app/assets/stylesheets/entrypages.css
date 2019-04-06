@@ -1,0 +1,55 @@
+.big-frame {
+ width: 820px;
+ padding-top: 40px;
+ padding-bottom: 40px;
+ padding-left: 80px;
+ padding-right: 80px;
+ position: absolute;
+ top: 50%;
+ left: 50%;
+ transform: translate(-50%, -50%);
+ border: 1px solid #D9D9D9;
+ border-radius: 8px;
+}
+
+.small-frame {
+ width: 480px;
+ padding-top: 40px;
+ padding-bottom: 40px;
+ padding-left: 96px;
+ padding-right: 96px;
+ position: absolute;
+ top: 50%;
+ left: 50%;
+ transform: translate(-50%, -50%);
+ border: 1px solid #D9D9D9;
+ border-radius: 8px;
+}
+
+.logo {
+  width: 100%;
+  height: 56px;
+  margin-top: 32px;
+  margin-bottom: 48px;
+  background-image: url("../../assets/images/logo.png");
+  background-repeat: no-repeat;
+  background-size: 120px;
+  background-position: center;
+}
+
+.buttons-container {
+  margin-top: 64px;
+  margin-bottom: 36px;
+}
+
+.login-form-forgot {
+ float: right;
+}
+
+.button {
+  width: 100%;
+}
+
+.errormsg {
+  color: red;
+}

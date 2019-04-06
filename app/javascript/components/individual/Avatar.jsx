@@ -1,42 +1,41 @@
 import { Upload, Icon, message } from 'antd';
 import React from "react";
 // import '../../../assets/stylesheets/avatar.css';
-import { AttachmentUpload } from "./attachment_upload"
 
 class Avatar extends React.Component {
 
   constructor(props) {
     super(props);
     this.state = {
+      tenant: this.props.tenant,
       loading: false,
-      imageUrl: null,
     };
     this.getBase64 = this.getBase64.bind(this);
     this.handleChange = this.handleChange.bind(this);
   }
 
   getBase64(img, callback) {
-    debugger
     const reader = new FileReader();
     reader.addEventListener('load', () => callback(reader.result));
     reader.readAsDataURL(img);
   }
 
   handleChange(info) {
-    debugger  
-    if (info.state === 'finished') {
+    if (info.file.status === 'uploading') {
+      this.setState({ loading: true });
+      return;
+    }
+    if (info.file.status === 'done') {
       // Get this url from response in real world.
-      this.getBase64(info.file, imageUrl => this.setState({
+      this.getBase64(info.file.originFileObj, imageUrl => this.setState({
         imageUrl,
         loading: false,
       }));
     }
-    if (info.state != 'finished' && info.progress != 100) {
-      this.setState({ loading: true });
-      return;
-    }
-
+    this.state.tenant["avatar"] = info.file;
     console.log("IN HANDLECHANGE IN AVATAR")
+    console.log(info.file);
+    console.log(info.file.name);
   }
 
   render() {
@@ -47,44 +46,24 @@ class Avatar extends React.Component {
       </div>
     );
 
+    const dummyRequest = ({ file, onSuccess }) => {
+      setTimeout(() => {
+        onSuccess("ok");
+      }, 0);
+    };
+
     const imageUrl = this.state.imageUrl;
     return (
-
-      [<Upload
+      <Upload
         name="avatar"
         listType="picture-card"
         className="avatar-uploader"
         showUploadList={false}
-        customRequest={({file}) => {this.props.handleUpload([file])}}
-        // onChange={this.handleChange}
+        onChange={this.handleChange}
+        customRequest={dummyRequest}
       >
-        {imageUrl ? <img src={imageUrl} alt="avatar" width="250px"/> : uploadButton}
-      </Upload>,
-
-      this.props.uploads.map(upload => {
-        // console.log(upload)
-        switch (upload.state) {
-          case 'waiting':
-            return <p key={upload.id}>Waiting to upload {upload.file.name}</p>
-          case 'uploading':
-            this.handleChange(upload)
-            return (
-              <p key={upload.id}>
-                Uploading {upload.file.name}: {upload.progress}%
-              </p>
-            )
-          case 'error':
-            return (
-              <p key={upload.id}>
-                Error uploading {upload.file.name}: {upload.error}
-              </p>
-            )
-          case 'finished':
-            this.handleChange(upload)
-            return <p key={upload.id}>Finished uploading {upload.file.name}</p>
-        }
-      })]
-
+        {imageUrl ? <img src={imageUrl} alt="avatar" /> : uploadButton}
+      </Upload>
     );
   }
 }
