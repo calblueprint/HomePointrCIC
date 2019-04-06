@@ -6,6 +6,8 @@ import RATenantView from "./RATenantView.jsx";
 import ListView from "./ListView.jsx";
 import Utils from 'helpers/utils';
 import { Icon, Button, Tabs } from "antd";
+import PropertyModal from "./modals/PropertyModal";
+import SubmissionModal from "./modals/SubmissionModal";
 
 class TenantShowPage extends React.Component {
   constructor(props) {
@@ -32,6 +34,8 @@ class TenantShowPage extends React.Component {
     );
     const rightComponent = ([
       <h1>Applications</h1>,
+      <PropertyModal property={this.props.properties[0]}/>,
+      <SubmissionModal property={this.props.properties[0]}/>,
       <ListView key={this.props.tenant.id} applications={this.state.applications} resources={this.state.properties} property_modal={true} type="property"/>
     ]);
 
