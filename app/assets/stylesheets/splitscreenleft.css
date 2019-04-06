@@ -4,6 +4,7 @@
 
 .section-header {
   margin-bottom: 24px;
+  margin-top: 8px;
 }
 
 .profile-picture {
@@ -11,9 +12,13 @@
  transform: translate(-50%);
 }
 
-.editButton {
-  margin-top: 42px;
+.chips {
+  margin-top: 28px;
   float: right;
+}
+
+.edit-button {
+  margin-left: 16px;
 }
 
 .section:not(:last-child) {

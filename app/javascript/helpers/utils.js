@@ -1,5 +1,5 @@
 import React from "react";
-import { Upload, Icon, message } from 'antd';
+import { Tag, Upload, Icon, message } from 'antd';
 import Avatar from '../components/individual/Avatar.jsx';
 
 const Utils = {
