@@ -75,7 +75,7 @@ class RATenantView extends React.Component {
             </Row>
             <Row>
               <Col span={12} className="content-text"><p>${this.props.tenant.income}</p></Col>
-              <Col span={12} className="content-text"><p>{this.props.tenant.benefits}</p></Col>
+              <Col span={12} className="content-text"><p>{this.props.tenant.benefits ? 'Yes' : 'No'}</p></Col>
             </Row>
             <Row>
               <Col span={24}><h3>Current Living Arrangements</h3></Col>
@@ -106,7 +106,7 @@ class RATenantView extends React.Component {
             <Row>
               <Col span={8} className="content-text"><p>${this.props.tenant.rent_min}</p></Col>
               <Col span={8} className="content-text"><p>${this.props.tenant.rent_max}</p></Col>
-              <Col span={8} className="content-text"><p>{this.props.tenant.num_bedrooms}</p></Col>
+              <Col span={8} className="content-text"><p>{this.props.tenant.number_of_bedrooms}</p></Col>
             </Row>
           </div>
         </div>

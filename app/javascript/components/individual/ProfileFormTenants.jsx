@@ -77,7 +77,9 @@ class ProfileFormTenants extends React.Component {
   }
 
   //api edit
-  handleEdit() {
+  handleEdit = (event) => {
+    event.preventDefault();
+    console.log('we in')
     let id = this.state.tenant.id;
     var request = null;
     var body = this.convertToDict()

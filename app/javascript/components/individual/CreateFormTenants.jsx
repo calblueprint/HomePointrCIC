@@ -95,7 +95,6 @@ class CreateFormTenants extends React.Component {
 
   // api create
   handleCreate() {
-
     console.log(this.state.tenant);
     this.setState({disabled: true});
     var body = this.convertToDict()

@@ -58,7 +58,7 @@ class Avatar extends React.Component {
         onChange={this.handleChange}
         customRequest={dummyRequest}
       >
-        {imageUrl ? <img src={imageUrl} alt="avatar" /> : uploadButton}
+        {imageUrl ? <img src={imageUrl} width='200px' alt="avatar" /> : uploadButton}
       </Upload>
     );
   }
