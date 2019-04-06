@@ -28,7 +28,7 @@ class CreateFormTenants extends React.Component {
         rent_max: 5000,
         housing_type: "other_housing_type",
         property_type: "other_property_type",
-        num_bedrooms: 1,
+        number_of_bedrooms: 1,
         location: "other_location",
         referral_agency_id: this.props.current_userID,
         date_needed: new Date(),
@@ -86,8 +86,8 @@ class CreateFormTenants extends React.Component {
 
   convertToDict() {
     const tenant = this.state.tenant;
-    const keys = ["name", "description", "email", "phone", "rent_min", "rent_max", "housing_type", "property_type", "num_bedrooms", "location", "referral_agency_id", "date_needed", "avatar", "number_of_bathrooms", "mobility_aids", "accessible_shower", "car_parking", "lift_access"];
-    const values = [tenant.name, tenant.description, tenant.email, tenant.phone, tenant.rent_min, tenant.rent_max, tenant.housing_type, tenant.property_type, tenant.num_bedrooms, tenant.location, tenant.referral_agency_id, tenant.date_needed, tenant.avatar, tenant.number_of_bathrooms, tenant.mobility_aids, tenant.accessible_shower, tenant.car_parking, tenant.lift_access];
+    const keys = ["name", "description", "email", "phone", "rent_min", "rent_max", "housing_type", "property_type", "number_of_bedrooms", "location", "referral_agency_id", "date_needed", "avatar", "number_of_bathrooms", "mobility_aids", "accessible_shower", "car_parking", "lift_access"];
+    const values = [tenant.name, tenant.description, tenant.email, tenant.phone, tenant.rent_min, tenant.rent_max, tenant.housing_type, tenant.property_type, tenant.number_of_bedrooms, tenant.location, tenant.referral_agency_id, tenant.date_needed, tenant.avatar, tenant.number_of_bathrooms, tenant.mobility_aids, tenant.accessible_shower, tenant.car_parking, tenant.lift_access];
     let result = keys.reduce((obj, k, i) => ({...obj, [k]: values[i] }), {})
     return result
   }
@@ -376,8 +376,8 @@ class CreateFormTenants extends React.Component {
             <Form.Item
               label="Number of Bedrooms"
             >
-              {getFieldDecorator('num_bedrooms', {
-                initialValue: tenant.num_bedrooms,
+              {getFieldDecorator('number_of_bedrooms', {
+                initialValue: tenant.number_of_bedrooms,
                 rules: [{
                   required: true, message: 'Please pick a number of bedrooms!',
                 }],
@@ -385,8 +385,8 @@ class CreateFormTenants extends React.Component {
                 <InputNumber
                   min={0}
                   max={10}
-                  value={tenant.num_bedrooms}
-                  onChange={(value) => this.handleChangeSelect("num_bedrooms", value)}
+                  value={tenant.number_of_bedrooms}
+                  onChange={(value) => this.handleChangeSelect("number_of_bedrooms", value)}
                 />
               )}
             </Form.Item>
@@ -419,46 +419,46 @@ class CreateFormTenants extends React.Component {
                 <DatePicker onChange={this.handleChangeDate}/>
               )}
             </Form.Item>
-            <Form.Item
-              label="Rent"
-            >
-              {getFieldDecorator('rent', {
-                rules: [{
-                  required: true, message: 'Please select your range for rent!',
-                }],
-              })(
-                <Row gutter={10}>
-                  <Col span={6}>
-                    <InputNumber
-                      min={0}
-                      max={5000}
-                      style={{ width: 80 }}
-                      value={tenant.rent_min}
-                      onChange={() => this.handleChange("rent_min")}
-                    />
-                  </Col>
-                  <Col className="slider" span={12}>
-                    <Slider
-                      range marks={marks}
-                      min={0}
-                      max={5000}
-                      style={{ width: 200, paddingLeft: 10 }}
-                      defaultValue={typeof tenant.rent_min === 'number' && typeof tenant.rent_max === 'number'? [tenant.rent_min, tenant.rent_max] : [0, 5000]}
-                      onChange={this.sliderChanges}/>
-                  </Col>
-                  <Col span={6}>
-                    <InputNumber
-                      min={0}
-                      max={5000}
-                      style={{ width: 80 }}
-                      value={tenant.rent_max}
-                      onChange={() => this.handleChange("rent_max")}
-                    />
-                  </Col>
-                </Row>
-              )}
-            </Form.Item>
           </div>
+          <Form.Item
+            label="Rent"
+          >
+            {getFieldDecorator('rent', {
+              rules: [{
+                required: true, message: 'Please select your range for rent!',
+              }],
+            })(
+              <Row gutter={10}>
+                <Col span={6}>
+                  <InputNumber
+                    min={0}
+                    max={5000}
+                    style={{ width: 80 }}
+                    value={tenant.rent_min}
+                    onChange={() => this.handleChange("rent_min")}
+                  />
+                </Col>
+                <Col className="slider" span={12}>
+                  <Slider
+                    range marks={marks}
+                    min={0}
+                    max={5000}
+                    style={{ width: 200, paddingLeft: 10 }}
+                    defaultValue={typeof tenant.rent_min === 'number' && typeof tenant.rent_max === 'number'? [tenant.rent_min, tenant.rent_max] : [0, 5000]}
+                    onChange={this.sliderChanges}/>
+                </Col>
+                <Col span={6}>
+                  <InputNumber
+                    min={0}
+                    max={5000}
+                    style={{ width: 80 }}
+                    value={tenant.rent_max}
+                    onChange={() => this.handleChange("rent_max")}
+                  />
+                </Col>
+              </Row>
+            )}
+          </Form.Item>
         </Form>
         <div className="buttons">
           <Button className="previous" onClick={() => {this.nextButton(1)}}>Previous</Button>
@@ -473,68 +473,72 @@ class CreateFormTenants extends React.Component {
     const { getFieldDecorator } = this.props.form;
     const Option = Select.Option;
     return (
-      <div>
+      <div className="container">
         <div>Step 3: blah blah</div>
         <Form>
-          <Form.Item
-            label="Mobility Aids"
-          >
-            {getFieldDecorator('mobility_aids', {
-              rules: [{
-                required: true, message: 'Please select a response!',
-              }],
-            })(
-              <Select placeholder="Select One" onChange={(value) => this.handleChangeSelect("mobility_aids", value)}>
-                <Option value={true}>Yes</Option>
-                <Option value={false}>No</Option>
-              </Select>
-            )}
-          </Form.Item>
-          <Form.Item
-            label="Accessible Shower"
-          >
-            {getFieldDecorator('accessible_shower', {
-              rules: [{
-                required: true, message: 'Please select a response!',
-              }],
-            })(
-              <Select placeholder="Select One" onChange={(value) => this.handleChangeSelect("accessible_shower", value)}>
-                <Option value={true}>Yes</Option>
-                <Option value={false}>No</Option>
-              </Select>
-            )}
-          </Form.Item>
-          <Form.Item
-            label="Car Parking"
-          >
-            {getFieldDecorator('car_parking', {
-              rules: [{
-                required: true, message: 'Please select a response!',
-              }],
-            })(
-              <Select placeholder="Select One" onChange={(value) => this.handleChangeSelect("car_parking", value)}>
-                <Option value={true}>Yes</Option>
-                <Option value={false}>No</Option>
-              </Select>
-            )}
-          </Form.Item>
-          <Form.Item
-            label="Lift Access"
-          >
-            {getFieldDecorator('lift_access', {
-              rules: [{
-                required: true, message: 'Please select a response!',
-              }],
-            })(
-              <Select placeholder="Select One" onChange={(value) => this.handleChangeSelect("lift_access", value)}>
-                <Option value={true}>Yes</Option>
-                <Option value={false}>No</Option>
-              </Select>
-            )}
-          </Form.Item>
+          <div className="grid-container">
+            <Form.Item
+              label="Mobility Aids"
+            >
+              {getFieldDecorator('mobility_aids', {
+                rules: [{
+                  required: true, message: 'Please select a response!',
+                }],
+              })(
+                <Select placeholder="Select One" onChange={(value) => this.handleChangeSelect("mobility_aids", value)}>
+                  <Option value={true}>Yes</Option>
+                  <Option value={false}>No</Option>
+                </Select>
+              )}
+            </Form.Item>
+            <Form.Item
+              label="Accessible Shower"
+            >
+              {getFieldDecorator('accessible_shower', {
+                rules: [{
+                  required: true, message: 'Please select a response!',
+                }],
+              })(
+                <Select placeholder="Select One" onChange={(value) => this.handleChangeSelect("accessible_shower", value)}>
+                  <Option value={true}>Yes</Option>
+                  <Option value={false}>No</Option>
+                </Select>
+              )}
+            </Form.Item>
+            <Form.Item
+              label="Car Parking"
+            >
+              {getFieldDecorator('car_parking', {
+                rules: [{
+                  required: true, message: 'Please select a response!',
+                }],
+              })(
+                <Select placeholder="Select One" onChange={(value) => this.handleChangeSelect("car_parking", value)}>
+                  <Option value={true}>Yes</Option>
+                  <Option value={false}>No</Option>
+                </Select>
+              )}
+            </Form.Item>
+            <Form.Item
+              label="Lift Access"
+            >
+              {getFieldDecorator('lift_access', {
+                rules: [{
+                  required: true, message: 'Please select a response!',
+                }],
+              })(
+                <Select placeholder="Select One" onChange={(value) => this.handleChangeSelect("lift_access", value)}>
+                  <Option value={true}>Yes</Option>
+                  <Option value={false}>No</Option>
+                </Select>
+              )}
+            </Form.Item>
+          </div>
         </Form>
-        <Button onClick={() => {this.nextButton(2)}}>Previous</Button>
-        <Button type="primary" onClick={() => {this.nextButton(4)}}>Next</Button>
+        <div className="buttons">
+          <Button className="previous" onClick={() => {this.nextButton(2)}}>Previous</Button>
+          <Button className="next" type="primary" onClick={() => {this.nextButton(4)}}>Next</Button>
+        </div>
       </div>
     )
   }
@@ -543,7 +547,7 @@ class CreateFormTenants extends React.Component {
     const { tenant } = this.state;
     const { getFieldDecorator } = this.props.form;
     return (
-      <div>
+      <div className="container">
         <div>Step 4: Wooo description</div>
         <Form>
           <Form.Item
@@ -555,12 +559,14 @@ class CreateFormTenants extends React.Component {
                 required: true, message: 'Please input your description!',
               }],
             })(
-              <Input onChange={() => this.handleChange("description")}/>
+              <Input style={{ height: 120 }} onChange={() => this.handleChange("description")}/>
             )}
           </Form.Item>
         </Form>
-        <Button onClick={() => {this.nextButton(3)}}>Previous</Button>
-        <Button type="primary" onClick={() => {this.nextButton(5)}}>Next</Button>
+        <div className="buttons">
+          <Button className="previous" onClick={() => {this.nextButton(3)}}>Previous</Button>
+          <Button className="next" type="primary" onClick={() => {this.nextButton(5)}}>Next</Button>
+        </div>
       </div>
     )
   }

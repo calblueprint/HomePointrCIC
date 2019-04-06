@@ -28,9 +28,8 @@ class Api::TenantsController < ApplicationController
 
     # avatar_attr = tenant_attr.delete("avatar")
     # @tenant = Tenant.find(params[:id])
-    puts("--------------TENANT UPDATE-------------")
+
     saved = @tenant.update(tenant_params)
-    # puts(avatar_attr)
     if saved
       if ActiveStorage::Blob.last.id != $activestoragestart
         a = ActiveStorage::Blob.last
@@ -65,7 +64,7 @@ class Api::TenantsController < ApplicationController
       :rent_max,
       :housing_type,
       :property_type,
-      :num_bedrooms,
+      :number_of_bedrooms,
       :location,
       :referral_agency_id,
       :date_needed,

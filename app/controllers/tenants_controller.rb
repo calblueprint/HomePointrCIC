@@ -84,7 +84,7 @@ class TenantsController < ApplicationController
       :rent_max,
       :housing_type,
       :property_type,
-      :num_bedrooms,
+      :number_of_bedrooms,
       :location,
       :referral_agency_id,
       :date_needed,

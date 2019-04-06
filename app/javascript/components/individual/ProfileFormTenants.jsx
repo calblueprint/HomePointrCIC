@@ -45,8 +45,8 @@ class ProfileFormTenants extends React.Component {
 
   convertToDict() {
     const tenant = this.state.tenant;
-    const keys = ["name", "description", "email", "phone", "rent_min", "rent_max", "housing_type", "property_type", "num_bedrooms", "location", "referral_agency_id", "date_needed", "avatar", "number_of_bathrooms", "mobility_aids", "accessible_shower", "car_parking", "lift_access"];
-    const values = [tenant.name, tenant.description, tenant.email, tenant.phone, tenant.rent_min, tenant.rent_max, tenant.housing_type, tenant.property_type, tenant.num_bedrooms, tenant.location, tenant.referral_agency_id, tenant.date_needed, tenant.avatar, tenant.number_of_bathrooms, tenant.mobility_aids, tenant.accessible_shower, tenant.car_parking, tenant.lift_access];
+    const keys = ["name", "description", "email", "phone", "rent_min", "rent_max", "housing_type", "property_type", "number_of_bedrooms", "location", "referral_agency_id", "date_needed", "avatar", "number_of_bathrooms", "mobility_aids", "accessible_shower", "car_parking", "lift_access"];
+    const values = [tenant.name, tenant.description, tenant.email, tenant.phone, tenant.rent_min, tenant.rent_max, tenant.housing_type, tenant.property_type, tenant.number_of_bedrooms, tenant.location, tenant.referral_agency_id, tenant.date_needed, tenant.avatar, tenant.number_of_bathrooms, tenant.mobility_aids, tenant.accessible_shower, tenant.car_parking, tenant.lift_access];
     let result = keys.reduce((obj, k, i) => ({...obj, [k]: values[i] }), {})
     return result
   }
@@ -94,10 +94,9 @@ class ProfileFormTenants extends React.Component {
       body: body,
       credentials: 'same-origin',
     }).then((data) => {
-      console.log(this.state.tenant.avatar.name)
-      // window.location = '/tenants/' + id.toString();
+      window.location = '/tenants/' + id.toString();
     }).catch((data) => {
-      window.location = '/';
+      window.location = '/tenants/' + id.toString() + '/edit';
     });
   }
   removeImages(imageList) {
@@ -383,8 +382,8 @@ class ProfileFormTenants extends React.Component {
           <Form.Item
             label="Number of Bedrooms"
           >
-            {getFieldDecorator('num_bedrooms', {
-              initialValue: tenant.num_bedrooms,
+            {getFieldDecorator('number_of_bedrooms', {
+              initialValue: tenant.number_of_bedrooms,
               rules: [{
                 required: true, message: 'Please pick a number of bedrooms!',
               }],
@@ -393,8 +392,8 @@ class ProfileFormTenants extends React.Component {
                 min={0}
                 max={10}
                 style={{ marginLeft: 16 }}
-                value={tenant.num_bedrooms}
-                onChange={(value) => this.handleChangeSelect("num_bedrooms", value)}
+                value={tenant.number_of_bedrooms}
+                onChange={(value) => this.handleChangeSelect("number_of_bedrooms", value)}
               />
             )}
           </Form.Item>
