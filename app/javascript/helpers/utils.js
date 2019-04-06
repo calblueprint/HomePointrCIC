@@ -41,6 +41,12 @@ const Utils = {
     return obj;
   },
 
+  setup(obj, images) {
+    for (var i=0; i < images.length; i++) {
+      obj[i] = Utils.extend(obj[i], images[i])
+    }
+  },
+
   //     0 - matched with a house
   //     1 - interviewing with a house
   //     2 - applied
