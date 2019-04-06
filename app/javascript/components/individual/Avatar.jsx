@@ -32,10 +32,6 @@ class Avatar extends React.Component {
         loading: false,
       }));
     }
-    this.state.tenant["avatar"] = info.file;
-    console.log("IN HANDLECHANGE IN AVATAR")
-    console.log(info.file);
-    console.log(info.file.name);
   }
 
   render() {

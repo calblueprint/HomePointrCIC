@@ -78,7 +78,8 @@ class PropertyProfileForm extends React.Component {
   }
 
   //api edit
-  handleEdit() {
+  handleEdit= (event) => {
+    event.preventDefault();
     let id = this.state.property.id;
     var request = null;
     var body = this.convertToDict()

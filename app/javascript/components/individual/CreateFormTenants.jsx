@@ -95,6 +95,7 @@ class CreateFormTenants extends React.Component {
 
   // api create
   handleCreate() {
+
     console.log(this.state.tenant);
     this.setState({disabled: true});
     var body = this.convertToDict()
@@ -629,7 +630,7 @@ class CreateFormTenants extends React.Component {
         </Form>
         <div className="buttons">
           <Button className="previous" onClick={() => {this.nextButton(5)}}>Previous</Button>
-          <Button className="next" type="primary" onClick={() => {this.handleCreate}}>Submit</Button>
+          <Button className="next" type="primary" onClick={this.handleCreate}>Submit</Button>
         </div>
       </div>
     )
