@@ -111,6 +111,7 @@ class ListView extends React.Component {
                 {this.renderPropertyModal(resource)}
                 {this.props.applications ? this.renderApplicationModal(this.props.applications[index]) : null}
               </Card>
+              // <PropertyCard property={resource} displayTag={this.props.applications[index].status}/>
             ) : (
               <TenantCard tenant={resource} displayTag={this.state.displayTag}/>
             )}
