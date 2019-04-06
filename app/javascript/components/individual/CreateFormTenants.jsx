@@ -95,10 +95,8 @@ class CreateFormTenants extends React.Component {
 
   // api create
   handleCreate() {
-    console.log(this.state.tenant);
     this.setState({disabled: true});
     var body = this.convertToDict()
-    console.log(body);
     body = JSON.stringify({tenant: body});
     var request = APIRoutes.tenants.create;
     fetch(request, {
@@ -114,7 +112,6 @@ class CreateFormTenants extends React.Component {
     }).catch((data) => {
       console.error(data);
     });
-    console.log("handle create complete");
   }
 
   removeImages(imageList) {
@@ -142,12 +139,8 @@ class CreateFormTenants extends React.Component {
     const tenant = this.state.tenant;
     tenant[attr] = event.target.value;
     this.setState({ tenant: tenant });
-    console.log(attr);
-    console.log(event.target.value);
-    console.log(tenant);
   }
   handleChangeDate(date) {
-    console.log(date);
     const tenant = this.state.tenant;
     tenant["date_needed"] = date.format("YYYY-MM-DD");
     this.setState({ tenant: tenant });
@@ -156,8 +149,6 @@ class CreateFormTenants extends React.Component {
     const tenant = this.state.tenant;
     tenant[attr] = value;
     this.setState({ tenant: tenant })
-    console.log(attr);
-    console.log(value);
   }
 
   setFile(e) {
@@ -655,7 +646,6 @@ class CreateFormTenants extends React.Component {
 
   renderFormStage() {
     const { stage } = this.state;
-    console.log("in renderFormStage");
     if (stage == 1) {
       return (
         <div>{this.renderStageOne()}</div>
