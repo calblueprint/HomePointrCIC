@@ -14,22 +14,8 @@ class TenantsController < ApplicationController
   def new
     @tenant = Tenant.new
     authorize @tenant
-    @mode = 'create'
-    @type = 'tenants'
-    enums = []
-    # @field_names = Tenant.column_names[1..-3] + ["avatar"]
-    @field_names = Tenant.column_names[1..-3]
-    @nice_field_names = []
-    @field_names.each do |i|
-      @nice_field_names << i.titleize
-      enums << Tenant.defined_enums[i].keys if Tenant.defined_enums.key?(i)
-    end
-    num_fields = @field_names.length
-    @prev_values = Array.new(num_fields, '')
-    # @prev_values << @tenant.avatar
-    @field_types = ['textbox', 'textarea', 'textbox', 'textbox', 'slider', '_slider', enums[0], enums[1], 'textbox', enums[2], 'id', 'datepicker', 'attachment']
-    # @field_types = ["textbox", "textarea", "textbox", "textbox", "textbox", "slider", "_slider", enums[0], enums[1], "textbox", enums[2], "textbox", "datepicker"]
     @current_userID = current_user.id
+    @categories = get_tenant_category_enums()
   end
 
   def show
@@ -53,39 +39,38 @@ class TenantsController < ApplicationController
     values = @tenant.attributes.values[3..-3]
     @avatarURL = nil
     @avatarURL = url_for(@tenant.avatar) if @tenant.avatar.attached?
-
-    field_names = Tenant.column_names[3..-3]
-    nice_field_names = []
-    field_names.each do |field_name|
-      nice_field_names << field_name.titleize
-    end
-    @tag_values = []
-    nice_field_names.each_with_index do |tag, index|
-      @tag_values << tag.to_s + ': ' + values[index].to_s
-    end
   end
 
   def edit
-    @mode = 'edit'
-    @type = 'tenants'
-    enums = []
-    @field_names = Tenant.column_names[1..-3] + ['avatar']
-    @nice_field_names = []
-    @field_names.each do |i|
-      @nice_field_names << i.titleize
-      enums << Tenant.defined_enums[i].keys if Tenant.defined_enums.key?(i)
-    end
-    @tenant = Tenant.find(params[:id])
-    authorize @tenant
-    @prev_values = @tenant.attributes.values[1..-3]
-    @prev_values << if @tenant.avatar.attached? == false
-                      @tenant.avatar
-                    else
-                      [{ id: @tenant.avatar.id, url: url_for(@tenant.avatar) }]
-                    end
-    @field_types = ['textbox', 'textarea', 'textbox', 'textbox', 'slider', '_slider', enums[0], enums[1], 'textbox', enums[2], 'id', 'datepicker', 'attachment']
-    @current_userID = current_user.id
+     puts "TENANT EDIT"
+     @tenant = Tenant.find(params[:id])
+     authorize @tenant
+     @current_userID = current_user.id
+     @categories = get_tenant_category_enums()
   end
+ def get_tenant_category_enums
+   @nice_housing_type = []
+   @nice_property_type = []
+   @nice_location = []
+   Tenant.housing_types.keys.each do |i|
+     @nice_housing_type << i.titleize
+   end
+   Tenant.property_types.keys.each do |i|
+     @nice_property_type << i.titleize
+   end
+   Tenant.locations.keys.each do |i|
+     @nice_location << i.titleize
+   end
+   categories = {
+     housing_types: Tenant.housing_types.keys,
+     property_types: Tenant.property_types.keys,
+     locations: Tenant.locations.keys,
+     nice_housing_types: @nice_housing_type,
+     nice_property_types: @nice_property_type,
+     nice_locations: @nice_location
+   }
+   # render json: categories
+ end
 
   private
 
@@ -99,10 +84,15 @@ class TenantsController < ApplicationController
       :rent_max,
       :housing_type,
       :property_type,
-      :num_bedrooms,
+      :number_of_bedrooms,
       :location,
       :referral_agency_id,
-      :date_needed
+      :date_needed,
+      :number_of_bathrooms,
+      :mobility_aids,
+      :accessible_shower,
+      :car_parking,
+      :lift_access
     )
   end
 end

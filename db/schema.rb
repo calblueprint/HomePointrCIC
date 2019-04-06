@@ -10,7 +10,8 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_04_06_061148) do
+
+ActiveRecord::Schema.define(version: 2019_04_06_045532) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -89,18 +90,24 @@ ActiveRecord::Schema.define(version: 2019_04_06_061148) do
     t.integer "rent_max"
     t.integer "housing_type"
     t.integer "property_type"
-    t.integer "num_bedrooms"
     t.integer "location"
     t.bigint "referral_agency_id"
     t.date "date_needed"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "number_of_bedrooms"
     t.integer "number_of_bathrooms"
     t.boolean "mobility_aids"
     t.boolean "accessible_shower"
     t.boolean "car_parking"
     t.boolean "lift_access"
+    t.integer "family_size"
+    t.string "living_arrangements"
+    t.string "income"
+    t.boolean "benefits"
+    t.boolean "local_council"
+    t.boolean "ex_offender"
+    t.string "local_area_link"
+    t.integer "number_of_bedrooms"
     t.index ["referral_agency_id"], name: "index_tenants_on_referral_agency_id"
   end
 

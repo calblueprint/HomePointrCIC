@@ -1,5 +1,5 @@
 import React from "react";
-import { Upload, Icon, message } from 'antd';
+import { Tag, Upload, Icon, message } from 'antd';
 import Avatar from '../components/individual/Avatar.jsx';
 
 const Utils = {
@@ -31,7 +31,7 @@ const Utils = {
     </div>)
   },
 
-  //combine two dictionaries together 
+  //combine two dictionaries together
   //example: var a = { foo: true }, b = { bar: false };
   //result: { foo: true, bar: false }
   extend: (obj, src) => {
@@ -46,42 +46,59 @@ const Utils = {
   //     2 - applied
   //     3 - rejected
   //     4 - not applied yet
-  renderStatus: (num) => {
-    if (num === 0 || num === "housed") {
-      return (
-        <React.Fragment key='status'>
-          <h2 style={{color:"green"}}>housed</h2>
-        </React.Fragment>
-      )
-    } else if (num === 1 || num === "interview") {
-      return (
-        <React.Fragment key='status'>
-          <h2 style={{color:"yellow"}}>interviewing with house</h2>
-        </React.Fragment>
-      )
-    } else if (num === 2 || num === "received") {
-      return (
-        <React.Fragment key='status'>
-          <h2 style={{color:"orange"}}>applied</h2>
-        </React.Fragment>
-      )
-    } else if (num === 3 || num === "rejected") {
-      return (
-        <React.Fragment key='status'>
-          <h2 style={{color:"red"}}>rejected</h2>
-        </React.Fragment>
-      )
-    } else if (num === 4) {
-      return (
-        <React.Fragment key='status'>
-          <h2 style={{color:"red"}}>not applied</h2>
-        </React.Fragment>
-      )
-    } else {
-      return null
+  renderStatus: (statusNum, displayTag) => {
+
+    const statuses = {
+      0: ["Accepted", "green"],
+      1: ["Interviewing", "blue"],
+      2: ["Applied", "purple"],
+      3: ["Declined", "red"],
+      4: ["No Applications", "gold"]
     }
+
+    if (displayTag) {
+      const status = statuses[statusNum][0];
+      const color = statuses[statusNum][1];
+      return(
+        <Tag color={color} className="tag">{status}</Tag>
+      )
+    }
+
+    // if (num === 0 || num === "housed") {
+    //   return (
+    //     <React.Fragment key='status'>
+    //       <h2 style={{color:"green"}}>housed</h2>
+    //     </React.Fragment>
+    //   )
+    // } else if (num === 1 || num === "interview") {
+    //   return (
+    //     <React.Fragment key='status'>
+    //       <h2 style={{color:"yellow"}}>interviewing with house</h2>
+    //     </React.Fragment>
+    //   )
+    // } else if (num === 2 || num === "received") {
+    //   return (
+    //     <React.Fragment key='status'>
+    //       <h2 style={{color:"orange"}}>applied</h2>
+    //     </React.Fragment>
+    //   )
+    // } else if (num === 3 || num === "rejected") {
+    //   return (
+    //     <React.Fragment key='status'>
+    //       <h2 style={{color:"red"}}>rejected</h2>
+    //     </React.Fragment>
+    //   )
+    // } else if (num === 4) {
+    //   return (
+    //     <React.Fragment key='status'>
+    //       <h2 style={{color:"red"}}>not applied</h2>
+    //     </React.Fragment>
+    //   )
+    // } else {
+    //   return null
+    // }
   }
-  
+
 }
 
 export default Utils;

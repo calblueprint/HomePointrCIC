@@ -59,7 +59,6 @@ class FilterPanel extends React.Component {
         rent_min: this.props.selectedTenant.rent_min,
         rent_max: this.props.selectedTenant.rent_max,
         number_of_bedrooms: this.props.selectedTenant.number_of_bedrooms,
-        capacity: this.props.selectedTenant.capacity,
         property_type: [this.props.selectedTenant.property_type],
         housing_type: [this.props.selectedTenant.housing_type],
         date_available: moment(this.props.selectedTenant.date_needed),
@@ -70,7 +69,7 @@ class FilterPanel extends React.Component {
   render() {
     const CheckboxGroup = Checkbox.Group;
     let menu = (
-      <div 
+      <div
         style={{
           background: "white",
           marginLeft: "10%",
@@ -94,10 +93,10 @@ class FilterPanel extends React.Component {
           >
             Location
           </div>
-          <CheckboxGroup 
-            options={this.props.location_options} 
+          <CheckboxGroup
+            options={this.props.location_options}
             defaultValue={this.state.location}
-            onChange={(e) => this.handleCheckbox(e, "location")} 
+            onChange={(e) => this.handleCheckbox(e, "location")}
           />
         </div>
         <div
@@ -116,10 +115,10 @@ class FilterPanel extends React.Component {
           >
           Property Type
           </div>
-          <CheckboxGroup 
-            options={this.props.property_options} 
+          <CheckboxGroup
+            options={this.props.property_options}
             defaultValue={this.state.property_type}
-            onChange={(e) => this.handleCheckbox(e, "property_type")} 
+            onChange={(e) => this.handleCheckbox(e, "property_type")}
           />
         </div>
         <div
@@ -138,10 +137,10 @@ class FilterPanel extends React.Component {
           >
           Housing Type
           </div>
-          <CheckboxGroup 
-            options={this.props.housing_options} 
+          <CheckboxGroup
+            options={this.props.housing_options}
             defaultValue={this.state.housing_type}
-            onChange={(e) => this.handleCheckbox(e, "housing_type")} 
+            onChange={(e) => this.handleCheckbox(e, "housing_type")}
           />
         </div>
         <div
@@ -194,9 +193,9 @@ class FilterPanel extends React.Component {
               fontWeight: "bold",
             }}
           >
-        Rent 
+        Rent
         </div>
-        Min<InputNumber min={0} defaultValue={this.state.rent_min} onChange={(e) => this.handleCheckbox(e, "rent_min")} /> 
+        Min<InputNumber min={0} defaultValue={this.state.rent_min} onChange={(e) => this.handleCheckbox(e, "rent_min")} />
         Max<InputNumber min={0} defaultValue={this.state.rent_max} onChange={(e) => this.handleCheckbox(e, "rent_max")} />
         </div>
         <div
@@ -213,16 +212,16 @@ class FilterPanel extends React.Component {
           >
         Date Available
         </div>
-        <DatePicker 
-          onChange={(date, dateString) => this.handleDatePicker(date, dateString)} 
+        <DatePicker
+          onChange={(date, dateString) => this.handleDatePicker(date, dateString)}
           defaultValue={moment(this.state.date_available)}
         />
         </div>
-      <Button 
-        type="primary" 
+      <Button
+        type="primary"
         onClick={this.passState}
       >
-        <div         
+        <div
           style={{
             paddingBottom: "15px",
           }}
@@ -230,11 +229,11 @@ class FilterPanel extends React.Component {
           Apply
         </div>
       </Button>
-      <Button 
-        type="danger" 
+      <Button
+        type="danger"
         onClick={this.toggleOpen}
       >
-        <div         
+        <div
           style={{
             paddingBottom: "15px",
           }}
@@ -249,7 +248,7 @@ class FilterPanel extends React.Component {
     <div>
       <Dropdown overlay={menu} visible={this.state.isOpen} trigger={['click']}>
         <a className="ant-dropdown-link" href="#">
-          <div        
+          <div
             style={{
             background: "white",
             marginLeft: "10%",

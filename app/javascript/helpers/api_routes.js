@@ -14,6 +14,7 @@ class ApiRoutes {
       create: '/api/tenants',
       update: (id) => '/api/tenants/' + id,
       delete: (id) => '/api/tenants/' + id,
+      categories: `/tenants/categories`,
     }
   }
 
