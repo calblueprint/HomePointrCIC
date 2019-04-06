@@ -15,6 +15,10 @@
   margin-top: 10px;
 }
 
+.sub-container {
+  margin-top: 15px;
+}
+
 .buttons {
   margin-top: 20px;
   align-self: flex-end;

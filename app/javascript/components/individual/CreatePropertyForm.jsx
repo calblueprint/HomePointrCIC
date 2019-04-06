@@ -467,26 +467,28 @@ class CreatePropertyForm extends React.Component {
     return (
       <div className="container">
         <h2>Step 3: Set the scene.</h2>
-        <h3>Write a quick summary of your place. You can highlight what's special about your space and the neighborhood.</h3>
-        <Form>
-          <Form.Item
-            label="Summary"
-          >
-            {getFieldDecorator('description', {
-              initialValue: property.description,
-              rules: [{
-                required: true, message: 'Please input the summary!',
-              }],
-            })(
-              <Input.TextArea
-                rows={10}
-                placeholder="Share what makes your property special, like favorite food spots, public transportation
-                in the area, parks, or a unqiue landmark."
-                onChange={() => this.handleChange("description")}
-              />
-            )}
-          </Form.Item>
-        </Form>
+        Write a quick summary of your place. You can highlight what's special about your space and the neighborhood.
+        <div className="sub-container">
+          <Form>
+            <Form.Item
+              label="Summary"
+            >
+              {getFieldDecorator('description', {
+                initialValue: property.description,
+                rules: [{
+                  required: true, message: 'Please input the summary!',
+                }],
+              })(
+                <Input.TextArea
+                  rows={10}
+                  placeholder="Share what makes your property special, like favorite food spots, public transportation
+                  in the area, parks, or a unqiue landmark."
+                  onChange={() => this.handleChange("description")}
+                />
+              )}
+            </Form.Item>
+          </Form>
+        </div>
         <div className="buttons">
           <Button className="previous" onClick={() => {this.nextButton(2)}}>Previous</Button>
           <Button className="next" type="primary" onClick={() => {this.nextButton(4)}}>Next</Button>
@@ -500,26 +502,28 @@ class CreatePropertyForm extends React.Component {
     return (
       <div className="container">
         <h2>Step 4: Bring it to life.</h2>
-        <h3>Photos help guests imagine staying in your place. You can start with one and add more after you publish.</h3>
-        <Form>
-          <Form.Item
-            label="Add images"
-          >
-            <ActiveStorageProvider
-              endpoint={{
-                path: '/api/properties/create',
-                model: "Property",
-                attribute: 'images',
-                method: "POST",
-              }}
-              multiple={true}
-              headers={{
-                'Content-Type': 'application/json'
-              }}
-              render={Utils.activeStorageUploadRenderer}
-            />
-          </Form.Item>
-        </Form>
+        Photos help guests imagine staying in your place. You can start with one and add more after you publish.
+        <div className="sub-container">
+          <Form>
+            <Form.Item
+              label="Add images"
+            >
+              <ActiveStorageProvider
+                endpoint={{
+                  path: '/api/properties/create',
+                  model: "Property",
+                  attribute: 'images',
+                  method: "POST",
+                }}
+                multiple={true}
+                headers={{
+                  'Content-Type': 'application/json'
+                }}
+                render={Utils.activeStorageUploadRenderer}
+              />
+            </Form.Item>
+          </Form>
+        </div>
         <div className="buttons">
           <Button className="previous" onClick={() => {this.nextButton(3)}}>Previous</Button>
           <Button className="next" type="primary" onClick={() => {this.nextButton(5)}}>Next</Button>
@@ -533,26 +537,28 @@ class CreatePropertyForm extends React.Component {
     return (
       <div className="container">
         <h2>Step 5: Additional paperwork (Optional)</h2>
-        <h3>Do you require potential clients to fill out any additional paperwork outside of the general client form?</h3>
-        <Form>
-          <Form.Item
-            label="Upload form"
-          >
-            <ActiveStorageProvider
-              endpoint={{
-                path: '/api/properties/create',
-                model: "Property",
-                attribute: 'form',
-                method: "POST",
-              }}
-              multiple={true}
-              headers={{
-                'Content-Type': 'application/json'
-              }}
-              render={Utils.activeStorageUploadRenderer}
-            />
-          </Form.Item>
-        </Form>
+        Do you require potential clients to fill out any additional paperwork outside of the general client form?
+        <div className="sub-container">
+          <Form>
+            <Form.Item
+              label="Upload form"
+            >
+              <ActiveStorageProvider
+                endpoint={{
+                  path: '/api/properties/create',
+                  model: "Property",
+                  attribute: 'form',
+                  method: "POST",
+                }}
+                multiple={true}
+                headers={{
+                  'Content-Type': 'application/json'
+                }}
+                render={Utils.activeStorageUploadRenderer}
+              />
+            </Form.Item>
+          </Form>
+        </div>
         <div className="buttons">
           <Button className="previous" onClick={() => {this.nextButton(4)}}>Previous</Button>
           <Button className="next" type="primary" onClick={this.handleCreate}>Submit</Button>
