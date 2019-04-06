@@ -5,7 +5,7 @@ class Api::TenantsController < ApplicationController
 
   def create
     @tenant = Tenant.new(tenant_params)
-    authorize @tenant
+    # authorize @tenant
     if @tenant.save
       if ActiveStorage::Blob.last.id != $activestoragestart
         a = ActiveStorage::Blob.last
@@ -19,11 +19,26 @@ class Api::TenantsController < ApplicationController
 
   def update
     @tenant = Tenant.find(params[:id])
-    authorize @tenant
-    if @tenant.update(tenant_params)
+    # authorize @tenant
+    # if @tenant.update(tenant_params)
+    #   render json: @tenant
+    # else
+    #   render component: 'ErrorMessage', message: @tenant.errors.messages
+    # end
+
+    # avatar_attr = tenant_attr.delete("avatar")
+    # @tenant = Tenant.find(params[:id])
+
+    saved = @tenant.update(tenant_params)
+    if saved
+      if ActiveStorage::Blob.last.id != $activestoragestart
+        a = ActiveStorage::Blob.last
+        @tenant.avatar.attach(a) if a.image?
+      end
+      flash[:success] = "Tenant updated successfully!"
       render json: @tenant
     else
-      render component: 'ErrorMessage', message: @tenant.errors.messages
+      flash[:danger] = "Tenant failed to update."
     end
   end
 
@@ -49,11 +64,16 @@ class Api::TenantsController < ApplicationController
       :rent_max,
       :housing_type,
       :property_type,
-      :num_bedrooms,
+      :number_of_bedrooms,
       :location,
       :referral_agency_id,
       :date_needed,
-      :avatar
+      :avatar,
+      :number_of_bathrooms,
+      :mobility_aids,
+      :accessible_shower,
+      :car_parking,
+      :lift_access
     )
   end
 end

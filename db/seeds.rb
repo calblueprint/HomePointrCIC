@@ -89,15 +89,21 @@ def make_tenants
       housing_type: n % 13,
       property_type: n % 10,
       location: n % 6,
-      num_bedrooms: Faker::Number.number(1),
+      number_of_bedrooms: Faker::Number.number(1),
       referral_agency_id: Faker::Number.between(NUM_LANDLORDS + 1, NUM_REFERRAL_AGENCIES + NUM_LANDLORDS),
       date_needed: Date.today,
-      number_of_bedrooms: Faker::Number.between(1, 10),
       number_of_bathrooms: Faker::Number.between(1, 10),
       mobility_aids: Faker::Boolean.boolean,
       accessible_shower: Faker::Boolean.boolean,
       car_parking: Faker::Boolean.boolean,
-      lift_access: Faker::Boolean.boolean
+      lift_access: Faker::Boolean.boolean,
+      family_size: Faker::Number.number(1),
+      living_arrangements: Faker::HowIMetYourMother.quote,
+      income: Faker::Number.between(20000, 90000),
+      benefits: Faker::Boolean.boolean,
+      local_council: Faker::HowIMetYourMother.quote,
+      ex_offender: Faker::Boolean.boolean,
+      local_area_link: Faker::HowIMetYourMother.quote
     )
     tenant.avatar.attach(io: File.open('app/assets/images/avatar2.jpg'), filename: 'avatar2.jpg')
     tenant.save

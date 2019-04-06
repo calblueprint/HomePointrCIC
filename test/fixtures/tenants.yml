@@ -11,7 +11,7 @@ one:
   integer: MyString
   housing_type: 1
   property_type: 1
-  num_bedrooms: 1
+  number_of_bedrooms: 1
   location: MyString
   date_needed: 2018-10-11
 
@@ -26,6 +26,6 @@ two:
   integer: MyString
   housing_type: 1
   property_type: 1
-  num_bedrooms: 1
+  number_of_bedrooms: 1
   location: MyString
   date_needed: 2018-10-11

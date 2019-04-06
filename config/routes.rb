@@ -14,6 +14,11 @@ Rails.application.routes.draw do
     end
   get 'home/index'
   get 'errors/show'
+  get '/tenants/new' => 'tenants#new'
+  get 'tenants/:id/edit' => 'tenants#edit'
+  get 'tenants/:id' => 'tenants#show'
+  get '/tenants/categories' => 'tenants#get_tenant_category_enums'
+
   resources :referral_agencies, only: %i[create show update edit destroy]
   resources :landlords, only: %i[create show update edit destroy]
   resources :properties, only: %i[new create update index edit show destroy]
