@@ -96,7 +96,7 @@ class NavBar extends React.Component {
         </div>
         <div id="navbar-dialog">
           <Button key="edit" type="default" onClick={this.handleEdit} className="navbar-dialog-button">Edit account</Button>
-          <Button key="logout" type="default" onClick={this.handleLogout} className="navbar-dialog-button">Logout</Button>
+          <Button key="logout" type="danger" onClick={this.handleLogout} className="navbar-dialog-button">Logout</Button>
         </div>
       </div>
 
