@@ -574,17 +574,31 @@ class CreateFormTenants extends React.Component {
   renderStageFive() {
     const { tenant } = this.state;
     return (
-      <div>
+      <div className="container">
         <div>Step 5: Add a profile photo</div>
         <Form>
           <Form.Item
             label="Upload Avatar"
           >
-            <Avatar tenant={this.state.tenant}/>
+            <ActiveStorageProvider
+              endpoint={{
+                path: '/api/tenants/' + 'new',
+                model: "Tenant",
+                attribute: 'avatar',
+                method: "PUT",
+              }}
+              multiple={true}
+              headers={{
+                'Content-Type': 'application/json'
+              }}
+              render={Utils.activeStorageUploadRenderer}
+            />
           </Form.Item>
         </Form>
-        <Button onClick={() => {this.nextButton(4)}}>Previous</Button>
-        <Button type="primary" onClick={() => {this.nextButton(6)}}>Next</Button>
+        <div className="buttons">
+          <Button className="previous" onClick={() => {this.nextButton(4)}}>Previous</Button>
+          <Button className="next" type="primary" onClick={() => {this.nextButton(6)}}>Next</Button>
+        </div>
       </div>
     )
   }
@@ -592,22 +606,31 @@ class CreateFormTenants extends React.Component {
   renderStageSix() {
     const { tenant } = this.state;
     return (
-      <div>
-        <div>Step 6: Upload default client form</div>
-        <ActiveStorageProvider
-          endpoint={{
-            path: '/api/tenants',
-            model: 'Tenant',
-            attribute: 'form',
-            method: 'POST',
-          }}
-          headers={{
-            'Content-Type': 'application/json'
-          }}
-          render={Utils.activeStorageUploadRenderer}
-        />
-        <Button onClick={() => {this.nextButton(5)}}>Previous</Button>
-        <Button type="primary" onClick={() => {this.handleCreate()}}>Create</Button>
+      <div className="container">
+        <div>Step 5: Add Default Client Form</div>
+        <Form>
+          <Form.Item
+            label="Upload Form"
+          >
+            <ActiveStorageProvider
+              endpoint={{
+                path: '/api/tenants/' + 'new',
+                model: "Tenant",
+                attribute: 'form',
+                method: "PUT",
+              }}
+              multiple={true}
+              headers={{
+                'Content-Type': 'application/json'
+              }}
+              render={Utils.activeStorageUploadRenderer}
+            />
+          </Form.Item>
+        </Form>
+        <div className="buttons">
+          <Button className="previous" onClick={() => {this.nextButton(5)}}>Previous</Button>
+          <Button className="next" type="primary" onClick={() => {this.handleCreate}}>Submit</Button>
+        </div>
       </div>
     )
   }

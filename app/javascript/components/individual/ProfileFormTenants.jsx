@@ -197,114 +197,240 @@ class ProfileFormTenants extends React.Component {
     const { tenant } = this.state;
 
     return (
-      <div>
+      <div className="container">
+        <h3>Edit Client</h3>
         <Form onSubmit={this.handleEdit}>
-          <Form.Item
-            label="Name"
-          >
-            {getFieldDecorator('name', {
-              initialValue: tenant.name,
-              rules: [{
-                required: true, message: 'Please input your Name!',
-              }],
-            })(
-              <Input onChange={() => this.handleChange("name")}/>
-            )}
-          </Form.Item>
-          <Form.Item
-            label="Description"
-          >
-            {getFieldDecorator('description', {
-              initialValue: tenant.description,
-              rules: [{
-                required: true, message: 'Please input your description!',
-              }],
-            })(
-              <Input onChange={() => this.handleChange("description")}/>
-            )}
-          </Form.Item>
-          <Form.Item
-            label="Email"
-          >
-            {getFieldDecorator('email', {
-              initialValue: tenant.email,
-              rules: [{
-                required: true, message: 'Please input your email!',
-              }, {
-                type: 'email', message: 'The input is not a valid email!'
-              }],
-            })(
-              <Input onChange={() => this.handleChange("email")}/>
-            )}
-          </Form.Item>
-          <Form.Item
-            label="Phone Number"
-          >
-            {getFieldDecorator('phone', {
-              initialValue: tenant.phone,
-              rules: [{
-                required: true, message: 'Please input your phone number!',
-              }]
-            })(
-              <Input onChange={() => this.handleChange("phone")}/>
-            )}
-          </Form.Item>
-          <Form.Item
-            label="Family Size"
-          >
-            {getFieldDecorator('family_size', {
-              initialValue: tenant.family_size,
-              rules: [{
-                required: true, message: 'Please pick you family size!',
-              }],
-            })(
-              <InputNumber
-                min={0}
-                max={30}
-                value={tenant.family_size}
-                onChange={(value) => this.handleChangeSelect("family_size", value)}
-              />
-            )}
-          </Form.Item>
-          <Form.Item
-            label="Household Income"
-          >
-            {getFieldDecorator('income', {
-              initialValue: tenant.income,
-              rules: [{
-                required: true, message: 'Please input your household income!',
-              }]
-            })(
-              <Input onChange={() => this.handleChange("income")}/>
-            )}
-          </Form.Item>
-          <Form.Item
-            label="Current Living Arrangements"
-          >
-            {getFieldDecorator('living_arrangements', {
-              initialValue: tenant.living_arrangements,
-              rules: [{
-                required: true, message: 'Please input your current living arrangements!',
-              }]
-            })(
-              <Input onChange={() => this.handleChange("living_arrangements")}/>
-            )}
-          </Form.Item>
-          <Form.Item
-            label="Receiving Benefits?"
-          >
-            {getFieldDecorator('benefits', {
-              initialValue: tenant.benefits,
-              rules: [{
-                required: true, message: 'Please select a response!',
-              }],
-            })(
-              <Select onChange={(value) => this.handleChangeSelect("benefits", value)}>
-                <Option value={true}>Yes</Option>
-                <Option value={false}>No</Option>
-              </Select>
-            )}
-          </Form.Item>
+          <div className="section">
+            <h3>Basic Information</h3>
+            <div className="grid-container">
+              <Form.Item
+                label="Name"
+              >
+                {getFieldDecorator('name', {
+                  initialValue: tenant.name,
+                  rules: [{
+                    required: true, message: 'Please input your Name!',
+                  }],
+                })(
+                  <Input onChange={() => this.handleChange("name")}/>
+                )}
+              </Form.Item>
+              <Form.Item
+                label="Email"
+              >
+                {getFieldDecorator('email', {
+                  initialValue: tenant.email,
+                  rules: [{
+                    required: true, message: 'Please input your email!',
+                  }, {
+                    type: 'email', message: 'The input is not a valid email!'
+                  }],
+                })(
+                  <Input onChange={() => this.handleChange("email")}/>
+                )}
+              </Form.Item>
+              <Form.Item
+                label="Phone Number"
+              >
+                {getFieldDecorator('phone', {
+                  initialValue: tenant.phone,
+                  rules: [{
+                    required: true, message: 'Please input your phone number!',
+                  }]
+                })(
+                  <Input onChange={() => this.handleChange("phone")}/>
+                )}
+              </Form.Item>
+              <Form.Item
+                label="Email"
+              >
+                {getFieldDecorator('email', {
+                  initialValue: tenant.email,
+                  rules: [{
+                    required: true, message: 'Please input your email!',
+                  }, {
+                    type: 'email', message: 'The input is not a valid email!'
+                  }],
+                })(
+                  <Input onChange={() => this.handleChange("email")}/>
+                )}
+              </Form.Item>
+              <Form.Item
+                label="Phone Number"
+              >
+                {getFieldDecorator('phone', {
+                  initialValue: tenant.phone,
+                  rules: [{
+                    required: true, message: 'Please input your phone number!',
+                  }]
+                })(
+                  <Input onChange={() => this.handleChange("phone")}/>
+                )}
+              </Form.Item>
+              <Form.Item
+                label="Location"
+              >
+              {getFieldDecorator('location', {
+                initialValue: tenant.location,
+                rules: [{
+                  required: true, message: 'Please pick a number of bedrooms!',
+                }],
+              })(
+                <Select onChange={(value) => this.handleChangeSelect("location", value)}>
+                {
+                  this.state.nice_locations.map((obj, i) => {
+                    return <Option key={i} value={this.state.locations[i]}>{obj}</Option>
+                  })
+                }
+                </Select>
+              )}
+              </Form.Item>
+              <Form.Item
+                label="Family Size"
+              >
+                {getFieldDecorator('family_size', {
+                  initialValue: tenant.family_size,
+                  rules: [{
+                    required: true, message: 'Please pick you family size!',
+                  }],
+                })(
+                  <InputNumber
+                    min={0}
+                    max={30}
+                    value={tenant.family_size}
+                    onChange={(value) => this.handleChangeSelect("family_size", value)}
+                  />
+                )}
+              </Form.Item>
+              <Form.Item
+                label="Current Living Arrangements"
+              >
+                {getFieldDecorator('living_arrangements', {
+                  initialValue: tenant.living_arrangements,
+                  rules: [{
+                    required: true, message: 'Please input your current living arrangements!',
+                  }]
+                })(
+                  <Input onChange={() => this.handleChange("living_arrangements")}/>
+                )}
+              </Form.Item>
+              <Form.Item
+                label="Household Income"
+              >
+                {getFieldDecorator('income', {
+                  initialValue: tenant.income,
+                  rules: [{
+                    required: true, message: 'Please input your household income!',
+                  }]
+                })(
+                  <Input onChange={() => this.handleChange("income")}/>
+                )}
+              </Form.Item>
+              <Form.Item
+                label="Receiving Benefits?"
+              >
+                {getFieldDecorator('benefits', {
+                  initialValue: tenant.benefits,
+                  rules: [{
+                    required: true, message: 'Please select a response!',
+                  }],
+                })(
+                  <Select onChange={(value) => this.handleChangeSelect("benefits", value)}>
+                    <Option value={true}>Yes</Option>
+                    <Option value={false}>No</Option>
+                  </Select>
+                )}
+              </Form.Item>
+            </div>
+          </div>
+          <div className="section">
+            <h3>Housing Preferences</h3>
+            <div className="grid-container">
+            <Form.Item
+              label="Property Type"
+            >
+              {getFieldDecorator('property_type', {
+                initialValue: tenant.property_type,
+                rules: [{
+                  required: true, message: 'Please pick a number of bedrooms!',
+                }],
+              })(
+                <Select onChange={(value) => this.handleChangeSelect("property_type", value)}>
+                {
+                  this.state.nice_property_types.map((obj, i) => {
+                    return <Option key={i} value={this.state.property_types[i]}>{obj}</Option>
+                  })
+                }
+                </Select>
+              )}
+            </Form.Item>
+            <Form.Item
+              label="Housing Type"
+              >
+              {getFieldDecorator('housing_type', {
+                initialValue: tenant.housing_type,
+                rules: [{
+                  required: true, message: 'Please pick a number of bedrooms!',
+                }],
+              })(
+                <Select onChange={(value) => this.handleChangeSelect("housing_type", value)}>
+                {
+                  this.state.nice_housing_types.map((obj, i) => {
+                    return <Option key={i} value={this.state.housing_types[i]}>{obj}</Option>
+                  })
+                }
+                </Select>
+              )}
+            </Form.Item>
+            <Form.Item
+              label="Date Needed"
+            >
+              {getFieldDecorator('date_needed', {
+                initialValue: moment(tenant.date_needed, "YYYY-MM-DD"),
+                rules: [{
+                  required: true, message: 'Please pick the date needed!',
+                }],
+              })(
+                <DatePicker onChange={this.handleChangeDate}/>
+              )}
+            </Form.Item>
+            <Form.Item
+              label="Number of Bedrooms"
+            >
+              {getFieldDecorator('number_of_bedrooms', {
+                initialValue: tenant.number_of_bedrooms,
+                rules: [{
+                  required: true, message: 'Please pick a number of bedrooms!',
+                }],
+              })(
+                <InputNumber
+                  min={0}
+                  max={10}
+                  style={{ marginLeft: 16 }}
+                  value={tenant.number_of_bedrooms}
+                  onChange={(value) => this.handleChangeSelect("number_of_bedrooms", value)}
+                />
+              )}
+            </Form.Item>
+            <Form.Item
+              label="Number of Bathrooms"
+            >
+              {getFieldDecorator('number_of_bathrooms', {
+                initialValue: tenant.number_of_bathrooms,
+                rules: [{
+                  required: true, message: 'Please pick a number of bedrooms!',
+                }],
+              })(
+                <InputNumber
+                  min={0}
+                  max={10}
+                  style={{ marginLeft: 16 }}
+                  value={tenant.number_of_bathrooms}
+                  onChange={(value) => this.handleChangeSelect("number_of_bathrooms", value)}
+                />
+              )}
+            </Form.Item>
+          </div>
           <Form.Item
             label="Rent"
           >
@@ -343,216 +469,173 @@ class ProfileFormTenants extends React.Component {
               </Row>
             )}
           </Form.Item>
-          <Form.Item
-            label="Housing Type"
+        </div>
+        <div className="section">
+          <h3>Others</h3>
+          <div className="grid-container">
+            <Form.Item
+              label="Ex-offender?"
             >
-            {getFieldDecorator('housing_type', {
-              initialValue: tenant.housing_type,
+              {getFieldDecorator('ex_offender', {
+                initialValue: tenant.ex_offender,
+                rules: [{
+                  required: true, message: 'Please select a response!',
+                }],
+              })(
+                <Select onChange={(value) => this.handleChangeSelect("ex_offender", value)}>
+                  <Option value={true}>Yes</Option>
+                  <Option value={false}>No</Option>
+                </Select>
+              )}
+            </Form.Item>
+            <Form.Item
+              label="Status of Local Council"
+            >
+              {getFieldDecorator('local_council', {
+                initialValue: tenant.local_council,
+                rules: [{
+                  required: true, message: 'Please input your status of local council!',
+                }],
+              })(
+                <Input onChange={() => this.handleChange("local_council")}/>
+              )}
+            </Form.Item>
+            <Form.Item
+              label="Describe any links to local area"
+            >
+              {getFieldDecorator('local_area_link', {
+                initialValue: tenant.local_area_link,
+                rules: [{
+                  required: true, message: 'Please input your links to local area!',
+                }],
+              })(
+                <Input onChange={() => this.handleChange("local_area_link")}/>
+              )}
+            </Form.Item>
+            <Form.Item
+              label="Mobility Aids"
+            >
+              {getFieldDecorator('mobility_aids', {
+                initialValue: tenant.mobility_aids,
+                rules: [{
+                  required: true, message: 'Please select a response!',
+                }],
+              })(
+                <Select onChange={(value) => this.handleChangeSelect("mobility_aids", value)}>
+                  <Option value={true}>Yes</Option>
+                  <Option value={false}>No</Option>
+                </Select>
+              )}
+            </Form.Item>
+            <Form.Item
+              label="Accessible Shower"
+            >
+              {getFieldDecorator('accessible_shower', {
+                initialValue: tenant.accessible_shower,
+                rules: [{
+                  required: true, message: 'Please select a response!',
+                }],
+              })(
+                <Select onChange={(value) => this.handleChangeSelect("accessible_shower", value)}>
+                  <Option value={true}>Yes</Option>
+                  <Option value={false}>No</Option>
+                </Select>
+              )}
+            </Form.Item>
+            <Form.Item
+              label="Car Parking"
+            >
+              {getFieldDecorator('car_parking', {
+                initialValue: tenant.car_parking,
+                rules: [{
+                  required: true, message: 'Please select a response!',
+                }],
+              })(
+                <Select onChange={(value) => this.handleChangeSelect("car_parking", value)}>
+                  <Option value={true}>Yes</Option>
+                  <Option value={false}>No</Option>
+                </Select>
+              )}
+            </Form.Item>
+            <Form.Item
+              label="Lift Access"
+            >
+              {getFieldDecorator('lift_access', {
+                initialValue: tenant.lift_access,
+                rules: [{
+                  required: true, message: 'Please select a response!',
+                }],
+              })(
+                <Select onChange={(value) => this.handleChangeSelect("lift_access", value)}>
+                  <Option value={true}>Yes</Option>
+                  <Option value={false}>No</Option>
+                </Select>
+              )}
+            </Form.Item>
+          </div>
+        </div>
+        <div className="section">
+          <h3>Description</h3>
+          <Form.Item
+            label="Description"
+          >
+            {getFieldDecorator('description', {
+              initialValue: tenant.description,
               rules: [{
-                required: true, message: 'Please pick a number of bedrooms!',
+                required: true, message: 'Please input your description!',
               }],
             })(
-              <Select onChange={(value) => this.handleChangeSelect("housing_type", value)}>
-              {
-                this.state.nice_housing_types.map((obj, i) => {
-                  return <Option key={i} value={this.state.housing_types[i]}>{obj}</Option>
-                })
-              }
-              </Select>
+              <Input style={{ height: 120 }} onChange={() => this.handleChange("description")}/>
             )}
           </Form.Item>
-          <Form.Item
-            label="Property Type"
-          >
-            {getFieldDecorator('property_type', {
-              initialValue: tenant.property_type,
-              rules: [{
-                required: true, message: 'Please pick a number of bedrooms!',
-              }],
-            })(
-              <Select onChange={(value) => this.handleChangeSelect("property_type", value)}>
-              {
-                this.state.nice_property_types.map((obj, i) => {
-                  return <Option key={i} value={this.state.property_types[i]}>{obj}</Option>
-                })
-              }
-              </Select>
-            )}
-          </Form.Item>
-          <Form.Item
-            label="Number of Bedrooms"
-          >
-            {getFieldDecorator('number_of_bedrooms', {
-              initialValue: tenant.number_of_bedrooms,
-              rules: [{
-                required: true, message: 'Please pick a number of bedrooms!',
-              }],
-            })(
-              <InputNumber
-                min={0}
-                max={10}
-                style={{ marginLeft: 16 }}
-                value={tenant.number_of_bedrooms}
-                onChange={(value) => this.handleChangeSelect("number_of_bedrooms", value)}
-              />
-            )}
-          </Form.Item>
-          <Form.Item
-            label="Number of Bathrooms"
-          >
-            {getFieldDecorator('number_of_bathrooms', {
-              initialValue: tenant.number_of_bathrooms,
-              rules: [{
-                required: true, message: 'Please pick a number of bedrooms!',
-              }],
-            })(
-              <InputNumber
-                min={0}
-                max={10}
-                style={{ marginLeft: 16 }}
-                value={tenant.number_of_bathrooms}
-                onChange={(value) => this.handleChangeSelect("number_of_bathrooms", value)}
-              />
-            )}
-          </Form.Item>
-          <Form.Item
-            label="Location"
-          >
-          {getFieldDecorator('location', {
-            initialValue: tenant.location,
-            rules: [{
-              required: true, message: 'Please pick a number of bedrooms!',
-            }],
-          })(
-            <Select onChange={(value) => this.handleChangeSelect("location", value)}>
-            {
-              this.state.nice_locations.map((obj, i) => {
-                return <Option key={i} value={this.state.locations[i]}>{obj}</Option>
-              })
-            }
-            </Select>
-          )}
-          </Form.Item>
-          <Form.Item
-            label="Date Needed"
-          >
-            {getFieldDecorator('date_needed', {
-              initialValue: moment(tenant.date_needed, "YYYY-MM-DD"),
-              rules: [{
-                required: true, message: 'Please pick the date needed!',
-              }],
-            })(
-              <DatePicker onChange={this.handleChangeDate}/>
-            )}
-          </Form.Item>
-          <Form.Item
-            label="Mobility Aids"
-          >
-            {getFieldDecorator('mobility_aids', {
-              initialValue: tenant.mobility_aids,
-              rules: [{
-                required: true, message: 'Please select a response!',
-              }],
-            })(
-              <Select onChange={(value) => this.handleChangeSelect("mobility_aids", value)}>
-                <Option value={true}>Yes</Option>
-                <Option value={false}>No</Option>
-              </Select>
-            )}
-          </Form.Item>
-          <Form.Item
-            label="Accessible Shower"
-          >
-            {getFieldDecorator('accessible_shower', {
-              initialValue: tenant.accessible_shower,
-              rules: [{
-                required: true, message: 'Please select a response!',
-              }],
-            })(
-              <Select onChange={(value) => this.handleChangeSelect("accessible_shower", value)}>
-                <Option value={true}>Yes</Option>
-                <Option value={false}>No</Option>
-              </Select>
-            )}
-          </Form.Item>
-          <Form.Item
-            label="Car Parking"
-          >
-            {getFieldDecorator('car_parking', {
-              initialValue: tenant.car_parking,
-              rules: [{
-                required: true, message: 'Please select a response!',
-              }],
-            })(
-              <Select onChange={(value) => this.handleChangeSelect("car_parking", value)}>
-                <Option value={true}>Yes</Option>
-                <Option value={false}>No</Option>
-              </Select>
-            )}
-          </Form.Item>
-          <Form.Item
-            label="Lift Access"
-          >
-            {getFieldDecorator('lift_access', {
-              initialValue: tenant.lift_access,
-              rules: [{
-                required: true, message: 'Please select a response!',
-              }],
-            })(
-              <Select onChange={(value) => this.handleChangeSelect("lift_access", value)}>
-                <Option value={true}>Yes</Option>
-                <Option value={false}>No</Option>
-              </Select>
-            )}
-          </Form.Item>
-          <Form.Item
-            label="Ex-offender?"
-          >
-            {getFieldDecorator('ex_offender', {
-              initialValue: tenant.ex_offender,
-              rules: [{
-                required: true, message: 'Please select a response!',
-              }],
-            })(
-              <Select onChange={(value) => this.handleChangeSelect("ex_offender", value)}>
-                <Option value={true}>Yes</Option>
-                <Option value={false}>No</Option>
-              </Select>
-            )}
-          </Form.Item>
-          <Form.Item
-            label="Status of Local Council"
-          >
-            {getFieldDecorator('local_council', {
-              initialValue: tenant.local_council,
-              rules: [{
-                required: true, message: 'Please input your status of local council!',
-              }],
-            })(
-              <Input onChange={() => this.handleChange("local_council")}/>
-            )}
-          </Form.Item>
-          <Form.Item
-            label="Describe any links to local area"
-          >
-            {getFieldDecorator('local_area_link', {
-              initialValue: tenant.local_area_link,
-              rules: [{
-                required: true, message: 'Please input your links to local area!',
-              }],
-            })(
-              <Input onChange={() => this.handleChange("local_area_link")}/>
-            )}
-          </Form.Item>
+        </div>
+        <div className="section">
+          <h3>Profile Photo</h3>
           <Form.Item
             label="Upload Avatar"
           >
-            <Avatar tenant={this.state.tenant}/>
+            <ActiveStorageProvider
+              endpoint={{
+                path: '/api/tenants/' + this.state.tenant.id.toString(),
+                model: "Tenant",
+                attribute: 'avatar',
+                method: "PUT",
+              }}
+              multiple={true}
+              headers={{
+                'Content-Type': 'application/json'
+              }}
+              render={Utils.activeStorageUploadRenderer}
+            />
           </Form.Item>
+        </div>
+        <div className="section">
+          <h3>Client Form</h3>
           <Form.Item
+            label="Upload Form"
           >
-            <Button type="primary" htmlType="submit">Submit</Button>
+            <ActiveStorageProvider
+              endpoint={{
+                path: '/api/tenants/' + this.state.tenant.id.toString(),
+                model: "Tenant",
+                attribute: 'form',
+                method: "PUT",
+              }}
+              multiple={true}
+              headers={{
+                'Content-Type': 'application/json'
+              }}
+              render={Utils.activeStorageUploadRenderer}
+            />
           </Form.Item>
+        </div>
+          <div className="buttons">
+            <Form.Item
+            >
+            <Button className="previous" onClick={() => {window.location = "tenants/" + this.state.tenant.id.toString()}}>Cancel</Button>
+            <Button  className="next" type="primary" htmlType="submit">Submit</Button>
+          </Form.Item>
+        </div>
         </Form>
       </div>
     )
