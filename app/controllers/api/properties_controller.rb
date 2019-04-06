@@ -17,7 +17,7 @@ class Api::PropertiesController < ApplicationController
   def create
     @property = Property.new(property_params)
     authorize @property
-    if @property.save
+    if @property.save!
       if ActiveStorage::Blob.last.id != $activestoragestart
         a = $activestoragestart
         add_files_to_property(a + 1, @property)
@@ -81,7 +81,6 @@ class Api::PropertiesController < ApplicationController
       :description,
       :landlord_id,
       :rent,
-      :size,
       :property_type,
       :housing_type,
       :date_available,
