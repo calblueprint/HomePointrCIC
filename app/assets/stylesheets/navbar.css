@@ -1,0 +1,72 @@
+.home-button-logo {
+  width: 60px;
+  height: 60px;
+  margin-top: -12px;
+  cursor: pointer;
+  /* background-image: url("../../images/logo.png");
+  background-repeat: no-repeat;
+  background-size: 120px;
+  background-position: center; */
+}
+
+.navbar {
+  width: 100%;
+  position: fixed;
+  height: 64px;
+  padding: 14px 32px 14px 32px;
+  border-bottom: 1px solid #D9D9D9;
+  z-index: 4;
+}
+
+.navbar-avatar {
+  float: right;
+  z-index: 5;
+  cursor: pointer;
+}
+
+#navbar-dialog {
+  height: 120px;
+  width: 200px;
+  border: 1px solid #D9D9D9;
+  z-index: 5;
+  right:0;
+  transform: translate(-32px, 58px);
+  border-radius: 4px;
+  position: absolute;
+  background-color: white;
+  padding: 16px;
+  box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.10);
+  display: none;
+}
+
+/* .navbar-dialog::before {
+  content: "";
+  width: 0;
+  height: 0;
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-bottom: 10px solid #D9D9D9;
+  transform: translate(-16px, -100%);
+  position:absolute;
+  right:0;
+  top:0;
+}
+
+.navbar-dialog::after {
+  content: "";
+  width: 0;
+  height: 0;
+  border-left: 6.75px solid transparent;
+  border-right: 6.75px solid transparent;
+  border-bottom: 8.75px solid white;
+  transform: translate(-17.5px, -100%);
+  position:absolute;
+  right:0;
+  top: 0;
+} */
+
+.navbar-dialog-button {
+  display: block;
+  width: 100%;
+  margin: 4px 0px 4px 0px;
+}
