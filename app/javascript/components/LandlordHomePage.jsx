@@ -17,6 +17,12 @@ class LandlordHomePage extends React.Component {
     window.location = '/properties/new'
   }
 
+  setup() {
+    for (var i=0; i < this.props.images.length; i++) {
+      this.state.resources[i] = Utils.extend(this.state.resources[i], this.props.images[i])
+    }
+  }
+
   renderView() {
     if (this.state.resources.length === 0) {
       return(<Avatar shape="square" src="/assets/leaves.png" size={350}/>)
@@ -26,7 +32,7 @@ class LandlordHomePage extends React.Component {
   }
 
   render() {
-    Utils.setup();
+    this.setup();
     return [
       <div className="LLHome"><h1>Properties</h1></div>,
       <Button 
