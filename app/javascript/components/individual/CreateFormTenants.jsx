@@ -26,24 +26,24 @@ class CreateFormTenants extends React.Component {
         phone: '',
         rent_min: 0,
         rent_max: 5000,
-        housing_type: "other_housing_type",
-        property_type: "other_property_type",
+        housing_type: undefined,
+        property_type: undefined,
         number_of_bedrooms: 1,
-        location: "other_location",
+        location: undefined,
         referral_agency_id: this.props.current_userID,
         date_needed: new Date(),
         avatar: null,
         number_of_bathrooms: 1,
-        mobility_aids: true,
-        accessible_shower: true,
-        car_parking: true,
-        lift_access: true,
+        mobility_aids: undefined,
+        accessible_shower: undefined,
+        car_parking: undefined,
+        lift_access: undefined,
         family_size: 1,
         living_arrangements: '',
         income: '',
-        benefits: true,
-        local_council: true,
-        ex_offender: true,
+        benefits: undefined,
+        local_council: undefined,
+        ex_offender: undefined,
         local_area_link: '',
       },
       categories: props.categories,
@@ -114,6 +114,7 @@ class CreateFormTenants extends React.Component {
     }).catch((data) => {
       console.error(data);
     });
+    console.log("handle create complete");
   }
 
   removeImages(imageList) {
@@ -204,7 +205,7 @@ class CreateFormTenants extends React.Component {
     const Option = Select.Option;
     return (
       <div className="container">
-        <div>Step 1: blah blah blah</div>
+        <h3>Step 1: blah blah blah</h3>
         <Form className="grid-container">
           <Form.Item
             label="Name"
@@ -250,10 +251,10 @@ class CreateFormTenants extends React.Component {
           {getFieldDecorator('location', {
             initialValue: tenant.location,
             rules: [{
-              required: true, message: 'Please pick a number of bedrooms!',
+              required: true, message: 'Please pick a location!',
             }],
           })(
-            <Select placeholder="Select One" onChange={(value) => this.handleChangeSelect("location", value)}>
+            <Select placeholder="Select One" value={tenant.location} onChange={(value) => this.handleChangeSelect("location", value)}>
             {
               this.state.nice_locations.map((obj, i) => {
                 return <Option key={i} value={this.state.locations[i]}>{obj}</Option>
@@ -312,7 +313,7 @@ class CreateFormTenants extends React.Component {
                 required: true, message: 'Please select a response!',
               }],
             })(
-              <Select placeholder="Select One" onChange={(value) => this.handleChangeSelect("benefits", value)}>
+              <Select placeholder="Select One" value={tenant.benefits} onChange={(value) => this.handleChangeSelect("benefits", value)}>
                 <Option value={true}>Yes</Option>
                 <Option value={false}>No</Option>
               </Select>
@@ -321,7 +322,7 @@ class CreateFormTenants extends React.Component {
         </Form>
         <div className="buttons">
           <Button className="previous" onClick={() => {window.location = '/'}}>Cancel</Button>
-          <Button className="next" type="primary" onClick={() => {this.nextButton(2)}}>Next</Button>
+          <Button className="next" type="primary" onClick={() => {this.nextButton(2, "next")}}>Next</Button>
         </div>
       </div>
     )
@@ -338,7 +339,7 @@ class CreateFormTenants extends React.Component {
     const { tenant } = this.state;
     return (
       <div className="container">
-        <div>Step 2: Housing preferences</div>
+        <h3>Step 2: Housing preferences</h3>
         <Form>
           <div className="grid-container">
             <Form.Item
@@ -347,10 +348,10 @@ class CreateFormTenants extends React.Component {
               {getFieldDecorator('housing_type', {
                 initialValue: tenant.housing_type,
                 rules: [{
-                  required: true, message: 'Please pick a number of bedrooms!',
+                  required: true, message: 'Please pick a housing type!',
                 }],
               })(
-                <Select placeholder="Select One" onChange={(value) => this.handleChangeSelect("housing_type", value)}>
+                <Select placeholder="Select One" value={tenant.housing_type} onChange={(value) => this.handleChangeSelect("housing_type", value)}>
                 {
                   this.state.nice_housing_types.map((obj, i) => {
                     return <Option key={i} value={this.state.housing_types[i]}>{obj}</Option>
@@ -365,10 +366,10 @@ class CreateFormTenants extends React.Component {
               {getFieldDecorator('property_type', {
                 initialValue: tenant.property_type,
                 rules: [{
-                  required: true, message: 'Please pick a number of bedrooms!',
+                  required: true, message: 'Please pick a property type!',
                 }],
               })(
-                <Select placeholder="Select One" onChange={(value) => this.handleChangeSelect("property_type", value)}>
+                <Select placeholder="Select One" value={tenant.property_type} onChange={(value) => this.handleChangeSelect("property_type", value)}>
                 {
                   this.state.nice_property_types.map((obj, i) => {
                     return <Option key={i} value={this.state.property_types[i]}>{obj}</Option>
@@ -427,11 +428,6 @@ class CreateFormTenants extends React.Component {
           <Form.Item
             label="Rent"
           >
-            {getFieldDecorator('rent', {
-              rules: [{
-                required: true, message: 'Please select your range for rent!',
-              }],
-            })(
               <Row gutter={10}>
                 <Col span={6}>
                   <InputNumber
@@ -461,12 +457,11 @@ class CreateFormTenants extends React.Component {
                   />
                 </Col>
               </Row>
-            )}
           </Form.Item>
         </Form>
         <div className="buttons">
-          <Button className="previous" onClick={() => {this.nextButton(1)}}>Previous</Button>
-          <Button className="next" type="primary" onClick={() => {this.nextButton(3)}}>Next</Button>
+          <Button className="previous" onClick={() => {this.nextButton(1, "previous")}}>Previous</Button>
+          <Button className="next" type="primary" onClick={() => {this.nextButton(3, "next")}}>Next</Button>
         </div>
       </div>
     )
@@ -490,7 +485,7 @@ class CreateFormTenants extends React.Component {
                   required: true, message: 'Please select a response!',
                 }],
               })(
-                <Select placeholder="Select One" onChange={(value) => this.handleChangeSelect("mobility_aids", value)}>
+                <Select placeholder="Select One" value={tenant.mobility_aids} onChange={(value) => this.handleChangeSelect("mobility_aids", value)}>
                   <Option value={true}>Yes</Option>
                   <Option value={false}>No</Option>
                 </Select>
@@ -505,7 +500,7 @@ class CreateFormTenants extends React.Component {
                   required: true, message: 'Please select a response!',
                 }],
               })(
-                <Select placeholder="Select One" onChange={(value) => this.handleChangeSelect("accessible_shower", value)}>
+                <Select placeholder="Select One" value={tenant.accessible_shower} onChange={(value) => this.handleChangeSelect("accessible_shower", value)}>
                   <Option value={true}>Yes</Option>
                   <Option value={false}>No</Option>
                 </Select>
@@ -520,7 +515,7 @@ class CreateFormTenants extends React.Component {
                   required: true, message: 'Please select a response!',
                 }],
               })(
-                <Select placeholder="Select One" onChange={(value) => this.handleChangeSelect("car_parking", value)}>
+                <Select placeholder="Select One" value={tenant.car_parking} onChange={(value) => this.handleChangeSelect("car_parking", value)}>
                   <Option value={true}>Yes</Option>
                   <Option value={false}>No</Option>
                 </Select>
@@ -535,7 +530,7 @@ class CreateFormTenants extends React.Component {
                   required: true, message: 'Please select a response!',
                 }],
               })(
-                <Select placeholder="Select One" onChange={(value) => this.handleChangeSelect("lift_access", value)}>
+                <Select placeholder="Select One" value={tenant.lift_access} onChange={(value) => this.handleChangeSelect("lift_access", value)}>
                   <Option value={true}>Yes</Option>
                   <Option value={false}>No</Option>
                 </Select>
@@ -544,8 +539,8 @@ class CreateFormTenants extends React.Component {
           </div>
         </Form>
         <div className="buttons">
-          <Button className="previous" onClick={() => {this.nextButton(2)}}>Previous</Button>
-          <Button className="next" type="primary" onClick={() => {this.nextButton(4)}}>Next</Button>
+          <Button className="previous" onClick={() => {this.nextButton(2, "previous")}}>Previous</Button>
+          <Button className="next" type="primary" onClick={() => {this.nextButton(4, "next")}}>Next</Button>
         </div>
       </div>
     )
@@ -554,6 +549,7 @@ class CreateFormTenants extends React.Component {
   renderStageFour() {
     const { tenant } = this.state;
     const { getFieldDecorator } = this.props.form;
+    const { TextArea } = Input;
     return (
       <div className="container">
         <div>Step 4: Wooo description</div>
@@ -567,13 +563,13 @@ class CreateFormTenants extends React.Component {
                 required: true, message: 'Please input your description!',
               }],
             })(
-              <Input style={{ height: 120 }} onChange={() => this.handleChange("description")}/>
+              <TextArea style={{ height: 120, textAlign: "left" }} onChange={() => this.handleChange("description")}/>
             )}
           </Form.Item>
         </Form>
         <div className="buttons">
-          <Button className="previous" onClick={() => {this.nextButton(3)}}>Previous</Button>
-          <Button className="next" type="primary" onClick={() => {this.nextButton(5)}}>Next</Button>
+          <Button className="previous" onClick={() => {this.nextButton(3, "previous")}}>Previous</Button>
+          <Button className="next" type="primary" onClick={() => {this.nextButton(5), "next"}}>Next</Button>
         </div>
       </div>
     )
@@ -590,10 +586,10 @@ class CreateFormTenants extends React.Component {
           >
             <ActiveStorageProvider
               endpoint={{
-                path: '/api/tenants/' + 'new',
+                path: '/api/tenants/',
                 model: "Tenant",
                 attribute: 'avatar',
-                method: "PUT",
+                method: "POST",
               }}
               multiple={true}
               headers={{
@@ -604,8 +600,8 @@ class CreateFormTenants extends React.Component {
           </Form.Item>
         </Form>
         <div className="buttons">
-          <Button className="previous" onClick={() => {this.nextButton(4)}}>Previous</Button>
-          <Button className="next" type="primary" onClick={() => {this.nextButton(6)}}>Next</Button>
+          <Button className="previous" onClick={() => {this.nextButton(4, "previous")}}>Previous</Button>
+          <Button className="next" type="primary" onClick={() => {this.nextButton(6, "next")}}>Next</Button>
         </div>
       </div>
     )
@@ -622,10 +618,10 @@ class CreateFormTenants extends React.Component {
           >
             <ActiveStorageProvider
               endpoint={{
-                path: '/api/tenants/' + 'new',
+                path: '/api/tenants/',
                 model: "Tenant",
                 attribute: 'form',
-                method: "PUT",
+                method: "POST",
               }}
               multiple={true}
               headers={{
@@ -636,15 +632,25 @@ class CreateFormTenants extends React.Component {
           </Form.Item>
         </Form>
         <div className="buttons">
-          <Button className="previous" onClick={() => {this.nextButton(5)}}>Previous</Button>
-          <Button className="next" type="primary" onClick={this.handleCreate}>Submit</Button>
+          <Button className="previous" onClick={() => {this.nextButton(5, "previous")}}>Previous</Button>
+          <Button className="next" type="primary" onClick={() => {this.handleCreate()}}>Submit</Button>
         </div>
       </div>
     )
   }
 
-  nextButton(stage) {
-    this.setState({ stage: stage });
+  nextButton(stage, action) {
+    if (action == "previous") {
+      this.setState({ stage: stage });
+    } else {
+      this.props.form.validateFields(
+        (err) => {
+          if (!err) {
+            this.setState({ stage: stage });
+          }
+        },
+      );
+    }
   }
 
   renderFormStage() {
