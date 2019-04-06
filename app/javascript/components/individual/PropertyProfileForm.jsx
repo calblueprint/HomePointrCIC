@@ -27,7 +27,8 @@ class PropertyProfileForm extends React.Component {
       housing_types: props.categories.housing_types,
       property_types: props.categories.property_types,
       locations: props.categories.locations,
-      avatar: this.props.property.avatar,
+      files: this.props.property.files,
+      images: this.props.property.images,
       fileList: [],
       imageRemoveList: [],
       disabled: false //to prevent multiple form submissions
@@ -93,8 +94,7 @@ class PropertyProfileForm extends React.Component {
       body: body,
       credentials: 'same-origin',
     }).then((data) => {
-      console.log(this.state.property.avatar.name)
-      // window.location = '/properties/' + id.toString();
+      window.location = '/properties/' + id.toString();
     }).catch((data) => {
       window.location = '/';
     });
@@ -136,7 +136,7 @@ class PropertyProfileForm extends React.Component {
     if (!files || !files[0]) {
       return;
     }
-    this.setState({ avatar: files[0] });
+    this.setState({ files: files[0] });
   }
 
   renderUpload() {
@@ -420,13 +420,37 @@ class PropertyProfileForm extends React.Component {
           <Form.Item
             label="Add image"
           >
-            <Avatar property={this.state.property}/>
+            <ActiveStorageProvider
+              endpoint={{
+                path: '/api/properties/' + this.state.property.id.toString(),
+                model: "Property",
+                attribute: 'images',
+                method: "PUT",
+              }}
+              multiple={true}
+              headers={{
+                'Content-Type': 'application/json'
+              }}
+              render={Utils.activeStorageUploadRenderer}
+            />
           </Form.Item>
           <h2>Additional paperwork</h2>
           <Form.Item
             label="Upload file"
           >
-            <Avatar property={this.state.property}/>
+            <ActiveStorageProvider
+              endpoint={{
+                path: '/api/properties/' + this.state.property.id.toString(),
+                model: "Property",
+                attribute: 'files',
+                method: "PUT",
+              }}
+              multiple={true}
+              headers={{
+                'Content-Type': 'application/json'
+              }}
+              render={Utils.activeStorageUploadRenderer}
+            />
           </Form.Item>
         </Form>
           <Button className="submit" type="primary" htmlType="submit">Submit</Button>

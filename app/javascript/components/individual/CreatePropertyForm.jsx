@@ -39,6 +39,8 @@ class CreatePropertyForm extends React.Component {
         accessible_shower: null,
         car_parking: null,
         lift_access: null,
+        images: null,
+        files: null,
 
         // name: '',
         // description: '',
@@ -72,7 +74,8 @@ class CreatePropertyForm extends React.Component {
       housing_types: props.categories.housing_types,
       property_types: props.categories.property_types,
       locations: props.categories.locations,
-      // avatar: this.props.property.avatar,
+      files: this.props.property.files,
+      images: this.props.property.images,
       fileList: [],
       imageRemoveList: [],
       disabled: false, //to prevent multiple form submissions
@@ -170,7 +173,7 @@ class CreatePropertyForm extends React.Component {
     if (!files || !files[0]) {
       return;
     }
-    this.setState({ avatar: files[0] });
+    this.setState({ files: files[0] });
   }
 
   renderUpload() {
@@ -505,7 +508,19 @@ class CreatePropertyForm extends React.Component {
           <Form.Item
             label="Add image"
           >
-            <Avatar property={this.state.property}/>
+            <ActiveStorageProvider
+              endpoint={{
+                path: '/api/properties/create',
+                model: "Property",
+                attribute: 'images',
+                method: "POST",
+              }}
+              multiple={true}
+              headers={{
+                'Content-Type': 'application/json'
+              }}
+              render={Utils.activeStorageUploadRenderer}
+            />
           </Form.Item>
         </Form>
         <div className="buttons">
@@ -526,7 +541,19 @@ class CreatePropertyForm extends React.Component {
           <Form.Item
             label="Upload file"
           >
-            <Avatar property={this.state.property}/>
+            <ActiveStorageProvider
+              endpoint={{
+                path: '/api/properties/create',
+                model: "Property",
+                attribute: 'files',
+                method: "POST",
+              }}
+              multiple={true}
+              headers={{
+                'Content-Type': 'application/json'
+              }}
+              render={Utils.activeStorageUploadRenderer}
+            />
           </Form.Item>
         </Form>
         <div className="buttons">
