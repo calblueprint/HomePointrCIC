@@ -12,9 +12,7 @@ class RATenantView extends React.Component {
   }
 
   handleEdit() {
-    //switch to the ProfileForm Edit
-    //what is this?
-    //window.location = '/tenants/' + this.props.id + '/edit'
+    window.location = '/tenants/' + this.props.tenant.id.toString() + '/edit'
   }
 
   renderName() {
@@ -68,22 +66,22 @@ class RATenantView extends React.Component {
               <Col span={12}><h3>Family Size</h3></Col>
             </Row>
             <Row>
-              <Col span={12} className="content-text"><p>--</p></Col>
-              <Col span={12} className="content-text"><p>--</p></Col>
+              <Col span={12} className="content-text"><p>{this.props.tenant.location}</p></Col>
+              <Col span={12} className="content-text"><p>{this.props.tenant.family_size}</p></Col>
             </Row>
             <Row>
               <Col span={12}><h3>Household Income</h3></Col>
               <Col span={12}><h3>Receving Benefits?</h3></Col>
             </Row>
             <Row>
-              <Col span={12} className="content-text"><p>--</p></Col>
-              <Col span={12} className="content-text"><p>--</p></Col>
+              <Col span={12} className="content-text"><p>${this.props.tenant.income}</p></Col>
+              <Col span={12} className="content-text"><p>{this.props.tenant.benefits}</p></Col>
             </Row>
             <Row>
               <Col span={24}><h3>Current Living Arrangements</h3></Col>
             </Row>
             <Row>
-              <Col span={24} className="content-text"><p>--</p></Col>
+              <Col span={24} className="content-text"><p>{this.props.tenant.living_arrangements}</p></Col>
             </Row>
           </div>
         </div>
@@ -96,7 +94,7 @@ class RATenantView extends React.Component {
               <Col span={8}><h3>Housing</h3></Col>
             </Row>
             <Row>
-              <Col span={8} className="content-text"><p>${this.props.tenant.date_needed}</p></Col>
+              <Col span={8} className="content-text"><p>{this.props.tenant.date_needed}</p></Col>
               <Col span={8} className="content-text"><p>{this.props.tenant.property_type}</p></Col>
               <Col span={8} className="content-text"><p>{this.props.tenant.housing_type}</p></Col>
             </Row>
@@ -106,8 +104,8 @@ class RATenantView extends React.Component {
               <Col span={8}><h3>Number of Bedrooms</h3></Col>
             </Row>
             <Row>
-              <Col span={8} className="content-text"><p>{this.props.tenant.rent_min}</p></Col>
-              <Col span={8} className="content-text"><p>{this.props.tenant.rent_max}</p></Col>
+              <Col span={8} className="content-text"><p>${this.props.tenant.rent_min}</p></Col>
+              <Col span={8} className="content-text"><p>${this.props.tenant.rent_max}</p></Col>
               <Col span={8} className="content-text"><p>{this.props.tenant.num_bedrooms}</p></Col>
             </Row>
           </div>

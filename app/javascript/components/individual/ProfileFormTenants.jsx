@@ -632,7 +632,7 @@ class ProfileFormTenants extends React.Component {
           <div className="buttons">
             <Form.Item
             >
-            <Button className="previous" onClick={() => {window.location = "tenants/" + this.state.tenant.id.toString()}}>Cancel</Button>
+            <Button className="previous" onClick={() => {window.location = '/tenants/' + this.state.tenant.id.toString()}}>Cancel</Button>
             <Button  className="next" type="primary" htmlType="submit">Submit</Button>
           </Form.Item>
         </div>

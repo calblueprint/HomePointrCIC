@@ -461,6 +461,7 @@ class PropertyProfileForm extends React.Component {
             />
           </Form.Item>
         </Form>
+          <Button className="previous" onClick={() => {window.location = '/properties/' + this.state.property.id.toString()}}>Cancel</Button>
           <Button className="submit" type="primary" htmlType="submit">Save changes</Button>
       </div>
     )
