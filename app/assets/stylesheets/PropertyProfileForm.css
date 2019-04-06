@@ -26,7 +26,7 @@
 
 .submit {
   align-self: flex-end;
-  display: flex;
+  float: right;
   flex-direction: row;
   width: 150px;
 }

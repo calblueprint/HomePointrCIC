@@ -215,6 +215,7 @@ class PropertyProfileForm extends React.Component {
             label="Housing type"
           >
             {getFieldDecorator('housing_type', {
+              initialValue: property.housing_type,
               rules: [{
                 required: true, message: 'Please select housing type!',
               }],
@@ -232,6 +233,7 @@ class PropertyProfileForm extends React.Component {
             label="Property type"
           >
             {getFieldDecorator('property_type', {
+              initialValue: property.property_type,
               rules: [{
                 required: true, message: 'Please select a property type!',
               }],
@@ -320,6 +322,7 @@ class PropertyProfileForm extends React.Component {
             label="Are there mobility aids?"
           >
             {getFieldDecorator('mobility_aids', {
+              initialValue: property.mobility_aids,
               rules: [{
                 required: true, message: 'Please select a response!',
               }],
@@ -334,6 +337,7 @@ class PropertyProfileForm extends React.Component {
             label="Is there lift access?"
           >
             {getFieldDecorator('lift_access', {
+              initialValue: property.lift_access,
               rules: [{
                 required: true, message: 'Please select a response!',
               }],
@@ -348,6 +352,7 @@ class PropertyProfileForm extends React.Component {
             label="Is the shower accessible?"
           >
             {getFieldDecorator('accessible_shower', {
+              initialValue: property.accessible_shower,
               rules: [{
                 required: true, message: 'Please select a response!',
               }],
@@ -362,6 +367,7 @@ class PropertyProfileForm extends React.Component {
             label="Are utilities included?"
           >
             {getFieldDecorator('utilities_included', {
+              initialValue: property.utilities_included,
               rules: [{
                 required: true, message: 'Please select a response!',
               }],
@@ -376,6 +382,7 @@ class PropertyProfileForm extends React.Component {
             label="Is it furnished?"
           >
             {getFieldDecorator('furniture', {
+              initialValue: property.furniture,
               rules: [{
                 required: true, message: 'Please select a response!',
               }],
@@ -390,6 +397,7 @@ class PropertyProfileForm extends React.Component {
             label="Is there car parking available?"
           >
             {getFieldDecorator('car_parking', {
+              initialValue: property.car_parking,
               rules: [{
                 required: true, message: 'Please select a response!',
               }],
@@ -453,7 +461,7 @@ class PropertyProfileForm extends React.Component {
             />
           </Form.Item>
         </Form>
-          <Button className="submit" type="primary" htmlType="submit">Submit</Button>
+          <Button className="submit" type="primary" htmlType="submit">Save changes</Button>
       </div>
     )
   }
