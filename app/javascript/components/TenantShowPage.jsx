@@ -26,6 +26,7 @@ class TenantShowPage extends React.Component {
   render() {
     this.setup(this.state.applications, this.props.form);
     this.setup(this.state.properties, this.props.propertyimages);
+    this.setup(this.state.properties, this.props.propertyForms);
     const leftComponent = (
       <RATenantView key={this.props.tenant.id} tenant={this.props.tenant} mode="ra_edit" avatar={this.props.url} status={this.props.status}/>
     );

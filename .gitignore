@@ -28,6 +28,7 @@
 /public/packs
 /public/packs-test
 /node_modules
+package-lock.json
 yarn-debug.log*
 yarn-error.log*
 .yarn-integrity

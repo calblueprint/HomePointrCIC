@@ -23,6 +23,16 @@ class ApplicationsController < ApplicationController
         @propertyImages << { images: nil }
       end
     end
+
+    @propertyForms = []
+    @properties.each do |p|
+      if p.form.attached?
+        @propertyForms << { form: url_for(p.form) }
+      else
+        @propertyForms << { form: nil }
+      end
+    end
+
     @housing_type_options = Property.housing_types.keys
     @property_type_options = Property.property_types.keys
     @location_options = Property.locations.keys

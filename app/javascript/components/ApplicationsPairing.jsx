@@ -118,6 +118,7 @@ class ApplicationsPairing extends React.Component {
     this.setup(this.state.tenants, this.props.tenantImages);
     this.setup(this.state.tenants, this.props.tenantPriorities);
     this.setup(this.state.properties, this.props.propertyImages);
+    this.setup(this.state.properties, this.props.propertyForms);
     let leftComponent = null;
     if (this.state.individualView) {
       //Individual tenant has been selected
