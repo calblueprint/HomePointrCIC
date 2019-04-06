@@ -53,7 +53,6 @@ def make_properties
       description: Faker::HowIMetYourMother.quote,
       landlord_id: Faker::Number.between(1, NUM_LANDLORDS),
       rent: Faker::Number.between(500, 3000),
-      size: Faker::Number.between(500, 3000),
       housing_type: n % 13,
       property_type: n % 10,
       location: n % 6,

@@ -13,7 +13,7 @@ class FilterPanel extends React.Component {
       capacity: 0,
       rent_min: 0,
       rent_max: 9999,
-      size: 10,
+      number_of_bedrooms: 0,
       property_type: [],
       housing_type: [],
       date_available: moment().format("YYYY-MM-DD"),
@@ -58,7 +58,7 @@ class FilterPanel extends React.Component {
         location: [this.props.selectedTenant.location],
         rent_min: this.props.selectedTenant.rent_min,
         rent_max: this.props.selectedTenant.rent_max,
-        size: this.props.selectedTenant.number_of_bedrooms,
+        number_of_bedrooms: this.props.selectedTenant.number_of_bedrooms,
         property_type: [this.props.selectedTenant.property_type],
         housing_type: [this.props.selectedTenant.housing_type],
         date_available: moment(this.props.selectedTenant.date_needed),
@@ -177,7 +177,7 @@ class FilterPanel extends React.Component {
           >
         Number of Bedrooms
         </div>
-        <InputNumber min={0} defaultValue={this.state.size} onChange={(e) => this.handleCheckbox(e, "size")} />
+        <InputNumber min={0} defaultValue={this.state.size} onChange={(e) => this.handleCheckbox(e, "number_of_bedrooms")} />
         </div>
         <div
           style={{
