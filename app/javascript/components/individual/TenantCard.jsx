@@ -14,26 +14,26 @@ class TenantCard extends React.Component {
     }
   }
 
-  tenantStatusHelper = (statusNum) => {
-    const statuses = {
-      0: ["Accepted", "green"],
-      1: ["Interviewing", "blue"],
-      2: ["Applied", "purple"],
-      3: ["Declined", "red"],
-      4: ["No Applications", "gold"]
-    }
-    return statuses[statusNum];
-  }
-
-  renderStatusTag = () => {
-    if (this.state.displayTag) {
-      const status = this.tenantStatusHelper(this.state.tenant.status)[0];
-      const color = this.tenantStatusHelper(this.state.tenant.status)[1];
-      return(
-        <Tag color={color} className="tag">{status}</Tag>
-      )
-    }
-  }
+  // tenantStatusHelper = (statusNum) => {
+  //   const statuses = {
+  //     0: ["Accepted", "green"],
+  //     1: ["Interviewing", "blue"],
+  //     2: ["Applied", "purple"],
+  //     3: ["Declined", "red"],
+  //     4: ["No Applications", "gold"]
+  //   }
+  //   return statuses[statusNum];
+  // }
+  //
+  // renderStatusTag = () => {
+  //   if (this.state.displayTag) {
+  //     const status = this.tenantStatusHelper(this.state.tenant.status)[0];
+  //     const color = this.tenantStatusHelper(this.state.tenant.status)[1];
+  //     return(
+  //       <Tag color={color} className="tag">{status}</Tag>
+  //     )
+  //   }
+  // }
 
   renderAvatar = () => {
     return(
@@ -53,7 +53,7 @@ class TenantCard extends React.Component {
           <Row className="header-container">
             <Col span={20}>
               <h2 className="title">{this.state.tenant.name}</h2>
-              <div className="status-tag">{this.renderStatusTag()}</div>
+              <div className="status-tag">{Utils.renderStatus(this.state.tenant.status, this.state.displayTag)}</div>
             </Col>
             <Col span={4}>
               <div className="status-tag">Edit</div>
