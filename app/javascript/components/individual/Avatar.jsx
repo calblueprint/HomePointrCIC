@@ -32,10 +32,6 @@ class Avatar extends React.Component {
         loading: false,
       }));
     }
-    this.state.tenant["avatar"] = info.file;
-    console.log("IN HANDLECHANGE IN AVATAR")
-    console.log(info.file);
-    console.log(info.file.name);
   }
 
   render() {
@@ -62,7 +58,7 @@ class Avatar extends React.Component {
         onChange={this.handleChange}
         customRequest={dummyRequest}
       >
-        {imageUrl ? <img src={imageUrl} alt="avatar" /> : uploadButton}
+        {imageUrl ? <img src={imageUrl} width='200px' alt="avatar" /> : uploadButton}
       </Upload>
     );
   }

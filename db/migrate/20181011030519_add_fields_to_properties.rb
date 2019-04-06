@@ -3,7 +3,6 @@
 class AddFieldsToProperties < ActiveRecord::Migration[5.2]
   def change
     add_column :properties, :rent, :integer
-    add_column :properties, :size, :integer
     add_column :properties, :property_type, :integer
     add_column :properties, :housing_type, :integer
     add_column :properties, :date_available, :date

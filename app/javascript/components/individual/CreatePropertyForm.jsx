@@ -276,6 +276,7 @@ class CreatePropertyForm extends React.Component {
             label="Date available"
           >
             {getFieldDecorator('date_available', {
+              initialValue: property.date_available ? moment() : moment(property.date_available),
               rules: [{
                 required: true, message: 'Please select the date available!',
               }],

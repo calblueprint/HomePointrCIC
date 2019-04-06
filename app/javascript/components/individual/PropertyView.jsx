@@ -11,7 +11,7 @@ class PropertyView extends React.Component {
 
   handleEdit() {
     //switch to the ProfileForm Edit
-    window.location = '/properties/' + this.props.id + '/edit'
+    window.location = '/properties/' + this.props.property.id.toString() + '/edit'
   }
 
   renderBooleans(includes_true) {
@@ -54,7 +54,7 @@ class PropertyView extends React.Component {
   renderNameEdit() {
     return (
       <Row>
-        <Col span="12"> {this.props.property.name}</Col>
+        <Col span="12"> {this.props.property.address}</Col>
         <Col span="12"> {this.renderEditButton()}</Col>
       </Row>
     )

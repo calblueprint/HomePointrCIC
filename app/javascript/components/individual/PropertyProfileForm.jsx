@@ -78,12 +78,13 @@ class PropertyProfileForm extends React.Component {
   }
 
   //api edit
-  handleEdit() {
+  handleEdit = (e) => {
+    e.preventDefault();
     let id = this.state.property.id;
     var request = null;
     var body = this.convertToDict()
     body = JSON.stringify({property: body})
-    request = APIRoutes.properties.update(id)
+    request = '/api/properties/' + id.toString();
     this.removeImages(this.state.imageRemoveList);
     fetch(request, {
       method: 'PUT',
@@ -461,7 +462,7 @@ class PropertyProfileForm extends React.Component {
             />
           </Form.Item>
         </Form>
-          <Button className="submit" type="primary" htmlType="submit">Save changes</Button>
+          <Button className="submit" type="primary" htmlType="submit" onClick={this.handleEdit}>Save changes</Button>
       </div>
     )
   }

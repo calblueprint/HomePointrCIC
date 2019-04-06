@@ -248,6 +248,7 @@ class CreateFormTenants extends React.Component {
             label="Location"
           >
           {getFieldDecorator('location', {
+            initialValue: tenant.location,
             rules: [{
               required: true, message: 'Please pick a number of bedrooms!',
             }],
@@ -306,6 +307,7 @@ class CreateFormTenants extends React.Component {
             label="Receiving Benefits?"
           >
             {getFieldDecorator('benefits', {
+              initialValue: tenant.benefits,
               rules: [{
                 required: true, message: 'Please select a response!',
               }],
@@ -343,6 +345,7 @@ class CreateFormTenants extends React.Component {
               label="Housing Type"
               >
               {getFieldDecorator('housing_type', {
+                initialValue: tenant.housing_type,
                 rules: [{
                   required: true, message: 'Please pick a number of bedrooms!',
                 }],
@@ -360,6 +363,7 @@ class CreateFormTenants extends React.Component {
               label="Property Type"
             >
               {getFieldDecorator('property_type', {
+                initialValue: tenant.property_type,
                 rules: [{
                   required: true, message: 'Please pick a number of bedrooms!',
                 }],
@@ -481,6 +485,7 @@ class CreateFormTenants extends React.Component {
               label="Mobility Aids"
             >
               {getFieldDecorator('mobility_aids', {
+                initialValue: tenant.mobility_aids,
                 rules: [{
                   required: true, message: 'Please select a response!',
                 }],
@@ -495,6 +500,7 @@ class CreateFormTenants extends React.Component {
               label="Accessible Shower"
             >
               {getFieldDecorator('accessible_shower', {
+                initialValue: tenant.accessible_shower,
                 rules: [{
                   required: true, message: 'Please select a response!',
                 }],
@@ -509,6 +515,7 @@ class CreateFormTenants extends React.Component {
               label="Car Parking"
             >
               {getFieldDecorator('car_parking', {
+                initialValue: tenant.car_parking,
                 rules: [{
                   required: true, message: 'Please select a response!',
                 }],
@@ -523,6 +530,7 @@ class CreateFormTenants extends React.Component {
               label="Lift Access"
             >
               {getFieldDecorator('lift_access', {
+                initialValue: tenant.lift_access,
                 rules: [{
                   required: true, message: 'Please select a response!',
                 }],
@@ -629,7 +637,7 @@ class CreateFormTenants extends React.Component {
         </Form>
         <div className="buttons">
           <Button className="previous" onClick={() => {this.nextButton(5)}}>Previous</Button>
-          <Button className="next" type="primary" onClick={() => {this.handleCreate}}>Submit</Button>
+          <Button className="next" type="primary" onClick={this.handleCreate}>Submit</Button>
         </div>
       </div>
     )

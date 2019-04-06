@@ -55,49 +55,51 @@ class PropertiesController < ApplicationController
     # nice_field_names.each_with_index do |tag, index|
     #   @tag_values << tag.to_s + ': ' + field_values[index].to_s
     # end
-    @images = nil
+    @images = []
     if @property.images.attached? == true
       image_list = @property.images.map { |img| { url: url_for(img) } }
-      @images = image_list
+      @images = [{ images: image_list }]
+    else
+      @images = [{ images: [] }]
     end
     @name = (@property.housing_type + ' in ' + @property.location).titleize
     @description = @property.attributes.values[2]
 
-    @propertys = []
-    @propertyImages = []
-    @propertyApps = []
-    @propertyAppsPDF = []
-    @potentialpropertys = []
-    @potentialpropertysImages = []
-    @potentialpropertyApps = []
-    @potentialpropertyAppsPDF = []
+    @tenants = []
+    @tenantImages = []
+    @tenantApps = []
+    @tenantAppsPDF = []
+    @potentialTenants = []
+    @potentialTenantsImages = []
+    @potentialTenantApps = []
+    @potentialTenantAppsPDF = []
     @property.applications.each do |a|
       if a.status == 'housed'
-        @propertys << a.property
-        @propertyImages << if a.property.avatar.attached?
-                           { url: url_for(a.property.avatar) }
+        @tenants << a.tenant
+        @tenantImages << if a.tenant.avatar.attached?
+                           { url: url_for(a.tenant.avatar) }
                          else
                            { url: nil }
                          end
-        @propertyAppsPDF << if a.form.attached?
+        @tenantAppsPDF << if a.form.attached?
                             { url: url_for(a.form) }
                           else
                             { url: nil }
                           end
-        @propertyApps << a
+        @tenantApps << a
       elsif (a.status == 'received') || (a.status == 'interview')
-        @potentialpropertys << a.property
-        @potentialpropertysImages << if a.property.avatar.attached?
-                                     { url: url_for(a.property.avatar) }
+        @potentialTenants << a.tenant
+        @potentialTenantsImages << if a.tenant.avatar.attached?
+                                     { url: url_for(a.tenant.avatar) }
                                    else
                                      { url: nil }
                                    end
-        @potentialpropertyAppsPDF << if a.form.attached?
+        @potentialTenantAppsPDF << if a.form.attached?
                                      { url: url_for(a.form) }
                                    else
                                      { url: nil }
                                    end
-        @potentialpropertyApps << a
+        @potentialTenantApps << a
       end
     end
   end

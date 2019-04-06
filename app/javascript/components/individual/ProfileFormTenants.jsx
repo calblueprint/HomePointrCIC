@@ -77,7 +77,9 @@ class ProfileFormTenants extends React.Component {
   }
 
   //api edit
-  handleEdit() {
+  handleEdit = (event) => {
+    event.preventDefault();
+    console.log('we in')
     let id = this.state.tenant.id;
     var request = null;
     var body = this.convertToDict()
@@ -632,7 +634,7 @@ class ProfileFormTenants extends React.Component {
           <div className="buttons">
             <Form.Item
             >
-            <Button className="previous" onClick={() => {window.location = "tenants/" + this.state.tenant.id.toString()}}>Cancel</Button>
+            <Button className="previous" onClick={() => {window.location = '/tenants/' + this.state.tenant.id.toString()}}>Cancel</Button>
             <Button  className="next" type="primary" htmlType="submit">Submit</Button>
           </Form.Item>
         </div>

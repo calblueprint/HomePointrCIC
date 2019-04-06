@@ -11,6 +11,7 @@ class PropertyShowPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      property: props.property,
       tenants: props.tenants,
       potentialTenants: props.potentialTenants,
       tenantApps: props.tenantApps,
@@ -25,13 +26,14 @@ class PropertyShowPage extends React.Component {
   }
 
   render() {
+    this.setup([this.state.property], this.props.images);
     this.setup(this.state.tenants, this.props.tenantImages);
     this.setup(this.state.potentialTenants, this.props.potentialTenantsImages);
     this.setup(this.state.tenantApps, this.props.tenantAppsPDF);
     this.setup(this.state.potentialTenantApps, this.props.potentialTenantAppsPDF);
     const TabPane = Tabs.TabPane;
     const leftComponent = (
-      <PropertyView canceledit={false} property={this.props.property}/>
+      <PropertyView canceledit={false} property={this.state.property}/>
     );
     const rightComponent = (
     <Tabs defaultActiveKey="1">
