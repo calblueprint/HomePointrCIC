@@ -27,7 +27,7 @@ class CreatePropertyForm extends React.Component {
         size: null,
         property_type: null,
         housing_type: null,
-        date_available: new Date(),
+        date_available: null,
         location: null,
         address: '',
         number_of_bedrooms: null,
@@ -40,7 +40,7 @@ class CreatePropertyForm extends React.Component {
         car_parking: null,
         lift_access: null,
         images: null,
-        files: null,
+        form: null,
 
         // name: '',
         // description: '',
@@ -114,7 +114,7 @@ class CreatePropertyForm extends React.Component {
   // api create
   handleCreate() {
     this.setState({disabled: true});
-    var body = this.convertToDict()
+    let body = this.convertToDict();
     body = JSON.stringify({property: body});
     var request = APIRoutes.properties.create;
     fetch(request, {
@@ -277,7 +277,7 @@ class CreatePropertyForm extends React.Component {
             label="Date available"
           >
             {getFieldDecorator('date_available', {
-              initialValue: moment(property.date_available, "YYYY-MM-DD"),
+              initialValue: property.date_available ? moment(property.date_available, "YYYY-MM-DD") : "Select date",
               rules: [{
                 required: true, message: 'Please select the date available!',
               }],
@@ -537,13 +537,13 @@ class CreatePropertyForm extends React.Component {
         <h3>Do you require potential clients to fill out any additional paperwork outside of the general client form?</h3>
         <Form>
           <Form.Item
-            label="Upload files"
+            label="Upload form"
           >
             <ActiveStorageProvider
               endpoint={{
                 path: '/api/properties/create',
                 model: "Property",
-                attribute: 'files',
+                attribute: 'form',
                 method: "POST",
               }}
               multiple={true}
@@ -556,7 +556,7 @@ class CreatePropertyForm extends React.Component {
         </Form>
         <div className="buttons">
           <Button className="previous" onClick={() => {this.nextButton(4)}}>Previous</Button>
-          <Button className="next" type="primary" onClick={() => {this.handleCreate()}}>Submit</Button>
+          <Button className="next" type="primary" onClick={this.handleCreate}>Submit</Button>
         </div>
       </div>
     )

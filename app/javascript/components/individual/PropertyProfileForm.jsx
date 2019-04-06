@@ -27,7 +27,7 @@ class PropertyProfileForm extends React.Component {
       housing_types: props.categories.housing_types,
       property_types: props.categories.property_types,
       locations: props.categories.locations,
-      files: this.props.property.files,
+      form: this.props.property.form,
       images: this.props.property.images,
       fileList: [],
       imageRemoveList: [],
@@ -418,7 +418,7 @@ class PropertyProfileForm extends React.Component {
           </Form.Item>
           <h2>Photos</h2>
           <Form.Item
-            label="Add image"
+            label="Add images"
           >
             <ActiveStorageProvider
               endpoint={{
@@ -436,13 +436,13 @@ class PropertyProfileForm extends React.Component {
           </Form.Item>
           <h2>Additional paperwork</h2>
           <Form.Item
-            label="Upload file"
+            label="Upload form"
           >
             <ActiveStorageProvider
               endpoint={{
                 path: '/api/properties/' + this.state.property.id.toString(),
                 model: "Property",
-                attribute: 'files',
+                attribute: 'form',
                 method: "PUT",
               }}
               multiple={true}

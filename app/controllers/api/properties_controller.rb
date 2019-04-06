@@ -86,6 +86,16 @@ class Api::PropertiesController < ApplicationController
       :housing_type,
       :date_available,
       :location,
+      :address,
+      :number_of_bedrooms,
+      :number_of_bathrooms,
+      :floor_number,
+      :mobility_aids,
+      :furniture,
+      :utilities_included,
+      :accessible_shower,
+      :car_parking,
+      :lift_access,
       :images,
       :form
     )
