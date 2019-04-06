@@ -1,8 +1,30 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
+  namespace :admin do
+      resources :users
+      resources :emails
+      resources :applications
+      resources :properties
+      resources :tenants
+      resources :landlords
+      resources :referral_agencies
+
+      root to: "users#index"
+    end
   get 'home/index'
   get 'errors/show'
+
+  get '/properties/new' => 'properties#new'
+  get 'properties/:id/edit' => 'properties#edit'
+  get 'properties/:id' => 'properties#show'
+  get '/properties/categories' => 'properties#get_property_category_enums'
+
+  get '/tenants/new' => 'tenants#new'
+  get 'tenants/:id/edit' => 'tenants#edit'
+  get 'tenants/:id' => 'tenants#show'
+  get '/tenants/categories' => 'tenants#get_tenant_category_enums'
+
   resources :referral_agencies, only: %i[create show update edit destroy]
   resources :landlords, only: %i[create show update edit destroy]
   resources :properties, only: %i[new create update index edit show destroy]
@@ -13,7 +35,6 @@ Rails.application.routes.draw do
   # resources :tenants, :only => [:create, :update, :show, :destroy]
   resources :tenants
   # resources :applications, only: %i[create show destroy]
-  resources :infos, only: [:create]
   devise_for :users, controllers: {
     sessions: 'sessions',
     registrations: 'registrations'
@@ -28,7 +49,7 @@ Rails.application.routes.draw do
     end
 
     namespace :api do
-      resources :landlords, :referral_agencies, :infos, :applications, :tenants
+      resources :landlords, :referral_agencies, :applications, :tenants
       resources :properties do
         collection do
           delete 'delete_image_attachment/:image_id', to: 'properties#delete_image_attachment'

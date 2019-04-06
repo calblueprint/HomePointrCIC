@@ -9,9 +9,7 @@ class TenantDashboard < Administrate::BaseDashboard
   # on pages throughout the dashboard.
   ATTRIBUTE_TYPES = {
     referral_agency: Field::BelongsTo,
-    info: Field::HasOne,
-    avatar_attachment: Field::HasOne,
-    avatar_blob: Field::HasOne,
+    avatar: Field::ActiveStorage,
     id: Field::Number,
     name: Field::String,
     description: Field::Text,
@@ -21,11 +19,16 @@ class TenantDashboard < Administrate::BaseDashboard
     rent_max: Field::Number,
     housing_type: Field::String.with_options(searchable: false),
     property_type: Field::String.with_options(searchable: false),
-    num_bedrooms: Field::Number,
     location: Field::String.with_options(searchable: false),
     date_needed: Field::DateTime,
     created_at: Field::DateTime,
     updated_at: Field::DateTime,
+    number_of_bedrooms: Field::Number,
+    number_of_bathrooms: Field::Number,
+    mobility_aids: Field::Boolean,
+    accessible_shower: Field::Boolean,
+    car_parking: Field::Boolean,
+    lift_access: Field::Boolean,
   }.freeze
 
   # COLLECTION_ATTRIBUTES
@@ -35,18 +38,14 @@ class TenantDashboard < Administrate::BaseDashboard
   # Feel free to add, remove, or rearrange items.
   COLLECTION_ATTRIBUTES = [
     :referral_agency,
-    :info,
-    :avatar_attachment,
-    :avatar_blob,
+    :avatar,
   ].freeze
 
   # SHOW_PAGE_ATTRIBUTES
   # an array of attributes that will be displayed on the model's show page.
   SHOW_PAGE_ATTRIBUTES = [
     :referral_agency,
-    :info,
-    :avatar_attachment,
-    :avatar_blob,
+    :avatar,
     :id,
     :name,
     :description,
@@ -56,11 +55,16 @@ class TenantDashboard < Administrate::BaseDashboard
     :rent_max,
     :housing_type,
     :property_type,
-    :num_bedrooms,
     :location,
     :date_needed,
     :created_at,
     :updated_at,
+    :number_of_bedrooms,
+    :number_of_bathrooms,
+    :mobility_aids,
+    :accessible_shower,
+    :car_parking,
+    :lift_access,
   ].freeze
 
   # FORM_ATTRIBUTES
@@ -68,9 +72,7 @@ class TenantDashboard < Administrate::BaseDashboard
   # on the model's form (`new` and `edit`) pages.
   FORM_ATTRIBUTES = [
     :referral_agency,
-    :info,
-    :avatar_attachment,
-    :avatar_blob,
+    :avatar,
     :name,
     :description,
     :email,
@@ -79,9 +81,14 @@ class TenantDashboard < Administrate::BaseDashboard
     :rent_max,
     :housing_type,
     :property_type,
-    :num_bedrooms,
     :location,
     :date_needed,
+    :number_of_bedrooms,
+    :number_of_bathrooms,
+    :mobility_aids,
+    :accessible_shower,
+    :car_parking,
+    :lift_access,
   ].freeze
 
   # Overwrite this method to customize how tenants are displayed

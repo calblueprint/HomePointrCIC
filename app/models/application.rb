@@ -4,10 +4,10 @@ class Application < ApplicationRecord
   enum status: { rejected: 0, received: 1, interview: 2, housed: 3 }
   has_one_attached :form
   belongs_to :property, required: false
-  belongs_to :info, required: false
-  validates :status, :property_id, :info_id, presence: true
+  belongs_to :tenant, required: false
+  validates :status, :property_id, :tenant_id, presence: true
   validates :status, inclusion: { in: statuses.keys }
-  validates_associated :info, :property
+  validates_associated :tenant, :property
 
   def self.policy_class
     AppPolicy
@@ -24,7 +24,7 @@ class Application < ApplicationRecord
     elsif status > 1
       return false
     else
-      if info.tenant.priority < 2
+      if tenant.priority < 2
         return true
       else
         return false

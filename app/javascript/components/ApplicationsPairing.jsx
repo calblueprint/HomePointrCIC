@@ -45,7 +45,7 @@ class ApplicationsPairing extends React.Component {
     var request = null;
     var prop;
     for (prop in this.state.selectedProperties) {
-      let body = {"description": this.state.description, "status": 1, "property_id": this.state.selectedProperties[prop], "info_id": this.state.selectedTenant.id};
+      let body = {"description": this.state.description, "status": 1, "property_id": this.state.selectedProperties[prop], "tenant_id": this.state.selectedTenant.id};
       body = JSON.stringify({application: body})
       request = APIRoutes.applications.create
       fetch(request, {
@@ -111,7 +111,7 @@ class ApplicationsPairing extends React.Component {
   }
 
   makeTagValues(tenant) {
-    return ["Min Rent: " + tenant.rent_min, "Max Rent: " + tenant.rent_max, "Housing Type " + tenant.housing_type, "Property Type " + tenant.property_type, "Size: " + tenant.num_bedrooms, "Location: " + tenant.location, "Date Needed: " + tenant.date_needed]
+    return ["Min Rent: " + tenant.rent_min, "Max Rent: " + tenant.rent_max, "Housing Type " + tenant.housing_type, "Property Type " + tenant.property_type, "Size: " + tenant.number_of_bedrooms, "Location: " + tenant.location, "Date Needed: " + tenant.date_needed]
   }
 
   render() {
@@ -165,7 +165,7 @@ ApplicationsPairing.propTypes = {
   properties: PropTypes.array,
   housing_options: PropTypes.array,
   property_options: PropTypes.array,
-  location_options: PropTypes.array 
+  location_options: PropTypes.array
 };
 
 export default ApplicationsPairing;

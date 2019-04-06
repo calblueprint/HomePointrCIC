@@ -41,8 +41,7 @@ class ApplicationsController < ApplicationController
 
   def show
     @application = Application.find(params[:id])
-    @info = @application.info
-    @application_tenant = @info.tenant
+    @application_tenant = @application.tenant
     authorize @application
     @property = @application.property
     @status = @application_tenant.priority

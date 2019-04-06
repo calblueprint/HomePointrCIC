@@ -2,7 +2,9 @@
   "name": "whales-docker",
   "private": true,
   "dependencies": {
+    "@rails/activestorage": "^6.0.0-alpha",
     "@rails/webpacker": "^3.5.5",
+    "activestorage": "^5.2.2-1",
     "antd": "^3.10.4",
     "babel-cli": "^6.26.0",
     "babel-loader": "7",
