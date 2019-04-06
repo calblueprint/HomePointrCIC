@@ -5,6 +5,7 @@ class CreateProperties < ActiveRecord::Migration[5.2]
     create_table :properties do |t|
       t.integer :capacity
       t.text :description
+      t.integer :number_of_openings
       t.references :landlord, index: true
     end
   end

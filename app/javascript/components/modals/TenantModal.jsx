@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from "prop-types";
 import 'antd/dist/antd.css';
-import { Modal, Button, Icon } from 'antd';
+import { Modal, Button, Icon, Card, Avatar} from 'antd';
 import ApplicationStatusButtons from './../individual/ApplicationStatusButtons'
 
 class TenantModal extends React.Component {
@@ -48,6 +48,14 @@ class TenantModal extends React.Component {
     }
   }
 
+  renderAvatar(images){
+    if (typeof(images) === "string") {
+        return (<Avatar size={200} shape="square" src={images} />);
+    } else {
+      return (<Avatar size={200} shape="square" src={images[0].url} />)
+    }
+  }
+
   render() {
     return (
       <div>
@@ -60,11 +68,16 @@ class TenantModal extends React.Component {
           onOk={this.handleOk}
           onCancel={this.handleCancel}
         >
-          <p>Email: {this.props.email}</p>
-          <p>Phone: {this.props.phone}</p>
-          <p>Description: {this.props.description}</p>
+          <p>Description: {this.props.tenant.description}</p>
+          <p>Email: {this.props.tenant.email}</p>
+          <p>Phone: {this.props.tenant.phone}</p>
+          <p>Description: {this.props.tenant.description}</p>
+          <p>Housing Type: {this.props.tenant.housing_type}</p>
+          <p>Date Needed: {this.props.tenant.date_needed}</p>
+
           {this.renderAttachment()}
           {this.handleButtons()}
+
         </Modal>
       </div>
     );
@@ -86,4 +99,3 @@ TenantModal.defaultProps = {
 };
 
 export default TenantModal;
-          

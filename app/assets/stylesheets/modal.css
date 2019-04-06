@@ -1,3 +1,63 @@
+h1 {
+  font-size: 18px;
+  font-weight: normal;
+  margin-bottom: 8px;
+  margin-top: 24px;
+}
+
+.title1 {
+  text-transform: uppercase;
+  color: rgba(0,0,0,0.5);
+  font-size: 10px;
+  margin-bottom: 4px;
+}
+
+.text1 {
+  font-size: 16px;
+  font-weight: normal;
+  margin-bottom: 24px;
+}
+
+.flex-container {
+  padding: 0;
+  margin-top: -24px;
+  list-style: none;
+
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+
+  -webkit-flex-flow: row wrap;
+  justify-content: space-around;
+}
+
+.flex-item {
+  width: 400px;
+}
+
+.flex-item:not(:last-child) {
+  margin-right: 32px;
+}
+
+.section:not(:last-child) {
+  border-bottom: 1px solid #D9D9D9;
+}
+
+.section:last-child {
+  border-bottom: 0px solid #D9D9D9;
+}
+
+.subsection {
+  margin-left: 32px;
+}
+
+.icon {
+  font-size: 16px;
+  margin: 6px;
+}
+
 .right {
   display: inline-block;
   float: right;
