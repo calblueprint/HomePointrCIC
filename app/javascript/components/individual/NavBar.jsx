@@ -47,7 +47,6 @@ class NavBar extends React.Component {
   }
 
   toggleDialog() {
-    console.log("hello");
     if (document.querySelector("#navbar-dialog").style.display != "block") {
       document.querySelector("#navbar-dialog").style.display = "block";
     } else {
@@ -61,34 +60,6 @@ class NavBar extends React.Component {
 
   render() {
     return (
-      // <div
-      //   style={{
-      //     background: "#FFFFFF",
-      //     height: "64px",
-      //     borderBottom: "1px solid #C4C4C4"
-      //   }}
-      // >
-      //   {[
-      //     this.renderEmail(),
-      //     this.renderAvatar(),
-      //     <Button
-      //       key="edit"
-      //       type="default"
-      //       onClick={this.handleEdit}
-      //       style={{ float: "right" }}
-      //     >
-      //       Edit Account
-      //     </Button>,
-      //     <Button
-      //       key="logout"
-      //       type="default"
-      //       onClick={this.handleLogout}
-      //       style={{ float: "right" }}
-      //     >
-      //       Logout
-      //     </Button>
-      //   ]}
-      // </div>
       <div>
         <div className="navbar">
           <img className="home-button-logo" onClick={this.returnHome} src={logo}/>
@@ -99,7 +70,6 @@ class NavBar extends React.Component {
           <Button key="logout" type="danger" onClick={this.handleLogout} className="navbar-dialog-button">Logout</Button>
         </div>
       </div>
-
     );
   }
 }

@@ -61,9 +61,9 @@ ActiveRecord::Schema.define(version: 2019_04_06_045532) do
   create_table "properties", force: :cascade do |t|
     t.integer "capacity"
     t.text "description"
+    t.integer "number_of_openings"
     t.bigint "landlord_id"
     t.integer "rent"
-    t.integer "size"
     t.integer "property_type"
     t.integer "housing_type"
     t.date "date_available"
@@ -90,7 +90,6 @@ ActiveRecord::Schema.define(version: 2019_04_06_045532) do
     t.integer "rent_max"
     t.integer "housing_type"
     t.integer "property_type"
-    t.integer "num_bedrooms"
     t.integer "location"
     t.bigint "referral_agency_id"
     t.date "date_needed"

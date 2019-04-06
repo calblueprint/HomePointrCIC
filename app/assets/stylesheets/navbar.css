@@ -49,32 +49,6 @@
   display: none;
 }
 
-/* .navbar-dialog::before {
-  content: "";
-  width: 0;
-  height: 0;
-  border-left: 8px solid transparent;
-  border-right: 8px solid transparent;
-  border-bottom: 10px solid #D9D9D9;
-  transform: translate(-16px, -100%);
-  position:absolute;
-  right:0;
-  top:0;
-}
-
-.navbar-dialog::after {
-  content: "";
-  width: 0;
-  height: 0;
-  border-left: 6.75px solid transparent;
-  border-right: 6.75px solid transparent;
-  border-bottom: 8.75px solid white;
-  transform: translate(-17.5px, -100%);
-  position:absolute;
-  right:0;
-  top: 0;
-} */
-
 .navbar-dialog-button {
   display: block;
   width: 100%;
