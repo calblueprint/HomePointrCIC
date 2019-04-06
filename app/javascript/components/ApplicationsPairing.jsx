@@ -93,12 +93,6 @@ class ApplicationsPairing extends React.Component {
     )
   }
 
-  setup(obj, images) {
-    for (var i=0; i < images.length; i++) {
-      obj[i] = Utils.extend(obj[i], images[i])
-    }
-  }
-
   setTenant(e, resource) {
     this.setState({individualView: true});
     this.setState({selectedTenant: resource});
@@ -115,10 +109,10 @@ class ApplicationsPairing extends React.Component {
   }
 
   render() {
-    this.setup(this.state.tenants, this.props.tenantImages);
-    this.setup(this.state.tenants, this.props.tenantPriorities);
-    this.setup(this.state.properties, this.props.propertyImages);
-    this.setup(this.state.properties, this.props.propertyForms);
+    Utils.setup(this.state.tenants, this.props.tenantImages);
+    Utils.setup(this.state.tenants, this.props.tenantPriorities);
+    Utils.setup(this.state.properties, this.props.propertyImages);
+    Utils.setup(this.state.properties, this.props.propertyForms);
     let leftComponent = null;
     if (this.state.individualView) {
       //Individual tenant has been selected

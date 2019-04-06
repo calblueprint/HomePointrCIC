@@ -19,18 +19,12 @@ class PropertyShowPage extends React.Component {
     }
   }
 
-  setup(obj, images) {
-    for (var i=0; i < images.length; i++) {
-      obj[i] = Utils.extend(obj[i], images[i])
-    }
-  }
-
   render() {
-    this.setup([this.state.property], this.props.images);
-    this.setup(this.state.tenants, this.props.tenantImages);
-    this.setup(this.state.potentialTenants, this.props.potentialTenantsImages);
-    this.setup(this.state.tenantApps, this.props.tenantAppsPDF);
-    this.setup(this.state.potentialTenantApps, this.props.potentialTenantAppsPDF);
+    Utils.setup([this.state.property], this.props.images);
+    Utils.setup(this.state.tenants, this.props.tenantImages);
+    Utils.setup(this.state.potentialTenants, this.props.potentialTenantsImages);
+    Utils.setup(this.state.tenantApps, this.props.tenantAppsPDF);
+    Utils.setup(this.state.potentialTenantApps, this.props.potentialTenantAppsPDF);
     const TabPane = Tabs.TabPane;
     const leftComponent = (
       <PropertyView canceledit={false} property={this.state.property}/>
