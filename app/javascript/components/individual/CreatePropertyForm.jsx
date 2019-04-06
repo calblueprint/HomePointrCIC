@@ -27,8 +27,8 @@ class CreatePropertyForm extends React.Component {
         size: null,
         property_type: null,
         housing_type: null,
-        date_available: null,
-        location: null,
+        date_available: new Date(),
+        location: 'other_location',
         address: '',
         number_of_bedrooms: null,
         number_of_bathrooms: null,
@@ -277,7 +277,6 @@ class CreatePropertyForm extends React.Component {
             label="Date available"
           >
             {getFieldDecorator('date_available', {
-              initialValue: property.date_available ? moment(property.date_available, "YYYY-MM-DD") : "Select date",
               rules: [{
                 required: true, message: 'Please select the date available!',
               }],
