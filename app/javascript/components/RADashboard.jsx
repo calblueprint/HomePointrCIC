@@ -13,19 +13,13 @@ class RADashboard extends React.Component {
     }
   }
 
-  setup(obj, images) {
-    for (var i=0; i < images.length; i++) {
-      obj[i] = Utils.extend(obj[i], images[i])
-    }
-  }
-
   redirectToNewTenant() {
     window.location = '/tenants/new'
   }
 
   render() {
-    this.setup(this.state.tenants, this.props.tenantImages);
-    this.setup(this.state.tenants, this.props.tenantStatuses);
+    Utils.setup(this.state.tenants, this.props.tenantImages);
+    Utils.setup(this.state.tenants, this.props.tenantStatuses);
     return (
       <div style={{
         display: "flex",

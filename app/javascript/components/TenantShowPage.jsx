@@ -17,17 +17,11 @@ class TenantShowPage extends React.Component {
     }
   }
 
-  setup(obj, images) {
-    for (var i=0; i < images.length; i++) {
-      obj[i] = Utils.extend(obj[i], images[i])
-    }
-  }
-
   render() {
-    this.setup(this.state.applications, this.props.form);
-    this.setup(this.state.properties, this.props.propertyimages);
-    this.setup(this.state.properties, this.props.propertyForms);
-    this.setup(this.state.properties, this.props.propertyStatuses);
+    Utils.setup(this.state.applications, this.props.form);
+    Utils.setup(this.state.properties, this.props.propertyimages);
+    Utils.setup(this.state.properties, this.props.propertyForms);
+    Utils.setup(this.state.properties, this.props.propertyStatuses);
     const leftComponent = (
       <RATenantView
         key={this.props.tenant.id}

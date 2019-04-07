@@ -39,7 +39,7 @@ class RAHomeView extends React.Component {
   }
 
 	render() {
-    this.setup(this.state.tenants, this.props.tenantImages);
+    Utils.setup(this.state.tenants, this.props.tenantImages);
     let leftComponent = this.checkDisable(leftComponent);
     var disabled = this.state.disabled ? 'disabled' : ''
     const rightComponent = (
