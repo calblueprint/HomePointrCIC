@@ -8,27 +8,27 @@ class TenantModal extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      visible: false,
+      visible: this.props.visible,
     }
   }
 
-  showModal = () => {
-    this.setState({
-      visible: true,
-    });
-  }
-
-  handleOk = (e) => {
-    this.setState({
-      visible: false,
-    });
-  }
-
-  handleCancel = (e) => {
-    this.setState({
-      visible: false,
-    });
-  }
+  // showModal = () => {
+  //   this.setState({
+  //     visible: true,
+  //   });
+  // }
+  //
+  // handleOk = (e) => {
+  //   this.setState({
+  //     visible: false,
+  //   });
+  // }
+  //
+  // handleCancel = (e) => {
+  //   this.setState({
+  //     visible: false,
+  //   });
+  // }
 
   handleButtons() {
     if (this.props.housed != null) {
@@ -57,16 +57,14 @@ class TenantModal extends React.Component {
   }
 
   render() {
+    console.log(this.props)
     return (
       <div>
-        <Button type="primary" onClick={this.showModal}>
-          View Info
-        </Button>
         <Modal
           title={this.props.name}
-          visible={this.state.visible}
-          onOk={this.handleOk}
-          onCancel={this.handleCancel}
+          visible={this.props.visible}
+          onOk={this.props.onOk}
+          onCancel={this.props.handleCancel}
         >
           <p>Description: {this.props.tenant.description}</p>
           <p>Email: {this.props.tenant.email}</p>

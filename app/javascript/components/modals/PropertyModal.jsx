@@ -9,27 +9,27 @@ class PropertyModal extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      visible: false,
+      visible: this.props.visible,
     }
   }
 
-  showModal = () => {
-    this.setState({
-      visible: true,
-    });
-  }
-
-  handleOk = (e) => {
-    this.setState({
-      visible: false,
-    });
-  }
-
-  handleCancel = (e) => {
-    this.setState({
-      visible: false,
-    });
-  }
+  // showModal = () => {
+  //   this.setState({
+  //     visible: true,
+  //   });
+  // }
+  //
+  // handleOk = (e) => {
+  //   this.setState({
+  //     visible: false,
+  //   });
+  // }
+  //
+  // handleCancel = (e) => {
+  //   this.setState({
+  //     visible: false,
+  //   });
+  // }
 
   renderPhotos() {
     if (this.props.property.images == null) {
@@ -93,14 +93,11 @@ class PropertyModal extends React.Component {
   render() {
     return (
       <div key="PropertyModal">
-        <Button type="primary" onClick={this.showModal}>
-          View Info
-        </Button>
         <Modal
           title={this.renderPhotos()}
-          visible={this.state.visible}
-          onOk={this.handleOk}
-          onCancel={this.handleCancel}
+          visible={this.props.visible}
+          onOk={this.props.onOk}
+          onCancel={this.props.onCancel}
           width="1008px"
           footer={null}
         >

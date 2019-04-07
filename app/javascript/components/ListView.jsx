@@ -7,6 +7,7 @@ import ApplicationModal from "./modals/ApplicationModal";
 import Utils from 'helpers/utils';
 import "antd/dist/antd.css";
 import TenantCard from "./individual/TenantCard";
+import PropertyCard from "./individual/PropertyCard";
 import '../../assets/stylesheets/tenantcard.css';
 
 class ListView extends React.Component {
@@ -17,7 +18,8 @@ class ListView extends React.Component {
       type: props.type,
       checkbox: props.checkbox,
       avatar: props.avatar,
-      displayTag: props.displayTag
+      displayTag: props.displayTag,
+      renderModal: props.renderModal
     }
   }
 
@@ -83,11 +85,11 @@ class ListView extends React.Component {
     }
   }
 
-  renderApplicationStatus(index) {
-    if (this.props.applications) {
-      return Utils.renderStatus(this.props.applications[index].status)
-    }
-  }
+  // renderApplicationStatus(index) {
+  //   if (this.props.applications) {
+  //     return Utils.renderStatus(this.props.applications[index].status, true, true)
+  //   }
+  // }
 
   renderApplicationModal(app) {
     return(<ApplicationModal application={app}/>)
@@ -100,20 +102,28 @@ class ListView extends React.Component {
         <div>
           <Row gutter={16}>
             {this.state.type === "property" ? (
-              <Card title={resource.location} bordered={false}>
-                {this.renderApplicationStatus(index)}
-                <Meta
-                  avatar={this.renderAvatar(resource.images, "property")}
-                />
-                <div><br></br></div>
-                <p>{resource.description}</p>
-                {this.renderCheckbox(resource.id)}
-                {this.renderPropertyModal(resource)}
-                {this.props.applications ? this.renderApplicationModal(this.props.applications[index]) : null}
-              </Card>
-              // <PropertyCard property={resource} displayTag={this.props.applications[index].status}/>
+              // <Card title={resource.location} bordered={false}>
+              //
+              //   <Meta
+              //     avatar={this.renderAvatar(resource.images, "property")}
+              //   />
+              //   <div><br></br></div>
+              //   <p>{resource.description}</p>
+              //   {this.renderCheckbox(resource.id)}
+              //   {this.renderPropertyModal(resource)}
+              //   {this.props.applications ? this.renderApplicationModal(this.props.applications[index]) : null}
+              // </Card>
+              <PropertyCard
+                property={resource}
+                displayTag={this.state.displayTag}
+                renderModal={this.props.renderModal}
+              />
             ) : (
-              <TenantCard tenant={resource} displayTag={this.state.displayTag}/>
+              <TenantCard
+                tenant={resource}
+                displayTag={this.state.displayTag}
+                renderModal={this.props.renderModal}
+              />
             )}
           </Row>
         </div>

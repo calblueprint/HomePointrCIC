@@ -6,8 +6,8 @@ class PropertiesController < ApplicationController
     @images = []
     @properties.each do |p|
       if p.images.attached? == true
-        image_list = p.images.map { |img| { image: url_for(img) } }
-        @images << { images: image_list[0][:image] }
+        image_list = p.images.map { |img| { url: url_for(img) } }
+        @images << { images: image_list }
       else
         @images << { images: nil }
       end
@@ -73,6 +73,7 @@ class PropertiesController < ApplicationController
     @potentialTenantsImages = []
     @potentialTenantApps = []
     @potentialTenantAppsPDF = []
+    @potentialTenantStatuses = []
     @property.applications.each do |a|
       if a.status == 'housed'
         @tenants << a.tenant
@@ -100,6 +101,7 @@ class PropertiesController < ApplicationController
                                      { url: nil }
                                    end
         @potentialTenantApps << a
+        @potentialTenantStatuses << { status: a.tenant.priority }
       end
     end
   end

@@ -4,13 +4,16 @@ import { Tag, Avatar, Row, Col } from "antd";
 import Utils from "helpers/utils";
 import '../../../assets/stylesheets/tenantcard.css';
 import '../../../assets/stylesheets/application.css';
+import TenantModal from "../modals/TenantModal";
 
 class TenantCard extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       tenant: this.props.tenant,
-      displayTag: this.props.displayTag
+      displayTag: this.props.displayTag,
+      renderModal: this.props.renderModal,
+      displayModal: false
     }
   }
 
@@ -37,23 +40,36 @@ class TenantCard extends React.Component {
 
   renderAvatar = () => {
     return(
-      <img className="img" height="142" width="144" src={this.state.tenant.url} />
+      <img className="img" height="144" width="144" src={this.state.tenant.url} />
     )
   }
 
-  redirectToTenantPage = () => {
-    window.location='/tenants/' + this.state.tenant.id;
+  onDismiss = () => {
+    this.setState({displayModal: false})
+  }
+
+  // needs to change depending on whether we want to redirect or render modal
+  onTenantClick = () => {
+    console.log("hi im clicked")
+    if (this.state.displayModal) {
+      return;
+    } else if (this.state.renderModal) {
+      this.setState({displayModal: true});
+    } else {
+      window.location='/tenants/' + this.state.tenant.id;
+    }
   }
 
   render() {
+    console.log(this.state)
     return(
-      <div onClick={this.redirectToTenantPage} className="tenant-card">
+      <div onClick={this.onTenantClick} className="tenant-card">
         <div className="avatar">{this.renderAvatar()}</div>
         <div className="content-container">
           <Row className="header-container">
             <Col span={20}>
               <h2 className="title">{this.state.tenant.name}</h2>
-              <div className="status-tag">{Utils.renderStatus(this.state.tenant.status, this.state.displayTag)}</div>
+              <div className="status-tag">{Utils.renderStatus(this.state.tenant.status, this.state.displayTag, false)}</div>
             </Col>
             <Col span={4}>
               <div className="status-tag">Edit</div>
@@ -64,6 +80,12 @@ class TenantCard extends React.Component {
             <p>{this.state.tenant.email}</p>
           </div>
         </div>
+        <TenantModal
+          tenant={this.state.tenant}
+          visible={this.state.displayModal}
+          onOk={this.onDismiss}
+          onCancel={this.onDismiss}
+        />
       </div>
     );
 

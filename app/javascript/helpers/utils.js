@@ -46,21 +46,40 @@ const Utils = {
   //     2 - applied
   //     3 - rejected
   //     4 - not applied yet
-  renderStatus: (statusNum, displayTag) => {
+  renderStatus: (statusInp, displayTag, isString) => {
 
-    const statuses = {
-      0: ["Accepted", "green"],
-      1: ["Interviewing", "blue"],
-      2: ["Applied", "purple"],
-      3: ["Declined", "red"],
-      4: ["No Applications", "gold"]
+    let status = statusInp;
+    
+    if (isString) {
+      switch(status) {
+        case "housed":
+          status = 0;
+          break;
+        case "interview":
+          status = 1;
+          break;
+        case "received":
+          status = 2;
+          break;
+        case "rejected":
+          status = 3;
+          break;
+      }
+    }
+
+    const statusDict = {
+        0: ["Accepted", "green"],
+        1: ["Interviewing", "blue"],
+        2: ["Applied", "purple"],
+        3: ["Declined", "red"],
+        4: ["No Applications", "gold"]
     }
 
     if (displayTag) {
-      const status = statuses[statusNum][0];
-      const color = statuses[statusNum][1];
+      const finalStatus = statusDict[status][0];
+      const color = statusDict[status][1];
       return(
-        <Tag color={color} className="tag">{status}</Tag>
+        <Tag color={color} className="tag">{finalStatus}</Tag>
       )
     }
 

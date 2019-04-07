@@ -31,26 +31,61 @@ class PropertyShowPage extends React.Component {
     this.setup(this.state.potentialTenants, this.props.potentialTenantsImages);
     this.setup(this.state.tenantApps, this.props.tenantAppsPDF);
     this.setup(this.state.potentialTenantApps, this.props.potentialTenantAppsPDF);
+    this.setup(this.state.potentialTenants, this.props.potentialTenantStatuses);
+    console.log(this.state.potentialTenants);
     const TabPane = Tabs.TabPane;
     const leftComponent = (
       <PropertyView canceledit={false} property={this.state.property}/>
     );
     const rightComponent = (
-    <Tabs defaultActiveKey="1">
-      <TabPane tab="Your Clients" key="1"><ListView tenant_modal={true} property_id={this.props.property.id} applications={this.props.tenantApps} resources={this.state.tenants} type="tenant" housed={true} avatar={true} checkbox={false}/></TabPane>
-      <TabPane tab="Pending Applications" key="2"><ListView tenant_modal={true} property_id={this.props.property.id} applications={this.props.potentialTenantApps} resources={this.state.potentialTenants} type="tenant" housed={false} avatar={true} checkbox={false}/></TabPane>
-    </Tabs>);
+      <div className="tab">
+        <Tabs defaultActiveKey="1" style={{marginLeft: "50px"}}>
+          <TabPane tab="Pending Applications" key="1">
+            <ListView
+              tenant_modal={true}
+              property_id={this.props.property.id}
+              applications={this.props.potentialTenantApps}
+              resources={this.state.potentialTenants}
+              type="tenant"
+              housed={false}
+              avatar={true}
+              checkbox={false}
+              displayTag={true}
+              renderModal={true}
+            />
+          </TabPane>
+          <TabPane tab="Your Clients" key="2">
+            <ListView
+              tenant_modal={true}
+              property_id={this.props.property.id}
+              applications={this.props.tenantApps}
+              resources={this.state.tenants}
+              type="tenant"
+              housed={true}
+              avatar={true}
+              checkbox={false}
+              displayTag={false}
+              renderModal={true}
+            />
+          </TabPane>
+        </Tabs>
+      </div>
+    );
 
     return (
-      [
-      <Button type="default" href={"/properties/"}>
-        <Icon type="left" /> View All Properties
-      </Button>,
-      <SplitViewContainer
-        leftComponent={leftComponent}
-        rightComponent={rightComponent}
-      />
-      ]
+      <div>
+        <div className="">
+          <Button type="default" href={"/properties/"}>
+            <Icon type="left" /> View All Properties
+          </Button>
+        </div>
+        <div>
+          <SplitViewContainer
+            leftComponent={leftComponent}
+            rightComponent={rightComponent}
+          />
+        </div>
+      </div>
     );
   }
 }
