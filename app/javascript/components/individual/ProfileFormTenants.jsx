@@ -197,6 +197,7 @@ class ProfileFormTenants extends React.Component {
     }
     const Option = Select.Option;
     const { tenant } = this.state;
+    const { TextArea } = Input;
 
     return (
       <div className="container">
@@ -587,7 +588,7 @@ class ProfileFormTenants extends React.Component {
                 required: true, message: 'Please input your description!',
               }],
             })(
-              <Input style={{ height: 120 }} onChange={() => this.handleChange("description")}/>
+              <TextArea style={{ height: 120 }} onChange={() => this.handleChange("description")}/>
             )}
           </Form.Item>
         </div>
