@@ -1,0 +1,53 @@
+.home-button-logo {
+  width: 60px;
+  height: 60px;
+  cursor: pointer;
+  top:50%;
+}
+
+.navbar {
+  width: 100%;
+  position: fixed;
+  height: 64px;
+  padding: 0px 32px 0px 32px;
+  border-bottom: 1px solid #E8E8E8;
+  z-index: 4;
+  background-color: white;
+}
+
+.navbar-avatar {
+  float: right;
+  z-index: 5;
+  cursor: pointer;
+  top:50%;
+  transform: translateY(40%);
+
+}
+
+.navbar-avatar:hover {
+  border: 5px solid #EEEEEE;
+  border-radius: 36px;
+  transform: translateY(20%);
+  margin-right: -5px;
+}
+
+#navbar-dialog {
+  height: 120px;
+  width: 200px;
+  border: 1px solid #EEEEEE;
+  z-index: 5;
+  right:0;
+  transform: translate(-32px, 58px);
+  border-radius: 4px;
+  position: absolute;
+  background-color: white;
+  padding: 16px;
+  box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.10);
+  display: none;
+}
+
+.navbar-dialog-button {
+  display: block;
+  width: 100%;
+  margin: 4px 0px 4px 0px;
+}
