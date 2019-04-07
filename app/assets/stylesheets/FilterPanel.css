@@ -1,0 +1,27 @@
+.navbar {
+  display: flex;
+  justify-content: space-evenly;
+  width: 580px;
+}
+
+.buttons-panel {
+	margin-top: 10px;
+	display: flex;
+	justify-content: space-between;
+	background-color: white !important;
+}
+
+.options {
+	margin-top: 15px;
+	z-index: 1000;
+}
+
+.ant-checkbox-group {  
+  display: grid;
+  grid-template-columns: auto auto;
+  grid-column-gap: 15px;
+}
+
+.guests {
+	margin-left: 10px;
+}
