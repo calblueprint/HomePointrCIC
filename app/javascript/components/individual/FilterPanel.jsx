@@ -44,6 +44,7 @@ class FilterPanel extends React.Component {
     this.closeAll = this.closeAll.bind(this);
     this.getInitialValues = this.getInitialValues.bind(this);
     this.componentDidMount = this.componentDidMount.bind(this);
+    this.handleClear = this.handleClear.bind(this);
   }
 
   componentDidMount = () => {
@@ -69,11 +70,38 @@ class FilterPanel extends React.Component {
   passState = (filter_name) => {
     const actual = this.state.actual;
     actual[filter_name] = this.state.[filter_name];
+    if (filter_name == 'capacity') {
+      actual['number_of_bedrooms'] = this.state.number_of_bedrooms;
+    } else if (filter_name == 'rent_min') {
+      actual['rent_max'] = this.state.rent_max;
+    }
     this.setState({
       actual: actual,
-    })
+    });
     this.props.applyFilter(this.state.actual);
     this.closeAll();
+  }
+
+  handleClear = (filter_name) => {
+    if (filter_name == 'location' || filter_name == 'property_type' || filter_name == 'housing_type') {
+      this.setState({
+        [filter_name]: []
+      });
+    } else if (filter_name == 'rent_min') {
+      this.setState({
+        rent_max: 5000,
+        rent_min: 0,
+      });
+    } else if (filter_name == 'capacity') {
+      this.setState({
+        capacity: 0, 
+        number_of_bedrooms: 0,
+      });
+    } else {
+      this.setState({
+        [filter_name]: 0
+      });
+    }
   }
 
   closeAll = () => {
@@ -153,7 +181,22 @@ class FilterPanel extends React.Component {
           onChange={(date, dateString) => this.handleDatePicker(date, dateString)}
           value={moment(this.state.date_available)}
         />
-        {buttons}
+        <div className="buttons-panel">
+          <Button
+            type="default"
+            style={{ border: 'none' }}
+            onClick={this.handleClear("date_available")}
+          >
+            Clear
+          </Button>
+          <Button
+            type="default"
+            style={{ border: 'none' }}
+            onClick={this.passState("date_available")}
+          >
+            Apply
+          </Button>
+        </div>
       </div>
     );
 
@@ -175,7 +218,22 @@ class FilterPanel extends React.Component {
             onChange={(e) => this.handleCheckbox(e, "capacity")}
           />
         </div>
-        {buttons}
+        <div className="buttons-panel">
+          <Button
+            type="default"
+            style={{ border: 'none' }}
+            onClick={this.handleClear("capacity")}
+          >
+            Clear
+          </Button>
+          <Button
+            type="default"
+            style={{ border: 'none' }}
+            onClick={this.passState("capacity")}
+          >
+            Apply
+          </Button>
+        </div>
       </div>
     );
 
@@ -186,7 +244,22 @@ class FilterPanel extends React.Component {
           value={this.state.location}
           onChange={(e) => this.handleCheckbox(e, "location")}
         />
-        {buttons}
+        <div className="buttons-panel">
+          <Button
+            type="default"
+            style={{ border: 'none' }}
+            onClick={this.handleClear("location")}
+          >
+            Clear
+          </Button>
+          <Button
+            type="default"
+            style={{ border: 'none' }}
+            onClick={this.passState("location")}
+          >
+            Apply
+          </Button>
+        </div>
       </div>
     );
 
@@ -197,7 +270,22 @@ class FilterPanel extends React.Component {
           value={this.state.property_type}
           onChange={(e) => this.handleCheckbox(e, "property_type")}
         />
-        {buttons}
+        <div className="buttons-panel">
+          <Button
+            type="default"
+            style={{ border: 'none' }}
+            onClick={this.handleClear("property_type")}
+          >
+            Clear
+          </Button>
+          <Button
+            type="default"
+            style={{ border: 'none' }}
+            onClick={this.passState("property_type")}
+          >
+            Apply
+          </Button>
+        </div>
       </div>
     );
 
@@ -208,7 +296,22 @@ class FilterPanel extends React.Component {
           value={this.state.housing_type}
           onChange={(e) => this.handleCheckbox(e, "housing_type")}
         />
-        {buttons}
+        <div className="buttons-panel">
+          <Button
+            type="default"
+            style={{ border: 'none' }}
+            onClick={this.handleClear("housing_type")}
+          >
+            Clear
+          </Button>
+          <Button
+            type="default"
+            style={{ border: 'none' }}
+            onClick={this.passState("housing_type")}
+          >
+            Apply
+          </Button>
+        </div>
       </div>
     );
 
@@ -243,7 +346,22 @@ class FilterPanel extends React.Component {
             />
           </Col>
         </Row>
-        {buttons}
+        <div className="buttons-panel">
+          <Button
+            type="default"
+            style={{ border: 'none' }}
+            onClick={this.handleClear("rent_min")}
+          >
+            Clear
+          </Button>
+          <Button
+            type="default"
+            style={{ border: 'none' }}
+            onClick={this.passState("rent_min")}
+          >
+            Apply
+          </Button>
+        </div>
       </div>
     );
 
