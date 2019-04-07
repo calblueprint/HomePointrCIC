@@ -66,8 +66,13 @@ class FilterPanel extends React.Component {
     this.setState({[filter_name]: value});
   }
 
-  passState = () => {
-    this.props.applyFilter(this.state);
+  passState = (filter_name) => {
+    const actual = this.state.actual;
+    actual[filter_name] = this.state.[filter_name];
+    this.setState({
+      actual: actual,
+    })
+    this.props.applyFilter(this.state.actual);
     this.closeAll();
   }
 
@@ -95,6 +100,10 @@ class FilterPanel extends React.Component {
   }
 
   getInitialValues = () => {
+    const actual = this.state.actual;
+    actual['location'] = this.props.location_options;
+    actual['property_type'] = this.props.property_options;
+    actual['housing_type'] = this.props.housing_options;
     if (this.props.tenants[0]) {
       let tenant = this.props.tenants[0];
       this.setState({
@@ -106,6 +115,7 @@ class FilterPanel extends React.Component {
         property_type: [tenant.property_type],
         housing_type: [tenant.housing_type],
         date_available: moment(tenant.date_needed),
+        actual: actual,
       });
     };
   }
@@ -130,7 +140,7 @@ class FilterPanel extends React.Component {
         <Button
           type="default"
           style={{ border: 'none' }}
-          onClick={this.passState}
+          onClick={this.passState("date_available")}
         >
           Apply
         </Button>
