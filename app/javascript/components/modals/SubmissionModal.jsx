@@ -60,7 +60,7 @@ class SubmissionModal extends React.Component {
     return (
       <div key="SubmissionModal">
         <Button type="primary" onClick={this.showModal}>
-          View Info
+          Complete Application
         </Button>
         <Modal
           title={this.renderPhotos()}

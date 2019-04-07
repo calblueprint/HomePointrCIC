@@ -17,6 +17,11 @@ class TenantShowPage extends React.Component {
       properties: props.properties,
       // potentialTenants: props.potentialTenants
     }
+    this.handleRedirect = this.handleRedirect.bind(this);
+  }
+
+  handleRedirect() {
+    window.location = '/applications/new/' + this.props.tenant.id.toString();
   }
 
   render() {
@@ -28,7 +33,9 @@ class TenantShowPage extends React.Component {
     );
     const rightComponent = ([
       <h1>Applications</h1>,
-      <PropertyModal property={this.props.properties[0]}/>,
+      <Button type="default" onClick={this.handleRedirect}>
+        + New Applications
+      </Button>,
       <SubmissionModal property={this.props.properties[0]}/>,
       <ListView key={this.props.tenant.id} applications={this.state.applications} resources={this.state.properties} property_modal={true} type="property"/>
     ]);

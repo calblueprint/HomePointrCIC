@@ -18,16 +18,12 @@ class ApplicationsPairing extends React.Component {
     super(props);
     this.state = {
       selectedProperties: [], //array of strings
-      selectedTenant: null,
       description: null,
-      tenants: props.tenants,
+      tenant: props.tenant,
       properties: props.properties,
-      individualView: false,
     };
     this.onChangeProperty = this.onChangeProperty.bind(this);
     this.handleMatch = this.handleMatch.bind(this);
-    this.setTenant = this.setTenant.bind(this);
-    this.clearTenant = this.clearTenant.bind(this);
   }
 
   onChangeProperty(e, id) {
@@ -45,7 +41,7 @@ class ApplicationsPairing extends React.Component {
     var request = null;
     var prop;
     for (prop in this.state.selectedProperties) {
-      let body = {"description": this.state.description, "status": 1, "property_id": this.state.selectedProperties[prop], "tenant_id": this.state.selectedTenant.id};
+      let body = {"description": this.state.description, "status": 1, "property_id": this.state.selectedProperties[prop], "tenant_id": this.props.tenant.id};
       body = JSON.stringify({application: body})
       request = APIRoutes.applications.create
       fetch(request, {
@@ -93,48 +89,21 @@ class ApplicationsPairing extends React.Component {
     )
   }
 
-  setTenant(e, resource) {
-    this.setState({individualView: true});
-    this.setState({selectedTenant: resource});
-    window.scrollTo(0, 0);
-  }
-
-  clearTenant() {
-    this.setState({individualView: false});
-    this.setState({selectedTenant: null});
-  }
-
   makeTagValues(tenant) {
     return ["Min Rent: " + tenant.rent_min, "Max Rent: " + tenant.rent_max, "Housing Type " + tenant.housing_type, "Property Type " + tenant.property_type, "Size: " + tenant.number_of_bedrooms, "Location: " + tenant.location, "Date Needed: " + tenant.date_needed]
   }
 
   render() {
-    Utils.setup(this.state.tenants, this.props.tenantImages);
-    Utils.setup(this.state.tenants, this.props.tenantPriorities);
+    Utils.setup([this.props.tenant], this.props.tenantImage);
+    Utils.setup([this.props.tenant], this.props.tenantPriority);
     Utils.setup(this.state.properties, this.props.propertyImages);
     Utils.setup(this.state.properties, this.props.propertyForms);
-    let leftComponent = null;
-    if (this.state.individualView) {
-      //Individual tenant has been selected
-      leftComponent = ([
-        <Button type="primary" onClick={this.clearTenant}><Icon type="left" /> View All Clients</Button>,
-        <RATenantView id={this.state.selectedTenant.id} name={this.state.selectedTenant.name} mode="ra_matching" description={this.state.selectedTenant.description} avatar={this.state.selectedTenant.url} tagValues={this.makeTagValues(this.state.selectedTenant)} status={this.state.selectedTenant.priority}/>
-      ]);
-    } else {
-      //All tenants shown here
-      leftComponent = (
-        <ListView resources={this.state.tenants} tenant_modal={true} avatar={true} selectTenantFunc={this.setTenant} tenantSelect={true} type="tenant"/>
-      );
-    }
-    //Filtered properties
+    let leftComponent = (
+      <RATenantView tenant={this.props.tenant} mode="ra_edit" status={this.props.tenant.priority}/>
+    );    //Filtered properties
     let rightComponent = (
-      <PropertyListWrapper {...this.props} CheckboxChange={this.onChangeProperty}/>
+      <PropertyListWrapper {...this.props} CheckboxChange={this.onChangeProperty} selectedTenant={this.props.tenant}/>
     );
-    if (this.state.individualView) {
-      rightComponent = (
-        <PropertyListWrapper {...this.props} CheckboxChange={this.onChangeProperty} selectedTenant={this.state.selectedTenant}/>
-      );
-    }
 
     return (
       <div>
@@ -153,9 +122,9 @@ class ApplicationsPairing extends React.Component {
 }
 
 ApplicationsPairing.propTypes = {
-  tenants: PropTypes.array,
-  tenantImages: PropTypes.array,
-  tenantPriorities: PropTypes.array,
+  tenant: PropTypes.object,
+  tenantImage: PropTypes.array,
+  tenantPriority: PropTypes.array,
   properties: PropTypes.array,
   housing_options: PropTypes.array,
   property_options: PropTypes.array,
