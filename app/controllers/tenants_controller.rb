@@ -15,6 +15,7 @@ class TenantsController < ApplicationController
     @tenant = Tenant.new
     authorize @tenant
     @current_userID = current_user.id
+    @categories = get_tenant_category_enums()
   end
 
   def show
@@ -25,6 +26,7 @@ class TenantsController < ApplicationController
     @form = []
     @applications = @tenant.applications
     @propertyimages = []
+    @propertyForms = []
     @applications.each do |a|
       @properties << a.property
       if a.property.images.attached? == true
@@ -33,43 +35,48 @@ class TenantsController < ApplicationController
       else
         @propertyimages << { images: nil }
       end
+      if a.property.form.attached? == true
+        @propertyForms << { form: url_for(a.property.form) }
+      else
+        @propertyForms << { form: nil }
+      end
       @form << { form: url_for(a.form) } if a.form.attached?
     end
     values = @tenant.attributes.values[3..-3]
     @avatarURL = nil
     @avatarURL = url_for(@tenant.avatar) if @tenant.avatar.attached?
-    render json:@tenant
   end
 
   def edit
+     puts "TENANT EDIT"
      @tenant = Tenant.find(params[:id])
      authorize @tenant
      @current_userID = current_user.id
      @categories = get_tenant_category_enums()
   end
-   def get_tenant_category_enums
-     @nice_housing_type = []
-     @nice_property_type = []
-     @nice_location = []
-     Tenant.housing_types.keys.each do |i|
-       @nice_housing_type << i.titleize
-     end
-     Tenant.property_types.keys.each do |i|
-       @nice_property_type << i.titleize
-     end
-     Tenant.locations.keys.each do |i|
-       @nice_location << i.titleize
-     end
-     categories = {
-       housing_types: Tenant.housing_types.keys,
-       property_types: Tenant.property_types.keys,
-       locations: Tenant.locations.keys,
-       nice_housing_types: @nice_housing_type,
-       nice_property_types: @nice_property_type,
-       nice_locations: @nice_location
-     }
-     # render json: categories
+ def get_tenant_category_enums
+   @nice_housing_type = []
+   @nice_property_type = []
+   @nice_location = []
+   Tenant.housing_types.keys.each do |i|
+     @nice_housing_type << i.titleize
    end
+   Tenant.property_types.keys.each do |i|
+     @nice_property_type << i.titleize
+   end
+   Tenant.locations.keys.each do |i|
+     @nice_location << i.titleize
+   end
+   categories = {
+     housing_types: Tenant.housing_types.keys,
+     property_types: Tenant.property_types.keys,
+     locations: Tenant.locations.keys,
+     nice_housing_types: @nice_housing_type,
+     nice_property_types: @nice_property_type,
+     nice_locations: @nice_location
+   }
+   # render json: categories
+ end
 
   private
 
@@ -86,7 +93,12 @@ class TenantsController < ApplicationController
       :number_of_bedrooms,
       :location,
       :referral_agency_id,
-      :date_needed
+      :date_needed,
+      :number_of_bathrooms,
+      :mobility_aids,
+      :accessible_shower,
+      :car_parking,
+      :lift_access
     )
   end
 end

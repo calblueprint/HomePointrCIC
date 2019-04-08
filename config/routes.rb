@@ -14,6 +14,13 @@ Rails.application.routes.draw do
     end
   get 'home/index'
   get 'errors/show'
+
+  get '/properties/new' => 'properties#new'
+  get 'properties/:id/edit' => 'properties#edit'
+  get 'properties/:id' => 'properties#show'
+  get '/properties/categories' => 'properties#get_property_category_enums'
+
+  get '/tenants/new' => 'tenants#new'
   get 'tenants/:id/edit' => 'tenants#edit'
   get 'tenants/:id' => 'tenants#show'
   get '/tenants/categories' => 'tenants#get_tenant_category_enums'

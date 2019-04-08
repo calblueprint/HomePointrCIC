@@ -1,0 +1,37 @@
+.container {
+  width: 600px;
+  display: flex;
+  flex-direction: column;
+  margin-left: auto;
+  margin-right: auto;
+  padding-top: 65px;
+  margin-bottom: 50px;
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: auto auto;
+  grid-column-gap: 50px;
+  margin-top: 10px;
+}
+
+.sub-container {
+  margin-top: 15px;
+}
+
+.buttons {
+  margin-top: 20px;
+  align-self: flex-end;
+  float: right;
+  width: 330px;
+  display: flex;
+  flex-direction: row;
+}
+
+.previous {
+  width: 150px;
+}
+.next {
+  margin-left: 30px;
+  width: 150px;
+}

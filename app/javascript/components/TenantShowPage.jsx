@@ -17,20 +17,15 @@ class TenantShowPage extends React.Component {
     }
   }
 
-  setup(obj, images) {
-    for (var i=0; i < images.length; i++) {
-      obj[i] = Utils.extend(obj[i], images[i])
-    }
-  }
-
   render() {
-    this.setup(this.state.applications, this.props.form);
-    this.setup(this.state.properties, this.props.propertyimages);
+    Utils.setup(this.state.applications, this.props.form);
+    Utils.setup(this.state.properties, this.props.propertyimages);
+    Utils.setup(this.state.properties, this.props.propertyForms);
     const leftComponent = (
-      <RATenantView key={this.props.tenant.id} id={this.props.tenant.id} name={this.props.tenant.name} mode="ra_edit" description={this.props.tenant.description} avatar={this.props.url} tagValues={this.props.tagValues} status={this.props.status}/>
+      <RATenantView key={this.props.tenant.id} tenant={this.props.tenant} mode="ra_edit" avatar={this.props.url} status={this.props.status}/>
     );
     const rightComponent = ([
-      <h1>Applications</h1>, 
+      <h1>Applications</h1>,
       <ListView key={this.props.tenant.id} applications={this.state.applications} resources={this.state.properties} property_modal={true} type="property"/>
     ]);
 
@@ -38,7 +33,7 @@ class TenantShowPage extends React.Component {
       [
       <Button type="default" href={"/"}>
         <Icon type="left" /> Back
-      </Button>, 
+      </Button>,
       <SplitViewContainer
         leftComponent={leftComponent}
         rightComponent={rightComponent}

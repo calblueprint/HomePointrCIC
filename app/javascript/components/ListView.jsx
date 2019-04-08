@@ -6,6 +6,8 @@ import PropertyModal from "./modals/PropertyModal";
 import ApplicationModal from "./modals/ApplicationModal";
 import Utils from 'helpers/utils';
 import "antd/dist/antd.css";
+import TenantCard from "./individual/TenantCard";
+import '../../assets/stylesheets/tenantcard.css';
 
 class ListView extends React.Component {
   constructor(props) {
@@ -15,6 +17,7 @@ class ListView extends React.Component {
       type: props.type,
       checkbox: props.checkbox,
       avatar: props.avatar,
+      displayTag: props.displayTag
     }
   }
 
@@ -57,16 +60,16 @@ class ListView extends React.Component {
       </Button>)
     } else {
       if (this.props.applications) {
-        return(<TenantModal property_id={this.props.property_id} app={this.props.applications[index]} name={resource.name} email={resource.email} description={resource.description} phone={resource.phone} housed={this.props.housed}/>)
+        return(<TenantModal tenant={resource} app={this.props.applications[index]}/>)
       } else {
-        return(<TenantModal name={resource.name} email={resource.email} description={resource.description} phone={resource.phone}/>)
+        return(<TenantModal tenant={resource}/>)
       }
     }
   }
 
   renderPropertyModal(resource) {
     if (this.props.property_modal) {
-      return(<PropertyModal location={resource.location} description={resource.description} images={resource.images}/>)
+      return(<PropertyModal property={resource}/>)
     } else {
       return(<Button key={resource.id} type="default" href={"/properties/" + resource.id}>
         View Info
@@ -94,16 +97,7 @@ class ListView extends React.Component {
     return this.state.resources.map((resource, index) => {
       const { Meta } = Card;
       return (
-        <div
-          style={{
-            background: "#ECECEC",
-            padding: "30px",
-            marginLeft: "20%",
-            marginRight: "20%",
-            marginTop: "2%"
-          }}
-          key={index}
-        >
+        <div>
           <Row gutter={16}>
             {this.state.type === "property" ? (
               <Card title={resource.location} bordered={false}>
@@ -117,14 +111,9 @@ class ListView extends React.Component {
                 {this.renderPropertyModal(resource)}
                 {this.props.applications ? this.renderApplicationModal(this.props.applications[index]) : null}
               </Card>
+              // <PropertyCard property={resource} displayTag={this.props.applications[index].status}/>
             ) : (
-              <Card title={resource.name} bordered={false}>
-                <Meta
-                  avatar={this.renderAvatar(resource.url, "tenant")}
-                />
-                {this.renderTenantSelectButton(resource)}
-                {this.renderTenantModal(resource, index)}
-              </Card>
+              <TenantCard tenant={resource} displayTag={this.state.displayTag}/>
             )}
           </Row>
         </div>
