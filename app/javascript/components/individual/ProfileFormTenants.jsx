@@ -3,7 +3,7 @@
 // } from 'antd';
 import React from "react";
 import PropTypes from "prop-types";
-import { Upload, message, Form, Icon, Select, Input, Button, Slider, Switch, DatePicker, InputNumber, Row, Col } from 'antd';
+import { Upload, message, Form, Icon, Select, Input, Button, Slider, Switch, DatePicker, InputNumber, Row, Col, Divider } from 'antd';
 import "antd/dist/antd.css";
 import moment from 'moment';
 import APIRoutes from 'helpers/api_routes';
@@ -63,9 +63,9 @@ class ProfileFormTenants extends React.Component {
     // } else if (this.props.type === "referral_agencies") {
     //   request = APIRoutes.referral_agencies.delete(id)
     // } else {
-      request = APIRoutes.tenants.delete(id)
+    request = APIRoutes.tenants.delete(id)
     // }
-    (request, {
+    fetch(request, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
@@ -86,7 +86,6 @@ class ProfileFormTenants extends React.Component {
     body = JSON.stringify({tenant: body})
     request = APIRoutes.tenants.update(id)
     this.removeImages(this.state.imageRemoveList);
-    console.log("TENANT HANDLE_EDIT");
     fetch(request, {
       method: 'PUT',
       headers: {
@@ -632,11 +631,23 @@ class ProfileFormTenants extends React.Component {
             />
           </Form.Item>
         </div>
+        <div className="section">
+          <div className="delete-client">
+            <Row type="flex" style={{ width: 660 }}>
+              <Col span={12}>
+                <div>Delete Client</div>
+              </Col>
+              <Col span={12}>
+                <Button className="delete-button" type="danger" onClick={this.handleDestroy}>Delete Client</Button>
+              </Col>
+            </Row>
+          </div>
+        </div>
           <div className="buttons">
             <Form.Item
             >
             <Button className="previous" onClick={() => {window.location = '/tenants/' + this.state.tenant.id.toString()}}>Cancel</Button>
-            <Button  className="next" type="primary" htmlType="submit">Submit</Button>
+            <Button className="next" type="primary" htmlType="submit">Submit</Button>
           </Form.Item>
         </div>
         </Form>

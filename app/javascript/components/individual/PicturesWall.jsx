@@ -4,7 +4,7 @@ import 'antd/dist/antd.css';
 import { Upload, Icon, Modal } from 'antd';
 
 class PicturesWall extends React.Component {
-  
+
   constructor(props) {
     super(props);
     this.state = {
@@ -66,4 +66,4 @@ class PicturesWall extends React.Component {
   }
 }
 
-export default PicturesWall; 
+export default PicturesWall;
