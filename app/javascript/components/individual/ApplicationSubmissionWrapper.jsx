@@ -2,11 +2,10 @@ import React from "react";
 import PropTypes from "prop-types";
 import FilterPanel from "./FilterPanel.jsx";
 import ListView from "./../ListView.jsx";
-import ApplicationSubmissionWrapper from "./ApplicationSubmissionWrapper.jsx";
 import { Button } from 'antd';
 import moment from 'moment';
 
-class PropertyListWrapper extends React.Component {
+class ApplicationSubmissionWrapper extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -52,24 +51,23 @@ class PropertyListWrapper extends React.Component {
 		this.setState({properties: updatedProperties})
 	}
 
-
 	render() {
 		return (
-			<div key="PropertyListWrapper"
+			<div key="ApplicationSubmissionWrapper"
         style={{
 	        paddingTop: "5%",
         }}
 			>
 				<FilterPanel {...this.props} applyFilter={this.handleFilter} />
-				<ListView avatar={true} resources={this.state.properties} property_modal={true} type="property" checkbox={true} CheckboxChange={this.props.CheckboxChange}/>
+				<ListView avatar={true} resources={this.state.properties} property_modal={false} type="property" checkbox={false} submission_modal={true} CheckboxChange={this.props.CheckboxChange}/>
 			</div>
 		);
 	}
 }
 
-PropertyListWrapper.propTypes = {
+ApplicationSubmissionWrapper.propTypes = {
   properties: PropTypes.array,
   selectedTenant: PropTypes.object,
 };
 
-export default PropertyListWrapper;
+export default ApplicationSubmissionWrapper;

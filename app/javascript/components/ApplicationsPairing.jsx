@@ -10,6 +10,7 @@ import UploadButton from './individual/UploadButton';
 import ActiveStorageProvider from "react-activestorage-provider";
 import SplitViewContainer from "./individual/SplitViewContainer.jsx";
 import PropertyListWrapper from "./individual/PropertyListWrapper.jsx";
+import ApplicationSubmissionWrapper from "./individual/ApplicationSubmissionWrapper.jsx";
 import RATenantView from "./RATenantView.jsx";
 
 class ApplicationsPairing extends React.Component {
@@ -21,9 +22,11 @@ class ApplicationsPairing extends React.Component {
       description: null,
       tenant: props.tenant,
       properties: props.properties,
+      status: "propertyList"
     };
     this.onChangeProperty = this.onChangeProperty.bind(this);
     this.handleMatch = this.handleMatch.bind(this);
+    this.renderApplicationSubmissionWrapper = this.renderApplicationSubmissionWrapper.bind(this);
   }
 
   onChangeProperty(e, id) {
@@ -93,6 +96,10 @@ class ApplicationsPairing extends React.Component {
     return ["Min Rent: " + tenant.rent_min, "Max Rent: " + tenant.rent_max, "Housing Type " + tenant.housing_type, "Property Type " + tenant.property_type, "Size: " + tenant.number_of_bedrooms, "Location: " + tenant.location, "Date Needed: " + tenant.date_needed]
   }
 
+  renderApplicationSubmissionWrapper() {
+		this.setState({status:"applicationSubmission"})
+	}
+
   render() {
     Utils.setup([this.props.tenant], this.props.tenantImage);
     Utils.setup([this.props.tenant], this.props.tenantPriority);
@@ -101,9 +108,22 @@ class ApplicationsPairing extends React.Component {
     let leftComponent = (
       <RATenantView tenant={this.props.tenant} mode="ra_edit" status={this.props.tenant.priority}/>
     );    //Filtered properties
-    let rightComponent = (
-      <PropertyListWrapper {...this.props} CheckboxChange={this.onChangeProperty} selectedTenant={this.props.tenant}/>
-    );
+    let rightComponent = null;
+    if (this.state.status == "propertyList") {
+      rightComponent = (
+        <h1>Potential Homes</h1>,
+        [<PropertyListWrapper {...this.props} propertyCompletion={true} CheckboxChange={this.onChangeProperty} selectedTenant={this.props.tenant}/>,
+        <Button key="start_applications" onClick={this.renderApplicationSubmissionWrapper}>Start Applications</Button>]
+      );
+    }
+    else if (this.state.status == "applicationSubmission") {
+      rightComponent = (
+        <h1>Upload and Submit</h1>,
+        [<ApplicationSubmissionWrapper {...this.props}/>,
+        <Button key="edit_selections">Edit Selections</Button>,
+        <Button key="edit_selections">Finish Application Process</Button>]
+      );
+    }
 
     return (
       <div>

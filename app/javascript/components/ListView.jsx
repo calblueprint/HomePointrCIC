@@ -4,6 +4,7 @@ import { Checkbox, Card, Col, Row, Button, Avatar, Icon } from "antd";
 import TenantModal from "./modals/TenantModal";
 import PropertyModal from "./modals/PropertyModal";
 import ApplicationModal from "./modals/ApplicationModal";
+import SubmissionModal from "./modals/SubmissionModal";
 import Utils from 'helpers/utils';
 import "antd/dist/antd.css";
 import TenantCard from "./individual/TenantCard";
@@ -30,6 +31,12 @@ class ListView extends React.Component {
   renderCheckbox(id) {
     if (this.props.checkbox) {
       return (<Checkbox onChange={(e) => this.props.CheckboxChange(e, id)}>Checkbox</Checkbox>)
+    }
+  }
+
+  renderSubmissionModal(resource) {
+    if (this.props.submission_modal) {
+      return(<SubmissionModal property={resource}/>)
     }
   }
 
@@ -108,6 +115,7 @@ class ListView extends React.Component {
                 <div><br></br></div>
                 <p>{resource.description}</p>
                 {this.renderCheckbox(resource.id)}
+                {this.renderSubmissionModal(resource)}
                 {this.renderPropertyModal(resource)}
                 {this.props.applications ? this.renderApplicationModal(this.props.applications[index]) : null}
               </Card>
