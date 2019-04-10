@@ -1,10 +1,14 @@
 import React from "react";
 import PropTypes from "prop-types";
 import 'antd/dist/antd.css';
-import { Menu, Dropdown, Icon, Radio, InputNumber, Button, Checkbox, DatePicker, Modal, Row, Col, Slider } from 'antd';
+import { Menu, Dropdown as AntDrop, Icon, Radio, InputNumber, Button, Checkbox, DatePicker, Modal, Row, Col, Slider } from 'antd';
 import moment from 'moment';
 import APIRoutes from 'helpers/api_routes';
 import '../../../assets/stylesheets/FilterPanel.css';
+
+const Dropdown = ({ overlay, ...props }) => (
+  <AntDrop {...props} overlay={<Menu>{overlay}</Menu>} />
+)
 
 class FilterPanel extends React.Component {
   constructor(props) {
@@ -152,47 +156,47 @@ class FilterPanel extends React.Component {
     };
 
     const dateFilter = (
-      <div className="options">
-        <DatePicker
-          onChange={(date, dateString) => this.handleDatePicker(date, dateString)}
-          value={moment(this.state.date_available)}
-        />
+      <div>
+        <div className="options">
+          <DatePicker
+            onChange={(date, dateString) => this.handleDatePicker(date, dateString)}
+            value={moment(this.state.date_available)}
+          />
+        </div>
         <div className="buttons-panel">
-          <Button
-            type="default"
-            style={{ border: 'none' }}
-            onClick={(e) => this.handleClear("date_available")}
-          >
-            Clear
-          </Button>
-          <Button
-            type="default"
-            style={{ border: 'none' }}
-            onClick={(e) => this.passState("date_available")}
-          >
-            Apply
-          </Button>
+          <a href="#">
+            <div onClick={(e) => this.handleClear("date_available")}>
+              Clear
+            </div>
+          </a>
+          <a href="#">
+            <div onClick={(e) => this.passState("date_available")}>
+              Apply
+            </div>
+          </a>
         </div>
       </div>
     );
 
     const guestsFilter = (
-      <div className="options">
-        Bedrooms
-        <div className="guests">
-          <InputNumber
-            min={0}
-            value={this.state.number_of_bedrooms}
-            onChange={(e) => this.handleCheckbox(e, "number_of_bedrooms")}
-          />
-        </div>
-        Capacity
-        <div className="guests">
-          <InputNumber
-            min={0}
-            value={this.state.capacity}
-            onChange={(e) => this.handleCheckbox(e, "capacity")}
-          />
+      <div>
+        <div className="options">
+          Bedrooms
+          <div className="guests">
+            <InputNumber
+              min={0}
+              value={this.state.number_of_bedrooms}
+              onChange={(e) => this.handleCheckbox(e, "number_of_bedrooms")}
+            />
+          </div>
+          Capacity
+          <div className="guests">
+            <InputNumber
+              min={0}
+              value={this.state.capacity}
+              onChange={(e) => this.handleCheckbox(e, "capacity")}
+            />
+          </div>
         </div>
         <div className="buttons-panel">
           <Button
@@ -214,12 +218,14 @@ class FilterPanel extends React.Component {
     );
 
     const locationFilter = (
-      <div className="options">
-        <CheckboxGroup
-          options={this.props.location_options}
-          value={this.state.location}
-          onChange={(e) => this.handleCheckbox(e, "location")}
-        />
+      <div>
+        <div className="options">
+          <CheckboxGroup
+            options={this.props.location_options}
+            value={this.state.location}
+            onChange={(e) => this.handleCheckbox(e, "location")}
+          />
+        </div>
         <div className="buttons-panel">
           <Button
             type="default"
@@ -240,12 +246,14 @@ class FilterPanel extends React.Component {
     );
 
     const propertyTypeFilter = (
-      <div className="options">
-        <CheckboxGroup
-          options={this.props.property_options}
-          value={this.state.property_type}
-          onChange={(e) => this.handleCheckbox(e, "property_type")}
-        />
+      <div>
+        <div className="options">
+          <CheckboxGroup
+            options={this.props.property_options}
+            value={this.state.property_type}
+            onChange={(e) => this.handleCheckbox(e, "property_type")}
+          />
+        </div>
         <div className="buttons-panel">
           <Button
             type="default"
@@ -266,12 +274,14 @@ class FilterPanel extends React.Component {
     );
 
     const housingTypeFilter = (
-      <div className="options">
-        <CheckboxGroup
-          options={this.props.housing_options}
-          value={this.state.housing_type}
-          onChange={(e) => this.handleCheckbox(e, "housing_type")}
-        />
+      <div>
+        <div className="options">
+          <CheckboxGroup
+            options={this.props.housing_options}
+            value={this.state.housing_type}
+            onChange={(e) => this.handleCheckbox(e, "housing_type")}
+          />
+        </div>
         <div className="buttons-panel">
           <Button
             type="default"
@@ -292,36 +302,38 @@ class FilterPanel extends React.Component {
     );
 
     const rentFilter = (
-      <div className="options">
-        <Row gutter={10}>
-          <Col span={6}>
-            <InputNumber
-              min={0}
-              max={5000}
-              style={{ width: 80 }}
-              value={this.state.rent_min}
-              onChange={(e) => this.handleCheckbox(e, "rent_min")}
-            />
-          </Col>
-          <Col span={12}>
-            <Slider
-              range marks={marks}
-              min={0}
-              max={5000}
-              style={{ width: 200, paddingLeft: 10 }}
-              defaultValue={typeof this.state.rent_min === 'number' && typeof this.state.rent_max === 'number' ? [this.state.rent_min, this.state.rent_max] : [0, 5000]}
-              onChange={this.sliderChanges}/>
-          </Col>
-          <Col span={6}>
-            <InputNumber
-              min={0}
-              max={5000}
-              style={{ width: 80 }}
-              value={this.state.rent_max}
-              onChange={(e) => this.handleCheckbox(e, "rent_max")}
-            />
-          </Col>
-        </Row>
+      <div>
+        <div className="options">
+          <Row gutter={10}>
+            <Col span={6}>
+              <InputNumber
+                min={0}
+                max={5000}
+                style={{ width: 80 }}
+                value={this.state.rent_min}
+                onChange={(e) => this.handleCheckbox(e, "rent_min")}
+              />
+            </Col>
+            <Col span={12}>
+              <Slider
+                range marks={marks}
+                min={0}
+                max={5000}
+                style={{ width: 200, paddingLeft: 10 }}
+                defaultValue={typeof this.state.rent_min === 'number' && typeof this.state.rent_max === 'number' ? [this.state.rent_min, this.state.rent_max] : [0, 5000]}
+                onChange={this.sliderChanges}/>
+            </Col>
+            <Col span={6}>
+              <InputNumber
+                min={0}
+                max={5000}
+                style={{ width: 80 }}
+                value={this.state.rent_max}
+                onChange={(e) => this.handleCheckbox(e, "rent_max")}
+              />
+            </Col>
+          </Row>
+        </div>
         <div className="buttons-panel">
           <Button
             type="default"
@@ -342,7 +354,7 @@ class FilterPanel extends React.Component {
     );
 
     return (
-      <div className="navbar">
+      <div className="filters-bar">
         <Dropdown overlay={dateFilter} visible={this.state.isDateOpen} trigger={['click']}>
           <a className="ant-dropdown-link" href="#">
             <div onClick={(e) => this.toggleOpen("isDateOpen")}>

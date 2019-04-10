@@ -18,7 +18,11 @@ const SplitViewContainer = props => (
 				overflow: "scroll",
 				borderLeft: "1px solid gray",
 				paddingLeft: "36px",
-				paddingRight: "36px"
+				paddingRight: "36px",
+				position: "fixed",
+     		top: "0",
+    		left: "0",
+    		marginTop: "63px"
 			}}
 		>
 			{props.leftComponent}
@@ -29,9 +33,9 @@ const SplitViewContainer = props => (
 				width: "960px",
 				height: "100vh",
 				display: "inline-block",
-				overflow: "scroll",
 				paddingLeft: "10px",
-				borderLeft: "1px solid gray"
+				borderLeft: "1px solid gray",
+				marginLeft: "480px"
 			}}
 		>
 			{props.rightComponent}

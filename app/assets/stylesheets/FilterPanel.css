@@ -1,7 +1,9 @@
-.navbar {
+.filters-bar {
   display: flex;
   justify-content: space-evenly;
-  width: 600px;
+  width: 570px;
+  margin-top: 80px;
+  margin-bottom: 10px;
 }
 
 .buttons-panel {
@@ -12,14 +14,23 @@
 }
 
 .options {
-	margin-top: 15px;
 	z-index: 1000;
+	background-color: white;
+  padding: 20px;
+  padding-bottom: 0px;
 }
 
 .ant-checkbox-group {  
   display: grid;
   grid-template-columns: auto auto;
   grid-column-gap: 15px;
+}
+
+.ant-dropdown-link {
+	border: 1px solid lightgrey;
+	border-radius: 5px;
+	margin-bottom: 22px;
+	padding: 7px; 
 }
 
 .guests {
