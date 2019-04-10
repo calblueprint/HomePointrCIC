@@ -14,9 +14,7 @@
   grid-column-gap: 50px;
   margin-top: 10px;
 }
-.section {
-  padding-top: 20px;
-}
+
 .buttons {
   margin-top: 20px;
   align-self: flex-end;

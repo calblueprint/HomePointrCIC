@@ -1,10 +1,18 @@
+.split-screen-left {
+  padding-top: 32px;
+}
+
+.split-screen-left-text {
+  padding-left: 36px;
+  padding-right: 36px
+}
+
 .content-text {
   margin-bottom: 28px;
 }
 
 .section-header {
   margin-bottom: 24px;
-  margin-top: 8px;
 }
 
 .profile-picture {
