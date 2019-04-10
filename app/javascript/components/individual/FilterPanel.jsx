@@ -25,14 +25,14 @@ class FilterPanel extends React.Component {
       isHousingTypeOpen: false,
       isRentOpen: false,
       actual: {
-        location: [],
+        location: props.location_options,
         capacity: 0,
         rent_min: 0,
         rent_max: 5000,
         number_of_bedrooms: 0,
-        property_type: [],
-        housing_type: [],
-        date_available: moment().format("YYYY-MM-DD"),
+        property_type: props.property_options,
+        housing_type: props.housing_options,
+        date_available: null,
       },
     };
     this.handleClick = this.handleClick.bind(this);
@@ -68,15 +68,15 @@ class FilterPanel extends React.Component {
   }
 
   passState = (filter_name) => {
-    const actual = this.state.actual;
-    actual[filter_name] = this.state.[filter_name];
+    var temp = this.state.actual;
+    temp[filter_name] = this.state[filter_name];
     if (filter_name == 'capacity') {
-      actual['number_of_bedrooms'] = this.state.number_of_bedrooms;
+      temp['number_of_bedrooms'] = this.state.number_of_bedrooms;
     } else if (filter_name == 'rent_min') {
-      actual['rent_max'] = this.state.rent_max;
+      temp['rent_max'] = this.state.rent_max;
     }
     this.setState({
-      actual: actual,
+      actual: temp,
     });
     this.props.applyFilter(this.state.actual);
     this.closeAll();
@@ -128,22 +128,17 @@ class FilterPanel extends React.Component {
   }
 
   getInitialValues = () => {
-    const actual = this.state.actual;
-    actual['location'] = this.props.location_options;
-    actual['property_type'] = this.props.property_options;
-    actual['housing_type'] = this.props.housing_options;
     if (this.props.tenants[0]) {
       let tenant = this.props.tenants[0];
       this.setState({
         location: [tenant.location],
-        capacity: tenant.capacity,
+        capacity: tenant.family_size,
         rent_min: tenant.rent_min,
         rent_max: tenant.rent_max,
         number_of_bedrooms: tenant.number_of_bedrooms,
         property_type: [tenant.property_type],
         housing_type: [tenant.housing_type],
         date_available: moment(tenant.date_needed),
-        actual: actual,
       });
     };
   }
@@ -156,25 +151,6 @@ class FilterPanel extends React.Component {
       5000: "$5000"
     };
 
-    const buttons = (
-      <div className="buttons-panel">
-        <Button
-          type="default"
-          style={{ border: 'none' }}
-          onClick={this.toggleOpen}
-        >
-          Clear
-        </Button>
-        <Button
-          type="default"
-          style={{ border: 'none' }}
-          onClick={this.passState("date_available")}
-        >
-          Apply
-        </Button>
-      </div>
-    );
-
     const dateFilter = (
       <div className="options">
         <DatePicker
@@ -185,14 +161,14 @@ class FilterPanel extends React.Component {
           <Button
             type="default"
             style={{ border: 'none' }}
-            onClick={this.handleClear("date_available")}
+            onClick={(e) => this.handleClear("date_available")}
           >
             Clear
           </Button>
           <Button
             type="default"
             style={{ border: 'none' }}
-            onClick={this.passState("date_available")}
+            onClick={(e) => this.passState("date_available")}
           >
             Apply
           </Button>
@@ -222,14 +198,14 @@ class FilterPanel extends React.Component {
           <Button
             type="default"
             style={{ border: 'none' }}
-            onClick={this.handleClear("capacity")}
+            onClick={(e) => this.handleClear("capacity")}
           >
             Clear
           </Button>
           <Button
             type="default"
             style={{ border: 'none' }}
-            onClick={this.passState("capacity")}
+            onClick={(e) => this.passState("capacity")}
           >
             Apply
           </Button>
@@ -248,14 +224,14 @@ class FilterPanel extends React.Component {
           <Button
             type="default"
             style={{ border: 'none' }}
-            onClick={this.handleClear("location")}
+            onClick={(e) => this.handleClear("location")}
           >
             Clear
           </Button>
           <Button
             type="default"
             style={{ border: 'none' }}
-            onClick={this.passState("location")}
+            onClick={(e) => this.passState("location")}
           >
             Apply
           </Button>
@@ -274,14 +250,14 @@ class FilterPanel extends React.Component {
           <Button
             type="default"
             style={{ border: 'none' }}
-            onClick={this.handleClear("property_type")}
+            onClick={(e) => this.handleClear("property_type")}
           >
             Clear
           </Button>
           <Button
             type="default"
             style={{ border: 'none' }}
-            onClick={this.passState("property_type")}
+            onClick={(e) => this.passState("property_type")}
           >
             Apply
           </Button>
@@ -300,14 +276,14 @@ class FilterPanel extends React.Component {
           <Button
             type="default"
             style={{ border: 'none' }}
-            onClick={this.handleClear("housing_type")}
+            onClick={(e) => this.handleClear("housing_type")}
           >
             Clear
           </Button>
           <Button
             type="default"
             style={{ border: 'none' }}
-            onClick={this.passState("housing_type")}
+            onClick={(e) => this.passState("housing_type")}
           >
             Apply
           </Button>
@@ -350,14 +326,14 @@ class FilterPanel extends React.Component {
           <Button
             type="default"
             style={{ border: 'none' }}
-            onClick={this.handleClear("rent_min")}
+            onClick={(e) => this.handleClear("rent_min")}
           >
             Clear
           </Button>
           <Button
             type="default"
             style={{ border: 'none' }}
-            onClick={this.passState("rent_min")}
+            onClick={(e) => this.passState("rent_min")}
           >
             Apply
           </Button>

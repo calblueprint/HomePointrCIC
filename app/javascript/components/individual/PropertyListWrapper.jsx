@@ -16,16 +16,22 @@ class PropertyListWrapper extends React.Component {
 	handleFilter(filters) {
 		let updatedProperties;
 		updatedProperties = this.props.properties.filter(p => {
-			const dateToMoment = moment(filters["date_available"]);
 			return (
 				filters["capacity"] <= p.capacity && 
 				filters["rent_min"] <= p.rent && 
 				filters["rent_max"] >= p.rent && 
-				filters["size"] <= p.size && 
-				(dateToMoment.isAfter(p.date_available) ||
-				dateToMoment.isSame(p.date_available))
+				filters["number_of_bedrooms"] <= p.number_of_bedrooms
 			);
 		})
+		if (filters["date_available"]) {
+			const dateToMoment = moment(filters["date_available"]);
+			updatedProperties = updatedProperties.filter(p => {
+				return (
+					(dateToMoment.isAfter(p.date_available) ||
+					dateToMoment.isSame(p.date_available))
+				);
+			})
+		}
 		if (filters["location"].length > 0) {
 			updatedProperties = updatedProperties.filter(p => {
 				return (
