@@ -22,6 +22,7 @@ class EditAccount extends React.Component {
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleEdit = this.handleEdit.bind(this);
+    this.handleDestroy = this.handleDestroy.bind(this);
   }
 
   /* takes in two arrays (our array of field names and our array of values)
@@ -30,7 +31,7 @@ class EditAccount extends React.Component {
    */
   convertToDict() {
     const user = this.state.user;
-    const keys = ["name", "address", "email", "phone", "encrypted_password"];
+    const keys = ["name", "address", "email", "phone", "password"];
     const values = [user.name, user.address, this.state.email, user.phone, this.state.new_password];
     let result = keys.reduce((obj, k, i) => ({...obj, [k]: values[i] }), {})
     return result
@@ -47,17 +48,13 @@ class EditAccount extends React.Component {
 
   //api destroy
   handleDestroy() {
-    let id = this.props.id;
+    let id = this.props.user.id;
     let type = this.props.type;
     var request = null;
-    if (this.props.type === "properties") {
-      request = APIRoutes.properties.delete(id)
-    } else if (this.props.type === "landlords") {
+    if (this.props.type === "landlord") {
       request = APIRoutes.landlords.delete(id)
-    } else if (this.props.type === "referral_agencies") {
-      request = APIRoutes.referral_agencies.delete(id)
     } else {
-      request = APIRoutes.tenants.delete(id)
+      request = APIRoutes.referral_agencies.delete(id)
     }
     fetch(request, {
       method: 'DELETE',

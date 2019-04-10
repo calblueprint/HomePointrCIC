@@ -82,6 +82,6 @@ class ReferralAgenciesController < ApplicationController
   private
 
   def referral_agency_params
-    params.require(:referral_agency).permit(:email, :encrypted_password, :name, :address, :phone)
+    params.require(:referral_agency).permit(:email, :password, :name, :address, :phone)
   end
 end

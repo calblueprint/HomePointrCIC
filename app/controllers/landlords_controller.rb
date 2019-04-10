@@ -56,6 +56,6 @@ class LandlordsController < ApplicationController
   private
 
   def landlord_params
-    params.require(:landlord).permit(:email, :encrypted_password, :name, :address, :phone)
+    params.require(:landlord).permit(:email, :password, :name, :address, :phone)
   end
 end
