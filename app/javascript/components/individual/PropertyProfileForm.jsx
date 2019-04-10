@@ -462,7 +462,10 @@ class PropertyProfileForm extends React.Component {
             />
           </Form.Item>
         </Form>
-          <Button className="submit" type="primary" htmlType="submit" onClick={this.handleEdit}>Save changes</Button>
+          <div className="buttons">
+            <Button className="previous" onClick={() => {window.location = '/properties/' + this.state.property.id.toString()}}>Cancel</Button>
+            <Button className="submit" type="primary" htmlType="submit" onClick={this.handleEdit}>Save changes</Button>
+          </div>
       </div>
     )
   }
