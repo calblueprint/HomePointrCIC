@@ -42,20 +42,12 @@ class ReferralAgenciesController < ApplicationController
   end
 
   def edit
-    @mode = 'edit'
-    @type = 'referral_agencies'
-    @nice_field_names = []
-    @field_names = ReferralAgency.column_names[11..-2] + %w[password email]
-    @field_names.each do |i|
-      @nice_field_names << i.titleize
-    end
     @referral_agency = ReferralAgency.find(params[:id])
     authorize @referral_agency
-    @prev_values = @referral_agency.attributes.values[11..-2]
-    @prev_values << nil
-    @prev_values << @referral_agency.email
-    @field_types = %w[textbox textbox textbox password textbox]
     @current_userID = current_user.id
+    @user = current_user
+    @current_password = @referral_agency.encrypted_password
+    @email = @referral_agency.email
   end
 
   def update
@@ -63,9 +55,9 @@ class ReferralAgenciesController < ApplicationController
     @referral_agency = ReferralAgency.find(params[:id])
     authorize @referral_agency
     if @referral_agency.update(referral_agency_params)
-      redirect_to root_path
+      flash[:success] = "Account updated successfully!"
     else
-      render json: { errors: @referral_agency.errors.messages }
+      flash[:danger] = "Account failed to update."
     end
     # else
     #   puts('you do not have access to this page')
@@ -90,6 +82,6 @@ class ReferralAgenciesController < ApplicationController
   private
 
   def referral_agency_params
-    params.require(:referral_agency).permit(:email, :password, :name, :address, :phone)
+    params.require(:referral_agency).permit(:email, :encrypted_password, :name, :address, :phone)
   end
 end
