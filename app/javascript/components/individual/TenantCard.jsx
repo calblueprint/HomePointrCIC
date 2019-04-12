@@ -111,8 +111,10 @@ class TenantCard extends React.Component {
             </Col>
           </div>
           <div className="details-container">
-            <h3>Email</h3>
-            <p>{this.state.tenant.email}</p>
+            <Col span={24}>
+              <h3>Email</h3>
+              <p>{this.state.tenant.email}</p>
+            </Col>
           </div>
         </div>
         {this.renderModalOnClick()}

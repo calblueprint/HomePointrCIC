@@ -4,6 +4,7 @@ import "antd/dist/antd.css";
 import ListView from "./ListView.jsx";
 import Utils from 'helpers/utils';
 import { Button } from 'antd';
+import '../../assets/stylesheets/dashboard.css';
 
 class RADashboard extends React.Component {
   constructor(props) {
@@ -21,17 +22,9 @@ class RADashboard extends React.Component {
     Utils.setup(this.state.tenants, this.props.tenantImages);
     Utils.setup(this.state.tenants, this.props.tenantStatuses);
     return (
-      <div style={{
-        display: "flex",
-        flexDirection: "row",
-        justifyContent: "center",
-      }}>
+      <div className="dashboard-container">
         <div>
-          <h2 style={{
-            marginTop: "88px",
-            marginBottom: "42px",
-            marginLeft: "10%",
-          }}>Client Dashboard</h2>
+          <h2 className='dashboard-h2'>Client Dashboard</h2>
           <ListView
             resources={this.state.tenants}
             type="tenant"
@@ -44,12 +37,7 @@ class RADashboard extends React.Component {
         </div>
         <div>
           <Button
-            style={{
-              width: "208px",
-              margin: "1.5% auto",
-              marginTop: "154px",
-              left: "80%",
-            }}
+            className='add-new-button'
             key='submit'
             type="primary"
             onClick={this.redirectToNewTenant}>+ Add new client

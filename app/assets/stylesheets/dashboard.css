@@ -1,0 +1,27 @@
+.dashboard-container {
+  display: flex;
+  flex-direction: row;
+  margin-left: 15%;
+  padding-top: 54px;
+}
+
+/* .dash-items-container {
+  display: inline-block;
+} */
+
+.dashboard-h2 {
+  margin-top: 88px;
+  margin-bottom: 42px;
+  margin-left: 10%;
+}
+
+/* .dash-button-container {
+  display: inline-block;
+} */
+
+.add-new-button {
+  width: 208px;
+  margin: 1.5% auto;
+  margin-top: 154px;
+  left: 80%;
+}

@@ -5,7 +5,7 @@ import ListView from "./ListView.jsx";
 import Utils from 'helpers/utils';
 import { Button, Avatar } from "antd";
 
-class LandlordHomePage extends React.Component {
+class LLDashboard extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -23,18 +23,16 @@ class LandlordHomePage extends React.Component {
     }
 
     for (var i = 0; i < this.state.resources.length; i ++) {
-      console.log(this.state.resources[i])
-
       this.state.resources[i]["tenantCount"] = this.props.tenantCounts[i]
       this.state.resources[i]["potentialTenantCount"] = this.props.potentialTenantCounts[i]
-
-      console.log(this.state.resources[i])
     }
   }
 
   renderView() {
     if (this.state.resources.length === 0) {
-      return(<Avatar shape="square" src="/assets/leaves.png" size={350}/>)
+      return(
+        <Avatar shape="square" src="/assets/leaves.png" size={350}/>
+      )
     } else {
       return(
         <ListView
@@ -42,31 +40,38 @@ class LandlordHomePage extends React.Component {
           type="property"
           avatar={true}
           checkbox={false}
-          viewpoint="LL"/>)
+          displayTag={true}
+          renderModal={false}
+          viewpoint="LL"
+        />
+      )
     }
   }
 
   render() {
     this.setup();
-    return [
-      <div className="LLHome"><h1>Properties</h1></div>,
-      <Button
-        style={{
-        width: "20%",
-        margin: "1.5% auto",
-        left: "80%",
-        }}
-        key='submit'
-        type="primary"
-        onClick={this.redirectToNewProperty}>+ New Property</Button>,
-      this.renderView()
-    ];
+    return (
+      <div className="dashboard-container">
+        <div className="dash-items-container">
+          <h2 className="dashboard-h2">Properties</h2>
+          {this.renderView()}
+        </div>
+        <div className="dash-button-container">
+          <Button
+            className="add-new-button"
+            key="submit"
+            type="primary"
+            onClick={this.redirectToNewTenant}>+ Add new property
+          </Button>
+        </div>
+      </div>
+    );
   }
 }
 
-LandlordHomePage.propTypes = {
+LLDashboard.propTypes = {
   resources: PropTypes.array,
   images: PropTypes.array,
   type: PropTypes.string
 };
-export default LandlordHomePage;
+export default LLDashboard;

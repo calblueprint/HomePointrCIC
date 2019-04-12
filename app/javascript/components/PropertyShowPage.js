@@ -6,6 +6,7 @@ import SplitViewContainer from "./individual/SplitViewContainer.jsx";
 import ListView from "./ListView.jsx";
 import Utils from 'helpers/utils';
 import { Icon, Button, Tabs } from "antd";
+import '../../assets/stylesheets/splitscreenright.css';
 
 class PropertyShowPage extends React.Component {
   constructor(props) {
@@ -31,8 +32,8 @@ class PropertyShowPage extends React.Component {
       <PropertyView canceledit={false} property={this.state.property}/>
     );
     const rightComponent = (
-      <div className="tab">
-        <Tabs defaultActiveKey="1" style={{marginLeft: "50px"}}>
+      <div className="split-screen-tabs">
+        <Tabs defaultActiveKey="1" className="tab-cards">
           <TabPane tab="Pending Applications" key="1">
             <ListView
               tenant_modal={true}

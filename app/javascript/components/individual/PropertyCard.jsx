@@ -93,6 +93,14 @@ class PropertyCard extends React.Component {
     }
   }
 
+  renderStatus = () => {
+    if (this.state.property.status) {
+      return(
+        Utils.renderStatus(this.state.property.status, this.state.displayTag, true)
+      );
+    }
+  }
+
   render() {
     return(
       <div
@@ -104,13 +112,13 @@ class PropertyCard extends React.Component {
         <div className="avatar">{this.renderAvatar()}</div>
         <div className="content-container">
           <div className="header-container">
-            <Col span={20}>
+            <Col span={21}>
               <h2 className="title">Eventual Name</h2>
               <div className="status-tag">
-                {Utils.renderStatus(this.state.property.status, this.state.displayTag, true)}
+                {this.renderStatus()}
               </div>
             </Col>
-            <Col span={4}>
+            <Col span={3}>
               {this.editButtonHelper()}
             </Col>
           </div>

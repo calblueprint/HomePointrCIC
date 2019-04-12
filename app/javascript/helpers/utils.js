@@ -82,46 +82,13 @@ const Utils = {
     }
 
     if (displayTag) {
+      console.log(status)
       const finalStatus = statusDict[status][0];
       const color = statusDict[status][1];
       return(
         <Tag color={color} className="tag">{finalStatus}</Tag>
       )
     }
-
-    // if (num === 0 || num === "housed") {
-    //   return (
-    //     <React.Fragment key='status'>
-    //       <h2 style={{color:"green"}}>housed</h2>
-    //     </React.Fragment>
-    //   )
-    // } else if (num === 1 || num === "interview") {
-    //   return (
-    //     <React.Fragment key='status'>
-    //       <h2 style={{color:"yellow"}}>interviewing with house</h2>
-    //     </React.Fragment>
-    //   )
-    // } else if (num === 2 || num === "received") {
-    //   return (
-    //     <React.Fragment key='status'>
-    //       <h2 style={{color:"orange"}}>applied</h2>
-    //     </React.Fragment>
-    //   )
-    // } else if (num === 3 || num === "rejected") {
-    //   return (
-    //     <React.Fragment key='status'>
-    //       <h2 style={{color:"red"}}>rejected</h2>
-    //     </React.Fragment>
-    //   )
-    // } else if (num === 4) {
-    //   return (
-    //     <React.Fragment key='status'>
-    //       <h2 style={{color:"red"}}>not applied</h2>
-    //     </React.Fragment>
-    //   )
-    // } else {
-    //   return null
-    // }
   }
 
 }
