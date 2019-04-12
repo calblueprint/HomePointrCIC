@@ -4,7 +4,7 @@
   flex-direction: column;
   margin-left: auto;
   margin-right: auto;
-  margin-top: 50px;
+  padding-top: 50px;
   margin-bottom: 50px;
 }
 
@@ -14,9 +14,7 @@
   grid-column-gap: 50px;
   margin-top: 10px;
 }
-.section {
-  padding-top: 20px;
-}
+
 .buttons {
   margin-top: 20px;
   align-self: flex-end;
@@ -45,4 +43,13 @@
   float: right;
   display: flex;
   flex-direction: row;
+}
+
+.dropzone {
+  height: 300px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 2px dashed $gray;
+  cursor: pointer;
 }

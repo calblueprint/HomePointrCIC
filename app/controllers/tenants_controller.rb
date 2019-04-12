@@ -48,11 +48,16 @@ class TenantsController < ApplicationController
   end
 
   def edit
-     puts "TENANT EDIT"
      @tenant = Tenant.find(params[:id])
      authorize @tenant
      @current_userID = current_user.id
      @categories = get_tenant_category_enums()
+     @avatar = nil
+     if @tenant.avatar.attached? == true
+       @avatar = { avatar: @tenant.avatar }
+     else
+       @avatar = { avatar: nil }
+     end
   end
  def get_tenant_category_enums
    @nice_housing_type = []
@@ -94,11 +99,12 @@ class TenantsController < ApplicationController
       :location,
       :referral_agency_id,
       :date_needed,
+      :avatar,
       :number_of_bathrooms,
       :mobility_aids,
       :accessible_shower,
       :car_parking,
-      :lift_access
+      :lift_access,
     )
   end
 end

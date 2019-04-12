@@ -211,7 +211,7 @@ class CreatePropertyForm extends React.Component {
     return (
       <div className="container">
         <h2>Step 1: Tell us about your space.</h2>
-        <Form className="grid-container">
+        <Form className="grid-container" hideRequiredMark={true}>
           <Form.Item
             label="Address"
           >
@@ -329,7 +329,7 @@ class CreatePropertyForm extends React.Component {
     return (
       <div className="container">
         <h2>Step 2: Couple more details.</h2>
-        <Form>
+        <Form hideRequiredMark={true}>
           <div className="grid-container">
             <Form.Item
               label="Number of bathrooms"
@@ -469,7 +469,7 @@ class CreatePropertyForm extends React.Component {
         <h2>Step 3: Set the scene.</h2>
         Write a quick summary of your place. You can highlight what's special about your space and the neighborhood.
         <div className="sub-container">
-          <Form>
+          <Form hideRequiredMark={true}>
             <Form.Item
               label="Summary"
             >
@@ -504,7 +504,7 @@ class CreatePropertyForm extends React.Component {
         <h2>Step 4: Bring it to life.</h2>
         Photos help guests imagine staying in your place. You can start with one and add more after you publish.
         <div className="sub-container">
-          <Form>
+          <Form hideRequiredMark={true}>
             <Form.Item
               label="Add images"
             >
@@ -539,7 +539,7 @@ class CreatePropertyForm extends React.Component {
         <h2>Step 5: Additional paperwork (Optional)</h2>
         Do you require potential clients to fill out any additional paperwork outside of the general client form?
         <div className="sub-container">
-          <Form>
+          <Form hideRequiredMark={true}>
             <Form.Item
               label="Upload form"
             >
