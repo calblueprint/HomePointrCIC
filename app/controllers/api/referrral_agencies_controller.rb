@@ -14,4 +14,9 @@ class Api::ReferralAgenciesController < ApplicationController
     referral_agency = ReferralAgency.find(params[:id])
     render json: referral_agency
   end
+
+  def referral_agency_params
+    params.require(:referral_agency).permit(:email, :encrypted_password, :name, :address, :phone)
+  end
+
 end
