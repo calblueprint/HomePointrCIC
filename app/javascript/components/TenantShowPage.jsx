@@ -6,6 +6,7 @@ import RATenantView from "./RATenantView.jsx";
 import ListView from "./ListView.jsx";
 import Utils from 'helpers/utils';
 import { Icon, Button, Tabs } from "antd";
+import '../../assets/stylesheets/splitscreenright.css';
 
 class TenantShowPage extends React.Component {
   constructor(props) {
@@ -39,7 +40,7 @@ class TenantShowPage extends React.Component {
         status={this.props.status}/>
     );
     const rightComponent = (
-      <div>
+      <div className="split-screen-tabs">
         <h1 className="h1-indent">Applications</h1>
         <ListView
           key={this.props.tenant.id}
