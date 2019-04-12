@@ -17,11 +17,19 @@ class TenantShowPage extends React.Component {
     }
   }
 
+  countSetupHelper = () => {
+    for (var i = 0; i < this.state.properties.length; i ++) {
+      this.state.properties[i]["tenantCount"] = this.props.propertyTenantCounts[i]
+      this.state.properties[i]["potentialTenantCount"] = this.props.propertyAppCounts[i]
+    }
+  }
+
   render() {
     Utils.setup(this.state.applications, this.props.form);
     Utils.setup(this.state.properties, this.props.propertyimages);
     Utils.setup(this.state.properties, this.props.propertyForms);
     Utils.setup(this.state.properties, this.props.propertyStatuses);
+    this.countSetupHelper();
     const leftComponent = (
       <RATenantView
         key={this.props.tenant.id}
@@ -32,7 +40,7 @@ class TenantShowPage extends React.Component {
     );
     const rightComponent = (
       <div>
-        <h1>Applications</h1>
+        <h1 className="h1-indent">Applications</h1>
         <ListView
           key={this.props.tenant.id}
           applications={this.state.applications}
@@ -40,7 +48,8 @@ class TenantShowPage extends React.Component {
           property_modal={true}
           type="property"
           displayTag={true}
-          renderModal={true}/>
+          renderModal={true}
+          viewpoint="RA"/>
       </div>
     );
 

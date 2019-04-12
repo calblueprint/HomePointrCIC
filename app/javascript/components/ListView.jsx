@@ -19,7 +19,7 @@ class ListView extends React.Component {
       checkbox: props.checkbox,
       avatar: props.avatar,
       displayTag: props.displayTag,
-      renderModal: props.renderModal
+      renderModal: props.renderModal,
     }
   }
 
@@ -55,29 +55,29 @@ class ListView extends React.Component {
     }
   }
 
-  renderTenantModal(resource, index) {
-    if (!this.props.tenant_modal) {
-      return(<Button key={resource.id} type="default" href={"/tenants/" + resource.id}>
-        View Info
-      </Button>)
-    } else {
-      if (this.props.applications) {
-        return(<TenantModal tenant={resource} app={this.props.applications[index]}/>)
-      } else {
-        return(<TenantModal tenant={resource}/>)
-      }
-    }
-  }
-
-  renderPropertyModal(resource) {
-    if (this.props.property_modal) {
-      return(<PropertyModal property={resource}/>)
-    } else {
-      return(<Button key={resource.id} type="default" href={"/properties/" + resource.id}>
-        View Info
-      </Button>)
-    }
-  }
+  // renderTenantModal(resource, index) {
+  //   if (!this.props.tenant_modal) {
+  //     return(<Button key={resource.id} type="default" href={"/tenants/" + resource.id}>
+  //       View Info
+  //     </Button>)
+  //   } else {
+  //     if (this.props.applications) {
+  //       return(<TenantModal tenant={resource} app={this.props.applications[index]}/>)
+  //     } else {
+  //       return(<TenantModal tenant={resource}/>)
+  //     }
+  //   }
+  // }
+  //
+  // renderPropertyModal(resource) {
+  //   if (this.props.property_modal) {
+  //     return(<PropertyModal property={resource}/>)
+  //   } else {
+  //     return(<Button key={resource.id} type="default" href={"/properties/" + resource.id}>
+  //       View Info
+  //     </Button>)
+  //   }
+  // }
 
   renderTenantSelectButton(resource) {
     if (this.props.tenantSelect) {
@@ -97,32 +97,22 @@ class ListView extends React.Component {
 
   render() {
     return this.state.resources.map((resource, index) => {
-      const { Meta } = Card;
       return (
         <div>
           <Row gutter={16}>
             {this.state.type === "property" ? (
-              // <Card title={resource.location} bordered={false}>
-              //
-              //   <Meta
-              //     avatar={this.renderAvatar(resource.images, "property")}
-              //   />
-              //   <div><br></br></div>
-              //   <p>{resource.description}</p>
-              //   {this.renderCheckbox(resource.id)}
-              //   {this.renderPropertyModal(resource)}
-              //   {this.props.applications ? this.renderApplicationModal(this.props.applications[index]) : null}
-              // </Card>
               <PropertyCard
                 property={resource}
                 displayTag={this.state.displayTag}
                 renderModal={this.props.renderModal}
+                viewpoint={this.props.viewpoint}
               />
             ) : (
               <TenantCard
                 tenant={resource}
                 displayTag={this.state.displayTag}
                 renderModal={this.props.renderModal}
+                viewpoint={this.props.viewpoint}
               />
             )}
           </Row>

@@ -45,6 +45,7 @@ class PropertyShowPage extends React.Component {
               checkbox={false}
               displayTag={true}
               renderModal={true}
+              viewpoint="LL"
             />
           </TabPane>
           <TabPane tab="Your Clients" key="2">
@@ -59,6 +60,7 @@ class PropertyShowPage extends React.Component {
               checkbox={false}
               displayTag={false}
               renderModal={true}
+              viewpoint="LL"
             />
           </TabPane>
         </Tabs>

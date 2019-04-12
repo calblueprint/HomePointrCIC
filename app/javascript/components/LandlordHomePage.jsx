@@ -21,13 +21,28 @@ class LandlordHomePage extends React.Component {
     for (var i=0; i < this.props.images.length; i++) {
       this.state.resources[i] = Utils.extend(this.state.resources[i], this.props.images[i])
     }
+
+    for (var i = 0; i < this.state.resources.length; i ++) {
+      console.log(this.state.resources[i])
+
+      this.state.resources[i]["tenantCount"] = this.props.tenantCounts[i]
+      this.state.resources[i]["potentialTenantCount"] = this.props.potentialTenantCounts[i]
+
+      console.log(this.state.resources[i])
+    }
   }
 
   renderView() {
     if (this.state.resources.length === 0) {
       return(<Avatar shape="square" src="/assets/leaves.png" size={350}/>)
     } else {
-      return(<ListView resources={this.state.resources} type="property" avatar={true} checkbox={false}/>)
+      return(
+        <ListView
+          resources={this.state.resources}
+          type="property"
+          avatar={true}
+          checkbox={false}
+          viewpoint="LL"/>)
     }
   }
 
@@ -35,14 +50,14 @@ class LandlordHomePage extends React.Component {
     this.setup();
     return [
       <div className="LLHome"><h1>Properties</h1></div>,
-      <Button 
+      <Button
         style={{
         width: "20%",
         margin: "1.5% auto",
         left: "80%",
         }}
-        key='submit' 
-        type="primary" 
+        key='submit'
+        type="primary"
         onClick={this.redirectToNewProperty}>+ New Property</Button>,
       this.renderView()
     ];

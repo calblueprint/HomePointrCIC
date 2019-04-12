@@ -13,24 +13,6 @@ class PropertyModal extends React.Component {
     }
   }
 
-  // showModal = () => {
-  //   this.setState({
-  //     visible: true,
-  //   });
-  // }
-  //
-  // handleOk = (e) => {
-  //   this.setState({
-  //     visible: false,
-  //   });
-  // }
-  //
-  // handleCancel = (e) => {
-  //   this.setState({
-  //     visible: false,
-  //   });
-  // }
-
   renderPhotos() {
     if (this.props.property.images == null) {
       return (
@@ -44,7 +26,10 @@ class PropertyModal extends React.Component {
           <Carousel autoplay>
             {this.props.property.images.map((image, index) => {
               return (
-                <div key={index}><h3><center>{this.props.property.location}<img src={image.url} margin-top="10%" height="320" width="400"/></center></h3></div>
+                <div key={index}><h3><center>
+                  {this.props.property.location}
+                  <img src={image.url} margin-top="10%" height="320" width="400"/>
+                </center></h3></div>
               )
             })}
           </Carousel>

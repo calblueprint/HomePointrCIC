@@ -47,6 +47,16 @@ class TenantsController < ApplicationController
     values = @tenant.attributes.values[3..-3]
     @avatarURL = nil
     @avatarURL = url_for(@tenant.avatar) if @tenant.avatar.attached?
+
+    @tenantCounts = []
+    @potentialTenantCounts = []
+
+    @properties.each do |p|
+      current_count = p.applications.where(status: "housed").size
+      @tenantCounts << current_count
+      app_count = p.applications.where(status: "received").size + p.applications.where(status: "interview").size
+      @potentialTenantCounts << app_count
+    end
   end
 
   def edit

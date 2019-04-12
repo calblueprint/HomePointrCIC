@@ -4,6 +4,8 @@ class PropertiesController < ApplicationController
   def index
     @properties = PropertyPolicy::Scope.new(current_user, Property).resolve
     @images = []
+    @tenantCounts = []
+    @potentialTenantCounts = []
     @properties.each do |p|
       if p.images.attached? == true
         image_list = p.images.map { |img| { url: url_for(img) } }
@@ -12,6 +14,13 @@ class PropertiesController < ApplicationController
         @images << { images: nil }
       end
     end
+    @properties.each do |p|
+      current_count = p.applications.where(status: "housed").size
+      @tenantCounts << current_count
+      app_count = p.applications.where(status: "received").size + p.applications.where(status: "interview").size
+      @potentialTenantCounts << app_count
+    end
+
   end
 
   def new

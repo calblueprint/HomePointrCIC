@@ -55,7 +55,7 @@ const Utils = {
   renderStatus: (statusInp, displayTag, isString) => {
 
     let status = statusInp;
-    
+
     if (isString) {
       switch(status) {
         case "housed":

@@ -39,6 +39,7 @@ class RADashboard extends React.Component {
             tenant_modal={false}
             displayTag={true}
             renderModal={false}
+            viewpoint="RA"
           />
         </div>
         <div>
