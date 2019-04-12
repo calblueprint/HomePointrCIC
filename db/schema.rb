@@ -69,6 +69,8 @@ ActiveRecord::Schema.define(version: 2019_04_06_045532) do
     t.date "date_available"
     t.integer "location"
     t.string "address"
+    t.float "lat"
+    t.float "long"
     t.integer "number_of_bedrooms"
     t.integer "number_of_bathrooms"
     t.integer "floor_number"

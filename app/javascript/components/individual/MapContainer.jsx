@@ -39,15 +39,11 @@ export class MapContainer extends React.Component {
 
   markersList() {
     return this.props.filtered_properties.map((data) => {
-      //testing purposes
-      const min = 37.778519;
-      const max = 38;
-      const rand = min + Math.random() * (max - min);
       return (
         <Marker
           name={data.address}
           onClick={this.onMarkerClick}
-          position={{ lat: rand, lng: -122.40564 }}
+          position={{ lat: data.lat, lng: data.long }}
         />
       )
     })
@@ -76,12 +72,9 @@ export class MapContainer extends React.Component {
           visible={this.state.showingInfoWindow}>
           <div>
             <Card
-              title={this.state.selectedPlace.name}
               style={{ width: 240 }}
             >
-              <p>Card content</p>
-              <p>Card content</p>
-              <p>Card content</p>
+            {this.state.selectedPlace.name}
             </Card>
           </div>
         </InfoWindow>
