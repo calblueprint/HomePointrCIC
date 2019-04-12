@@ -60,7 +60,6 @@ class TenantsController < ApplicationController
   end
 
   def edit
-     puts "TENANT EDIT"
      @tenant = Tenant.find(params[:id])
      authorize @tenant
      @current_userID = current_user.id

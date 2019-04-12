@@ -9,6 +9,8 @@ import UploadButton from './UploadButton';
 import PicturesWall from './PicturesWall';
 import SliderBar from './SliderBar';
 import ActiveStorageProvider from "react-activestorage-provider";
+import '../../../assets/stylesheets/application.css';
+
 
 class ProfileForm extends React.Component {
 
@@ -153,26 +155,17 @@ class ProfileForm extends React.Component {
 
   renderTextbox(index) {
     return (
-      <div
-      style={{
-        width: "50%",
-        margin: "1.5% auto"
-      }}
-      key={index}>
-        <label>{this.state.niceFieldNames[index]}</label>
-        <Input size="large" defaultValue={this.state.prevValues[index]} onChange={(e) => this.handleChange(index, e)} />
+      <div key={index}>
+        <Form.Item colon="false" label={this.state.niceFieldNames[index]}>
+          <Input size="large" defaultValue={this.state.prevValues[index]} onChange={(e) => this.handleChange(index, e)} />
+        </Form.Item>
       </div>
     )
   }
 
   renderPassword(index) {
     return (
-      <div
-      style={{
-        width: "50%",
-        margin: "1.5% auto"
-      }}
-      key={index}>
+      <div key={index}>
         <label>New Password</label>
         <Input type="password" size="large" defaultValue={this.state.prevValues[index]} onChange={(e) => this.handleChange(index, e)} />
       </div>
@@ -182,12 +175,7 @@ class ProfileForm extends React.Component {
   renderTextarea(index) {
     const { TextArea } = Input;
     return (
-      <div
-      style={{
-        width: "50%",
-        margin: "1.5% auto"
-      }}
-      key={index}>
+      <div key={index}>
         <label>{this.state.niceFieldNames[index]}</label>
         <TextArea defaultValue={this.state.prevValues[index]} rows ={8} onChange={(e) => this.handleChange(index, e)} autosize={true}/>
       </div>
@@ -422,14 +410,11 @@ class ProfileForm extends React.Component {
           <Button style={{
           width: "20%",
           margin: "1.5% auto"
-          }}key='delete' type="danger" onClick={this.handleDestroy}>Delete</Button>, ]
+          }}key='delete' type="danger" onClick={this.handleDestroy}>Delete </Button>, ]
     }
     return (
-      <div
-      style={{
-        textAlign: "center",
-            }}
-      >
+      <div className="profile-form">
+      <h1>Edit account</h1>
       {returnArr}
       </div>
       );

@@ -4,11 +4,11 @@ import Avatar from '../components/individual/Avatar.jsx';
 
 const Utils = {
   activeStorageUploadRenderer: ({ handleUpload, uploads, ready }) => {
+    console.log('asdfasdf')
     return(<div>
       <Avatar handleUpload={handleUpload} uploads={uploads}/>
 
       {uploads.map(upload => {
-        // console.log(upload)
         switch (upload.state) {
           case 'waiting':
             return <p key={upload.id}>Waiting to upload {upload.file.name}</p>
