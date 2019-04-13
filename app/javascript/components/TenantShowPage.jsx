@@ -14,10 +14,11 @@ class TenantShowPage extends React.Component {
     this.state = {
       applications: props.applications,
       properties: props.properties,
-      // potentialTenants: props.potentialTenants
     }
   }
 
+  // Adds counts of current property residents and applications to
+  // properties the tenant has applied to (for use in the PropertyCards)
   countSetupHelper = () => {
     for (var i = 0; i < this.state.properties.length; i ++) {
       this.state.properties[i]["tenantCount"] = this.props.propertyTenantCounts[i]

@@ -4,7 +4,6 @@ import Avatar from '../components/individual/Avatar.jsx';
 
 const Utils = {
   activeStorageUploadRenderer: ({ handleUpload, uploads, ready }) => {
-    console.log('asdfasdf')
     return(<div>
       <Avatar handleUpload={handleUpload} uploads={uploads}/>
 
@@ -41,17 +40,13 @@ const Utils = {
     return obj;
   },
 
-  setup(obj, images) {
-    for (var i=0; i < images.length; i++) {
-      obj[i] = Utils.extend(obj[i], images[i])
+  setup(obj, list) {
+    for (var i=0; i < list.length; i++) {
+      obj[i] = Utils.extend(obj[i], list[i])
     }
   },
 
-  //     0 - matched with a house
-  //     1 - interviewing with a house
-  //     2 - applied
-  //     3 - rejected
-  //     4 - not applied yet
+  // render status tag for tenant card
   renderStatus: (statusInp, displayTag, isString) => {
 
     let status = statusInp;
@@ -82,7 +77,6 @@ const Utils = {
     }
 
     if (displayTag) {
-      console.log(status)
       const finalStatus = statusDict[status][0];
       const color = statusDict[status][1];
       return(

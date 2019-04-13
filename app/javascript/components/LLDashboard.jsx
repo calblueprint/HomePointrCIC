@@ -17,6 +17,8 @@ class LLDashboard extends React.Component {
     window.location = '/properties/new'
   }
 
+  // First loop: adds images to each property
+  // Second loops: adds current tenant and application counts to each property
   setup() {
     for (var i=0; i < this.props.images.length; i++) {
       this.state.resources[i] = Utils.extend(this.state.resources[i], this.props.images[i])

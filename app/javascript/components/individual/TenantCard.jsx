@@ -26,12 +26,11 @@ class TenantCard extends React.Component {
     );
   }
 
-  onDismiss = () => {
-    this.setState({displayModal: false})
-  }
 
-
-
+  // Three cases:
+  // 1. If the modal is already being displayed or user is hovering on edit, do nothing
+  // 2. If we want the modal to be rendered on click (aka within Property Show page), display it
+  // 3. If user is a referral agency, redirect to Tenant Show page
   onTenantClick = () => {
     if (this.state.displayModal || this.state.disableDivClick) {
       return;
@@ -42,6 +41,13 @@ class TenantCard extends React.Component {
     }
   }
 
+  // Function to close modal (to be passed in as a prop to TenantModal)
+  onDismiss = () => {
+    this.setState({displayModal: false})
+  }
+
+  // Handles rendering the modal if user is on Property Show page
+  // Don't want to render the modal if hovering over edit button
   renderModalOnClick = () => {
     if (this.state.renderModal && !this.state.renderEdit) {
       return(
@@ -55,10 +61,8 @@ class TenantCard extends React.Component {
     }
   }
 
-  handleEdit = () => {
-    window.location = '/tenants/' + this.state.tenant.id.toString() + '/edit'
-  }
 
+  // Toggles whether edit button is hovered
   renderEdit = (event) => {
     if (this.state.viewpoint === "RA") {
       this.setState((state) => {
@@ -67,12 +71,18 @@ class TenantCard extends React.Component {
     }
   }
 
+  // If user is hovering over the edit button, we do not want the entire div to be clickable
   disableDivClick = (event) => {
     this.setState((state) => {
       return {disableDivClick: 1 - state.disableDivClick}
     });
   }
 
+  handleEdit = () => {
+    window.location = '/tenants/' + this.state.tenant.id.toString() + '/edit'
+  }
+
+  // Renders edit button on card hover
   editButtonHelper = () => {
     if (this.state.renderEdit) {
       return(

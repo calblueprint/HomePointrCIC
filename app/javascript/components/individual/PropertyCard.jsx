@@ -32,11 +32,10 @@ class PropertyCard extends React.Component {
     }
   }
 
-  onDismiss = () => {
-    this.setState({displayModal: false})
-  }
-
-  // needs to change depending on whether we want to redirect or render modal
+  // Three cases:
+  // 1. If the modal is already being displayed or user is hovering on edit, do nothing
+  // 2. If we want the modal to be rendered on click (aka within Tenant Show Page), display it
+  // 3. If user is a landlord, redirect to Property Show page
   onPropertyClick = () => {
     if (this.state.displayModal || this.state.disableDivClick) {
       return;
@@ -47,6 +46,13 @@ class PropertyCard extends React.Component {
     }
   }
 
+  // Function to close modal (to be passed in as a prop to PropertyModal)
+  onDismiss = () => {
+    this.setState({displayModal: false})
+  }
+
+  // Handles rendering the modal if user is on Tenant Show Page
+  // Don't want to render the modal if hovering over edit button
   renderModalOnClick = () => {
     if (this.state.renderModal && !this.state.renderEdit) {
       return(
@@ -60,10 +66,7 @@ class PropertyCard extends React.Component {
     }
   }
 
-  handleEdit = () => {
-    window.location = '/properties/' + this.state.property.id.toString() + '/edit'
-  }
-
+  // Toggles whether edit button is hovered
   renderEdit = (event) => {
     if (this.state.viewpoint === "LL") {
       this.setState((state) => {
@@ -72,12 +75,18 @@ class PropertyCard extends React.Component {
     }
   }
 
+  // If user is hovering over the edit button, we do not want the entire div to be clickable
   disableDivClick = (event) => {
     this.setState((state) => {
       return {disableDivClick: 1 - state.disableDivClick}
     });
   }
 
+  handleEdit = () => {
+    window.location = '/properties/' + this.state.property.id.toString() + '/edit'
+  }
+
+  // Renders edit button on card hover
   editButtonHelper = () => {
     if (this.state.renderEdit) {
       return(
@@ -93,6 +102,7 @@ class PropertyCard extends React.Component {
     }
   }
 
+  // If we want the status to be shown, aka the property has a status, render the tag
   renderStatus = () => {
     if (this.state.property.status) {
       return(
