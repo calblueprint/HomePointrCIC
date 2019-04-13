@@ -10,11 +10,11 @@ import APIRoutes from 'helpers/api_routes';
 import Utils from 'helpers/utils';
 import UploadButton from './UploadButton';
 import SliderBar from './SliderBar';
-import ActiveStorageProvider from "react-activestorage-provider";
 import PicturesWall from './PicturesWall';
 import Dropzone from "react-dropzone";
 import Avatar from './Avatar';
-import { DirectUpload } from 'activestorage';
+import { DirectUploadProvider } from "react-activestorage-provider";
+import DefaultDirectUploadRender from './DefaultDirectUploadRender'
 
 class ProfileFormTenants extends React.Component {
   constructor(props) {
@@ -162,18 +162,6 @@ class ProfileFormTenants extends React.Component {
         onChange: (fileList) => this.handleChangeImage(fileList)
       };
 
-      <ActiveStorageProvider
-        endpoint={{
-          path: '/api/tenants/' + this.state.tenant.id.toString(),
-          model: "Tenant",
-          attribute: 'avatar',
-          method: "PUT",
-        }}
-        headers={{
-          'Content-Type': 'application/json'
-        }}
-        render={Utils.activeStorageUploadRenderer}
-      />
 
     return (
       <div>
@@ -208,9 +196,10 @@ class ProfileFormTenants extends React.Component {
     }
   }
 
-  onDrop = (avatar) => {
-    this.uploadFile(avatar);
-    console.log(avatar);
+  uploadAvatar = () => {
+    // this.setState({ avatar: signed_id });
+    console.log("upload avatar");
+    console.log(this.state.avatar);
   }
 
   uploadFile = (file) => {
@@ -222,11 +211,24 @@ class ProfileFormTenants extends React.Component {
         // TODO: Handle this error.
         console.log(error);
       } else {
-        this.setState({ avatar: blob.signed_id});
+        this.setState({ avatar: blob.signed_id });
         console.log(this.state.avatar)
       }
     })
   }
+
+
+  // <div className="dropzone-container">
+  //   <Dropzone
+  //     onDrop={this.onDrop}
+  //     multiple={true}
+  //     accept="image/jpeg, image/png"
+  //     className="dropzone"
+  //     style={{ backgroundColor: "#F8F8F8", width: 120, height: 120, borderStyle: "dashed", borderColor: "#C8C8C8", borderWidth: 0.1 }}
+  //   >
+  //     <p className="gray">Upload</p>
+  //   </Dropzone>
+  // </div>
 
 
   render() {
@@ -647,19 +649,10 @@ class ProfileFormTenants extends React.Component {
           <Form.Item
             label="Upload Avatar"
           >
-            <div>
-              <div className="dropzone-container">
-                <Dropzone
-                  onDrop={this.onDrop}
-                  multiple={true}
-                  accept="image/jpeg, image/png"
-                  className="dropzone"
-                  style={{ backgroundColor: "#F8F8F8", width: 120, height: 120, borderStyle: "dashed", borderColor: "#C8C8C8", borderWidth: 0.1 }}
-                >
-                  <p className="gray">Upload</p>
-                </Dropzone>
-              </div>
-            </div>
+            <DirectUploadProvider
+              onSuccess={signedIds => this.setState({ avatar: signedIds[0] })}
+              render={DefaultDirectUploadRender}
+            />
           </Form.Item>
         </div>
         <div className="section">
@@ -668,19 +661,6 @@ class ProfileFormTenants extends React.Component {
             label="Upload Form"
           >
             <PicturesWall {...buttonProps} />
-            <ActiveStorageProvider
-              endpoint={{
-                path: '/api/tenants/' + this.state.tenant.id.toString(),
-                model: "Tenant",
-                attribute: 'form',
-                method: "PUT",
-              }}
-              multiple={true}
-              headers={{
-                'Content-Type': 'application/json'
-              }}
-              render={Utils.activeStorageUploadRenderer}
-            />
           </Form.Item>
         </div>
         <div className="section">
