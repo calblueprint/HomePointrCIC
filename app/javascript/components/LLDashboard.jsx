@@ -63,7 +63,7 @@ class LLDashboard extends React.Component {
             className="add-new-button"
             key="submit"
             type="primary"
-            onClick={this.redirectToNewTenant}>+ Add new property
+            onClick={this.redirectToNewProperty}>+ Add new property
           </Button>
         </div>
       </div>
