@@ -6,6 +6,10 @@ import 'antd/dist/antd.css';
 class PropertyView extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      includes_boolean: false,
+      discludes_boolean: false
+    }
     this.handleEdit = this.handleEdit.bind(this);
   }
 
@@ -14,40 +18,33 @@ class PropertyView extends React.Component {
     window.location = '/properties/' + this.props.property.id.toString() + '/edit'
   }
 
-  renderBooleans(includes_true) {
-    console.log(htmldiv);
-    var discludes = "";
-    if (this.props.property.furniture) {
-      includes += "Furniture, ";
-    } else {
-      discludes += "Furniture, ";
+  getIncludes(amenities_str, amenities_bool) {
+    if (amenities_bool) {
+      this.state.includes_boolean = true;
+      return (
+        <Col span={12} className="content-text" id="includes"><p>{amenities_str}</p></Col>
+      );
     }
-    if (this.props.property.utilities_included) {
-      includes += "Utilities, ";
-    } else {
-      discludes += "Utilities, ";
+  }
+
+  getDiscludes(amenities_str, amenities_bool) {
+    if (!amenities_bool) {
+      this.state.discludes_boolean = true;
+      return (
+        <Col span={12} className="content-text" id="discludes"><p>{amenities_str}</p></Col>
+      );
     }
-    if (this.props.property.accessible_shower) {
-      includes += "Accessible Shower, ";
-    } else {
-      discludes += "Accessible Shower, ";
-    }
-    if (this.props.property.car_parking) {
-      includes += "Car Parking, ";
-    } else {
-      discludes += "Car Parking, ";
-    }
-    if (includes.length >= 2) {
-      includes = includes.slice(0, includes.length-2);
-    }
-    if (discludes.length >= 2) {
-      discludes = discludes.slice(0, discludes.length-2);
-    }
-    if(includes_true) {
-      return(<div> {includes} </div>);
-    }
-    else {
-      return(<div> {discludes} </div>);
+  }
+
+  renderNone(display_includes) {
+    if (display_includes && !this.state.includes_boolean) {
+      return (
+        <Col span={12} className="content-text"><p>None</p></Col>
+      );
+    } else if (display_includes && !this.state.discludes_boolean) {
+      return (
+        <Col span={12} className="content-text"><p>None</p></Col>
+      );
     }
   }
 
@@ -122,13 +119,25 @@ class PropertyView extends React.Component {
         <div className="section">
           <h2 className="section-header"> <Icon type="check-circle" className="icon"/> Includes </h2>
           <div className="subsection">
-            {this.renderBooleans(true)}
+            <Row>
+              {this.getIncludes("Furniture", this.props.property.furniture)}
+              {this.getIncludes("Utilities", this.props.property.utilities_included)}
+              {this.getIncludes("Accessible shower", this.props.property.accessible_shower)}
+              {this.getIncludes("Parking", this.props.property.car_parking)}
+              {this.renderNone(true)}
+            </Row>
           </div>
         </div>
         <div className="section">
         <h2 className="section-header"> <Icon type="close-circle" className="icon"/> Does Not Include </h2>
           <div className="subsection">
-            {this.renderBooleans(false)}
+            <Row>
+              {this.getDiscludes("Furniture", this.props.property.furniture)}
+              {this.getDiscludes("Utilities", this.props.property.utilities_included)}
+              {this.getDiscludes("Accessible shower", this.props.property.accessible_shower)}
+              {this.getDiscludes("Parking", this.props.property.car_parking)}
+              {this.renderNone(false)}
+            </Row>
           </div>
         </div>
         <div className="section">
@@ -174,6 +183,7 @@ class PropertyView extends React.Component {
   }
 
   render() {
+
     return (
       <div className="split-screen-left">
         {this.renderPhotos()}
@@ -182,6 +192,7 @@ class PropertyView extends React.Component {
           {this.renderDetails()}
         </div>
       </div>
+
     );
   }
 }
