@@ -2,15 +2,28 @@
   display: flex;
   justify-content: space-evenly;
   width: 570px;
-  margin-top: 80px;
+  margin-top: 100px;
   margin-bottom: 10px;
 }
 
 .buttons-panel {
 	margin-top: 10px;
+	margin-bottom: 5px;
 	display: flex;
 	justify-content: space-between;
 	background-color: white !important;
+}
+
+.clear-btn {
+	margin-left: 15px;
+	color: #1890FF;
+	cursor: pointer;
+}
+
+.apply-btn {
+	margin-right: 15px;
+	color: #1890FF;
+	cursor: pointer;
 }
 
 .options {
@@ -26,11 +39,13 @@
   grid-column-gap: 15px;
 }
 
-.ant-dropdown-link {
+.category-btn {
 	border: 1px solid lightgrey;
 	border-radius: 5px;
 	margin-bottom: 22px;
-	padding: 7px; 
+	padding: 5px; 
+	padding-left: 7px;
+  padding-right: 7px;
 }
 
 .guests {

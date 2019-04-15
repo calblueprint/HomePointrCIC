@@ -41,6 +41,7 @@ class FilterPanel extends React.Component {
     };
     this.handleClick = this.handleClick.bind(this);
     this.handleCheckbox = this.handleCheckbox.bind(this);
+    this.convertCheckbox = this.convertCheckbox.bind(this);
     this.handleDatePicker = this.handleDatePicker.bind(this);
     this.passState = this.passState.bind(this);
     this.toggleOpen = this.toggleOpen.bind(this);
@@ -49,6 +50,9 @@ class FilterPanel extends React.Component {
     this.getInitialValues = this.getInitialValues.bind(this);
     this.componentDidMount = this.componentDidMount.bind(this);
     this.handleClear = this.handleClear.bind(this);
+    this.titleize = this.titleize.bind(this);
+    this.convertToDict = this.convertToDict.bind(this);
+    this.getKeyByValue = this.getKeyByValue.bind(this);
   }
 
   componentDidMount = () => {
@@ -61,6 +65,14 @@ class FilterPanel extends React.Component {
 
   handleCheckbox = (checkedValues, filter_name) => {
     this.setState({[filter_name]: checkedValues});
+  }
+
+  convertCheckbox = (checkedValues, filter_name, dict) => {
+    let originalValues = checkedValues.reduce((result, key) => {
+      result.push(dict[key])
+      return result;
+    }, []);
+    this.setState({[filter_name]: originalValues});
   }
 
   handleDatePicker = (date, dateString) => {
@@ -120,8 +132,12 @@ class FilterPanel extends React.Component {
   }
 
   toggleOpen = (filter_name) => {
-    this.closeAll();
-    this.setState({[filter_name]: true});
+    if (this.state[filter_name] == true) {
+      this.setState({[filter_name]: false});
+    } else {
+      this.closeAll();
+      this.setState({[filter_name]: true});
+    }
   }
 
   sliderChanges([value1, value2]) {
@@ -147,8 +163,32 @@ class FilterPanel extends React.Component {
     };
   }
 
+  titleize = (original) => {
+    let result = original.split("_");
+    result[0] =  result[0].charAt(0).toUpperCase() + result[0].slice(1);
+    return result.join(" ");
+  }
+
+  convertToDict = (options) => {
+    return options.reduce((result, option) => {
+      result[this.titleize(option)] = option;
+      return result;
+    }, {});
+  }
+
+  getKeyByValue(object, values) {
+    return values.reduce((result, val) => {
+      result.push(Object.keys(object).find(key => object[key] === val))
+      return result;
+    }, []);
+  }
+
   render() {
+    const locationOptionsDict = this.convertToDict(this.props.location_options);
+    const propertyOptionsDict = this.convertToDict(this.props.property_options);
+    const housingOptionsDict = this.convertToDict(this.props.housing_options);
     const CheckboxGroup = Checkbox.Group;
+
     const marks = {
       0: "$0",
       2500: "$2500",
@@ -164,16 +204,18 @@ class FilterPanel extends React.Component {
           />
         </div>
         <div className="buttons-panel">
-          <a href="#">
-            <div onClick={(e) => this.handleClear("date_available")}>
-              Clear
-            </div>
-          </a>
-          <a href="#">
-            <div onClick={(e) => this.passState("date_available")}>
-              Apply
-            </div>
-          </a>
+          <div 
+            className="clear-btn" 
+            onClick={(e) => this.handleClear("date_available")}
+          >
+            Clear
+          </div>
+          <div 
+            className="apply-btn"
+            onClick={(e) => this.passState("date_available")}
+          >
+            Apply
+          </div>
         </div>
       </div>
     );
@@ -199,20 +241,18 @@ class FilterPanel extends React.Component {
           </div>
         </div>
         <div className="buttons-panel">
-          <Button
-            type="default"
-            style={{ border: 'none' }}
+          <div
+            className="clear-btn"
             onClick={(e) => this.handleClear("capacity")}
           >
             Clear
-          </Button>
-          <Button
-            type="default"
-            style={{ border: 'none' }}
+          </div>
+          <div 
+            className="apply-btn"
             onClick={(e) => this.passState("capacity")}
           >
             Apply
-          </Button>
+          </div>
         </div>
       </div>
     );
@@ -221,26 +261,24 @@ class FilterPanel extends React.Component {
       <div>
         <div className="options">
           <CheckboxGroup
-            options={this.props.location_options}
-            value={this.state.location}
-            onChange={(e) => this.handleCheckbox(e, "location")}
+            options={Object.keys(locationOptionsDict)}
+            value={this.getKeyByValue(locationOptionsDict, this.state.location)}
+            onChange={(e) => this.convertCheckbox(e, "location", locationOptionsDict)}
           />
         </div>
         <div className="buttons-panel">
-          <Button
-            type="default"
-            style={{ border: 'none' }}
+          <div
+            className="clear-btn"
             onClick={(e) => this.handleClear("location")}
           >
             Clear
-          </Button>
-          <Button
-            type="default"
-            style={{ border: 'none' }}
+          </div>
+          <div
+            className="apply-btn"
             onClick={(e) => this.passState("location")}
           >
             Apply
-          </Button>
+          </div>
         </div>
       </div>
     );
@@ -249,26 +287,24 @@ class FilterPanel extends React.Component {
       <div>
         <div className="options">
           <CheckboxGroup
-            options={this.props.property_options}
-            value={this.state.property_type}
-            onChange={(e) => this.handleCheckbox(e, "property_type")}
+            options={Object.keys(propertyOptionsDict)}
+            value={this.getKeyByValue(propertyOptionsDict, this.state.property_type)}
+            onChange={(e) => this.convertCheckbox(e, "property_type", propertyOptionsDict)}
           />
         </div>
         <div className="buttons-panel">
-          <Button
-            type="default"
-            style={{ border: 'none' }}
+          <div 
+            className="clear-btn"
             onClick={(e) => this.handleClear("property_type")}
           >
             Clear
-          </Button>
-          <Button
-            type="default"
-            style={{ border: 'none' }}
+          </div>
+          <div
+            className="apply-btn"
             onClick={(e) => this.passState("property_type")}
           >
             Apply
-          </Button>
+          </div>
         </div>
       </div>
     );
@@ -277,26 +313,24 @@ class FilterPanel extends React.Component {
       <div>
         <div className="options">
           <CheckboxGroup
-            options={this.props.housing_options}
-            value={this.state.housing_type}
-            onChange={(e) => this.handleCheckbox(e, "housing_type")}
+            options={Object.keys(housingOptionsDict)}
+            value={this.getKeyByValue(housingOptionsDict, this.state.housing_type)}
+            onChange={(e) => this.convertCheckbox(e, "housing_type", housingOptionsDict)}
           />
         </div>
         <div className="buttons-panel">
-          <Button
-            type="default"
-            style={{ border: 'none' }}
+          <div
+            className="clear-btn"
             onClick={(e) => this.handleClear("housing_type")}
           >
             Clear
-          </Button>
-          <Button
-            type="default"
-            style={{ border: 'none' }}
+          </div>
+          <div
+            className="apply-btn"
             onClick={(e) => this.passState("housing_type")}
           >
             Apply
-          </Button>
+          </div>
         </div>
       </div>
     );
@@ -335,20 +369,18 @@ class FilterPanel extends React.Component {
           </Row>
         </div>
         <div className="buttons-panel">
-          <Button
-            type="default"
-            style={{ border: 'none' }}
+          <div
+            className="clear-btn"
             onClick={(e) => this.handleClear("rent_min")}
           >
             Clear
-          </Button>
-          <Button
-            type="default"
-            style={{ border: 'none' }}
+          </div>
+          <div
+            className="apply-btn"
             onClick={(e) => this.passState("rent_min")}
           >
             Apply
-          </Button>
+          </div>
         </div>
       </div>
     );
@@ -356,46 +388,52 @@ class FilterPanel extends React.Component {
     return (
       <div className="filters-bar">
         <Dropdown overlay={dateFilter} visible={this.state.isDateOpen} trigger={['click']}>
-          <a className="ant-dropdown-link" href="#">
-            <div onClick={(e) => this.toggleOpen("isDateOpen")}>
-              Date needed
-            </div>
-          </a>
+          <Button 
+            className="category-btn"
+            onClick={(e) => this.toggleOpen("isDateOpen")}
+          >
+            Date needed
+          </Button>
         </Dropdown>
         <Dropdown overlay={guestsFilter} visible={this.state.isGuestsOpen} trigger={['click']}>
-          <a className="ant-dropdown-link" href="#">
-            <div onClick={(e) => this.toggleOpen("isGuestsOpen")}>
-              Guests
-            </div>
-          </a>
+          <Button 
+            className="category-btn"
+            onClick={(e) => this.toggleOpen("isGuestsOpen")}
+          >
+            Guests
+          </Button>
         </Dropdown>
         <Dropdown overlay={locationFilter} visible={this.state.isLocationOpen} trigger={['click']}>
-          <a className="ant-dropdown-link" href="#">
-            <div onClick={(e) => this.toggleOpen("isLocationOpen")}>
-              Location
-            </div>
-          </a>
+          <Button 
+            className="category-btn"
+            onClick={(e) => this.toggleOpen("isLocationOpen")}
+          >
+            Location
+          </Button>
         </Dropdown>
         <Dropdown overlay={propertyTypeFilter} visible={this.state.isPropertyTypeOpen} trigger={['click']}>
-          <a className="ant-dropdown-link" href="#">
-            <div onClick={(e) => this.toggleOpen("isPropertyTypeOpen")}>
-              Property type
-            </div>
-          </a>
+          <Button 
+            className="category-btn"
+            onClick={(e) => this.toggleOpen("isPropertyTypeOpen")}
+          >
+            Property type
+          </Button>
         </Dropdown>
         <Dropdown overlay={housingTypeFilter} visible={this.state.isHousingTypeOpen} trigger={['click']}>
-          <a className="ant-dropdown-link" href="#">
-            <div onClick={(e) => this.toggleOpen("isHousingTypeOpen")}>
-              Housing type
-            </div>
-          </a>
+          <Button 
+            className="category-btn"
+            onClick={(e) => this.toggleOpen("isHousingTypeOpen")}
+          >
+            Housing type
+          </Button>
         </Dropdown>
         <Dropdown overlay={rentFilter} visible={this.state.isRentOpen} trigger={['click']}>
-          <a className="ant-dropdown-link" href="#">
-            <div onClick={(e) => this.toggleOpen("isRentOpen")}>
-              Rent
-            </div>
-          </a>
+          <Button 
+            className="category-btn"
+            onClick={(e) => this.toggleOpen("isRentOpen")}
+          >
+            Rent
+          </Button>
         </Dropdown>
       </div>
     );
