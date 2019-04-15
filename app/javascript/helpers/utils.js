@@ -76,7 +76,9 @@ const Utils = {
         4: ["No Applications", "gold"]
     }
 
-    if (displayTag) {
+    if (statusInp && displayTag) {
+      console.log(status)
+      console.log(statusDict[status])
       const finalStatus = statusDict[status][0];
       const color = statusDict[status][1];
       return(

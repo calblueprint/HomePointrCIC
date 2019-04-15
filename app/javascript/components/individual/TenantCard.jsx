@@ -114,7 +114,7 @@ class TenantCard extends React.Component {
             <Col span={21}>
               <h2 className="title">{this.state.tenant.name}</h2>
               <div className="status-tag">
-                {Utils.renderStatus(this.state.tenant.status, this.state.displayTag)}
+                {Utils.renderStatus(this.state.tenant.status, this.props.displayTag)}
               </div>
             </Col>
             <Col span={3}>

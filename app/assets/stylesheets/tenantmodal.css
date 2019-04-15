@@ -5,22 +5,32 @@
 .modal-content {
   display: flex;
   flex-direction: row;
-  padding-left: 98px;
-  padding-right: 98px;
-  padding-top: 70px;
-
+  padding-left: 80px;
+  padding-right: 80px;
+  padding-top: 60px;
 }
 
 .modal-avatar {
   border-radius: 4px 4px 4px 4px;
+  margin-bottom: 32px;
 }
 
 .basic-info {
   width: 33%;
-
 }
 
 .detailed-info {
-  padding-left: 20px;
+  padding-left: 42px;
+}
 
+.modal-subsection {
+  margin-bottom: 24px;
+}
+
+.table-container {
+  border-top: 1px solid #D9D9D9;
+}
+
+.table {
+  padding-top: 42px;
 }

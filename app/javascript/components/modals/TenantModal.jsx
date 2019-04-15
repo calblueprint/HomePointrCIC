@@ -27,7 +27,7 @@ class TenantModal extends React.Component {
 
   renderAttachment() {
     if (this.props.application) {
-      return(<p><h3>Attachment</h3><a href={this.props.application.url}><Icon type="paper-clip" />Attachment</a></p>)
+      return(<p><a href={this.props.application.url}><Icon type="paper-clip" />Attachment</a></p>)
     }
   }
 
@@ -48,10 +48,12 @@ class TenantModal extends React.Component {
   render() {
     const dataSource = [{
       fileName: 'Tenant Application',
-      lastUpdated: 'THIS WILL BE UPDATED'
+      lastUpdated: 'THIS WILL BE UPDATED',
+      attachment: 'THIS TOO'
     }, {
       fileName: 'Additional Files',
-      lastUpdated: this.props.application.updated_at
+      lastUpdated: this.props.application.updated_at,
+      attachment: 'Download'
     }];
 
     const columns = [{
@@ -60,6 +62,10 @@ class TenantModal extends React.Component {
     }, {
       title: 'Last Updated',
       dataIndex: 'lastUpdated',
+    }, {
+      title: 'Attachment',
+      dataIndex: 'attachment',
+      render: download => <a href={this.props.application.url}>{download}</a>
     }];
 
 
@@ -77,30 +83,43 @@ class TenantModal extends React.Component {
             <div className="modal-content">
               <div className="basic-info">
                 {this.renderAvatar()}
-                <h3>Email</h3>
-                {this.props.tenant.email}
-                <h3>Phone</h3>
-                {this.props.tenant.phone}
-                {this.renderAttachment()}
-                <h3>Housing Type</h3>
-                {this.props.tenant.housing_type}
-                <h3>Date Needed</h3>
-                {this.props.tenant.date_needed}
+                <div className="modal-subsection">
+                  <h3>Email</h3>
+                  {this.props.tenant.email}
+                </div>
+                <div className="modal-subsection">
+                  <h3>Phone</h3>
+                  {this.props.tenant.phone}
+                </div>
+                <div className="modal-subsection">
+                  <h3>Housing Type</h3>
+                  {this.props.tenant.housing_type}
+                </div>
+                <div className="modal-subsection">
+                  <h3>Date Needed</h3>
+                  {this.props.tenant.date_needed}
+                </div>
               </div>
               <div className="detailed-info">
                 <h1>{this.props.tenant.name}</h1>
-                <h3>Status</h3>
-                {Utils.renderStatus(this.props.tenant.status, true)}
-                <h3>Description</h3>
-                {this.props.tenant.description}
-                <Table
-                  dataSource={dataSource}
-                  columns={columns}
-                  pagination={false}
-                />
+                <div className="modal-subsection">
+                  <h3>Status</h3>
+                  {Utils.renderStatus(this.props.tenant.status, true)}
+                </div>
+                <div className="modal-subsection">
+                  {this.props.tenant.description}
+                </div>
+                <div className="table-container">
+                  <div className="table">
+                    <Table
+                      dataSource={dataSource}
+                      columns={columns}
+                      pagination={false}
+                    />
+                  </div>
+                </div>
               </div>
             </div>
-
             {this.handleButtons()}
           </div>
 

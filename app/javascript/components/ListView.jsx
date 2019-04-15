@@ -103,14 +103,14 @@ class ListView extends React.Component {
             {this.state.type === "property" ? (
               <PropertyCard
                 property={resource}
-                displayTag={this.state.displayTag}
+                displayTag={this.props.displayTag}
                 renderModal={this.props.renderModal}
                 viewpoint={this.props.viewpoint}
               />
             ) : (
               <TenantCard
                 tenant={resource}
-                displayTag={this.state.displayTag}
+                displayTag={this.props.displayTag}
                 renderModal={this.props.renderModal}
                 viewpoint={this.props.viewpoint}
                 application={this.props.applications[index]}
