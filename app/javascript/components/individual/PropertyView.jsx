@@ -192,19 +192,7 @@ class PropertyView extends React.Component {
           {this.renderDetails()}
         </div>
       </div>
-
-<<<<<<< HEAD
-  render() {
-    return(
-      <div>
-        {this.renderPhotos()}
-        {this.renderNameEdit()}
-        {this.renderDetails()}
-      </div>
-    )
-=======
     );
->>>>>>> a7d333b7952a2028666b347d4b26bce15d112564
   }
 }
 
