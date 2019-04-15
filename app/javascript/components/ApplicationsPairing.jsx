@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Select, Input, Button, Slider, Icon, Switch, DatePicker } from 'antd';
+import { Select, Input, Button, Slider, Icon, Switch, DatePicker, message } from 'antd';
 import 'antd/dist/antd.css';
 import moment from 'moment';
 import ListView from './ListView.jsx';
@@ -52,6 +52,7 @@ class ApplicationsPairing extends React.Component {
       var index = this.state.properties.indexOf(property);
       this.state.properties.splice(index, 1);
       this.state.properties.push(property);
+      this.state.selectedEnd-=1;
     }
   }
 
@@ -89,7 +90,12 @@ class ApplicationsPairing extends React.Component {
   }
 
   renderApplicationSubmissionWrapper() {
-		this.setState({status:"applicationSubmission"})
+    if (this.state.selectedEnd > 0) { //there are selected applications
+        this.setState({status:"applicationSubmission"})
+    } else {
+      message.error('Please select applications!');
+    }
+
 	}
 
   renderPropertyListWrapper() {
@@ -113,14 +119,14 @@ class ApplicationsPairing extends React.Component {
     if (this.state.status == "propertyList") {
       rightComponent = (
         <h1>Potential Homes</h1>,
-        [<PropertyListWrapper {...this.props} propertyCompletion={true} CheckboxChange={this.onChangeProperty} selectedTenant={this.props.tenant}/>,
+        [<PropertyListWrapper {...this.props} selectedEnd={this.state.selectedEnd} propertyCompletion={true} CheckboxChange={this.onChangeProperty} selectedTenant={this.props.tenant}/>,
         <Button key="start_applications" onClick={this.renderApplicationSubmissionWrapper}>Start Applications</Button>]
       );
     }
     else if (this.state.status == "applicationSubmission") {
       rightComponent = (
         <h1>Upload and Submit</h1>,
-        [<ApplicationSubmissionWrapper {...this.props} selectedProperties={this.state.selectedProperties}/>,
+        [<ApplicationSubmissionWrapper {...this.props} selectedProperties={this.state.properties.slice(0, this.state.selectedEnd)}/>,
         <Button key="edit_selections" onClick={this.renderPropertyListWrapper}>Edit Selections</Button>,
         <Button key="edit_selections" onClick={this.renderTenantView}>Finish Application Process</Button>]
       );

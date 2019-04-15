@@ -28,18 +28,19 @@ class ListView extends React.Component {
     }
   }
 
-  renderCheckbox(property) {
+  renderCheckbox(property, index) {
+    if (index < this.props.selectedEnd && this.props.checkbox) {
+      return (<Checkbox defaultChecked={true} onChange={(e) => this.props.CheckboxChange(e, property)}>Checkbox</Checkbox>)
+    }
     if (this.props.checkbox) {
       return (<Checkbox onChange={(e) => this.props.CheckboxChange(e, property)}>Checkbox</Checkbox>)
     }
-    if ()
   }
 
   renderSubmissionModal(resource, index) {
     if (this.props.submission_modal) {
       return(<SubmissionModal property={resource} tenant={this.props.tenant}/>)
     }
-    if ()
   }
 
   renderAvatar(images, type){
@@ -116,7 +117,7 @@ class ListView extends React.Component {
                 />
                 <div><br></br></div>
                 <p>{resource.description}</p>
-                {this.renderCheckbox(resource)}
+                {this.renderCheckbox(resource, index)}
                 {this.renderSubmissionModal(resource)}
                 {this.renderPropertyModal(resource)}
                 {this.props.applications ? this.renderApplicationModal(this.props.applications[index]) : null}
