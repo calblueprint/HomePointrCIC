@@ -15,7 +15,7 @@
 
 .tenant-card:hover {
   cursor: pointer;
-  box-shadow: 0px 0px 0px 2px #D3D3D3;
+  box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 .avatar {
