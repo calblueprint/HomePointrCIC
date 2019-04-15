@@ -199,11 +199,11 @@ class ProfileFormTenants extends React.Component {
     const { TextArea } = Input;
 
     return (
-      <div className="container">
-        <h3>Edit Client</h3>
+      <div className="edit-tenant-container">
+        <h1>Edit Client</h1>
         <Form onSubmit={this.handleEdit}>
           <div className="section">
-            <h3>Basic Information</h3>
+            <h2>Basic Information</h2>
             <div className="grid-container">
               <Form.Item
                 label="Name"
@@ -346,7 +346,7 @@ class ProfileFormTenants extends React.Component {
             </div>
           </div>
           <div className="section">
-            <h3>Housing Preferences</h3>
+            <h2>Housing Preferences</h2>
             <div className="grid-container">
             <Form.Item
               label="Property Type"
@@ -473,7 +473,7 @@ class ProfileFormTenants extends React.Component {
           </Form.Item>
         </div>
         <div className="section">
-          <h3>Others</h3>
+          <h2>Others</h2>
           <div className="grid-container">
             <Form.Item
               label="Ex-offender?"
@@ -577,7 +577,7 @@ class ProfileFormTenants extends React.Component {
           </div>
         </div>
         <div className="section">
-          <h3>Description</h3>
+          <h2>Description</h2>
           <Form.Item
             label="Description"
           >
@@ -592,7 +592,7 @@ class ProfileFormTenants extends React.Component {
           </Form.Item>
         </div>
         <div className="section">
-          <h3>Profile Photo</h3>
+          <h2>Profile Photo</h2>
           <Form.Item
             label="Upload Avatar"
           >
@@ -612,7 +612,7 @@ class ProfileFormTenants extends React.Component {
           </Form.Item>
         </div>
         <div className="section">
-          <h3>Client Form</h3>
+          <h2>Client Form</h2>
           <Form.Item
             label="Upload Form"
           >
