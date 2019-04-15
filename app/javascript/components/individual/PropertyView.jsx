@@ -133,7 +133,9 @@ class PropertyView extends React.Component {
           <Carousel autoplay>
             {this.props.property.images.map((image, index) => {
               return (
-                <div key={index}><h3><center><img src={image.url} margin-top="10%" height="320" width="400"/></center></h3></div>
+                <div>
+                  <h3><center><img src={image.url} margin-top="10%" height="320" width="400" key={index}/></center></h3>
+                </div>
               )
             })}
           </Carousel>
@@ -145,7 +147,7 @@ class PropertyView extends React.Component {
   renderTags() {
     return (
       <div key='tags'>
-        {this.props.property.tagValues.map(tag => <Tag key={tag}>{tag}</Tag>)}
+        {this.props.property.tagValues.map((tag, index) => <Tag key={index}>{tag}</Tag>)}
       </div>
     )
   }
@@ -161,7 +163,13 @@ class PropertyView extends React.Component {
   }
 
   render() {
-    return [this.renderPhotos(), this.renderNameEdit(), this.renderDetails()]
+    return(
+      <div>
+        {this.renderPhotos()}
+        {this.renderNameEdit()}
+        {this.renderDetails()}
+      </div>
+    )
   }
 }
 

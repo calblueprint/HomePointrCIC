@@ -45,27 +45,43 @@ class TenantModal extends React.Component {
     );
   }
 
+  statusHelper = () => {
+    if (this.props.tenant.status) {
+      return(
+        <div className="modal-subsection">
+          <h3>Status</h3>
+          {Utils.renderStatus(this.props.tenant.status, this.props.displayTag)}
+        </div>
+      )
+    }
+  }
+
   render() {
     const dataSource = [{
       fileName: 'Tenant Application',
       lastUpdated: 'THIS WILL BE UPDATED',
-      attachment: 'THIS TOO'
+      attachment: 'THIS TOO',
+      key: '1'
     }, {
       fileName: 'Additional Files',
       lastUpdated: this.props.application.updated_at,
-      attachment: 'Download'
+      attachment: 'Download',
+      key: '2'
     }];
 
     const columns = [{
       title: 'File Name',
       dataIndex: 'fileName',
+      key: 'fileName'
     }, {
       title: 'Last Updated',
       dataIndex: 'lastUpdated',
+      key: 'fileName'
     }, {
       title: 'Attachment',
       dataIndex: 'attachment',
-      render: download => <a href={this.props.application.url}>{download}</a>
+      render: download => <a href={this.props.application.url}>{download}</a>,
+      key: 'fileName'
     }];
 
 
@@ -102,11 +118,8 @@ class TenantModal extends React.Component {
               </div>
               <div className="detailed-info">
                 <h1>{this.props.tenant.name}</h1>
-                <div className="modal-subsection">
-                  <h3>Status</h3>
-                  {Utils.renderStatus(this.props.tenant.status, true)}
-                </div>
-                <div className="modal-subsection">
+                {this.statusHelper()}
+                <div className="description-container">
                   {this.props.tenant.description}
                 </div>
                 <div className="table-container">

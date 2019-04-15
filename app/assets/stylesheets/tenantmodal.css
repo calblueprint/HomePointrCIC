@@ -27,6 +27,46 @@
   margin-bottom: 24px;
 }
 
+/* handling ellipses for the description */
+.description-container {
+  margin-bottom: 24px;
+  width: 530px;
+  height: 84px;
+  overflow: hidden;
+  position: relative;
+  line-height: 1.2em;
+  max-height: 6em;
+  text-align: justify;
+  margin-right: -1em;
+  padding-right: 1em;
+}
+
+/* .description-container:hover {
+  overflow: visible;
+  position: static;
+  background-color: white;
+
+} */
+
+/* .description-container:before {
+  content: '...';
+  position: absolute;
+  bottom: 0;
+  right: 1em;
+  background-color: white;
+}
+
+.description-container:after {
+  content: '';
+  position: absolute;
+  right: 0;
+  width: 1em;
+  height: 1em;
+  margin-top: 0.2em;
+  background: white;
+} */
+
+
 .table-container {
   border-top: 1px solid #D9D9D9;
 }

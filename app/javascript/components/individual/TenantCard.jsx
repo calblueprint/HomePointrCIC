@@ -57,6 +57,7 @@ class TenantCard extends React.Component {
           onOk={this.onDismiss}
           onCancel={this.onDismiss}
           application={this.props.application}
+          displayTag={this.props.displayTag}
         />
       );
     }

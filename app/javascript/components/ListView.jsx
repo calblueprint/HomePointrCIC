@@ -95,17 +95,24 @@ class ListView extends React.Component {
     return(<ApplicationModal application={app}/>)
   }
 
+  getApplication = (index) => {
+    if (this.props.applications) {
+      return this.props.applications[index];
+    }
+  }
+
   render() {
     return this.state.resources.map((resource, index) => {
       return (
         <div>
-          <Row gutter={16}>
+          <Row gutter={16} key={index}>
             {this.state.type === "property" ? (
               <PropertyCard
                 property={resource}
                 displayTag={this.props.displayTag}
                 renderModal={this.props.renderModal}
                 viewpoint={this.props.viewpoint}
+                key={index}
               />
             ) : (
               <TenantCard
@@ -113,7 +120,8 @@ class ListView extends React.Component {
                 displayTag={this.props.displayTag}
                 renderModal={this.props.renderModal}
                 viewpoint={this.props.viewpoint}
-                application={this.props.applications[index]}
+                application={this.getApplication(index)}
+                key={index}
               />
             )}
           </Row>

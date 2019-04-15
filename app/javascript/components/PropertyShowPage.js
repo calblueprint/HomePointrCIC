@@ -36,7 +36,7 @@ class PropertyShowPage extends React.Component {
     console.log(this.state.potentialTenants)
     console.log("PENDING TENANT APPS")
     console.log(this.state.potentialTenantApps)
-    
+
     const TabPane = Tabs.TabPane;
     const leftComponent = (
       <PropertyView canceledit={false} property={this.state.property}/>
