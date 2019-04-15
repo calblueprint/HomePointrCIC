@@ -7,7 +7,6 @@ class Application < ApplicationRecord
   belongs_to :tenant, required: false
   validates :status, :property_id, :tenant_id, presence: true
   validates :status, inclusion: { in: statuses.keys }
-  validates_associated :tenant, :property
 
   def self.policy_class
     AppPolicy

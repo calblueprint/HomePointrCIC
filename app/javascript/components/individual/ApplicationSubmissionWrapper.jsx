@@ -9,46 +9,8 @@ class ApplicationSubmissionWrapper extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			properties: props.properties,
+			selectedProperties: props.selectedProperties
 		}
-		this.handleFilter = this.handleFilter.bind(this);
-	}
-
-	handleFilter(filters) {
-		let updatedProperties;
-		updatedProperties = this.props.properties.filter(p => {
-			const dateToMoment = moment(filters["date_available"]);
-			return (
-				filters["capacity"] <= p.capacity &&
-				filters["rent_min"] <= p.rent &&
-				filters["rent_max"] >= p.rent &&
-				filters["size"] <= p.size &&
-				(dateToMoment.isAfter(p.date_available) ||
-				dateToMoment.isSame(p.date_available))
-			);
-		})
-		if (filters["location"].length > 0) {
-			updatedProperties = updatedProperties.filter(p => {
-				return (
-					filters["location"].indexOf(p.location) > -1
-				);
-			})
-		}
-		if (filters["property_type"].length > 0) {
-			updatedProperties = updatedProperties.filter(p => {
-				return (
-					filters["property_type"].indexOf(p.property_type) > -1
-				);
-			})
-		}
-		if (filters["housing_type"].length > 0) {
-			updatedProperties = updatedProperties.filter(p => {
-				return (
-					filters["housing_type"].indexOf(p.housing_type) > -1
-				);
-			})
-		}
-		this.setState({properties: updatedProperties})
 	}
 
 	render() {
@@ -58,8 +20,7 @@ class ApplicationSubmissionWrapper extends React.Component {
 	        paddingTop: "5%",
         }}
 			>
-				<FilterPanel {...this.props} applyFilter={this.handleFilter} />
-				<ListView avatar={true} resources={this.state.properties} property_modal={false} type="property" checkbox={false} submission_modal={true} CheckboxChange={this.props.CheckboxChange}/>
+				<ListView avatar={true} resources={this.props.selectedProperties} tenant={this.props.tenant} property_modal={true} type="property" checkbox={false} submission_modal={true} CheckboxChange={this.props.CheckboxChange}/>
 			</div>
 		);
 	}

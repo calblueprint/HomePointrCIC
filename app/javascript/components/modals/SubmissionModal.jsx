@@ -1,18 +1,22 @@
 import React from 'react';
 import PropTypes from "prop-types";
 import 'antd/dist/antd.css';
-import { Modal, Button, Carousel, Avatar, Layout, Row, Col, Upload, Icon } from 'antd';
+import { Modal, Button, Carousel, Avatar, Layout, Row, Col, Upload, Icon, Input } from 'antd';
 import ApplicationStatusButtons from './../individual/ApplicationStatusButtons'
 import '../../../assets/stylesheets/modal.css';
 import ActiveStorageProvider from "react-activestorage-provider";
 import Utils from 'helpers/utils';
+import APIRoutes from 'helpers/api_routes';
 
 class SubmissionModal extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       visible: false,
+      description: "",
+      disabled:false
     }
+    this.handlePost = this.handlePost.bind(this);
   }
 
   showModal = () => {
@@ -23,9 +27,7 @@ class SubmissionModal extends React.Component {
 
   handleOk = (e) => {
     console.log(e)
-    this.setState({
-      visible: false,
-    });
+    this.handlePost();
   }
 
   handleCancel = (e) => {
@@ -56,12 +58,55 @@ class SubmissionModal extends React.Component {
     }
   }
 
+  renderTextarea() {
+    const { TextArea } = Input;
+    return (
+      <div>
+        <label>Add a note to about the client.</label>
+        <TextArea rows ={4} onChange={(e) => this.state.description = e.target.value} autosize={true}/>
+      </div>
+    )
+  }
+
+  handlePost() {
+    debugger;
+    let body = {"description": this.state.description, "status": 1, "property_id": this.props.property.id, "tenant_id": this.props.tenant.id};
+    body = JSON.stringify({application: body})
+    let request = APIRoutes.applications.create
+    fetch(request, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        "X_CSRF-Token": document.getElementsByName("csrf-token")[0].content
+      },
+      body: body,
+      credentials: 'same-origin',
+    }).then((data) => {
+      this.setState({
+        visible: false,
+        disabled: true,
+      });
+    }).catch((data) => {
+      console.error(data);
+    });
+  }
+
+  renderButton() {
+      if (this.state.disabled) {
+          return <Button type="primary" onClick={this.showModal} disabled>
+            Complete Application
+          </Button>
+      } else {
+        return(<Button type="primary" onClick={this.showModal}>
+          Complete Application
+        </Button>)
+      }
+  }
+
   render() {
     return (
       <div key="SubmissionModal">
-        <Button type="primary" onClick={this.showModal}>
-          Complete Application
-        </Button>
+        {this.renderButton()}
         <Modal
           title={this.renderPhotos()}
           visible={this.state.visible}
@@ -120,6 +165,8 @@ class SubmissionModal extends React.Component {
                 }}
                 render={Utils.activeStorageUploadRenderer}
               />
+              <h1> Additional Tenant Information </h1>
+              {this.renderTextarea()}
             </div>
           </div>
 
@@ -128,7 +175,6 @@ class SubmissionModal extends React.Component {
     );
   }
 }
-
 SubmissionModal.propTypes = {
   location: PropTypes.string,
   description: PropTypes.string,

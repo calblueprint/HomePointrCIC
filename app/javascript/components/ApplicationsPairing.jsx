@@ -4,7 +4,6 @@ import { Select, Input, Button, Slider, Icon, Switch, DatePicker } from 'antd';
 import 'antd/dist/antd.css';
 import moment from 'moment';
 import ListView from './ListView.jsx';
-import APIRoutes from 'helpers/api_routes';
 import Utils from 'helpers/utils';
 import UploadButton from './individual/UploadButton';
 import ActiveStorageProvider from "react-activestorage-provider";
@@ -20,46 +19,39 @@ class ApplicationsPairing extends React.Component {
     this.state = {
       selectedProperties: [], //array of strings
       description: null,
-      tenant: props.tenant,
       properties: props.properties,
+      selectedEnd: 0,
       status: "propertyList"
     };
     this.onChangeProperty = this.onChangeProperty.bind(this);
-    this.handleMatch = this.handleMatch.bind(this);
     this.renderApplicationSubmissionWrapper = this.renderApplicationSubmissionWrapper.bind(this);
+    this.renderPropertyListWrapper = this.renderPropertyListWrapper.bind(this);
+    this.renderTenantView = this.renderTenantView.bind(this);
   }
 
-  onChangeProperty(e, id) {
+  onChangePropertyGood(e, property) {
     if (e.target.checked) {
-      this.state.selectedProperties.push(id);
+      this.state.selectedProperties.push(property);
     } else {
-      var index = this.state.selectedProperties.indexOf(id);
+      var index = this.state.selectedProperties.indexOf(property);
       if (index > -1) {
         this.state.selectedProperties.splice(index, 1);
       }
     }
   }
 
-  handleMatch() {
-    var request = null;
-    var prop;
-    for (prop in this.state.selectedProperties) {
-      let body = {"description": this.state.description, "status": 1, "property_id": this.state.selectedProperties[prop], "tenant_id": this.props.tenant.id};
-      body = JSON.stringify({application: body})
-      request = APIRoutes.applications.create
-      fetch(request, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          "X_CSRF-Token": document.getElementsByName("csrf-token")[0].content
-        },
-        body: body,
-        credentials: 'same-origin',
-      }).then((data) => {
-        window.location = '/';
-      }).catch((data) => {
-        console.error(data);
-      });
+  onChangeProperty(e, property) {
+    if (e.target.checked) {
+      //add to beginning
+      var index = this.state.properties.indexOf(property);
+      this.state.properties.splice(index, 1);
+      this.state.properties.unshift(property);
+      this.state.selectedEnd+=1;
+    } else {
+      //add to end
+      var index = this.state.properties.indexOf(property);
+      this.state.properties.splice(index, 1);
+      this.state.properties.push(property);
     }
   }
 
@@ -100,6 +92,15 @@ class ApplicationsPairing extends React.Component {
 		this.setState({status:"applicationSubmission"})
 	}
 
+  renderPropertyListWrapper() {
+		this.setState({status:"propertyList"})
+	}
+
+  renderTenantView() {
+    debugger;
+    window.location = "/tenants/" + this.props.tenant.id;
+  }
+
   render() {
     Utils.setup([this.props.tenant], this.props.tenantImage);
     Utils.setup([this.props.tenant], this.props.tenantPriority);
@@ -119,9 +120,9 @@ class ApplicationsPairing extends React.Component {
     else if (this.state.status == "applicationSubmission") {
       rightComponent = (
         <h1>Upload and Submit</h1>,
-        [<ApplicationSubmissionWrapper {...this.props}/>,
-        <Button key="edit_selections">Edit Selections</Button>,
-        <Button key="edit_selections">Finish Application Process</Button>]
+        [<ApplicationSubmissionWrapper {...this.props} selectedProperties={this.state.selectedProperties}/>,
+        <Button key="edit_selections" onClick={this.renderPropertyListWrapper}>Edit Selections</Button>,
+        <Button key="edit_selections" onClick={this.renderTenantView}>Finish Application Process</Button>]
       );
     }
 
