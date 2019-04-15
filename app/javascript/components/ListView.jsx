@@ -87,7 +87,7 @@ class ListView extends React.Component {
 
   // renderApplicationStatus(index) {
   //   if (this.props.applications) {
-  //     return Utils.renderStatus(this.props.applications[index].status, true, true)
+  //     return Utils.renderStatus(this.props.applications[index].status, true)
   //   }
   // }
 
@@ -113,6 +113,7 @@ class ListView extends React.Component {
                 displayTag={this.state.displayTag}
                 renderModal={this.props.renderModal}
                 viewpoint={this.props.viewpoint}
+                application={this.props.applications[index]}
               />
             )}
           </Row>

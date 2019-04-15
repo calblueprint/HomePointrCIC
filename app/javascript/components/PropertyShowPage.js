@@ -27,6 +27,16 @@ class PropertyShowPage extends React.Component {
     Utils.setup(this.state.tenantApps, this.props.tenantAppsPDF);
     Utils.setup(this.state.potentialTenantApps, this.props.potentialTenantAppsPDF);
     Utils.setup(this.state.potentialTenants, this.props.potentialTenantStatuses);
+
+    console.log("CURRENT TENANTS")
+    console.log(this.state.tenants)
+    console.log("CURRENT TENANT APPS")
+    console.log(this.state.tenantApps)
+    console.log("PENDING TENANTS")
+    console.log(this.state.potentialTenants)
+    console.log("PENDING TENANT APPS")
+    console.log(this.state.potentialTenantApps)
+    
     const TabPane = Tabs.TabPane;
     const leftComponent = (
       <PropertyView canceledit={false} property={this.state.property}/>

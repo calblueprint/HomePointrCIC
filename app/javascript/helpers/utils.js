@@ -47,11 +47,11 @@ const Utils = {
   },
 
   // render status tag for tenant card
-  renderStatus: (statusInp, displayTag, isString) => {
+  renderStatus: (statusInp, displayTag) => {
 
     let status = statusInp;
 
-    if (isString) {
+    if (typeof(status) === "string") {
       switch(status) {
         case "housed":
           status = 0;

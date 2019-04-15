@@ -1,0 +1,30 @@
+.app-buttons {
+  float: right;
+  margin-right: 56px;
+  padding-top: 40px;
+  padding-bottom: 50px;
+}
+
+.accept-button {
+  display: inline-block;
+  margin: 10px;
+
+}
+
+.interview-button {
+  display: inline-block;
+  margin: 10px;
+
+}
+
+.reject-button {
+  display: inline-block;
+  margin: 10px;
+
+}
+
+.remove-button {
+  display: block;
+  width: 100%;
+  margin: 10px;
+}

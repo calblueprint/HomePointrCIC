@@ -106,7 +106,7 @@ class PropertyCard extends React.Component {
   renderStatus = () => {
     if (this.state.property.status) {
       return(
-        Utils.renderStatus(this.state.property.status, this.state.displayTag, true)
+        Utils.renderStatus(this.state.property.status, this.state.displayTag)
       );
     }
   }

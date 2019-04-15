@@ -110,7 +110,7 @@ class PropertiesController < ApplicationController
                                      { url: nil }
                                    end
         @potentialTenantApps << a
-        @potentialTenantStatuses << { status: a.tenant.priority }
+        @potentialTenantStatuses << { status: a.status }
       end
     end
   end

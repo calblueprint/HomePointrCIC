@@ -56,6 +56,7 @@ class TenantCard extends React.Component {
           visible={this.state.displayModal}
           onOk={this.onDismiss}
           onCancel={this.onDismiss}
+          application={this.props.application}
         />
       );
     }
@@ -113,7 +114,7 @@ class TenantCard extends React.Component {
             <Col span={21}>
               <h2 className="title">{this.state.tenant.name}</h2>
               <div className="status-tag">
-                {Utils.renderStatus(this.state.tenant.status, this.state.displayTag, false)}
+                {Utils.renderStatus(this.state.tenant.status, this.state.displayTag)}
               </div>
             </Col>
             <Col span={3}>
