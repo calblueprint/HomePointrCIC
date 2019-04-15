@@ -7,28 +7,28 @@
 }
 
 .buttons-panel {
-	margin-top: 10px;
-	margin-bottom: 5px;
-	display: flex;
-	justify-content: space-between;
-	background-color: white !important;
+  margin-top: 10px;
+  margin-bottom: 5px;
+  display: flex;
+  justify-content: space-between;
+  background-color: white !important;
 }
 
 .clear-btn {
-	margin-left: 15px;
-	color: #1890FF;
-	cursor: pointer;
+  margin-left: 15px;
+  color: #1890FF;
+  cursor: pointer;
 }
 
 .apply-btn {
-	margin-right: 15px;
-	color: #1890FF;
-	cursor: pointer;
+  margin-right: 15px;
+  color: #1890FF;
+  cursor: pointer;
 }
 
 .options {
-	z-index: 1000;
-	background-color: white;
+  z-index: 1000;
+  background-color: white;
   padding: 20px;
   padding-bottom: 0px;
 }
@@ -40,14 +40,14 @@
 }
 
 .category-btn {
-	border: 1px solid lightgrey;
-	border-radius: 5px;
-	margin-bottom: 22px;
-	padding: 5px; 
-	padding-left: 7px;
+  border: 1px solid lightgrey;
+  border-radius: 5px;
+  margin-bottom: 22px;
+  padding: 5px; 
+  padding-left: 7px;
   padding-right: 7px;
 }
 
 .guests {
-	margin-left: 10px;
+  margin-left: 10px;
 }
