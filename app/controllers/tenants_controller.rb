@@ -27,8 +27,10 @@ class TenantsController < ApplicationController
     @applications = @tenant.applications
     @propertyimages = []
     @propertyForms = []
+    @propertyStatuses = []
     @applications.each do |a|
       @properties << a.property
+      @propertyStatuses << { status: a.status }
       if a.property.images.attached? == true
         image_list = a.property.images.map { |img| { url: url_for(img) } }
         @propertyimages << { images: image_list }
@@ -45,10 +47,19 @@ class TenantsController < ApplicationController
     values = @tenant.attributes.values[3..-3]
     @avatarURL = nil
     @avatarURL = url_for(@tenant.avatar) if @tenant.avatar.attached?
+
+    @tenantCounts = []
+    @potentialTenantCounts = []
+
+    @properties.each do |p|
+      current_count = p.applications.where(status: "housed").size
+      @tenantCounts << current_count
+      app_count = p.applications.where(status: "received").size + p.applications.where(status: "interview").size
+      @potentialTenantCounts << app_count
+    end
   end
 
   def edit
-     puts "TENANT EDIT"
      @tenant = Tenant.find(params[:id])
      authorize @tenant
      @current_userID = current_user.id
