@@ -96,13 +96,12 @@ class CreatePropertyForm extends React.Component {
     this.renderFormStage = this.renderFormStage.bind(this);
     this.nextButton = this.nextButton.bind(this);
     this.handleAuto = this.handleAuto.bind(this);
+    this.componentDidMount = this.componentDidMount.bind(this);
   }
 
-  // componentDidMount() {
-  //   render() {
-  //     return <div>{this.renderStageOne()}</div>
-  //   }
-  // }
+  componentDidMount() {
+    this.handleAuto();
+  }
 
   convertToDict() {
     const property = this.state.property;
@@ -242,7 +241,7 @@ class CreatePropertyForm extends React.Component {
                 required: true, message: 'Please input the address!',
               }],
             })(
-              <Input onChange={() => this.handleChange("address")}/>
+              <Input id="address"/>
             )}
           </Form.Item>
           <Form.Item

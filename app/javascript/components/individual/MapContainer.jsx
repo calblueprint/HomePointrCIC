@@ -56,11 +56,11 @@ export class MapContainer extends React.Component {
         className="map"
         google={this.props.google}
         onClick={this.onMapClicked}
-        style={{ height: '100%', position: 'relative', width: '50%' }}
-        zoom={14}
+        style={{ height: '100%', position: 'relative', width: "480px" }}
+        zoom={7}
         initialCenter={{
-          lat: 37.778519,
-          lng: -122.40564
+          lat: 56.4907,
+          lng: -4
         }}
       >
         
