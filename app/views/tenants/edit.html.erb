@@ -1,3 +1,3 @@
 <%= form_with(model: @tenant, local: true) do |form| %>
- <%= react_component("individual/ProfileFormTenants", props={ tenant_id: @tenant.id, current_userID: @current_userID, tenant: @tenant, categories: @categories, avatar: @avatar}) %>
+ <%= react_component("individual/ProfileFormTenants", props={ tenant_id: @tenant.id, current_userID: @current_userID, tenant: @tenant, categories: @categories, avatar: @avatar, image_object: @image_object, client_form: @client_form, form_name: @form_name }) %>
 <% end %>

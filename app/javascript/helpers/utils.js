@@ -3,12 +3,12 @@ import { Tag, Upload, Icon, message } from 'antd';
 import Avatar from '../components/individual/Avatar.jsx';
 
 const Utils = {
-  activeStorageUploadRenderer: ({ handleUpload, uploads, ready }) => {
-    console.log('asdfasdf')
+  activeStorageUploadRenderer: ({ handleUpload, uploads, ready, imageUrl, filename, type }) => {
     return(<div>
-      <Avatar handleUpload={handleUpload} uploads={uploads}/>
+      <Avatar handleUpload={handleUpload} uploads={uploads} imageUrl={imageUrl} filename={filename} type={type}/>
 
       {uploads.map(upload => {
+        // console.log(upload)
         switch (upload.state) {
           case 'waiting':
             return <p key={upload.id}>Waiting to upload {upload.file.name}</p>
@@ -41,9 +41,9 @@ const Utils = {
     return obj;
   },
 
-  setup(obj, images) {
-    for (var i=0; i < images.length; i++) {
-      obj[i] = Utils.extend(obj[i], images[i])
+  setup(obj, list) {
+    for (var i=0; i < list.length; i++) {
+      obj[i] = Utils.extend(obj[i], list[i])
     }
   },
 

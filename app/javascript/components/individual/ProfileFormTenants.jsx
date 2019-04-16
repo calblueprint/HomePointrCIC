@@ -29,10 +29,11 @@ class ProfileFormTenants extends React.Component {
       property_types: props.categories.property_types,
       locations: props.categories.locations,
       avatar: this.props.avatar,
-      fileList: [],
-      imageRemoveList: [],
+      form: this.props.client_form,
       disabled: false //to prevent multiple form submissions
     };
+    console.log("AVATAR FROM BACKEND");
+    console.log(this.props.avatar);
     this.handleChange = this.handleChange.bind(this);
     // this.handleCreate = this.handleCreate.bind(this);
     this.handleEdit = this.handleEdit.bind(this);
@@ -43,13 +44,13 @@ class ProfileFormTenants extends React.Component {
     this.handleChangeSelect = this.handleChangeSelect.bind(this);
     this.renderUpload = this.renderUpload.bind(this);
     this.setFile = this.setFile.bind(this);
-
   }
 
   convertToDict() {
     const tenant = this.state.tenant;
-    const keys = ["name", "description", "email", "phone", "rent_min", "rent_max", "housing_type", "property_type", "number_of_bedrooms", "location", "referral_agency_id", "date_needed", "avatar", "number_of_bathrooms", "mobility_aids", "accessible_shower", "car_parking", "lift_access"];
-    const values = [tenant.name, tenant.description, tenant.email, tenant.phone, tenant.rent_min, tenant.rent_max, tenant.housing_type, tenant.property_type, tenant.number_of_bedrooms, tenant.location, tenant.referral_agency_id, tenant.date_needed, this.state.avatar, tenant.number_of_bathrooms, tenant.mobility_aids, tenant.accessible_shower, tenant.car_parking, tenant.lift_access];
+
+    const keys = ["name", "description", "email", "phone", "rent_min", "rent_max", "housing_type", "property_type", "number_of_bedrooms", "location", "referral_agency_id", "date_needed", "avatar", "number_of_bathrooms", "mobility_aids", "accessible_shower", "car_parking", "lift_access", "form"];
+    const values = [tenant.name, tenant.description, tenant.email, tenant.phone, tenant.rent_min, tenant.rent_max, tenant.housing_type, tenant.property_type, tenant.number_of_bedrooms, tenant.location, tenant.referral_agency_id, tenant.date_needed, this.state.avatar, tenant.number_of_bathrooms, tenant.mobility_aids, tenant.accessible_shower, tenant.car_parking, tenant.lift_access, this.state.form];
     let result = keys.reduce((obj, k, i) => ({...obj, [k]: values[i] }), {})
     return result
   }
@@ -89,7 +90,6 @@ class ProfileFormTenants extends React.Component {
     var body = this.convertToDict()
     body = JSON.stringify({tenant: body})
     request = APIRoutes.tenants.update(id)
-    this.removeImages(this.state.imageRemoveList);
     fetch(request, {
       method: 'PUT',
       headers: {
@@ -153,10 +153,13 @@ class ProfileFormTenants extends React.Component {
   }
 
   renderUpload() {
+    console.log("IN RENDER UPLOAD");
     let buttonProps = null;
+    let imageList = this.setupImages();
+    console.log(this.state.imageList);
       buttonProps = {
         listType: 'picture-card',
-        fileList: this.state.fileList,
+        fileList: imageList,
         onRemoveRequest: (e) => this.state.imageRemoveList.push(e.uid),
         className: 'upload-list-inline',
         onChange: (fileList) => this.handleChangeImage(fileList)
@@ -165,7 +168,6 @@ class ProfileFormTenants extends React.Component {
 
     return (
       <div>
-        Images
         <PicturesWall {...buttonProps} />
       </div>
     )
@@ -179,42 +181,25 @@ class ProfileFormTenants extends React.Component {
   // </Form.Item>
 
   //grabs the active storage image urls from backend, name of pic at end of url
-  setupImages(imageList) {
+  setupImages = () => {
+    console.log("SET UP IMAGES");
     let fileList = [];
+    let image_object = this.props.image_object;
     try {
-      fileList = imageList.map((url) => {
-        return {uid: url.id, url: url.image, name: url.image.split("/").slice(-1).pop()};
-      })
+      fileList.push({uid: image_object.id, url: image_object.url, name: image_object.name});
+      console.log(fileList);
       return fileList;
     } catch(error) {
-      try {
-        fileList = [{uid: this.state.fileList[0].id, url: this.state.fileList[0].url, name: this.state.fileList[0].url.split("/").slice(-1).pop()}];
-        return fileList;
-      } catch(error) {
-        return [];
-      }
+      return [];
     }
   }
 
-  uploadAvatar = () => {
-    // this.setState({ avatar: signed_id });
-    console.log("upload avatar");
-    console.log(this.state.avatar);
+  uploadAvatar = (signedIds) => {
+    this.setState({ avatar: signedIds[0] });
   }
 
-  uploadFile = (file) => {
-    const url = "/rails/active_storage/direct_uploads";
-    const upload = new DirectUpload(file, url);
-
-    upload.create((error, blob) => {
-      if (error) {
-        // TODO: Handle this error.
-        console.log(error);
-      } else {
-        this.setState({ avatar: blob.signed_id });
-        console.log(this.state.avatar)
-      }
-    })
+  uploadForms = (signedIds) => {
+    this.setState({ form: signedIds[0] });
   }
 
 
@@ -241,15 +226,7 @@ class ProfileFormTenants extends React.Component {
     const Option = Select.Option;
     const { tenant } = this.state;
     const { TextArea } = Input;
-
-    let buttonProps = null;
-    let imageList = this.setupImages([this.state.avatar]);
-    buttonProps = {
-      listType: 'picture-card',
-      fileList: imageList,
-      onRemoveRequest: (e) => this.state.imageRemoveList.push(e.uid),
-      className: 'upload-list-inline',
-    };
+    let uploadImage = this.renderUpload();
 
     return (
       <div className="container">
@@ -649,10 +626,13 @@ class ProfileFormTenants extends React.Component {
           <Form.Item
             label="Upload Avatar"
           >
-            <DirectUploadProvider
-              onSuccess={signedIds => this.setState({ avatar: signedIds[0] })}
-              render={DefaultDirectUploadRender}
-            />
+            <div className="upload-image">
+              <DirectUploadProvider
+                multiple={false}
+                onSuccess={signedIds => { this.uploadAvatar(signedIds) }}
+                render={(renderProps) => Utils.activeStorageUploadRenderer({ ...renderProps, imageUrl: this.props.image_object.url, type: "avatar" })}
+              />
+            </div>
           </Form.Item>
         </div>
         <div className="section">
@@ -660,7 +640,13 @@ class ProfileFormTenants extends React.Component {
           <Form.Item
             label="Upload Form"
           >
-            <PicturesWall {...buttonProps} />
+            <div className="upload-form">
+              <DirectUploadProvider
+                multiple={false}
+                onSuccess={signedIds => { this.uploadForms(signedIds) }}
+                render={(renderProps) => Utils.activeStorageUploadRenderer({ ...renderProps, filename: this.props.form_name, type: "form" })}
+              />
+            </div>
           </Form.Item>
         </div>
         <div className="section">

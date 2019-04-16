@@ -53,3 +53,7 @@
   border: 2px dashed $gray;
   cursor: pointer;
 }
+.upload-image {
+  display: flex;
+  flex-direction: row;
+}

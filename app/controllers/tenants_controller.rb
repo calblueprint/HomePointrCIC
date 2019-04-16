@@ -53,10 +53,30 @@ class TenantsController < ApplicationController
      @current_userID = current_user.id
      @categories = get_tenant_category_enums()
      @avatar = nil
+     @image_object = nil
      if @tenant.avatar.attached? == true
-       @avatar = { avatar: @tenant.avatar }
+       @avatar = @tenant.avatar.signed_id
+       @image_object = {
+          id: @tenant.avatar.id,
+          name: @tenant.avatar.filename,
+          url: rails_blob_path(@tenant.avatar, :host => 'localhost'),
+        }
      else
-       @avatar = { avatar: nil }
+       @avatar = nil
+       @image_object = nil
+     end
+     puts "AVATAR SIGNED ID START"
+     puts @avatar
+     puts "AVATAR SIGNED ID END"
+
+     @client_form = nil
+     @form_name = nil
+     if @tenant.form.attached? == true
+       @client_form = @tenant.form.signed_id
+       @form_name = @tenant.form.filename
+     else
+       @client_form = nil
+       @form_name = nil
      end
   end
  def get_tenant_category_enums

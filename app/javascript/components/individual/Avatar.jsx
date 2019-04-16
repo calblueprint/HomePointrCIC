@@ -1,6 +1,6 @@
 import { Upload, Icon, message } from 'antd';
 import React from "react";
-// import '../../../assets/stylesheets/avatar.css';
+import '../../../assets/stylesheets/avatar.css';
 
 class Avatar extends React.Component {
 
@@ -8,8 +8,12 @@ class Avatar extends React.Component {
     super(props);
     this.state = {
       loading: false,
-      imageUrl: null,
+      imageUrl: this.props.imageUrl,
+      filename: this.props.filename,
+      type: this.props.type,
     };
+    console.log("IN AVATAR");
+    console.log(this.state.imageUrl);
     this.getBase64 = this.getBase64.bind(this);
     this.handleChange = this.handleChange.bind(this);
   }
@@ -20,17 +24,40 @@ class Avatar extends React.Component {
     reader.readAsDataURL(img);
   }
 
-  handleChange(info) { 
+  handleChange(info) {
     if (info.state === 'finished') {
       // Get this url from response in real world.
       this.getBase64(info.file, imageUrl => this.setState({
         imageUrl,
+        filename: info.file.name,
         loading: false,
       }));
     }
     if (info.state != 'finished' && info.progress != 100) {
       this.setState({ loading: true });
       return;
+    }
+  }
+
+  renderDisplay = () => {
+    if (this.state.type == "avatar" && this.state.imageUrl) {
+      console.log("AVATAR RENDERED");
+      return (
+        <img src={this.state.imageUrl} alt={this.state.filename} width="104px" height="104px"/>
+      )
+    } else if (this.state.type == "form" && (this.state.imageUrl || this.state.filename)) {
+      console.log("FORM RENDERED");
+      console.log(this.state.filename);
+      return (
+        <div className="form-box" style={{ backgroundColor: "#ED326C" }}>{this.state.filename}</div>
+      )
+    } else {
+      return (
+        <div>
+          <Icon type={this.state.loading ? 'loading' : 'plus'} />
+          <div className="ant-upload-text">Upload</div>
+        </div>
+      )
     }
   }
 
@@ -43,9 +70,11 @@ class Avatar extends React.Component {
     );
 
     const imageUrl = this.state.imageUrl;
+    let display = this.renderDisplay();
+
     return (
 
-      [<Upload
+      [<Upload style={{ width: 104, height: 104 }}
         name="avatar"
         listType="picture-card"
         className="avatar-uploader"
@@ -53,7 +82,7 @@ class Avatar extends React.Component {
         customRequest={({file}) => {this.props.handleUpload([file])}}
         // onChange={this.handleChange}
       >
-        {imageUrl ? <img src={imageUrl} alt="avatar" width="250px"/> : uploadButton}
+        {display}
       </Upload>,
 
       this.props.uploads.map(upload => {

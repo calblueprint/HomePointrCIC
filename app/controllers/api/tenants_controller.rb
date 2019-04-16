@@ -27,10 +27,9 @@ class Api::TenantsController < ApplicationController
     # end
     tenant_attr = tenant_params
     avatar_attr = tenant_attr.delete("avatar")
+    form_attr = tenant_attr.delete("form")
     # @tenant = Tenant.find(params[:id])
     puts "ITS UPDATING TENANT"
-    puts @tenant.avatar
-    puts @tenant.avatar.filename
     saved = @tenant.update(tenant_attr)
     if saved
       @tenant.avatar.attach(avatar_attr)
@@ -38,6 +37,8 @@ class Api::TenantsController < ApplicationController
       #   a = ActiveStorage::Blob.last
       #   @tenant.avatar.attach(a) if a.image?
       # end
+      puts @tenant.avatar.signed_id()
+      @tenant.form.attach(form_attr)
       flash[:success] = "Tenant updated successfully!"
       render json: @tenant
     else
@@ -72,6 +73,7 @@ class Api::TenantsController < ApplicationController
       :referral_agency_id,
       :date_needed,
       :avatar,
+      :form,
       :number_of_bathrooms,
       :mobility_aids,
       :accessible_shower,
