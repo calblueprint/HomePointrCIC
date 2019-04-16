@@ -1,10 +1,10 @@
-.container {
+.edit-tenant-container {
   width: 600px;
   display: flex;
   flex-direction: column;
   margin-left: auto;
   margin-right: auto;
-  padding-top: 50px;
+  padding-top: 160px;
   margin-bottom: 50px;
 }
 
