@@ -15,12 +15,6 @@ class RAHomeView extends React.Component {
     }
 	}
 
-  setup(obj, images) {
-    for (var i=0; i < images.length; i++) {
-      obj[i] = Utils.extend(obj[i], images[i])
-    }
-  }
-
   redirectToNewTenant() {
     window.location = '/tenants/new'
   }
@@ -43,26 +37,26 @@ class RAHomeView extends React.Component {
     let leftComponent = this.checkDisable(leftComponent);
     var disabled = this.state.disabled ? 'disabled' : ''
     const rightComponent = (
-      <Button 
+      <Button
         style={{
         bottom: "-2%",
         width: "50%",
         left: "24%"
         }}
         disabled={disabled}
-        key='submit' 
-        type="primary" 
+        key='submit'
+        type="primary"
         onClick={this.redirectToNewApplications}>Match Clients With Available Properties</Button>
     );
 
-		return ([<Button 
+		return ([<Button
         style={{
         width: "20%",
         margin: "1.5% auto",
         left: "80%",
         }}
-        key='submit' 
-        type="primary" 
+        key='submit'
+        type="primary"
         onClick={this.redirectToNewTenant}>+ New Client</Button>,
 			<SplitViewContainer
 				leftComponent={leftComponent}

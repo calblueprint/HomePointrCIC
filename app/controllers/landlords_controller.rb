@@ -20,28 +20,21 @@ class LandlordsController < ApplicationController
   end
 
   def edit
-    @mode = 'edit'
-    @type = 'landlords'
-    @nice_field_names = []
-    @field_names = Landlord.column_names[11..-2] + %w[password email]
-    @field_names.each do |i|
-      @nice_field_names << i.titleize
-    end
     @landlord = Landlord.find(params[:id])
     authorize @landlord
-    @prev_values = @landlord.attributes.values[11..-2]
-    @prev_values << nil
-    @prev_values << @landlord.email
-    @field_types = %w[textbox textbox textbox password textbox]
+    @current_userID = current_user.id
+    @user = current_user
+    @current_password = @landlord.encrypted_password
+    @email = @landlord.email
   end
 
   def update
     @landlord = Landlord.find(params[:id])
     authorize @landlord
     if @landlord.update(landlord_params)
-      redirect_to root_path
+      flash[:success] = "Account updated successfully!"
     else
-      render json: { errors: @landlord.errors.messages }
+      flash[:danger] = "Account failed to update."
     end
   end
 

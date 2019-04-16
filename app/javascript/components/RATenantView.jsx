@@ -12,7 +12,7 @@ class RATenantView extends React.Component {
   }
 
   editRedirect() {
-    window.location = '/tenant/' + this.props.tenant.id.toString() + '/edit'
+    window.location = '/tenants/' + this.props.tenant.id.toString() + '/edit'
   }
 
   renderName() {
@@ -126,40 +126,20 @@ class RATenantView extends React.Component {
     )
   }
 
-//   render() {
-//     if (this.props.mode === "ra_matching") {
-//       return [this.renderName(), this.renderAvatar(), Utils.renderStatus(this.props.status, true)]
-//     // } else if (this.props.mode === "ll_applicant") {
-//     //   return [this.renderNameDescription(), this.renderAvatar(), this.renderStatus(), this.renderTags(),
-//     //     <Button type="danger">Reject</Button>,
-//     //     <Button type="default">Interview</Button>,
-//     //     <Button type="primary" disabled>Accept</Button>]
-//     // } else if (this.props.mode === "ll_resident") {
-//     //   return [this.renderNameDescription(), this.renderAvatar(), this.renderStatus(), this.renderTags(),
-//     //     <Button type="danger">Remove Tenant</Button>]
-//     } else if (this.props.mode === "ra_edit") {
-//       return [this.renderAvatar(),
-//           <Row>
-//                 <Col span={12}><h1>{this.props.tenant.name}</h1></Col>
-//                 <Col span={12}> <Button key='button' type="default" onClick={this.handleEdit} className="editButton">Edit</Button> </Col>
-//               </Row>, Utils.renderStatus(this.props.status, true), this.renderDetails()]
-//     } else {
-//       return null
-//     }
-//   }
-
   render() {
     return (
-      <div>
+      <div className="split-screen-left">
         {this.renderAvatar()}
-        <Row>
-          <Col span={14}><h1>{this.props.tenant.name}</h1></Col>
-          <Col span={10} className='chips'>
-            {Utils.renderStatus(this.props.status, true)}
-            <Button key='button' type='default' onClick={this.editRedirect} className='edit-button'>Edit</Button>
-          </Col>
-        </Row>
-        {this.renderDetails()}
+        <div className="split-screen-left-text">
+          <Row>
+            <Col span={16}><h1>{this.props.tenant.name}</h1></Col>
+            <Col span={8} className='chips'>
+              {Utils.renderStatus(this.props.status, true)}
+              <Button key='button' type='default' onClick={this.editRedirect} className='edit-button'>Edit</Button>
+            </Col>
+          </Row>
+          {this.renderDetails()}
+        </div>
       </div>
     );
   }

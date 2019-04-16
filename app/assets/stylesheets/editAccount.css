@@ -1,0 +1,19 @@
+.form-container {
+  padding-top: 128px;
+  padding-bottom: 48px;
+  margin: auto;
+  width: 610px;
+}
+
+.form-header {
+  margin-bottom: 40px;
+}
+
+.divider {
+  border-bottom: 1px solid #E8E8E8;
+  margin: 24px 0px 36px 0px;
+}
+
+.delete-account-btn {
+  width: 100%;
+}

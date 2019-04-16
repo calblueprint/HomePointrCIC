@@ -56,35 +56,6 @@ class ApplicationsPairing extends React.Component {
     }
   }
 
-  renderTextarea() {
-    const { TextArea } = Input;
-    return (
-      <div>
-        <label>Add a note to about the client.</label>
-        <TextArea rows ={4} onChange={(e) => this.state.description = e.target.value} autosize={true}/>
-      </div>
-    )
-  }
-
-  renderUpload(index) {
-    return (
-      <div key={index}>
-        <ActiveStorageProvider
-          endpoint={{
-            path: '/api/applications',
-            model: 'Application',
-            attribute: 'form',
-            method: 'POST',
-          }}
-          headers={{
-            'Content-Type': 'application/json'
-          }}
-          render={Utils.activeStorageUploadRenderer}
-        />
-      </div>
-    )
-  }
-
   makeTagValues(tenant) {
     return ["Min Rent: " + tenant.rent_min, "Max Rent: " + tenant.rent_max, "Housing Type " + tenant.housing_type, "Property Type " + tenant.property_type, "Size: " + tenant.number_of_bedrooms, "Location: " + tenant.location, "Date Needed: " + tenant.date_needed]
   }
@@ -113,7 +84,7 @@ class ApplicationsPairing extends React.Component {
     Utils.setup(this.state.properties, this.props.propertyImages);
     Utils.setup(this.state.properties, this.props.propertyForms);
     let leftComponent = (
-      <RATenantView tenant={this.props.tenant} mode="ra_edit" status={this.props.tenant.priority}/>
+      <RATenantView tenant={this.props.tenant} mode="ra_edit" avatar={this.props.tenant.avatar} status={this.props.tenant.priority}/>
     );    //Filtered properties
     let rightComponent = null;
     if (this.state.status == "propertyList") {
@@ -138,11 +109,6 @@ class ApplicationsPairing extends React.Component {
           leftComponent={leftComponent}
           rightComponent={rightComponent}
         />
-        {this.renderTextarea()}
-        {this.renderUpload()}
-        <Button key='save' type="primary" onClick={this.handleMatch}>
-          Submit
-        </Button>
       </div>
     );
   }

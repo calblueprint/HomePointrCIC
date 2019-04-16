@@ -6,9 +6,9 @@ class ApplicationsController < ApplicationController
     @tenant=Tenant.find(@tenant_id)
     @tenantImage = []
     @tenantImage << if @tenant.avatar.attached?
-                       { url: url_for(@tenant.avatar) }
+                       { avatar: url_for(@tenant.avatar) }
                      else
-                       { url: nil }
+                       { avatar: nil }
                      end
     @tenantPriority = [{ priority: @tenant.priority }]
     @properties = Property.all

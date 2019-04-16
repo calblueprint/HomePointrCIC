@@ -15,7 +15,7 @@
 
 .tenant-card:hover {
   cursor: pointer;
-  box-shadow: 0px 0px 0px 2px #D3D3D3;
+  box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 .avatar {
@@ -31,9 +31,10 @@
 
 .header-container {
   display: inline-block;
-  margin-top: 22px;
-  margin-bottom: 26px;
+  margin-top: 26px;
+  margin-bottom: 24px;
   width: 400px;
+  height: 28px;
 }
 
 .title {
@@ -57,6 +58,10 @@
 
 .status-tag {
   display: inline-block;
-  padding-top: 7px;
   float: right;
+}
+
+.card-edit-button {
+  display: inline-block;
+  /* margin-left: 6px; */
 }

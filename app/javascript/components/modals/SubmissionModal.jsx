@@ -69,7 +69,6 @@ class SubmissionModal extends React.Component {
   }
 
   handlePost() {
-    debugger;
     let body = {"description": this.state.description, "status": 1, "property_id": this.props.property.id, "tenant_id": this.props.tenant.id};
     body = JSON.stringify({application: body})
     let request = APIRoutes.applications.create

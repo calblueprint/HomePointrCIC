@@ -9,26 +9,8 @@ class PropertyModal extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      visible: false,
+      visible: this.props.visible,
     }
-  }
-
-  showModal = () => {
-    this.setState({
-      visible: true,
-    });
-  }
-
-  handleOk = (e) => {
-    this.setState({
-      visible: false,
-    });
-  }
-
-  handleCancel = (e) => {
-    this.setState({
-      visible: false,
-    });
   }
 
   renderPhotos() {
@@ -44,7 +26,10 @@ class PropertyModal extends React.Component {
           <Carousel autoplay>
             {this.props.property.images.map((image, index) => {
               return (
-                <div key={index}><h3><center>{this.props.property.location}<img src={image.url} margin-top="10%" height="320" width="400"/></center></h3></div>
+                <div key={index}><h3><center>
+                  {this.props.property.location}
+                  <img src={image.url} margin-top="10%" height="320" width="400"/>
+                </center></h3></div>
               )
             })}
           </Carousel>
@@ -93,14 +78,11 @@ class PropertyModal extends React.Component {
   render() {
     return (
       <div key="PropertyModal">
-        <Button type="primary" onClick={this.showModal}>
-          View Info
-        </Button>
         <Modal
           title={this.renderPhotos()}
-          visible={this.state.visible}
-          onOk={this.handleOk}
-          onCancel={this.handleCancel}
+          visible={this.props.visible}
+          onOk={this.props.onOk}
+          onCancel={this.props.onCancel}
           width="1008px"
           footer={null}
         >

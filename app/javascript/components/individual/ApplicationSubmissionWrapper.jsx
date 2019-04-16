@@ -6,24 +6,24 @@ import { Button } from 'antd';
 import moment from 'moment';
 
 class ApplicationSubmissionWrapper extends React.Component {
-	constructor(props) {
-		super(props);
-		this.state = {
-			selectedProperties: props.selectedProperties
-		}
-	}
+  constructor(props) {
+    super(props);
+    this.state = {
+      selectedProperties: props.selectedProperties
+    }
+  }
 
-	render() {
-		return (
-			<div key="ApplicationSubmissionWrapper"
+  render() {
+    return (
+      <div key="ApplicationSubmissionWrapper"
         style={{
-	        paddingTop: "5%",
+          paddingTop: "5%",
         }}
-			>
-				<ListView avatar={true} resources={this.props.selectedProperties} tenant={this.props.tenant} property_modal={true} type="property" checkbox={false} submission_modal={true} CheckboxChange={this.props.CheckboxChange}/>
-			</div>
-		);
-	}
+      >
+        <ListView avatar={true} resources={this.props.selectedProperties} tenant={this.props.tenant} property_modal={true} type="property" checkbox={false} submission_modal={true} CheckboxChange={this.props.CheckboxChange}/>
+      </div>
+    );
+  }
 }
 
 ApplicationSubmissionWrapper.propTypes = {
