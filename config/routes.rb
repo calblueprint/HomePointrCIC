@@ -14,6 +14,8 @@ Rails.application.routes.draw do
     end
   get 'home/index'
   get 'errors/show'
+  
+  get 'applications/new/:id' => 'applications#new'
 
   get '/properties/new' => 'properties#new'
   get 'properties/:id/edit' => 'properties#edit'

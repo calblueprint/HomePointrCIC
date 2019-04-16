@@ -2,6 +2,8 @@ import React from "react";
 import PropTypes from "prop-types";
 import FilterPanel from "./FilterPanel.jsx";
 import ListView from "./../ListView.jsx";
+import ApplicationSubmissionWrapper from "./ApplicationSubmissionWrapper.jsx";
+import { Button } from 'antd';
 import moment from 'moment';
 
 class PropertyListWrapper extends React.Component {
@@ -18,10 +20,10 @@ class PropertyListWrapper extends React.Component {
 		updatedProperties = this.props.properties.filter(p => {
 			const dateToMoment = moment(filters["date_available"]);
 			return (
-				filters["capacity"] <= p.capacity && 
-				filters["rent_min"] <= p.rent && 
-				filters["rent_max"] >= p.rent && 
-				filters["size"] <= p.size && 
+				filters["capacity"] <= p.capacity &&
+				filters["rent_min"] <= p.rent &&
+				filters["rent_max"] >= p.rent &&
+				filters["size"] <= p.size &&
 				(dateToMoment.isAfter(p.date_available) ||
 				dateToMoment.isSame(p.date_available))
 			);
@@ -49,7 +51,8 @@ class PropertyListWrapper extends React.Component {
 		}
 		this.setState({properties: updatedProperties})
 	}
-	
+
+
 	render() {
 		return (
 			<div key="PropertyListWrapper"
@@ -58,7 +61,7 @@ class PropertyListWrapper extends React.Component {
         }}
 			>
 				<FilterPanel {...this.props} applyFilter={this.handleFilter} />
-				<ListView avatar={true} resources={this.state.properties} property_modal={true} type="property" checkbox={true} CheckboxChange={this.props.CheckboxChange}/>
+				<ListView avatar={true} selectedEnd = {this.props.selectedEnd} resources={this.state.properties} property_modal={true} type="property" checkbox={true} CheckboxChange={this.props.CheckboxChange}/>
 			</div>
 		);
 	}
