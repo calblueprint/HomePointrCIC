@@ -2,6 +2,9 @@ import React from "react";
 import PropTypes from "prop-types";
 import FilterPanel from "./FilterPanel.jsx";
 import ListView from "./../ListView.jsx";
+import { Switch, Icon } from 'antd';
+import ApplicationSubmissionWrapper from "./ApplicationSubmissionWrapper.jsx";
+import { Button } from 'antd';
 import moment from 'moment';
 
 class PropertyListWrapper extends React.Component {
@@ -16,6 +19,7 @@ class PropertyListWrapper extends React.Component {
   handleFilter(filters) {
     let updatedProperties;
     updatedProperties = this.props.properties.filter(p => {
+      const dateToMoment = moment(filters["date_available"]);
       return (
         filters["capacity"] <= p.capacity && 
         filters["rent_min"] <= p.rent && 
@@ -60,6 +64,7 @@ class PropertyListWrapper extends React.Component {
     return (
       <div key="PropertyListWrapper">
         <FilterPanel {...this.props} applyFilter={this.handleFilter} />
+        Show Map <Switch checkedChildren={<Icon type="check" />} unCheckedChildren={<Icon type="close" />} onChange={this.props.toggleMap}/>
         <h1>
           <div style={{ marginLeft: '10%', marginBottom: '2%', marginTop: '2%' }}>
             Potential Homes

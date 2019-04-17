@@ -11,6 +11,7 @@ import SplitViewContainer from "./individual/SplitViewContainer.jsx";
 import PropertyListWrapper from "./individual/PropertyListWrapper.jsx";
 import ApplicationSubmissionWrapper from "./individual/ApplicationSubmissionWrapper.jsx";
 import RATenantView from "./RATenantView.jsx";
+import MapContainer from './individual/MapContainer';
 
 class ApplicationsPairing extends React.Component {
 
@@ -20,13 +21,24 @@ class ApplicationsPairing extends React.Component {
       selectedProperties: [], //array of strings
       description: null,
       properties: props.properties,
+      filtered_properties: props.properties,
+      show_map: false,
+      leftComponent: null,
+      rightComponent: null,
       selectedEnd: 0,
       status: "propertyList"
     };
     this.onChangeProperty = this.onChangeProperty.bind(this);
+    this.clearTenant = this.clearTenant.bind(this);
+    this.toggleMap = this.toggleMap.bind(this);
+    this.setFilteredProperties = this.setFilteredProperties.bind(this);
     this.renderApplicationSubmissionWrapper = this.renderApplicationSubmissionWrapper.bind(this);
     this.renderPropertyListWrapper = this.renderPropertyListWrapper.bind(this);
     this.renderTenantView = this.renderTenantView.bind(this);
+  }
+
+  toggleMap() {
+    this.setState({show_map: !this.state.show_map})
   }
 
   onChangePropertyGood(e, property) {
@@ -69,6 +81,15 @@ class ApplicationsPairing extends React.Component {
 
 	}
 
+  setFilteredProperties(lst) {
+    this.setState({filtered_properties: lst});
+  }
+
+  clearTenant() {
+    this.setState({individualView: false});
+    this.setState({selectedTenant: null});
+  }
+
   renderPropertyListWrapper() {
 		this.setState({status:"propertyList"})
 	}
@@ -83,14 +104,22 @@ class ApplicationsPairing extends React.Component {
     Utils.setup([this.props.tenant], this.props.tenantPriority);
     Utils.setup(this.state.properties, this.props.propertyImages);
     Utils.setup(this.state.properties, this.props.propertyForms);
-    let leftComponent = (
-      <RATenantView tenant={this.props.tenant} mode="ra_edit" avatar={this.props.tenant.avatar} status={this.props.tenant.priority}/>
-    );    //Filtered properties
+
+    let leftComponent = null;
+    if (this.state.show_map) {
+      leftComponent = <MapContainer filtered_properties={this.state.filtered_properties}/>
+    } else {
+      leftComponent = (
+        <RATenantView tenant={this.props.tenant} mode="ra_edit" avatar={this.props.tenant.avatar} status={this.props.tenant.priority}/>
+      );
+    }
+    
+    //Filtered properties
     let rightComponent = null;
     if (this.state.status == "propertyList") {
       rightComponent = (
         <h1>Potential Homes</h1>,
-        [<PropertyListWrapper {...this.props} selectedEnd={this.state.selectedEnd} propertyCompletion={true} CheckboxChange={this.onChangeProperty} selectedTenant={this.props.tenant}/>,
+        [<PropertyListWrapper {...this.props} toggleMap={this.toggleMap} selectedEnd={this.state.selectedEnd} propertyCompletion={true} CheckboxChange={this.onChangeProperty} selectedTenant={this.props.tenant}/>,
         <Button key="start_applications" onClick={this.renderApplicationSubmissionWrapper}>Start Applications</Button>]
       );
     }
