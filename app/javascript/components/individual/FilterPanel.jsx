@@ -149,8 +149,8 @@ class FilterPanel extends React.Component {
   }
 
   getInitialValues = () => {
-    if (this.props.tenants[0]) {
-      let tenant = this.props.tenants[0];
+    if (this.props.tenant) {
+      let tenant = this.props.tenant;
       this.setState({
         location: [tenant.location],
         capacity: tenant.family_size,
@@ -469,7 +469,7 @@ FilterPanel.propTypes = {
   location_options: PropTypes.array,
   property_options: PropTypes.array,
   housing_options: PropTypes.array,
-  tenants: PropTypes.object
+  tenant: PropTypes.object
 };
 
 export default FilterPanel;

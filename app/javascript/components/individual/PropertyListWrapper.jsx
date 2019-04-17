@@ -65,7 +65,7 @@ class PropertyListWrapper extends React.Component {
             Potential Homes
           </div>
         </h1>
-        <ListView avatar={true} resources={this.state.properties} property_modal={true} type="property" checkbox={true} CheckboxChange={this.props.CheckboxChange}/>
+        <ListView avatar={true} selectedEnd={this.props.selectedEnd} resources={this.state.properties} property_modal={true} type="property" checkbox={true} CheckboxChange={this.props.CheckboxChange}/>
       </div>
     );
   }
