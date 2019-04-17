@@ -2,17 +2,15 @@
 
 class ApplicationsController < ApplicationController
   def new
-    @tenants = Tenant.where(referral_agency: current_user)
-    @tenantImages = []
-    @tenantPriorities = []
-    @tenants.each do |t|
-      @tenantPriorities << { priority: t.priority }
-      @tenantImages << if t.avatar.attached?
-                         { url: url_for(t.avatar) }
-                       else
-                         { url: nil }
-                       end
-    end
+    @tenant_id = params[:id]
+    @tenant=Tenant.find(@tenant_id)
+    @tenantImage = []
+    @tenantImage << if @tenant.avatar.attached?
+                       { avatar: url_for(@tenant.avatar) }
+                     else
+                       { avatar: nil }
+                     end
+    @tenantPriority = [{ priority: @tenant.priority }]
     @properties = Property.all
     @propertyImages = []
     @properties.each do |p|
