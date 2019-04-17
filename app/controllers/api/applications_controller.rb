@@ -9,7 +9,7 @@ class Api::ApplicationsController < ApplicationController
   def create
     @application = Application.new(application_params)
     authorize @application
-    if @application.save
+    if @application.save!
       ApplicationsMailer.with(application: @application).new_application.deliver_now
       @application.form.attach(ActiveStorage::Blob.last)
       render json: @application
