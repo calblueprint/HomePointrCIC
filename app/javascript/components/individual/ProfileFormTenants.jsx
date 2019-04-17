@@ -187,7 +187,6 @@ class ProfileFormTenants extends React.Component {
   //   <Avatar tenant={this.state.tenant}/>
   // </Form.Item>
 
-
   render() {
     const { getFieldDecorator } = this.props.form;
     const marks = {
