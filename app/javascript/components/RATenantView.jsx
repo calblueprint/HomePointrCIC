@@ -17,7 +17,7 @@ class RATenantView extends React.Component {
 
   renderName() {
     return (
-      <div key='name'>
+      <div className="split-screen-left-title" key='name'>
         <h1> {this.props.tenant.name} </h1>
       </div>
     )
@@ -134,7 +134,6 @@ class RATenantView extends React.Component {
           <Row>
             <Col span={16}><h1>{this.props.tenant.name}</h1></Col>
             <Col span={8} className='chips'>
-              {Utils.renderStatus(this.props.status, true)}
               <Button key='button' type='default' onClick={this.editRedirect} className='edit-button'>Edit</Button>
             </Col>
           </Row>

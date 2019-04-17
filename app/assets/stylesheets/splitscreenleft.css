@@ -25,6 +25,10 @@
   float: right;
 }
 
+.split-screen-left-title {
+  top: 28px important!;
+}
+
 .edit-button {
   margin-left: 16px;
 }
