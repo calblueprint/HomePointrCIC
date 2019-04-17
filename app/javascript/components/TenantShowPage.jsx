@@ -4,26 +4,36 @@ import "antd/dist/antd.css";
 import SplitViewContainer from "./individual/SplitViewContainer.jsx";
 import RATenantView from "./RATenantView.jsx";
 import ListView from "./ListView.jsx";
-import Utils from 'helpers/utils';
+import Utils from "helpers/utils";
 import { Icon, Button, Tabs } from "antd";
-import '../../assets/stylesheets/splitscreenright.css';
+import PropertyModal from "./modals/PropertyModal";
+import "../../assets/stylesheets/splitscreenright.css";
 
 class TenantShowPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       applications: props.applications,
-      properties: props.properties,
-    }
+      properties: props.properties
+    };
   }
 
   // Adds counts of current property residents and applications to
   // properties the tenant has applied to (for use in the PropertyCards)
   countSetupHelper = () => {
-    for (var i = 0; i < this.state.properties.length; i ++) {
-      this.state.properties[i]["tenantCount"] = this.props.propertyTenantCounts[i]
-      this.state.properties[i]["potentialTenantCount"] = this.props.propertyAppCounts[i]
+    for (var i = 0; i < this.state.properties.length; i++) {
+      this.state.properties[i]["tenantCount"] = this.props.propertyTenantCounts[
+        i
+      ];
+      this.state.properties[i][
+        "potentialTenantCount"
+      ] = this.props.propertyAppCounts[i];
     }
+    this.handleRedirect = this.handleRedirect.bind(this);
+  };
+
+  handleRedirect() {
+    window.location = "/applications/new/" + this.props.tenant.id.toString();
   }
 
   render() {
@@ -38,11 +48,15 @@ class TenantShowPage extends React.Component {
         tenant={this.props.tenant}
         mode="ra_edit"
         avatar={this.props.url}
-        status={this.props.status}/>
+        status={this.props.status}
+      />
     );
     const rightComponent = (
       <div className="split-screen-tabs">
         <h1 className="h1-indent">Applications</h1>
+        <Button type="default" onClick={this.handleRedirect}>
+          + New Applications
+        </Button>
         <ListView
           key={this.props.tenant.id}
           applications={this.state.applications}
@@ -51,12 +65,12 @@ class TenantShowPage extends React.Component {
           type="property"
           displayTag={true}
           renderModal={true}
-          viewpoint="RA"/>
+          viewpoint="RA"
+        />
       </div>
     );
 
-    return (
-      [
+    return [
       <Button type="default" href={"/"}>
         <Icon type="left" /> Back
       </Button>,
@@ -64,8 +78,7 @@ class TenantShowPage extends React.Component {
         leftComponent={leftComponent}
         rightComponent={rightComponent}
       />
-      ]
-    );
+    ];
   }
 }
 

@@ -4,6 +4,7 @@ import { Checkbox, Card, Col, Row, Button, Avatar, Icon } from "antd";
 import TenantModal from "./modals/TenantModal";
 import PropertyModal from "./modals/PropertyModal";
 import ApplicationModal from "./modals/ApplicationModal";
+import SubmissionModal from "./modals/SubmissionModal";
 import Utils from 'helpers/utils';
 import "antd/dist/antd.css";
 import TenantCard from "./individual/TenantCard";
@@ -21,6 +22,8 @@ class ListView extends React.Component {
       displayTag: props.displayTag,
       renderModal: props.renderModal,
     }
+    this.renderCheckbox = this.renderCheckbox.bind(this);
+    this.renderSubmissionModal = this.renderSubmissionModal.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -29,9 +32,19 @@ class ListView extends React.Component {
     }
   }
 
-  renderCheckbox(id) {
+  renderCheckbox(property, index) {
     if (this.props.checkbox) {
-      return (<Checkbox onChange={(e) => this.props.CheckboxChange(e, id)}>Checkbox</Checkbox>)
+      if (index < this.props.selectedEnd) {
+        return (<Checkbox defaultChecked={true} onChange={(e) => this.props.CheckboxChange(e, property)}>Checkbox</Checkbox>)
+      } else {
+        return (<Checkbox onChange={(e) => this.props.CheckboxChange(e, property)}/>)
+      }
+    }
+  }
+
+  renderSubmissionModal(resource, index) {
+    if (this.props.submission_modal) {
+      return(<SubmissionModal property={resource} tenant={this.props.tenant}/>)
     }
   }
 
@@ -101,12 +114,29 @@ class ListView extends React.Component {
         <div>
           <Row gutter={16}>
             {this.state.type === "property" ? (
-              <PropertyCard
-                property={resource}
-                displayTag={this.state.displayTag}
-                renderModal={this.props.renderModal}
-                viewpoint={this.props.viewpoint}
-              />
+
+              // <Card title={resource.location} bordered={false}>
+              //   <div><br></br></div>
+              //   <p>{resource.description}</p>
+              //   {this.renderCheckbox(resource, index)}
+              //   {this.renderSubmissionModal(resource)}
+              // </Card>
+              <div>
+                <div className="#">
+                  {this.renderCheckbox(resource, index)}
+                </div>
+
+                <PropertyCard
+                  property={resource}
+                  displayTag={this.state.displayTag}
+                  renderModal={this.props.renderModal}
+                  viewpoint={this.props.viewpoint}
+                />
+
+                <div className="#">
+                  {this.renderSubmissionModal(resource)}
+                </div>
+              </div>
             ) : (
               <TenantCard
                 tenant={resource}
