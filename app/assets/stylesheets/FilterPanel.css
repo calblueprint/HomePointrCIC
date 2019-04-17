@@ -1,0 +1,63 @@
+.filters-bar {
+  display: flex;
+  justify-content: space-evenly;
+  width: 570px;
+  margin-top: 100px;
+  margin-bottom: 10px;
+}
+
+.filters-panel {
+	display: inline-flex;
+}
+
+.buttons-panel {
+  margin-top: 10px;
+  margin-bottom: 5px;
+  display: flex;
+  justify-content: space-between;
+  background-color: white !important;
+}
+
+.clear-btn {
+  margin-left: 15px;
+  color: #1890FF;
+  cursor: pointer;
+}
+
+.apply-btn {
+  margin-right: 15px;
+  color: #1890FF;
+  cursor: pointer;
+}
+
+.options {
+  z-index: 1000;
+  background-color: white;
+  padding: 20px;
+  padding-bottom: 0px;
+  padding-top: 15px;
+}
+
+.ant-checkbox-group {  
+  display: grid;
+  grid-template-columns: auto auto;
+  grid-column-gap: 15px;
+}
+
+.category-btn {
+  border: 1px solid lightgrey;
+  border-radius: 5px;
+  margin-bottom: 22px;
+  padding: 5px; 
+  padding-left: 7px;
+  padding-right: 7px;
+}
+
+.guests {
+  padding-bottom: 10px;
+}
+
+.clear-all-filters {
+	margin-top: 100px;
+	margin-left: 51px;
+}
