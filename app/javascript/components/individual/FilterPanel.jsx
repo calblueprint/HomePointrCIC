@@ -53,6 +53,7 @@ class FilterPanel extends React.Component {
     this.titleize = this.titleize.bind(this);
     this.convertToDict = this.convertToDict.bind(this);
     this.getKeyByValue = this.getKeyByValue.bind(this);
+    this.clearAllFilters = this.clearAllFilters.bind(this);
   }
 
   componentDidMount = () => {
@@ -176,11 +177,25 @@ class FilterPanel extends React.Component {
     }, {});
   }
 
-  getKeyByValue(object, values) {
+  getKeyByValue = (object, values) => {
     return values.reduce((result, val) => {
       result.push(Object.keys(object).find(key => object[key] === val))
       return result;
     }, []);
+  }
+
+  clearAllFilters = () => {
+    let defaultVals = {
+      location: this.props.location_options,
+      capacity: 0,
+      rent_min: 0,
+      rent_max: 5000,
+      number_of_bedrooms: 0,
+      property_type: this.props.property_options,
+      housing_type: this.props.housing_options,
+      date_available: null,
+    }
+    this.props.applyFilter(defaultVals);
   }
 
   render() {
@@ -348,7 +363,7 @@ class FilterPanel extends React.Component {
                 onChange={(e) => this.handleCheckbox(e, "rent_min")}
               />
             </Col>
-            <Col span={12}>
+            <Col style={{ paddingRight: 95 }} span={12}>
               <Slider
                 range marks={marks}
                 min={0}
@@ -386,55 +401,65 @@ class FilterPanel extends React.Component {
     );
 
     return (
-      <div className="filters-bar">
-        <Dropdown overlay={dateFilter} visible={this.state.isDateOpen} trigger={['click']}>
-          <Button 
-            className="category-btn"
-            onClick={(e) => this.toggleOpen("isDateOpen")}
+      <div className="filters-panel">
+        <div className="filters-bar">
+          <Dropdown overlay={dateFilter} visible={this.state.isDateOpen} trigger={['click']}>
+            <Button 
+              className="category-btn"
+              onClick={(e) => this.toggleOpen("isDateOpen")}
+            >
+              Date needed
+            </Button>
+          </Dropdown>
+          <Dropdown overlay={guestsFilter} visible={this.state.isGuestsOpen} trigger={['click']}>
+            <Button 
+              className="category-btn"
+              onClick={(e) => this.toggleOpen("isGuestsOpen")}
+            >
+              Guests
+            </Button>
+          </Dropdown>
+          <Dropdown overlay={locationFilter} visible={this.state.isLocationOpen} trigger={['click']}>
+            <Button 
+              className="category-btn"
+              onClick={(e) => this.toggleOpen("isLocationOpen")}
+            >
+              Location
+            </Button>
+          </Dropdown>
+          <Dropdown overlay={propertyTypeFilter} visible={this.state.isPropertyTypeOpen} trigger={['click']}>
+            <Button 
+              className="category-btn"
+              onClick={(e) => this.toggleOpen("isPropertyTypeOpen")}
+            >
+              Property type
+            </Button>
+          </Dropdown>
+          <Dropdown overlay={housingTypeFilter} visible={this.state.isHousingTypeOpen} trigger={['click']}>
+            <Button 
+              className="category-btn"
+              onClick={(e) => this.toggleOpen("isHousingTypeOpen")}
+            >
+              Housing type
+            </Button>
+          </Dropdown>
+          <Dropdown overlay={rentFilter} visible={this.state.isRentOpen} trigger={['click']}>
+            <Button 
+              className="category-btn"
+              onClick={(e) => this.toggleOpen("isRentOpen")}
+            >
+              Rent
+            </Button>
+          </Dropdown>
+        </div>
+        <div className="clear-all-filters">
+          <Button
+            type="primary"
+            onClick={(e) => this.clearAllFilters()}
           >
-            Date needed
+            Reset
           </Button>
-        </Dropdown>
-        <Dropdown overlay={guestsFilter} visible={this.state.isGuestsOpen} trigger={['click']}>
-          <Button 
-            className="category-btn"
-            onClick={(e) => this.toggleOpen("isGuestsOpen")}
-          >
-            Guests
-          </Button>
-        </Dropdown>
-        <Dropdown overlay={locationFilter} visible={this.state.isLocationOpen} trigger={['click']}>
-          <Button 
-            className="category-btn"
-            onClick={(e) => this.toggleOpen("isLocationOpen")}
-          >
-            Location
-          </Button>
-        </Dropdown>
-        <Dropdown overlay={propertyTypeFilter} visible={this.state.isPropertyTypeOpen} trigger={['click']}>
-          <Button 
-            className="category-btn"
-            onClick={(e) => this.toggleOpen("isPropertyTypeOpen")}
-          >
-            Property type
-          </Button>
-        </Dropdown>
-        <Dropdown overlay={housingTypeFilter} visible={this.state.isHousingTypeOpen} trigger={['click']}>
-          <Button 
-            className="category-btn"
-            onClick={(e) => this.toggleOpen("isHousingTypeOpen")}
-          >
-            Housing type
-          </Button>
-        </Dropdown>
-        <Dropdown overlay={rentFilter} visible={this.state.isRentOpen} trigger={['click']}>
-          <Button 
-            className="category-btn"
-            onClick={(e) => this.toggleOpen("isRentOpen")}
-          >
-            Rent
-          </Button>
-        </Dropdown>
+        </div>
       </div>
     );
   }

@@ -60,6 +60,11 @@ class PropertyListWrapper extends React.Component {
     return (
       <div key="PropertyListWrapper">
         <FilterPanel {...this.props} applyFilter={this.handleFilter} />
+        <h1>
+          <div style={{ marginLeft: '10%', marginBottom: '2%', marginTop: '2%' }}>
+            Potential Homes
+          </div>
+        </h1>
         <ListView avatar={true} resources={this.state.properties} property_modal={true} type="property" checkbox={true} CheckboxChange={this.props.CheckboxChange}/>
       </div>
     );

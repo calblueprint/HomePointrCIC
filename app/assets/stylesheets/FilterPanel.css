@@ -6,6 +6,10 @@
   margin-bottom: 10px;
 }
 
+.filters-panel {
+	display: inline-flex;
+}
+
 .buttons-panel {
   margin-top: 10px;
   margin-bottom: 5px;
@@ -50,4 +54,9 @@
 
 .guests {
   margin-left: 10px;
+}
+
+.clear-all-filters {
+	margin-top: 100px;
+	margin-left: 51px;
 }
