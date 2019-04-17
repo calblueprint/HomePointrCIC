@@ -51,7 +51,6 @@ class PropertyListWrapper extends React.Component {
       })
     }
     this.setState({properties: updatedProperties})
-    this.props.setFilteredProperties(updatedProperties);
   }
   
   render() {

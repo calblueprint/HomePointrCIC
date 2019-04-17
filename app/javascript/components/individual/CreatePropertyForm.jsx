@@ -117,7 +117,6 @@ class CreatePropertyForm extends React.Component {
     var placesAutocomplete = places({
       appId: 'plT4Z8MULV0O',
       apiKey: '48e619128b523ff86727e917eb1fa1d3',
-      // container: document.querySelectorAll('div.ant-row.ant-form-item')[0].children[1].querySelector('div').querySelector('span').querySelector('input')
       container: document.querySelector('#address')
     });
     placesAutocomplete.on('change', (e) => {
@@ -202,19 +201,6 @@ class CreatePropertyForm extends React.Component {
         className: 'upload-list-inline',
         onChange: (fileList) => this.handleChangeImage(fileList)
       };
-
-      // <ActiveStorageProvider
-      //   endpoint={{
-      //     path: '/api/properties/' + this.state.property.id.toString(),
-      //     model: "property",
-      //     attribute: 'avatar',
-      //     method: "PUT",
-      //   }}
-      //   headers={{
-      //     'Content-Type': 'application/json'
-      //   }}
-      //   render={Utils.activeStorageUploadRenderer}
-      // />
 
     return (
       <div>
@@ -630,5 +616,4 @@ class CreatePropertyForm extends React.Component {
   }
 
 }
-// const WrappedProfileFormproperties = Form.create({name: 'profileproperties'})(ProfileFormproperties);
 export default Form.create()(CreatePropertyForm);
