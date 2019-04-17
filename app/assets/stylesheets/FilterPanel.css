@@ -35,6 +35,7 @@
   background-color: white;
   padding: 20px;
   padding-bottom: 0px;
+  padding-top: 15px;
 }
 
 .ant-checkbox-group {  
@@ -53,7 +54,7 @@
 }
 
 .guests {
-  margin-left: 10px;
+  padding-bottom: 10px;
 }
 
 .clear-all-filters {
