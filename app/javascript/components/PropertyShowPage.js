@@ -39,7 +39,7 @@ class PropertyShowPage extends React.Component {
 
     const TabPane = Tabs.TabPane;
     const leftComponent = (
-      <PropertyView canceledit={false} property={this.state.property}/>
+      <PropertyView canceledit={false} property={this.state.property} numTenants={this.props.numTenants}/>
     );
     const rightComponent = (
       <div className="split-screen-tabs">

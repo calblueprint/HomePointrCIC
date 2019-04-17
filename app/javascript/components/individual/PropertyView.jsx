@@ -95,7 +95,7 @@ class PropertyView extends React.Component {
             </Row>
             <Row>
               <Col span={8} className="content-text"><p>{this.props.property.capacity}</p></Col>
-              <Col span={8} className="content-text"><p>{this.props.property.openings}</p></Col>
+              <Col span={8} className="content-text"><p>{this.props.property.capacity - this.props.numTenants}</p></Col>
               <Col span={8} className="content-text"><p>${this.props.property.rent}</p></Col>
             </Row>
             <Row>
