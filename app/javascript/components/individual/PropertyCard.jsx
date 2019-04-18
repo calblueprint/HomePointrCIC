@@ -133,7 +133,7 @@ class PropertyCard extends React.Component {
             </Col>
           </div>
           <div className="details-container">
-            <Col span={6}>
+            <Col span={7}>
               <h3>Location</h3>
               <p>{this.state.property.location}</p>
             </Col>
@@ -145,7 +145,7 @@ class PropertyCard extends React.Component {
               <h3>Apps</h3>
               <p>{this.state.property.potentialTenantCount}</p>
             </Col>
-            <Col span={6}>
+            <Col span={5}>
               <h3>Openings</h3>
               <p>{this.state.property.capacity - this.state.property.tenantCount}</p>
             </Col>
