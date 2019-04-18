@@ -24,18 +24,19 @@ const SplitViewContainer = props => (
       {props.leftComponent}
     </div>
 
-    <div key="right"
-      style={{
-        width: "960px",
-        height: "100vh",
-        display: "inline-block",
-        paddingLeft: "10px",
-        borderLeft: "1px solid gray"
-      }}
-    >
-      {props.rightComponent}
-    </div>
-  </div>
+		<div key="right"
+			style={{
+				width: "960px",
+				height: "100vh",
+				display: "inline-block",
+				overflow: "scroll",
+				paddingLeft: "10px",
+				borderLeft: "1px solid #E8E8E8"
+			}}
+		>
+			{props.rightComponent}
+		</div>
+	</div>
 );
 
 SplitViewContainer.propTypes = {

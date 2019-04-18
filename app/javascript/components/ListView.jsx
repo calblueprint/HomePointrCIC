@@ -68,30 +68,6 @@ class ListView extends React.Component {
     }
   }
 
-  // renderTenantModal(resource, index) {
-  //   if (!this.props.tenant_modal) {
-  //     return(<Button key={resource.id} type="default" href={"/tenants/" + resource.id}>
-  //       View Info
-  //     </Button>)
-  //   } else {
-  //     if (this.props.applications) {
-  //       return(<TenantModal tenant={resource} app={this.props.applications[index]}/>)
-  //     } else {
-  //       return(<TenantModal tenant={resource}/>)
-  //     }
-  //   }
-  // }
-  //
-  // renderPropertyModal(resource) {
-  //   if (this.props.property_modal) {
-  //     return(<PropertyModal property={resource}/>)
-  //   } else {
-  //     return(<Button key={resource.id} type="default" href={"/properties/" + resource.id}>
-  //       View Info
-  //     </Button>)
-  //   }
-  // }
-
   renderTenantSelectButton(resource) {
     if (this.props.tenantSelect) {
       return(<Button type="default" onClick={(e) => this.props.selectTenantFunc(e, resource)}>Select Client</Button>)
@@ -100,7 +76,7 @@ class ListView extends React.Component {
 
   // renderApplicationStatus(index) {
   //   if (this.props.applications) {
-  //     return Utils.renderStatus(this.props.applications[index].status, true, true)
+  //     return Utils.renderStatus(this.props.applications[index].status, true)
   //   }
   // }
 
@@ -108,19 +84,18 @@ class ListView extends React.Component {
     return(<ApplicationModal application={app}/>)
   }
 
+  getApplication = (index) => {
+    if (this.props.applications) {
+      return this.props.applications[index];
+    }
+  }
+
   render() {
     return this.state.resources.map((resource, index) => {
       return (
         <div>
-          <Row gutter={16}>
+          <Row gutter={16} key={index}>
             {this.state.type === "property" ? (
-
-              // <Card title={resource.location} bordered={false}>
-              //   <div><br></br></div>
-              //   <p>{resource.description}</p>
-              //   {this.renderCheckbox(resource, index)}
-              //   {this.renderSubmissionModal(resource)}
-              // </Card>
               <div>
                 <div className="#">
                   {this.renderCheckbox(resource, index)}
@@ -131,6 +106,7 @@ class ListView extends React.Component {
                   displayTag={this.state.displayTag}
                   renderModal={this.props.renderModal}
                   viewpoint={this.props.viewpoint}
+                  key={index}
                 />
 
                 <div className="#">
@@ -140,9 +116,11 @@ class ListView extends React.Component {
             ) : (
               <TenantCard
                 tenant={resource}
-                displayTag={this.state.displayTag}
+                displayTag={this.props.displayTag}
                 renderModal={this.props.renderModal}
                 viewpoint={this.props.viewpoint}
+                application={this.getApplication(index)}
+                key={index}
               />
             )}
           </Row>
@@ -158,17 +136,10 @@ ListView.propTypes = {
   tenantSelect: PropTypes.bool,
   checkbox: PropTypes.bool,
   avatar: PropTypes.bool,
-  tenant_modal: PropTypes.bool,
-  property_id: PropTypes.number,
-  housed: PropTypes.bool,
-  property_modal: PropTypes.bool,
 };
 
 ListView.defaultProps = {
-  property_id: null,
   applications: null,
-  housed: null,
-  property_modal: null,
   tenantSelect: null,
   applications: null,
 };

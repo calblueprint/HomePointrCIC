@@ -39,17 +39,35 @@ class ApplicationStatusButtons extends React.Component {
 
   render() {
     if (this.props.status === "received") {
-      return [<Button key="reject" type="danger" onClick={this.handleReject}>Reject</Button>,
-              <Button key="interview" type="default" onClick={this.handleInterview}>Interview</Button>,
-              <Button key="accept" type="primary" disabled>Accept</Button>]
+      return(
+        <div className="app-buttons">
+          <div className="reject-button">
+            <Button key="reject" type="danger" onClick={this.handleReject}>Reject</Button>
+          </div>
+          <div className="interview-button">
+            <Button key="interview" type="default" onClick={this.handleInterview}>Interview</Button>
+          </div>
+        </div>
+      );
     } else if (this.props.status === "interview") {
-      return [<Button key="reject" type="danger" onClick={this.handleReject}>Reject</Button>,
-              <Button key="interview" type="default" disabled>Interview</Button>,
-              <Button key="accept" type="primary" onClick={this.handleAccept}>Accept</Button>]
+      return(
+        <div className="app-buttons">
+          <div className="reject-button">
+            <Button key="reject" type="danger" onClick={this.handleReject}>Reject</Button>
+          </div>
+          <div className="accept-button">
+            <Button key="accept" type="primary" onClick={this.handleAccept}>Offer Tenancy</Button>
+          </div>
+        </div>
+      );
     } else if (this.props.status === "housed") {
-      return <Button key="remove" type="danger" onClick={this.removeTenant}>Remove Client</Button>
-    } else {
-      return null
+      return(
+        <div className="app-buttons">
+          <div className="remove-button">
+            <Button key="remove" type="danger" onClick={this.removeTenant}>Remove Client</Button>
+          </div>
+        </div>
+      );
     }
   }
 }

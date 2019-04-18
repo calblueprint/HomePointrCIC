@@ -27,21 +27,19 @@ class PropertyShowPage extends React.Component {
     Utils.setup(this.state.tenantApps, this.props.tenantAppsPDF);
     Utils.setup(this.state.potentialTenantApps, this.props.potentialTenantAppsPDF);
     Utils.setup(this.state.potentialTenants, this.props.potentialTenantStatuses);
+
     const TabPane = Tabs.TabPane;
     const leftComponent = (
-      <PropertyView canceledit={false} property={this.state.property}/>
+      <PropertyView canceledit={false} property={this.state.property} numTenants={this.props.numTenants}/>
     );
     const rightComponent = (
       <div className="split-screen-tabs">
         <Tabs defaultActiveKey="1" className="tab-cards">
           <TabPane tab="Pending Applications" key="1">
             <ListView
-              tenant_modal={true}
-              property_id={this.props.property.id}
               applications={this.props.potentialTenantApps}
               resources={this.state.potentialTenants}
               type="tenant"
-              housed={false}
               avatar={true}
               checkbox={false}
               displayTag={true}
@@ -51,12 +49,9 @@ class PropertyShowPage extends React.Component {
           </TabPane>
           <TabPane tab="Your Clients" key="2">
             <ListView
-              tenant_modal={true}
-              property_id={this.props.property.id}
               applications={this.props.tenantApps}
               resources={this.state.tenants}
               type="tenant"
-              housed={true}
               avatar={true}
               checkbox={false}
               displayTag={false}

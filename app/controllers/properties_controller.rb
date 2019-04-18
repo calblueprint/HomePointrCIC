@@ -75,6 +75,7 @@ class PropertiesController < ApplicationController
     @description = @property.attributes.values[2]
 
     @tenants = []
+    @numTenants = 0
     @tenantImages = []
     @tenantApps = []
     @tenantAppsPDF = []
@@ -86,6 +87,7 @@ class PropertiesController < ApplicationController
     @property.applications.each do |a|
       if a.status == 'housed'
         @tenants << a.tenant
+        @numTenants += 1
         @tenantImages << if a.tenant.avatar.attached?
                            { url: url_for(a.tenant.avatar) }
                          else
@@ -110,7 +112,7 @@ class PropertiesController < ApplicationController
                                      { url: nil }
                                    end
         @potentialTenantApps << a
-        @potentialTenantStatuses << { status: a.tenant.priority }
+        @potentialTenantStatuses << { status: a.status }
       end
     end
   end

@@ -1,8 +1,10 @@
 import React from 'react';
 import PropTypes from "prop-types";
 import 'antd/dist/antd.css';
-import { Modal, Button, Icon, Card, Avatar} from 'antd';
+import { Modal, Button, Icon, Card, Avatar, Table } from 'antd';
 import ApplicationStatusButtons from './../individual/ApplicationStatusButtons'
+import '../../../assets/stylesheets/modal.css';
+import Utils from "helpers/utils";
 
 class TenantModal extends React.Component {
   constructor(props) {
@@ -13,32 +15,66 @@ class TenantModal extends React.Component {
   }
 
   handleButtons() {
-    if (this.props.housed != null) {
-      if (this.props.housed) {
-        return(<ApplicationStatusButtons property_id={this.props.property_id} application_id={this.props.app.id} status={this.props.app.status}/>)
-      } else {
-        return(<ApplicationStatusButtons property_id={this.props.property_id} application_id={this.props.app.id} status={this.props.app.status}/>)
-      }
-    } else {
-      return(null)
-    }
+    return(
+        <ApplicationStatusButtons
+          property_id={this.props.application.property_id}
+          application_id={this.props.application.id}
+          status={this.props.application.status}/>
+        )
   }
 
   renderAttachment() {
-    if (this.props.app) {
-      return(<p>Attachment: <a href={this.props.app.url}><Icon type="paper-clip" />Attachment</a></p>)
+    if (this.props.application) {
+      return(<p><a href={this.props.application.url}><Icon type="paper-clip" />Attachment</a></p>)
     }
   }
 
-  renderAvatar(images){
-    if (typeof(images) === "string") {
-        return (<Avatar size={200} shape="square" src={images} />);
-    } else {
-      return (<Avatar size={200} shape="square" src={images[0].url} />)
+  renderAvatar = () => {
+    return(
+      <img className="modal-avatar" height="224" width="224" src={this.props.tenant.url} />
+    );
+  }
+
+  statusHelper = () => {
+    if (this.props.tenant.status) {
+      return(
+        <div className="modal-subsection">
+          <h3>Status</h3>
+          {Utils.renderStatus(this.props.tenant.status, this.props.displayTag)}
+        </div>
+      )
     }
   }
 
   render() {
+    const dataSource = [{
+      fileName: 'Tenant Application',
+      lastUpdated: 'THIS WILL BE UPDATED',
+      attachment: 'THIS TOO',
+      key: '1'
+    }, {
+      fileName: 'Additional Files',
+      lastUpdated: this.props.application.updated_at,
+      attachment: 'Download',
+      key: '2'
+    }];
+
+    const columns = [{
+      title: 'File Name',
+      dataIndex: 'fileName',
+      key: 'fileName'
+    }, {
+      title: 'Last Updated',
+      dataIndex: 'lastUpdated',
+      key: 'lastUpdated'
+    }, {
+      title: 'Attachment',
+      dataIndex: 'attachment',
+      render: download => <a href={this.props.application.url}>{download}</a>,
+      key: 'attachment'
+    }];
+
+
     return (
       <div>
         <Modal
@@ -46,16 +82,50 @@ class TenantModal extends React.Component {
           visible={this.props.visible}
           onOk={this.props.onOk}
           onCancel={this.props.onCancel}
+          footer={null}
+          width={"1008px"}
         >
-          <p>Description: {this.props.tenant.description}</p>
-          <p>Email: {this.props.tenant.email}</p>
-          <p>Phone: {this.props.tenant.phone}</p>
-          <p>Description: {this.props.tenant.description}</p>
-          <p>Housing Type: {this.props.tenant.housing_type}</p>
-          <p>Date Needed: {this.props.tenant.date_needed}</p>
+          <div className="tenant-modal">
+            <div className="modal-content">
+              <div className="basic-info">
+                {this.renderAvatar()}
+                <div className="modal-subsection">
+                  <h3>Email</h3>
+                  {this.props.tenant.email}
+                </div>
+                <div className="modal-subsection">
+                  <h3>Phone</h3>
+                  {this.props.tenant.phone}
+                </div>
+                <div className="modal-subsection">
+                  <h3>Housing Type</h3>
+                  {this.props.tenant.housing_type}
+                </div>
+                <div className="modal-subsection">
+                  <h3>Date Needed</h3>
+                  {this.props.tenant.date_needed}
+                </div>
+              </div>
+              <div className="detailed-info">
+                <h1>{this.props.tenant.name}</h1>
+                {this.statusHelper()}
+                <div className="description-container">
+                  {this.props.tenant.description}
+                </div>
+                <div className="table-container">
+                  <div className="table">
+                    <Table
+                      dataSource={dataSource}
+                      columns={columns}
+                      pagination={false}
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+            {this.handleButtons()}
+          </div>
 
-          {this.renderAttachment()}
-          {this.handleButtons()}
 
         </Modal>
       </div>
@@ -69,8 +139,6 @@ TenantModal.propTypes = {
   description: PropTypes.string,
   name: PropTypes.string,
   app: PropTypes.object,
-  property_id: PropTypes.number,
-  housed: PropTypes.bool
 };
 
 TenantModal.defaultProps = {
