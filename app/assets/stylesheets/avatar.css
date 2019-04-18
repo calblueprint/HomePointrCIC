@@ -1,4 +1,11 @@
 .avatar-uploader > .ant-upload {
-  width: 128px !important;
-  height: 128px !important;
+  width: 104px !important;
+  height: 104px !important;
+}
+.form-box {
+  width: 104px;
+  height: 104px;
+  text-align: center;
+  vertical-align: middle;
+  color: white;
 }

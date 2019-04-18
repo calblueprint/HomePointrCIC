@@ -4,7 +4,7 @@ import 'antd/dist/antd.css';
 import { Upload, Icon, Modal } from 'antd';
 
 class PicturesWall extends React.Component {
-  
+
   constructor(props) {
     super(props);
     this.state = {
@@ -47,7 +47,7 @@ class PicturesWall extends React.Component {
     );
     return (
       <div className="clearfix">
-        <Upload
+        <Upload className="uploaded-image"
           action='/rails/active_storage/direct_uploads'
           headers={
             {"X_CSRF-Token": document.getElementsByName("csrf-token")[0].content}
@@ -66,4 +66,4 @@ class PicturesWall extends React.Component {
   }
 }
 
-export default PicturesWall; 
+export default PicturesWall;

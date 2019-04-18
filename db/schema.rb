@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_04_06_045532) do
+ActiveRecord::Schema.define(version: 2019_04_18_070918) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -61,16 +61,14 @@ ActiveRecord::Schema.define(version: 2019_04_06_045532) do
   create_table "properties", force: :cascade do |t|
     t.integer "capacity"
     t.text "description"
+    t.integer "number_of_openings"
     t.bigint "landlord_id"
     t.integer "rent"
-    t.integer "size"
     t.integer "property_type"
     t.integer "housing_type"
     t.date "date_available"
     t.integer "location"
     t.string "address"
-    t.float "lat"
-    t.float "long"
     t.integer "number_of_bedrooms"
     t.integer "number_of_bathrooms"
     t.integer "floor_number"
@@ -80,6 +78,8 @@ ActiveRecord::Schema.define(version: 2019_04_06_045532) do
     t.boolean "accessible_shower"
     t.boolean "car_parking"
     t.boolean "lift_access"
+    t.float "lat"
+    t.float "long"
     t.index ["landlord_id"], name: "index_properties_on_landlord_id"
   end
 
@@ -92,7 +92,6 @@ ActiveRecord::Schema.define(version: 2019_04_06_045532) do
     t.integer "rent_max"
     t.integer "housing_type"
     t.integer "property_type"
-    t.integer "num_bedrooms"
     t.integer "location"
     t.bigint "referral_agency_id"
     t.date "date_needed"
