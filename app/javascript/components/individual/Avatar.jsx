@@ -40,6 +40,7 @@ class Avatar extends React.Component {
   }
 
   renderDisplay = () => {
+    console.log("RENDER DISPLAY");
     if (this.state.type == "avatar" && this.state.imageUrl) {
       console.log("AVATAR RENDERED");
       return (
@@ -52,6 +53,7 @@ class Avatar extends React.Component {
         <div className="form-box" style={{ backgroundColor: "#ED326C" }}>{this.state.filename}</div>
       )
     } else {
+      console.log("UPLOAD ICON RENDERED");
       return (
         <div>
           <Icon type={this.state.loading ? 'loading' : 'plus'} />

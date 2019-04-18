@@ -11,10 +11,8 @@ import Utils from 'helpers/utils';
 import UploadButton from './UploadButton';
 import SliderBar from './SliderBar';
 import PicturesWall from './PicturesWall';
-import Dropzone from "react-dropzone";
 import Avatar from './Avatar';
 import { DirectUploadProvider } from "react-activestorage-provider";
-import DefaultDirectUploadRender from './DefaultDirectUploadRender'
 
 class ProfileFormTenants extends React.Component {
   constructor(props) {
@@ -662,10 +660,9 @@ class ProfileFormTenants extends React.Component {
           </div>
         </div>
           <div className="buttons">
-            <Form.Item
-            >
+            <Form.Item>
             <Button className="previous" onClick={() => {window.location = '/tenants/' + this.state.tenant.id.toString()}}>Cancel</Button>
-            <Button className="next" type="primary" htmlType="submit">Submit</Button>
+            <Button className="next" type="primary" htmlType="submit">Save Changes</Button>
           </Form.Item>
         </div>
         </Form>
