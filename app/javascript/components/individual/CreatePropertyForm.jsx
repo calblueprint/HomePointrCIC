@@ -24,20 +24,20 @@ class CreatePropertyForm extends React.Component {
         description: '',
         landlord_id: this.props.current_userID,
         rent: null,
-        property_type: null,
-        housing_type: null,
+        property_type: undefined,
+        housing_type: undefined,
         date_available: new Date(),
-        location: 'other_location',
+        location: undefined,
         address: '',
         number_of_bedrooms: null,
         number_of_bathrooms: null,
         floor_number: null,
-        mobility_aids: null,
-        furniture: null,
-        utilities_included: null,
-        accessible_shower: null,
-        car_parking: null,
-        lift_access: null,
+        mobility_aids: undefined,
+        furniture: undefined,
+        utilities_included: undefined,
+        accessible_shower: undefined,
+        car_parking: undefined,
+        lift_access: undefined,
         lat: null,
         long: null,
         images: null,
@@ -107,6 +107,7 @@ class CreatePropertyForm extends React.Component {
     const property = this.state.property;
     const keys = ["capacity", "description", "landlord_id", "rent", "property_type", "housing_type", "date_available", "location", "address", "number_of_bedrooms", "number_of_bathrooms", "floor_number", "mobility_aids", "furniture", "utilities_included", "accessible_shower", "car_parking", "lift_access", "lat", "long"];
     const values = [property.capacity, property.description, property.landlord_id, property.rent, property.property_type, property.housing_type, property.date_available, property.location, property.address, property.number_of_bedrooms, property.number_of_bathrooms, property.floor_number, property.mobility_aids, property.furniture, property.utilities_included, property.accessible_shower, property.car_parking, property.lift_access, property.lat, property.long];
+    console.log(values);
     let result = keys.reduce((obj, k, i) => ({...obj, [k]: values[i] }), {})
     return result
   }
@@ -217,7 +218,7 @@ class CreatePropertyForm extends React.Component {
     return (
       <div className="container">
         <h2>Step 1: Tell us about your space.</h2>
-        <Form className="grid-container">
+        <Form className="grid-container" hideRequiredMark={true}>
           <Form.Item
             label="Address"
           >
@@ -246,12 +247,12 @@ class CreatePropertyForm extends React.Component {
             label="Housing type"
           >
             {getFieldDecorator('housing_type', {
-              initialValue: property.housing_type ? property.housing_type : "Select one",
+              initialValue: property.housing_type,
               rules: [{
                 required: true, message: 'Please select housing type!',
               }],
             })(
-              <Select placeholder="Select One" onChange={(value) => this.handleChangeSelect("housing_type", value)}>
+              <Select placeholder="Select One" value={property.housing_type} onChange={(value) => this.handleChangeSelect("housing_type", value)}>
               {
                 this.state.nice_housing_types.map((obj, i) => {
                   return <Option key={i} value={this.state.housing_types[i]}>{obj}</Option>
@@ -264,12 +265,12 @@ class CreatePropertyForm extends React.Component {
             label="Property type"
           >
             {getFieldDecorator('property_type', {
-              initialValue: property.property_type ? property.property_type : "Select one",
+              initialValue: property.property_type,
               rules: [{
                 required: true, message: 'Please select a property type!',
               }],
             })(
-              <Select placeholder="Select One" onChange={(value) => this.handleChangeSelect("property_type", value)}>
+              <Select placeholder="Select One" value={property.property_type} onChange={(value) => this.handleChangeSelect("property_type", value)}>
               {
                 this.state.nice_property_types.map((obj, i) => {
                   return <Option key={i} value={this.state.property_types[i]}>{obj}</Option>
@@ -277,6 +278,24 @@ class CreatePropertyForm extends React.Component {
               }
               </Select>
             )}
+          </Form.Item>
+          <Form.Item
+            label="Location"
+          >
+          {getFieldDecorator('location', {
+            initialValue: property.location,
+            rules: [{
+              required: true, message: 'Please pick a location!',
+            }],
+          })(
+            <Select placeholder="Select One" value={property.location} onChange={(value) => this.handleChangeSelect("location", value)}>
+            {
+              this.state.nice_locations.map((obj, i) => {
+                return <Option key={i} value={this.state.locations[i]}>{obj}</Option>
+              })
+            }
+            </Select>
+          )}
           </Form.Item>
           <Form.Item
             label="Date available"
@@ -299,7 +318,12 @@ class CreatePropertyForm extends React.Component {
                 required: true, message: 'Please input the capacity!',
               }],
             })(
-              <Input onChange={() => this.handleChange("capacity")}/>
+              <InputNumber
+                min={0}
+                max={100}
+                value={property.capacity}
+                onChange={(value) => this.handleChangeSelect("capacity", value)}
+              />
             )}
           </Form.Item>
           <Form.Item
@@ -322,7 +346,7 @@ class CreatePropertyForm extends React.Component {
         </Form>
         <div className="buttons">
           <Button className="previous" onClick={() => {window.location = '/'}}>Cancel</Button>
-          <Button className="next" type="primary" onClick={() => {this.nextButton(2)}}>Next</Button>
+          <Button className="next" type="primary" onClick={() => {this.nextButton(2, "next")}}>Next</Button>
         </div>
       </div>
     )
@@ -335,7 +359,7 @@ class CreatePropertyForm extends React.Component {
     return (
       <div className="container">
         <h2>Step 2: Couple more details.</h2>
-        <Form>
+        <Form hideRequiredMark={true}>
           <div className="grid-container">
             <Form.Item
               label="Number of bathrooms"
@@ -363,19 +387,24 @@ class CreatePropertyForm extends React.Component {
                   required: true, message: 'Please select the floor number!',
                 }],
               })(
-                <Input onChange={() => this.handleChange("floor_number")}/>
+                <InputNumber
+                  min={0}
+                  max={100}
+                  value={property.floor_number}
+                  onChange={(value) => this.handleChangeSelect("floor_number", value)}
+                />
               )}
             </Form.Item>
             <Form.Item
               label="Are there mobility aids?"
             >
               {getFieldDecorator('mobility_aids', {
-                initialValue: property.mobility_aids == null ? "Select one" : property.mobility_aids,
+                initialValue: property.mobility_aids,
                 rules: [{
                   required: true, message: 'Please select a response!',
                 }],
               })(
-                <Select placeholder="Select One" onChange={(value) => this.handleChangeSelect("mobility_aids", value)}>
+                <Select placeholder="Select One" value={property.mobility_aids} onChange={(value) => this.handleChangeSelect("mobility_aids", value)}>
                   <Option value={true}>Yes</Option>
                   <Option value={false}>No</Option>
                 </Select>
@@ -385,12 +414,12 @@ class CreatePropertyForm extends React.Component {
               label="Is there lift access?"
             >
               {getFieldDecorator('lift_access', {
-                initialValue: property.lift_access == null ? "Select one" : property.lift_access,
+                initialValue: property.lift_access,
                 rules: [{
                   required: true, message: 'Please select a response!',
                 }],
               })(
-                <Select placeholder="Select One" onChange={(value) => this.handleChangeSelect("lift_access", value)}>
+                <Select placeholder="Select One" value={property.lift_access} onChange={(value) => this.handleChangeSelect("lift_access", value)}>
                   <Option value={true}>Yes</Option>
                   <Option value={false}>No</Option>
                 </Select>
@@ -400,12 +429,12 @@ class CreatePropertyForm extends React.Component {
               label="Is the shower accessible?"
             >
               {getFieldDecorator('accessible_shower', {
-                initialValue: property.accessible_shower == null ? "Select one" : property.accessible_shower,
+                initialValue: property.accessible_shower,
                 rules: [{
                   required: true, message: 'Please select a response!',
                 }],
               })(
-                <Select placeholder="Select One" onChange={(value) => this.handleChangeSelect("accessible_shower", value)}>
+                <Select placeholder="Select One" value={property.accessible_shower} onChange={(value) => this.handleChangeSelect("accessible_shower", value)}>
                   <Option value={true}>Yes</Option>
                   <Option value={false}>No</Option>
                 </Select>
@@ -415,12 +444,12 @@ class CreatePropertyForm extends React.Component {
               label="Are utilities included?"
             >
               {getFieldDecorator('utilities_included', {
-                initialValue: property.utilities_included == null ? "Select one" : property.utilities_included,
+                initialValue: property.utilities_included,
                 rules: [{
                   required: true, message: 'Please select a response!',
                 }],
               })(
-                <Select placeholder="Select One" onChange={(value) => this.handleChangeSelect("utilities_included", value)}>
+                <Select placeholder="Select One" value={property.utilities_included} onChange={(value) => this.handleChangeSelect("utilities_included", value)}>
                   <Option value={true}>Yes</Option>
                   <Option value={false}>No</Option>
                 </Select>
@@ -430,12 +459,12 @@ class CreatePropertyForm extends React.Component {
               label="Is it furnished?"
             >
               {getFieldDecorator('furniture', {
-                initialValue: property.furniture == null ? "Select one" : property.furniture,
+                initialValue: property.furniture,
                 rules: [{
                   required: true, message: 'Please select a response!',
                 }],
               })(
-                <Select placeholder="Select One" onChange={(value) => this.handleChangeSelect("furniture", value)}>
+                <Select placeholder="Select One" value={property.furniture} onChange={(value) => this.handleChangeSelect("furniture", value)}>
                   <Option value={true}>Yes</Option>
                   <Option value={false}>No</Option>
                 </Select>
@@ -445,12 +474,12 @@ class CreatePropertyForm extends React.Component {
               label="Is there car parking available?"
             >
               {getFieldDecorator('car_parking', {
-                initialValue: property.car_parking == null ? "Select one" : property.car_parking,
+                initialValue: property.car_parking,
                 rules: [{
                   required: true, message: 'Please select a response!',
                 }],
               })(
-                <Select placeholder="Select One" onChange={(value) => this.handleChangeSelect("car_parking", value)}>
+                <Select placeholder="Select One" value={property.car_parking} onChange={(value) => this.handleChangeSelect("car_parking", value)}>
                   <Option value={true}>Yes</Option>
                   <Option value={false}>No</Option>
                 </Select>
@@ -459,8 +488,8 @@ class CreatePropertyForm extends React.Component {
           </div>
         </Form>
         <div className="buttons">
-          <Button className="previous" onClick={() => {this.nextButton(1)}}>Previous</Button>
-          <Button className="next" type="primary" onClick={() => {this.nextButton(3)}}>Next</Button>
+          <Button className="previous" onClick={() => {this.nextButton(1, "previous")}}>Previous</Button>
+          <Button className="next" type="primary" onClick={() => {this.nextButton(3, "next")}}>Next</Button>
         </div>
       </div>
     )
@@ -475,7 +504,7 @@ class CreatePropertyForm extends React.Component {
         <h2>Step 3: Set the scene.</h2>
         Write a quick summary of your place. You can highlight what's special about your space and the neighborhood.
         <div className="sub-container">
-          <Form>
+          <Form hideRequiredMark={true}>
             <Form.Item
               label="Summary"
             >
@@ -496,8 +525,8 @@ class CreatePropertyForm extends React.Component {
           </Form>
         </div>
         <div className="buttons">
-          <Button className="previous" onClick={() => {this.nextButton(2)}}>Previous</Button>
-          <Button className="next" type="primary" onClick={() => {this.nextButton(4)}}>Next</Button>
+          <Button className="previous" onClick={() => {this.nextButton(2, "previous")}}>Previous</Button>
+          <Button className="next" type="primary" onClick={() => {this.nextButton(4, "next")}}>Next</Button>
         </div>
       </div>
     )
@@ -510,7 +539,7 @@ class CreatePropertyForm extends React.Component {
         <h2>Step 4: Bring it to life.</h2>
         Photos help guests imagine staying in your place. You can start with one and add more after you publish.
         <div className="sub-container">
-          <Form>
+          <Form hideRequiredMark={true}>
             <Form.Item
               label="Add images"
             >
@@ -531,8 +560,8 @@ class CreatePropertyForm extends React.Component {
           </Form>
         </div>
         <div className="buttons">
-          <Button className="previous" onClick={() => {this.nextButton(3)}}>Previous</Button>
-          <Button className="next" type="primary" onClick={() => {this.nextButton(5)}}>Next</Button>
+          <Button className="previous" onClick={() => {this.nextButton(3, "previous")}}>Previous</Button>
+          <Button className="next" type="primary" onClick={() => {this.nextButton(5, "next")}}>Next</Button>
         </div>
       </div>
     )
@@ -545,7 +574,7 @@ class CreatePropertyForm extends React.Component {
         <h2>Step 5: Additional paperwork (Optional)</h2>
         Do you require potential clients to fill out any additional paperwork outside of the general client form?
         <div className="sub-container">
-          <Form>
+          <Form hideRequiredMark={true}>
             <Form.Item
               label="Upload form"
             >
@@ -566,15 +595,25 @@ class CreatePropertyForm extends React.Component {
           </Form>
         </div>
         <div className="buttons">
-          <Button className="previous" onClick={() => {this.nextButton(4)}}>Previous</Button>
+          <Button className="previous" onClick={() => {this.nextButton(4, "previous")}}>Previous</Button>
           <Button className="next" type="primary" onClick={this.handleCreate}>Submit</Button>
         </div>
       </div>
     )
   }
 
-  nextButton(stage) {
-    this.setState({ stage: stage });
+  nextButton(stage, action) {
+    if (action == "previous") {
+      this.setState({ stage: stage });
+    } else {
+      this.props.form.validateFields(
+        (err) => {
+          if (!err) {
+            this.setState({ stage: stage });
+          }
+        },
+      );
+    }
   }
 
   renderFormStage() {

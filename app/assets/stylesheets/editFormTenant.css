@@ -31,3 +31,21 @@
   margin-left: 30px;
   width: 150px;
 }
+
+.delete-client {
+  display: flex;
+  margin-bottom: 30px;
+}
+
+.delete-button {
+  width: 330px;
+  align-self: flex-end;
+  float: right;
+  display: flex;
+  flex-direction: row;
+}
+
+.upload-image {
+  display: flex;
+  flex-direction: row;
+}

@@ -56,7 +56,27 @@ class Api::PropertiesController < ApplicationController
   def update
     @property = Property.find(params[:id])
     authorize @property
-    if @property.update(property_params)
+    property_attr = property_params
+    form_attr = property_attr.delete("form")
+
+    images_param = property_params["images"]
+    delete_images = property_params["image_deletes"]
+
+    saved = @property.update(property_attr)
+
+    if saved
+      # @property.images.attach(images_attr)
+
+      images_param.each do |i|
+        @property.images.attach(i)
+      end
+
+      delete_images.each do |i|
+        @property.images.find(i).purge
+      end
+
+      @property.form.attach(form_attr)
+      flash[:success] = "Property updated successfully!"
       render json: @property
     else
       render json: { errors: @property.errors.messages }
@@ -97,8 +117,9 @@ class Api::PropertiesController < ApplicationController
       :lift_access,
       :lat,
       :long,
-      :images,
-      :form
+      :form,
+      :images => [],
+      :image_deletes => []
     )
   end
 end

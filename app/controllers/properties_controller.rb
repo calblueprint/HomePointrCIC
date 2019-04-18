@@ -124,6 +124,25 @@ class PropertiesController < ApplicationController
     authorize @property
     @current_userID = current_user.id
     @categories = get_property_category_enums()
+
+    @images = []
+    @image_objects = []
+
+    @property.images.each do |image|
+      @images << image.signed_id
+      @image_objects << { id: image.id, name: image.filename, url: rails_blob_path(image, :host => 'localhost') }
+    end
+
+    @client_form = nil
+    @form_name = nil
+    if @property.form.attached? == true
+      @client_form = @property.form.signed_id
+      @form_name = @property.form.filename
+    else
+      @client_form = nil
+      @form_name = nil
+    end
+
   end
 
   def get_property_category_enums
