@@ -92,11 +92,11 @@ class SubmissionModal extends React.Component {
 
   renderButton() {
       if (this.state.disabled) {
-          return <Button type="primary" onClick={this.showModal} disabled>
+          return <Button className="complete-app-btn" type="primary" onClick={this.showModal} disabled>
             Complete Application
           </Button>
       } else {
-        return(<Button type="primary" onClick={this.showModal}>
+        return(<Button className="complete-app-btn" type="primary" onClick={this.showModal}>
           Complete Application
         </Button>)
       }

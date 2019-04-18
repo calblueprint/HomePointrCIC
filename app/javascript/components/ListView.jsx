@@ -35,9 +35,9 @@ class ListView extends React.Component {
   renderCheckbox(property, index) {
     if (this.props.checkbox) {
       if (index < this.props.selectedEnd) {
-        return (<Checkbox defaultChecked={true} onChange={(e) => this.props.CheckboxChange(e, property)}>Checkbox</Checkbox>)
+        return (<Checkbox className="checkbox" defaultChecked={true} onChange={(e) => this.props.CheckboxChange(e, property)}>Checkbox</Checkbox>)
       } else {
-        return (<Checkbox onChange={(e) => this.props.CheckboxChange(e, property)}/>)
+        return (<Checkbox className="checkbox" onChange={(e) => this.props.CheckboxChange(e, property)}/>)
       }
     }
   }

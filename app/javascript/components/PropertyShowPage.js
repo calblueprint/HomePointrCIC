@@ -70,11 +70,6 @@ class PropertyShowPage extends React.Component {
 
     return (
       <div>
-        <div className="">
-          <Button type="default" href={"/properties/"}>
-            <Icon type="left" /> View All Properties
-          </Button>
-        </div>
         <div>
           <SplitViewContainer
             leftComponent={leftComponent}
