@@ -8,7 +8,8 @@ const SplitViewContainer = props => (
       justifyContent: "space-around",
       flexDirection: "row",
       height: "90%",
-      paddingTop: "60px"
+      paddingTop: "64px",
+      top: "0px"
     }}
   >
     <div key="left"
