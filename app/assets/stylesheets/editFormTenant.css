@@ -45,14 +45,6 @@
   flex-direction: row;
 }
 
-.dropzone {
-  height: 300px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border: 2px dashed $gray;
-  cursor: pointer;
-}
 .upload-image {
   display: flex;
   flex-direction: row;

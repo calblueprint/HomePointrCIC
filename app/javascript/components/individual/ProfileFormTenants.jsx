@@ -196,20 +196,6 @@ class ProfileFormTenants extends React.Component {
     this.setState({ form: signedIds[0] });
   }
 
-
-  // <div className="dropzone-container">
-  //   <Dropzone
-  //     onDrop={this.onDrop}
-  //     multiple={true}
-  //     accept="image/jpeg, image/png"
-  //     className="dropzone"
-  //     style={{ backgroundColor: "#F8F8F8", width: 120, height: 120, borderStyle: "dashed", borderColor: "#C8C8C8", borderWidth: 0.1 }}
-  //   >
-  //     <p className="gray">Upload</p>
-  //   </Dropzone>
-  // </div>
-
-
   render() {
     const { getFieldDecorator } = this.props.form;
     const marks = {
