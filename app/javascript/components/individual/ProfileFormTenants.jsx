@@ -79,24 +79,31 @@ class ProfileFormTenants extends React.Component {
   //api edit
   handleEdit = (event) => {
     event.preventDefault();
-    let id = this.state.tenant.id;
-    var request = null;
-    var body = this.convertToDict()
-    body = JSON.stringify({tenant: body})
-    request = APIRoutes.tenants.update(id)
-    fetch(request, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-        "X_CSRF-Token": document.getElementsByName("csrf-token")[0].content
+
+    this.props.form.validateFields(
+      (err) => {
+        if (!err) {
+          let id = this.state.tenant.id;
+          var request = null;
+          var body = this.convertToDict()
+          body = JSON.stringify({tenant: body})
+          request = APIRoutes.tenants.update(id)
+          fetch(request, {
+            method: 'PUT',
+            headers: {
+              'Content-Type': 'application/json',
+              "X_CSRF-Token": document.getElementsByName("csrf-token")[0].content
+            },
+            body: body,
+            credentials: 'same-origin',
+          }).then((data) => {
+            window.location = '/tenants/' + id.toString();
+          }).catch((data) => {
+            window.location = '/tenants/' + id.toString() + '/edit';
+          });
+        }
       },
-      body: body,
-      credentials: 'same-origin',
-    }).then((data) => {
-      window.location = '/tenants/' + id.toString();
-    }).catch((data) => {
-      window.location = '/tenants/' + id.toString() + '/edit';
-    });
+    );
   }
   removeImages(imageList) {
     var i;
@@ -232,32 +239,6 @@ class ProfileFormTenants extends React.Component {
                   }],
                 })(
                   <Input onChange={() => this.handleChange("name")}/>
-                )}
-              </Form.Item>
-              <Form.Item
-                label="Email"
-              >
-                {getFieldDecorator('email', {
-                  initialValue: tenant.email,
-                  rules: [{
-                    required: true, message: 'Please input your email!',
-                  }, {
-                    type: 'email', message: 'The input is not a valid email!'
-                  }],
-                })(
-                  <Input onChange={() => this.handleChange("email")}/>
-                )}
-              </Form.Item>
-              <Form.Item
-                label="Phone Number"
-              >
-                {getFieldDecorator('phone', {
-                  initialValue: tenant.phone,
-                  rules: [{
-                    required: true, message: 'Please input your phone number!',
-                  }]
-                })(
-                  <Input onChange={() => this.handleChange("phone")}/>
                 )}
               </Form.Item>
               <Form.Item
@@ -453,11 +434,6 @@ class ProfileFormTenants extends React.Component {
           <Form.Item
             label="Rent"
           >
-            {getFieldDecorator('rent', {
-              rules: [{
-                required: true, message: 'Please select your range for rent!',
-              }],
-            })(
               <Row>
                 <Col span={4}>
                   <InputNumber
@@ -486,7 +462,6 @@ class ProfileFormTenants extends React.Component {
                   />
                 </Col>
               </Row>
-            )}
           </Form.Item>
         </div>
         <div className="section">

@@ -106,25 +106,31 @@ class PropertyProfileForm extends React.Component {
   //api edit
   handleEdit = (e) => {
     e.preventDefault();
-    let id = this.state.property.id;
-    var request = null;
-    var body = this.convertToDict()
-    body = JSON.stringify({property: body})
-    request = '/api/properties/' + id.toString();
-    this.removeImages(this.state.imageRemoveList);
-    fetch(request, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-        "X_CSRF-Token": document.getElementsByName("csrf-token")[0].content
-      },
-      body: body,
-      credentials: 'same-origin',
-    }).then((data) => {
-      window.location = '/properties/' + id.toString();
-    }).catch((data) => {
-      window.location = '/';
-    });
+
+    this.props.form.validateFields(
+      (err) => {
+        if (!err) {
+          let id = this.state.property.id;
+          var request = null;
+          var body = this.convertToDict()
+          body = JSON.stringify({property: body})
+          request = '/api/properties/' + id.toString();
+          this.removeImages(this.state.imageRemoveList);
+          fetch(request, {
+            method: 'PUT',
+            headers: {
+              'Content-Type': 'application/json',
+              "X_CSRF-Token": document.getElementsByName("csrf-token")[0].content
+            },
+            body: body,
+            credentials: 'same-origin',
+          }).then((data) => {
+            window.location = '/properties/' + id.toString();
+          }).catch((data) => {
+            window.location = '/';
+          });
+        }
+      });
   }
   removeImages(imageList) {
     var i;
