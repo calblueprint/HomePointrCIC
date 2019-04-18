@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { Avatar, Button } from "antd";
 import APIRoutes from "helpers/api_routes";
 import "antd/dist/antd.css";
-import logo from 'images/logo.png';
+import logo from '../../../assets/images/logo.png';
 
 class NavBar extends React.Component {
   constructor(props) {

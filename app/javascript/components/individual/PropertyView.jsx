@@ -165,7 +165,7 @@ class PropertyView extends React.Component {
           <Carousel autoplay>
             {this.props.property.images.map((image, index) => {
               return (
-                <div key={index}><h3><center><img src={image.url} key={index} margin-top="10%" width="100%"/></center></h3></div>
+                <div key={index}><h3><center><img src={image.url} width="100%"/></center></h3></div>
               )
             })}
           </Carousel>

@@ -53,8 +53,8 @@ class TenantShowPage extends React.Component {
     );
     const rightComponent = (
       <div className="split-screen-tabs">
-        <h1 className="h1-indent">Applications</h1>
-        <Button type="default" onClick={this.handleRedirect}>
+        <h1 className="h1-indent">Current Applications</h1>
+        <Button type="primary" className="new-app-btn" onClick={this.handleRedirect}>
           + New Applications
         </Button>
         <ListView
@@ -71,9 +71,6 @@ class TenantShowPage extends React.Component {
     );
 
     return [
-      <Button type="default" href={"/"}>
-        <Icon type="left" /> Back
-      </Button>,
       <SplitViewContainer
         leftComponent={leftComponent}
         rightComponent={rightComponent}

@@ -1,6 +1,3 @@
-.split-screen-left {
-  padding-top: 32px;
-}
 
 .split-screen-left-text {
   padding-left: 36px;
@@ -23,6 +20,10 @@
 .chips {
   margin-top: 28px;
   float: right;
+}
+
+.split-screen-left-title {
+  top: 28px important!;
 }
 
 .edit-button {

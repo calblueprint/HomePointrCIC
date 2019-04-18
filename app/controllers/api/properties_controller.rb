@@ -95,6 +95,8 @@ class Api::PropertiesController < ApplicationController
       :accessible_shower,
       :car_parking,
       :lift_access,
+      :lat,
+      :long,
       :images,
       :form
     )

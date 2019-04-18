@@ -22,6 +22,7 @@
   width: 330px;
   display: flex;
   flex-direction: row;
+  background: transparent;
 }
 
 .previous {
