@@ -77,9 +77,6 @@ class TenantsController < ApplicationController
        @avatar = nil
        @image_object = nil
      end
-     puts "AVATAR SIGNED ID START"
-     puts @avatar
-     puts "AVATAR SIGNED ID END"
 
      @client_form = nil
      @form_name = nil

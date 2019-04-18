@@ -26,7 +26,6 @@ class SubmissionModal extends React.Component {
   }
 
   handleOk = (e) => {
-    console.log(e)
     this.handlePost();
   }
 

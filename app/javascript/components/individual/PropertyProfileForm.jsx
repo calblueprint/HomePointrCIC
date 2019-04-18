@@ -46,9 +46,6 @@ class PropertyProfileForm extends React.Component {
     this.handleChangeSelect = this.handleChangeSelect.bind(this);
     this.renderUpload = this.renderUpload.bind(this);
     this.setFile = this.setFile.bind(this);
-    console.log("PROPERTY FORM/IMAGES");
-    console.log(this.state.form);
-    console.log(this.state.images);
   }
 
   componentDidMount() {
@@ -75,7 +72,6 @@ class PropertyProfileForm extends React.Component {
 
   convertToDict() {
     const property = this.state.property;
-    console.log(this.state.images);
     const keys = ["capacity", "description", "landlord_id", "rent", "property_type", "housing_type", "date_available", "location", "address", "number_of_bedrooms", "number_of_bathrooms", "floor_number", "mobility_aids", "furniture", "utilities_included", "accessible_shower", "car_parking", "lift_access", "lat", "long", "images", "image_deletes", "form"];
     const values = [property.capacity, property.description, property.landlord_id, property.rent, property.property_type, property.housing_type, property.date_available, property.location, property.address, property.number_of_bedrooms, property.number_of_bathrooms, property.floor_number, property.mobility_aids, property.furniture, property.utilities_included, property.accessible_shower, property.car_parking, property.lift_access, property.lat, property.long, this.state.images, this.state.image_deletes, this.state.form];
     let result = keys.reduce((obj, k, i) => ({...obj, [k]: values[i] }), {})
@@ -202,14 +198,12 @@ class PropertyProfileForm extends React.Component {
   }
 
   setupImages = () => {
-    console.log("SET UP IMAGES");
     let fileList = [];
     let image_objects = this.props.image_objects;
     try {
       image_objects.map((image_object) => {
         fileList.push({uid: image_object.id, url: image_object.url, name: image_object.name});
       });
-      console.log(fileList);
       return fileList;
     } catch(error) {
       return [];
@@ -217,10 +211,8 @@ class PropertyProfileForm extends React.Component {
   }
 
   uploadImages = (signedIds) => {
-    console.log("IN UPLOAD IMAGES");
     let uploadList = []
     signedIds.map((signedId) => {
-      console.log(find_signed(signedId));
       uploadList.push(signedId);
     });
     this.setState({ images: uploadList })
@@ -231,7 +223,6 @@ class PropertyProfileForm extends React.Component {
   }
 
   renderUpload = () => {
-    console.log("IN RENDER UPLOAD");
     let buttonProps = null;
     let imageList = this.setupImages();
       buttonProps = {

@@ -30,8 +30,6 @@ class ProfileFormTenants extends React.Component {
       form: this.props.client_form,
       disabled: false //to prevent multiple form submissions
     };
-    console.log("AVATAR FROM BACKEND");
-    console.log(this.props.avatar);
     this.handleChange = this.handleChange.bind(this);
     // this.handleCreate = this.handleCreate.bind(this);
     this.handleEdit = this.handleEdit.bind(this);
@@ -81,8 +79,6 @@ class ProfileFormTenants extends React.Component {
   //api edit
   handleEdit = (event) => {
     event.preventDefault();
-    console.log('we in')
-    console.log(this.state.avatar);
     let id = this.state.tenant.id;
     var request = null;
     var body = this.convertToDict()
@@ -137,9 +133,6 @@ class ProfileFormTenants extends React.Component {
     const tenant = this.state.tenant;
     tenant[attr] = value;
     this.setState({ tenant: tenant })
-    console.log(attr);
-    console.log(value);
-    console.log(tenant);
   }
 
   setFile(e) {
@@ -151,10 +144,8 @@ class ProfileFormTenants extends React.Component {
   }
 
   renderUpload() {
-    console.log("IN RENDER UPLOAD");
     let buttonProps = null;
     let imageList = this.setupImages();
-    console.log(this.state.imageList);
       buttonProps = {
         listType: 'picture-card',
         fileList: imageList,
@@ -180,12 +171,10 @@ class ProfileFormTenants extends React.Component {
 
   //grabs the active storage image urls from backend, name of pic at end of url
   setupImages = () => {
-    console.log("SET UP IMAGES");
     let fileList = [];
     let image_object = this.props.image_object;
     try {
       fileList.push({uid: image_object.id, url: image_object.url, name: image_object.name});
-      console.log(fileList);
       return fileList;
     } catch(error) {
       return [];
