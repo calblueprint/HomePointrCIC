@@ -1,0 +1,11 @@
+.checkbox {
+  top: 35%;
+  left: 5%;
+  position: absolute;
+}
+
+.complete-app-btn {
+  position: absolute;
+  top: -150px;
+  left: 500px;
+}

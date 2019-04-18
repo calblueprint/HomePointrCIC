@@ -38,6 +38,8 @@ class CreatePropertyForm extends React.Component {
         accessible_shower: null,
         car_parking: null,
         lift_access: null,
+        lat: null,
+        long: null,
         images: null,
         form: null,
 
@@ -93,22 +95,39 @@ class CreatePropertyForm extends React.Component {
     this.renderStageFive = this.renderStageFive.bind(this);
     this.renderFormStage = this.renderFormStage.bind(this);
     this.nextButton = this.nextButton.bind(this);
+    this.handleAuto = this.handleAuto.bind(this);
+    this.componentDidMount = this.componentDidMount.bind(this);
   }
 
-  // componentDidMount() {
-  //   render() {
-  //     return <div>{this.renderStageOne()}</div>
-  //   }
-  // }
+  componentDidMount() {
+    this.handleAuto();
+  }
 
   convertToDict() {
     const property = this.state.property;
-    const keys = ["capacity", "description", "landlord_id", "rent", "property_type", "housing_type", "date_available", "location", "address", "number_of_bedrooms", "number_of_bathrooms", "floor_number", "mobility_aids", "furniture", "utilities_included", "accessible_shower", "car_parking", "lift_access"];
-    const values = [property.capacity, property.description, property.landlord_id, property.rent, property.property_type, property.housing_type, property.date_available, property.location, property.address, property.number_of_bedrooms, property.number_of_bathrooms, property.floor_number, property.mobility_aids, property.furniture, property.utilities_included, property.accessible_shower, property.car_parking, property.lift_access];
+    const keys = ["capacity", "description", "landlord_id", "rent", "property_type", "housing_type", "date_available", "location", "address", "number_of_bedrooms", "number_of_bathrooms", "floor_number", "mobility_aids", "furniture", "utilities_included", "accessible_shower", "car_parking", "lift_access", "lat", "long"];
+    const values = [property.capacity, property.description, property.landlord_id, property.rent, property.property_type, property.housing_type, property.date_available, property.location, property.address, property.number_of_bedrooms, property.number_of_bathrooms, property.floor_number, property.mobility_aids, property.furniture, property.utilities_included, property.accessible_shower, property.car_parking, property.lift_access, property.lat, property.long];
     let result = keys.reduce((obj, k, i) => ({...obj, [k]: values[i] }), {})
     return result
   }
 
+  // autocomplete
+  handleAuto() {
+    var places = require('places.js');
+    var placesAutocomplete = places({
+      appId: 'plT4Z8MULV0O',
+      apiKey: '48e619128b523ff86727e917eb1fa1d3',
+      container: document.querySelector('#address')
+    });
+    placesAutocomplete.on('change', (e) => {
+      const new_property = this.state.property;
+      new_property['address'] = e.suggestion.value;
+      new_property['lat'] = e.suggestion.latlng.lat;
+      new_property['long'] = e.suggestion.latlng.lng;
+      this.setState({ property: new_property });
+      document.querySelector('#address').value = e.suggestion.value;
+    });
+  }
 
   // api create
   handleCreate() {
@@ -183,19 +202,6 @@ class CreatePropertyForm extends React.Component {
         onChange: (fileList) => this.handleChangeImage(fileList)
       };
 
-      // <ActiveStorageProvider
-      //   endpoint={{
-      //     path: '/api/properties/' + this.state.property.id.toString(),
-      //     model: "property",
-      //     attribute: 'avatar',
-      //     method: "PUT",
-      //   }}
-      //   headers={{
-      //     'Content-Type': 'application/json'
-      //   }}
-      //   render={Utils.activeStorageUploadRenderer}
-      // />
-
     return (
       <div>
         Images
@@ -221,7 +227,7 @@ class CreatePropertyForm extends React.Component {
                 required: true, message: 'Please input the address!',
               }],
             })(
-              <Input onChange={() => this.handleChange("address")}/>
+              <Input id="address"/>
             )}
           </Form.Item>
           <Form.Item
@@ -610,5 +616,4 @@ class CreatePropertyForm extends React.Component {
   }
 
 }
-// const WrappedProfileFormproperties = Form.create({name: 'profileproperties'})(ProfileFormproperties);
 export default Form.create()(CreatePropertyForm);

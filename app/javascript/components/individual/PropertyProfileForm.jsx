@@ -37,7 +37,8 @@ class PropertyProfileForm extends React.Component {
       disabled: false //to prevent multiple form submissions
     };
     this.handleChange = this.handleChange.bind(this);
-    // this.handleCreate = this.handleCreate.bind(this);
+    this.componentDidMount = this.componentDidMount.bind(this);
+    this.handleAuto = this.handleAuto.bind(this)
     this.handleEdit = this.handleEdit.bind(this);
     this.handleDestroy = this.handleDestroy.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -50,11 +51,33 @@ class PropertyProfileForm extends React.Component {
     console.log(this.state.images);
   }
 
+  componentDidMount() {
+    this.handleAuto();
+  }
+
+  handleAuto() {
+    var places = require('places.js');
+    var placesAutocomplete = places({
+      appId: 'plT4Z8MULV0O',
+      apiKey: '48e619128b523ff86727e917eb1fa1d3',
+      // container: document.querySelectorAll('div.ant-row.ant-form-item')[0].children[1].querySelector('div').querySelector('span').querySelector('input')
+      container: document.querySelector('#address')
+    });
+    placesAutocomplete.on('change', (e) => {
+      const new_property = this.state.property;
+      new_property['address'] = e.suggestion.value;
+      new_property['lat'] = e.suggestion.latlng.lat;
+      new_property['long'] = e.suggestion.latlng.lng;
+      this.setState({ property: new_property });
+      document.querySelector('#address').value = e.suggestion.value;
+    });
+  }
+
   convertToDict() {
     const property = this.state.property;
     console.log(this.state.images);
-    const keys = ["capacity", "description", "landlord_id", "rent", "property_type", "housing_type", "date_available", "location", "address", "number_of_bedrooms", "number_of_bathrooms", "floor_number", "mobility_aids", "furniture", "utilities_included", "accessible_shower", "car_parking", "lift_access", "images", "image_deletes", "form"];
-    const values = [property.capacity, property.description, property.landlord_id, property.rent, property.property_type, property.housing_type, property.date_available, property.location, property.address, property.number_of_bedrooms, property.number_of_bathrooms, property.floor_number, property.mobility_aids, property.furniture, property.utilities_included, property.accessible_shower, property.car_parking, property.lift_access, this.state.images, this.state.image_deletes, this.state.form];
+    const keys = ["capacity", "description", "landlord_id", "rent", "property_type", "housing_type", "date_available", "location", "address", "number_of_bedrooms", "number_of_bathrooms", "floor_number", "mobility_aids", "furniture", "utilities_included", "accessible_shower", "car_parking", "lift_access", "lat", "long", "images", "image_deletes", "form"];
+    const values = [property.capacity, property.description, property.landlord_id, property.rent, property.property_type, property.housing_type, property.date_available, property.location, property.address, property.number_of_bedrooms, property.number_of_bathrooms, property.floor_number, property.mobility_aids, property.furniture, property.utilities_included, property.accessible_shower, property.car_parking, property.lift_access, property.lat, property.long, this.state.images, this.state.image_deletes, this.state.form];
     let result = keys.reduce((obj, k, i) => ({...obj, [k]: values[i] }), {})
     return result
   }
@@ -243,9 +266,10 @@ class PropertyProfileForm extends React.Component {
 
     return (
       <div className="edit-property-container">
-        <Form onSubmit={this.handleEdit}>
+        <h1>Edit Property</h1>
+        <Form onSubmit={this.handleEdit} hideRequiredMark={true}>
           <div className="section">
-            <h2>Basic</h2>
+            <h2>Basic Information</h2>
             <div className="grid-container">
               <Form.Item
                 label="Address"
@@ -256,7 +280,7 @@ class PropertyProfileForm extends React.Component {
                     required: true, message: 'Please input the address!',
                   }],
                 })(
-                  <Input onChange={() => this.handleChange("address")}/>
+                  <Input id="address"/>
                 )}
               </Form.Item>
               <Form.Item
@@ -497,14 +521,14 @@ class PropertyProfileForm extends React.Component {
             <Form.Item
               label="Add images"
             >
-            <div className="upload-image">
-              {pictureWallRender}
-              <DirectUploadProvider
-                multiple={true}
-                onSuccess={signedIds => { this.uploadImages(signedIds) }}
-                render={Utils.activeStorageUploadRenderer}
-              />
-            </div>
+              <div className="upload-image">
+                {pictureWallRender}
+                <DirectUploadProvider
+                  multiple={true}
+                  onSuccess={signedIds => { this.uploadImages(signedIds) }}
+                  render={Utils.activeStorageUploadRenderer}
+                />
+              </div>
             </Form.Item>
           </div>
           <div className="section">
@@ -512,33 +536,33 @@ class PropertyProfileForm extends React.Component {
               <Form.Item
                 label="Upload form"
               >
-              <div className="upload-form">
-                <DirectUploadProvider
-                  multiple={false}
-                  onSuccess={signedIds => { this.uploadForms(signedIds) }}
-                  render={(renderProps) => Utils.activeStorageUploadRenderer({ ...renderProps, filename: this.props.form_name, type: "form" })}
-                />
-              </div>
+                <div className="upload-form">
+                  <DirectUploadProvider
+                    multiple={false}
+                    onSuccess={signedIds => { this.uploadForms(signedIds) }}
+                    render={(renderProps) => Utils.activeStorageUploadRenderer({ ...renderProps, filename: this.props.form_name, type: "form" })}
+                  />
+                </div>
               </Form.Item>
-            </div>
-            <div className="section">
-              <div className="delete-client">
-                <Row type="flex" style={{ width: 660 }}>
-                  <Col span={12}>
-                    <div>Delete Client</div>
-                  </Col>
-                  <Col span={12}>
-                    <Button className="delete-button" type="danger" onClick={this.handleDestroy}>Delete Property</Button>
-                  </Col>
-                </Row>
-              </div>
-            </div>
-          <div className="buttons">
-            <Form.Item>
-              <Button className="previous" onClick={() => {window.location = '/properties/' + this.state.property.id.toString()}}>Cancel</Button>
-              <Button className="submit" type="primary" htmlType="submit" onClick={this.handleEdit}>Save Changes</Button>
-            </Form.Item>
           </div>
+          <div className="section">
+            <div className="delete-client">
+              <Row type="flex" style={{ width: 660 }}>
+                <Col span={12}>
+                  <div>Delete Client</div>
+                </Col>
+                <Col span={12}>
+                  <Button className="delete-button" type="danger" onClick={this.handleDestroy}>Delete Property</Button>
+                </Col>
+              </Row>
+            </div>
+          </div>
+        <div className="buttons">
+          <Form.Item>
+            <Button className="previous" onClick={() => {window.location = '/properties/' + this.state.property.id.toString()}}>Cancel</Button>
+            <Button className="submit" type="primary" htmlType="submit" onClick={this.handleEdit}>Save Changes</Button>
+          </Form.Item>
+        </div>
         </Form>
       </div>
     )

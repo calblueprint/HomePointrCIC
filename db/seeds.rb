@@ -18,7 +18,7 @@ def make_landlords
       password: 'password',
       password_confirmation: 'password',
       phone: Faker::PhoneNumber.cell_phone.delete('-'),
-      address: Faker::Address.street_address
+      address: Faker::Address.full_address
     )
     landlord.save
     # landlord.primary_email_record.skip_confirmation!
@@ -36,7 +36,7 @@ def make_referral_agencies
       password: 'password',
       password_confirmation: 'password',
       phone: Faker::PhoneNumber.cell_phone.delete('-'),
-      address: Faker::Address.street_address
+      address: Faker::Address.full_address
     )
     referral_agency.save
     # referral_agency.primary_email_record.skip_confirmation!
@@ -58,7 +58,9 @@ def make_properties
       housing_type: n % 13,
       property_type: n % 10,
       location: n % 6,
-      address: Faker::Address.street_address,
+      address: Faker::Address.full_address,
+      lat: Faker::Address.latitude,
+      long: Faker::Address.longitude,
       date_available: Date.today,
       number_of_bedrooms: Faker::Number.between(1, 10),
       number_of_bathrooms: Faker::Number.between(1, 10),

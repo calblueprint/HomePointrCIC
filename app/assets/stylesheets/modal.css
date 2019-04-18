@@ -1,4 +1,4 @@
-h1 {
+.modal-h1 {
   font-size: 18px;
   font-weight: normal;
   margin-bottom: 8px;
@@ -68,4 +68,16 @@ h1 {
   display: inline-block;
   float: left;
   width: 50%
+}
+
+.upload-list-inline .ant-upload-list-item {
+  float: left;
+  width: 200px;
+  margin-right: 8px;
+}
+.upload-list-inline .ant-upload-animate-enter {
+  animation-name: uploadAnimateInlineIn;
+}
+.upload-list-inline .ant-upload-animate-leave {
+  animation-name: uploadAnimateInlineOut;
 }

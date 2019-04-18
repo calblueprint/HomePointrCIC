@@ -8,16 +8,16 @@ import '../../assets/stylesheets/application.css';
 class RATenantView extends React.Component {
   constructor(props) {
     super(props);
-    this.handleEdit = this.handleEdit.bind(this);
+    this.editRedirect = this.editRedirect.bind(this);
   }
 
-  handleEdit() {
+  editRedirect() {
     window.location = '/tenants/' + this.props.tenant.id.toString() + '/edit'
   }
 
   renderName() {
     return (
-      <div key='name'>
+      <div className="split-screen-left-title" key='name'>
         <h1> {this.props.tenant.name} </h1>
       </div>
     )
@@ -134,7 +134,7 @@ class RATenantView extends React.Component {
           <Row>
             <Col span={16}><h1>{this.props.tenant.name}</h1></Col>
             <Col span={8} className='chips'>
-              <Button key='button' type='default' onClick={this.handleEdit} className='edit-button'>Edit</Button>
+              <Button key='button' type='default' onClick={this.editRedirect} className='edit-button'>Edit</Button>
             </Col>
           </Row>
           {this.renderDetails()}

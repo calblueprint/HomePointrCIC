@@ -1,16 +1,17 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Select, Input, Button, Slider, Icon, Switch, DatePicker } from 'antd';
+import { Select, Input, Button, Slider, Icon, Switch, DatePicker, message } from 'antd';
 import 'antd/dist/antd.css';
 import moment from 'moment';
 import ListView from './ListView.jsx';
-import APIRoutes from 'helpers/api_routes';
 import Utils from 'helpers/utils';
 import UploadButton from './individual/UploadButton';
 import ActiveStorageProvider from "react-activestorage-provider";
 import SplitViewContainer from "./individual/SplitViewContainer.jsx";
 import PropertyListWrapper from "./individual/PropertyListWrapper.jsx";
+import ApplicationSubmissionWrapper from "./individual/ApplicationSubmissionWrapper.jsx";
 import RATenantView from "./RATenantView.jsx";
+import MapContainer from './individual/MapContainer';
 
 class ApplicationsPairing extends React.Component {
 
@@ -18,85 +19,70 @@ class ApplicationsPairing extends React.Component {
     super(props);
     this.state = {
       selectedProperties: [], //array of strings
-      selectedTenant: null,
       description: null,
-      tenants: props.tenants,
       properties: props.properties,
-      individualView: false,
+      filtered_properties: props.properties,
+      show_map: false,
+      leftComponent: null,
+      rightComponent: null,
+      selectedEnd: 0,
+      status: "propertyList"
     };
     this.onChangeProperty = this.onChangeProperty.bind(this);
-    this.handleMatch = this.handleMatch.bind(this);
-    this.setTenant = this.setTenant.bind(this);
     this.clearTenant = this.clearTenant.bind(this);
+    this.toggleMap = this.toggleMap.bind(this);
+    this.setFilteredProperties = this.setFilteredProperties.bind(this);
+    this.renderApplicationSubmissionWrapper = this.renderApplicationSubmissionWrapper.bind(this);
+    this.renderPropertyListWrapper = this.renderPropertyListWrapper.bind(this);
+    this.renderTenantView = this.renderTenantView.bind(this);
   }
 
-  onChangeProperty(e, id) {
+  toggleMap() {
+    this.setState({show_map: !this.state.show_map})
+  }
+
+  onChangePropertyGood(e, property) {
     if (e.target.checked) {
-      this.state.selectedProperties.push(id);
+      this.state.selectedProperties.push(property);
     } else {
-      var index = this.state.selectedProperties.indexOf(id);
+      var index = this.state.selectedProperties.indexOf(property);
       if (index > -1) {
         this.state.selectedProperties.splice(index, 1);
       }
     }
   }
 
-  handleMatch() {
-    var request = null;
-    var prop;
-    for (prop in this.state.selectedProperties) {
-      let body = {"description": this.state.description, "status": 1, "property_id": this.state.selectedProperties[prop], "tenant_id": this.state.selectedTenant.id};
-      body = JSON.stringify({application: body})
-      request = APIRoutes.applications.create
-      fetch(request, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          "X_CSRF-Token": document.getElementsByName("csrf-token")[0].content
-        },
-        body: body,
-        credentials: 'same-origin',
-      }).then((data) => {
-        window.location = '/';
-      }).catch((data) => {
-        console.error(data);
-      });
+  onChangeProperty(e, property) {
+    if (e.target.checked) {
+      //add to beginning
+      var index = this.state.properties.indexOf(property);
+      this.state.properties.splice(index, 1);
+      this.state.properties.unshift(property);
+      this.state.selectedEnd+=1;
+    } else {
+      //add to end
+      var index = this.state.properties.indexOf(property);
+      this.state.properties.splice(index, 1);
+      this.state.properties.push(property);
+      this.state.selectedEnd-=1;
     }
   }
 
-  renderTextarea() {
-    const { TextArea } = Input;
-    return (
-      <div>
-        <label>Add a note to about the client.</label>
-        <TextArea rows ={4} onChange={(e) => this.state.description = e.target.value} autosize={true}/>
-      </div>
-    )
+  makeTagValues(tenant) {
+    return ["Min Rent: " + tenant.rent_min, "Max Rent: " + tenant.rent_max, "Housing Type " + tenant.housing_type, "Property Type " + tenant.property_type, "Size: " + tenant.number_of_bedrooms, "Location: " + tenant.location, "Date Needed: " + tenant.date_needed]
   }
 
-  renderUpload(index) {
-    return (
-      <div key={index}>
-        <ActiveStorageProvider
-          endpoint={{
-            path: '/api/applications',
-            model: 'Application',
-            attribute: 'form',
-            method: 'POST',
-          }}
-          headers={{
-            'Content-Type': 'application/json'
-          }}
-          render={Utils.activeStorageUploadRenderer}
-        />
-      </div>
-    )
-  }
+  renderApplicationSubmissionWrapper() {
+    if (this.state.selectedEnd > 0) { //there are selected applications
+        this.setState({status:"applicationSubmission"})
+    } else {
+      message.error('Please select applications!');
+    }
 
-  setTenant(e, resource) {
-    this.setState({individualView: true});
-    this.setState({selectedTenant: resource});
-    window.scrollTo(0, 0);
+	}
+
+  setFilteredProperties(lst) {
+    this.setState({filtered_properties: lst});
   }
 
   clearTenant() {
@@ -104,35 +90,45 @@ class ApplicationsPairing extends React.Component {
     this.setState({selectedTenant: null});
   }
 
-  makeTagValues(tenant) {
-    return ["Min Rent: " + tenant.rent_min, "Max Rent: " + tenant.rent_max, "Housing Type " + tenant.housing_type, "Property Type " + tenant.property_type, "Size: " + tenant.number_of_bedrooms, "Location: " + tenant.location, "Date Needed: " + tenant.date_needed]
+  renderPropertyListWrapper() {
+		this.setState({status:"propertyList"})
+	}
+
+  renderTenantView() {
+    debugger;
+    window.location = "/tenants/" + this.props.tenant.id;
   }
 
   render() {
-    Utils.setup(this.state.tenants, this.props.tenantImages);
-    Utils.setup(this.state.tenants, this.props.tenantPriorities);
+    Utils.setup([this.props.tenant], this.props.tenantImage);
+    Utils.setup([this.props.tenant], this.props.tenantPriority);
     Utils.setup(this.state.properties, this.props.propertyImages);
     Utils.setup(this.state.properties, this.props.propertyForms);
+
     let leftComponent = null;
-    if (this.state.individualView) {
-      //Individual tenant has been selected
-      leftComponent = ([
-        <Button type="primary" onClick={this.clearTenant}><Icon type="left" /> View All Clients</Button>,
-        <RATenantView id={this.state.selectedTenant.id} name={this.state.selectedTenant.name} mode="ra_matching" description={this.state.selectedTenant.description} avatar={this.state.selectedTenant.url} tagValues={this.makeTagValues(this.state.selectedTenant)} status={this.state.selectedTenant.priority}/>
-      ]);
+    if (this.state.show_map) {
+      leftComponent = <MapContainer filtered_properties={this.state.filtered_properties}/>
     } else {
-      //All tenants shown here
       leftComponent = (
-        <ListView resources={this.state.tenants} tenant_modal={true} avatar={true} selectTenantFunc={this.setTenant} tenantSelect={true} type="tenant"/>
+        <RATenantView tenant={this.props.tenant} mode="ra_edit" avatar={this.props.tenant.avatar} status={this.props.tenant.priority}/>
       );
     }
+    
     //Filtered properties
-    let rightComponent = (
-      <PropertyListWrapper {...this.props} CheckboxChange={this.onChangeProperty}/>
-    );
-    if (this.state.individualView) {
+    let rightComponent = null;
+    if (this.state.status == "propertyList") {
       rightComponent = (
-        <PropertyListWrapper {...this.props} CheckboxChange={this.onChangeProperty} selectedTenant={this.state.selectedTenant}/>
+        <h1>Potential Homes</h1>,
+        [<PropertyListWrapper {...this.props} toggleMap={this.toggleMap} selectedEnd={this.state.selectedEnd} propertyCompletion={true} CheckboxChange={this.onChangeProperty} selectedTenant={this.props.tenant}/>,
+        <Button key="start_applications" onClick={this.renderApplicationSubmissionWrapper}>Start Applications</Button>]
+      );
+    }
+    else if (this.state.status == "applicationSubmission") {
+      rightComponent = (
+        <h1>Upload and Submit</h1>,
+        [<ApplicationSubmissionWrapper {...this.props} selectedProperties={this.state.properties.slice(0, this.state.selectedEnd)}/>,
+        <Button key="edit_selections" onClick={this.renderPropertyListWrapper}>Edit Selections</Button>,
+        <Button key="edit_selections" onClick={this.renderTenantView}>Finish Application Process</Button>]
       );
     }
 
@@ -142,20 +138,15 @@ class ApplicationsPairing extends React.Component {
           leftComponent={leftComponent}
           rightComponent={rightComponent}
         />
-        {this.renderTextarea()}
-        {this.renderUpload()}
-        <Button key='save' type="primary" onClick={this.handleMatch}>
-          Submit
-        </Button>
       </div>
     );
   }
 }
 
 ApplicationsPairing.propTypes = {
-  tenants: PropTypes.array,
-  tenantImages: PropTypes.array,
-  tenantPriorities: PropTypes.array,
+  tenant: PropTypes.object,
+  tenantImage: PropTypes.array,
+  tenantPriority: PropTypes.array,
   properties: PropTypes.array,
   housing_options: PropTypes.array,
   property_options: PropTypes.array,
