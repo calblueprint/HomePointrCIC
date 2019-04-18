@@ -15,14 +15,12 @@ class TenantModal extends React.Component {
   }
 
   handleButtons() {
-    if (this.props.housed == null) {
-        return(
-          <ApplicationStatusButtons
-            property_id={this.props.application.property_id}
-            application_id={this.props.application.id}
-            status={this.props.application.status}/>
-          )
-    }
+    return(
+        <ApplicationStatusButtons
+          property_id={this.props.application.property_id}
+          application_id={this.props.application.id}
+          status={this.props.application.status}/>
+        )
   }
 
   renderAttachment() {
@@ -30,14 +28,6 @@ class TenantModal extends React.Component {
       return(<p><a href={this.props.application.url}><Icon type="paper-clip" />Attachment</a></p>)
     }
   }
-
-  // renderAvatar(images){
-  //   if (typeof(images) === "string") {
-  //       return (<Avatar size={200} shape="square" src={images} />);
-  //   } else {
-  //     return (<Avatar size={200} shape="square" src={images[0].url} />)
-  //   }
-  // }
 
   renderAvatar = () => {
     return(
@@ -76,12 +66,12 @@ class TenantModal extends React.Component {
     }, {
       title: 'Last Updated',
       dataIndex: 'lastUpdated',
-      key: 'fileName'
+      key: 'lastUpdated'
     }, {
       title: 'Attachment',
       dataIndex: 'attachment',
       render: download => <a href={this.props.application.url}>{download}</a>,
-      key: 'fileName'
+      key: 'attachment'
     }];
 
 
@@ -149,8 +139,6 @@ TenantModal.propTypes = {
   description: PropTypes.string,
   name: PropTypes.string,
   app: PropTypes.object,
-  property_id: PropTypes.number,
-  housed: PropTypes.bool
 };
 
 TenantModal.defaultProps = {

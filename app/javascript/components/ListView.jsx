@@ -68,30 +68,6 @@ class ListView extends React.Component {
     }
   }
 
-  // renderTenantModal(resource, index) {
-  //   if (!this.props.tenant_modal) {
-  //     return(<Button key={resource.id} type="default" href={"/tenants/" + resource.id}>
-  //       View Info
-  //     </Button>)
-  //   } else {
-  //     if (this.props.applications) {
-  //       return(<TenantModal tenant={resource} app={this.props.applications[index]}/>)
-  //     } else {
-  //       return(<TenantModal tenant={resource}/>)
-  //     }
-  //   }
-  // }
-  //
-  // renderPropertyModal(resource) {
-  //   if (this.props.property_modal) {
-  //     return(<PropertyModal property={resource}/>)
-  //   } else {
-  //     return(<Button key={resource.id} type="default" href={"/properties/" + resource.id}>
-  //       View Info
-  //     </Button>)
-  //   }
-  // }
-
   renderTenantSelectButton(resource) {
     if (this.props.tenantSelect) {
       return(<Button type="default" onClick={(e) => this.props.selectTenantFunc(e, resource)}>Select Client</Button>)
@@ -160,17 +136,10 @@ ListView.propTypes = {
   tenantSelect: PropTypes.bool,
   checkbox: PropTypes.bool,
   avatar: PropTypes.bool,
-  tenant_modal: PropTypes.bool,
-  property_id: PropTypes.number,
-  housed: PropTypes.bool,
-  property_modal: PropTypes.bool,
 };
 
 ListView.defaultProps = {
-  property_id: null,
   applications: null,
-  housed: null,
-  property_modal: null,
   tenantSelect: null,
   applications: null,
 };
