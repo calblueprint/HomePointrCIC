@@ -68,7 +68,7 @@ p {
 .h1-indent {
   margin-left: 10%;
   margin-bottom: 63px;
-  margin-right: 164px;
+  margin-right: 165px;
   display: inline-block;
 }
 
@@ -77,4 +77,5 @@ p {
   /* float: right; */
   /* margin-right: 26%; */
   margin-top: 8px;
+  width: 208px;
 }
