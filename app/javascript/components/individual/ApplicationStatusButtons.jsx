@@ -12,6 +12,7 @@ class ApplicationStatusButtons extends React.Component {
   }
 
   handleStatus(new_status) {
+    confirm("Are you sure you want to change this tenant's status?");
     let application_id = this.props.application_id;
     let body = JSON.stringify({status: new_status});
     let request =APIRoutes.applications.update(application_id)
