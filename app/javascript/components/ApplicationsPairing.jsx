@@ -113,14 +113,13 @@ class ApplicationsPairing extends React.Component {
         <RATenantView tenant={this.props.tenant} mode="ra_edit" avatar={this.props.tenant.avatar} status={this.props.tenant.priority}/>
       );
     }
-    
+
     //Filtered properties
     let rightComponent = null;
     if (this.state.status == "propertyList") {
       rightComponent = (
-        <h1>Potential Homes</h1>,
-        [<PropertyListWrapper {...this.props} toggleMap={this.toggleMap} selectedEnd={this.state.selectedEnd} propertyCompletion={true} CheckboxChange={this.onChangeProperty} selectedTenant={this.props.tenant}/>,
-        <Button key="start_applications" onClick={this.renderApplicationSubmissionWrapper}>Start Applications</Button>]
+        [<Button type="primary" className="property-list-wrapper-start-app-btn" key="start_applications" onClick={this.renderApplicationSubmissionWrapper}>Start Applications</Button>,
+          <PropertyListWrapper {...this.props} toggleMap={this.toggleMap} selectedEnd={this.state.selectedEnd} propertyCompletion={true} CheckboxChange={this.onChangeProperty} selectedTenant={this.props.tenant}/>]
       );
     }
     else if (this.state.status == "applicationSubmission") {
