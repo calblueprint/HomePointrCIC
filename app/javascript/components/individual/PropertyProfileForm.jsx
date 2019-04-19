@@ -30,7 +30,7 @@ class PropertyProfileForm extends React.Component {
       property_types: props.categories.property_types,
       locations: props.categories.locations,
       form: this.props.client_form,
-      images: this.props.images,
+      images: [],
       fileList: [],
       imageRemoveList: [],
       disabled: false //to prevent multiple form submissions
@@ -216,6 +216,7 @@ class PropertyProfileForm extends React.Component {
   }
 
   uploadImages = (signedIds) => {
+    console.log("signedIds", signedIds);
     let uploadList = []
     signedIds.map((signedId) => {
       uploadList.push(signedId);
@@ -224,6 +225,7 @@ class PropertyProfileForm extends React.Component {
   }
 
   uploadForms = (signedIds) => {
+    console.log("signedIds", signedIds);
     this.setState({ form: signedIds[0] });
   }
 
@@ -522,7 +524,7 @@ class PropertyProfileForm extends React.Component {
                 <DirectUploadProvider
                   multiple={true}
                   onSuccess={signedIds => { this.uploadImages(signedIds) }}
-                  render={Utils.activeStorageUploadRenderer}
+                  render={(renderProps) => Utils.activeStorageUploadRenderer({ ...renderProps, type: "images" })}
                 />
               </div>
             </Form.Item>
