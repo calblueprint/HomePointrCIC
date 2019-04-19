@@ -35,6 +35,13 @@ class ApplicationsPairing extends React.Component {
     this.renderApplicationSubmissionWrapper = this.renderApplicationSubmissionWrapper.bind(this);
     this.renderPropertyListWrapper = this.renderPropertyListWrapper.bind(this);
     this.renderTenantView = this.renderTenantView.bind(this);
+    this.onSubmitProperty = this.onSubmitProperty.bind(this);
+  }
+
+  onSubmitProperty(e, property) {
+      if (this.state.selectedProperties > 0) {
+          this.state.selectedProperties -= 1;
+      }
   }
 
   toggleMap() {
@@ -76,7 +83,7 @@ class ApplicationsPairing extends React.Component {
     if (this.state.selectedEnd > 0) { //there are selected applications
         this.setState({status:"applicationSubmission"})
     } else {
-      message.error('Please select applications!');
+      message.error('Please select properties!');
     }
 
 	}
@@ -95,8 +102,12 @@ class ApplicationsPairing extends React.Component {
 	}
 
   renderTenantView() {
-    debugger;
-    window.location = "/tenants/" + this.props.tenant.id;
+    if (this.state.selectedProperties > 0) {
+      debugger;
+      message.error('Please submit all applications!');
+    } else {
+      window.location = "/tenants/" + this.props.tenant.id;
+    }
   }
 
   render() {
@@ -126,7 +137,7 @@ class ApplicationsPairing extends React.Component {
     else if (this.state.status == "applicationSubmission") {
       rightComponent = (
         <h1>Upload and Submit</h1>,
-        [<ApplicationSubmissionWrapper {...this.props} selectedProperties={this.state.properties.slice(0, this.state.selectedEnd)}/>,
+        [<ApplicationSubmissionWrapper {...this.props} onSubmitProperty={this.onSubmitProperty} selectedProperties={this.state.properties.slice(0, this.state.selectedEnd)}/>,
         <Button key="edit_selections" onClick={this.renderPropertyListWrapper}>Edit Selections</Button>,
         <Button key="edit_selections" onClick={this.renderTenantView}>Finish Application Process</Button>]
       );
