@@ -277,7 +277,7 @@ class PropertyProfileForm extends React.Component {
                     required: true, message: 'Please input the address!',
                   }],
                 })(
-                  <Input id="address"/>
+                  <Input id="address" size="8"/>
                 )}
               </Form.Item>
               <Form.Item
