@@ -34,18 +34,20 @@ class PropertyShowPage extends React.Component {
     );
     const rightComponent = (
       <div className="split-screen-tabs">
-        <Tabs defaultActiveKey="1" className="tab-cards">
+        <Tabs defaultActiveKey="1">
           <TabPane tab="Pending Applications" key="1">
-            <ListView
-              applications={this.props.potentialTenantApps}
-              resources={this.state.potentialTenants}
-              type="tenant"
-              avatar={true}
-              checkbox={false}
-              displayTag={true}
-              renderModal={true}
-              viewpoint="LL"
-            />
+            <div className="tab-cards">
+              <ListView
+                applications={this.props.potentialTenantApps}
+                resources={this.state.potentialTenants}
+                type="tenant"
+                avatar={true}
+                checkbox={false}
+                displayTag={true}
+                renderModal={true}
+                viewpoint="LL"
+              />
+            </div>
           </TabPane>
           <TabPane tab="Your Clients" key="2">
             <ListView
