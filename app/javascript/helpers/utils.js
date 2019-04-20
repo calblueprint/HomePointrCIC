@@ -3,11 +3,12 @@ import { Tag, Upload, Icon, message } from 'antd';
 import Avatar from '../components/individual/Avatar.jsx';
 
 const Utils = {
-  activeStorageUploadRenderer: ({ handleUpload, uploads, ready }) => {
+  activeStorageUploadRenderer: ({ handleUpload, uploads, ready, imageUrl, filename, type }) => {
     return(<div>
-      <Avatar handleUpload={handleUpload} uploads={uploads}/>
+      <Avatar handleUpload={handleUpload} uploads={uploads} imageUrl={imageUrl} filename={filename} type={type}/>
 
       {uploads.map(upload => {
+        // console.log(upload)
         switch (upload.state) {
           case 'waiting':
             return <p key={upload.id}>Waiting to upload {upload.file.name}</p>
@@ -47,11 +48,11 @@ const Utils = {
   },
 
   // render status tag for tenant card
-  renderStatus: (statusInp, displayTag, isString) => {
+  renderStatus: (statusInp, displayTag) => {
 
     let status = statusInp;
 
-    if (isString) {
+    if (typeof(status) === "string") {
       switch(status) {
         case "housed":
           status = 0;

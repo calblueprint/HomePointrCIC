@@ -64,6 +64,29 @@ class TenantsController < ApplicationController
      authorize @tenant
      @current_userID = current_user.id
      @categories = get_tenant_category_enums()
+     @avatar = nil
+     @image_object = nil
+     if @tenant.avatar.attached? == true
+       @avatar = @tenant.avatar.signed_id
+       @image_object = {
+          id: @tenant.avatar.id,
+          name: @tenant.avatar.filename,
+          url: rails_blob_path(@tenant.avatar, :host => 'localhost'),
+        }
+     else
+       @avatar = nil
+       @image_object = nil
+     end
+
+     @client_form = nil
+     @form_name = nil
+     if @tenant.form.attached? == true
+       @client_form = @tenant.form.signed_id
+       @form_name = @tenant.form.filename
+     else
+       @client_form = nil
+       @form_name = nil
+     end
   end
  def get_tenant_category_enums
    @nice_housing_type = []
@@ -105,11 +128,12 @@ class TenantsController < ApplicationController
       :location,
       :referral_agency_id,
       :date_needed,
+      :avatar,
       :number_of_bathrooms,
       :mobility_aids,
       :accessible_shower,
       :car_parking,
-      :lift_access
+      :lift_access,
     )
   end
 end

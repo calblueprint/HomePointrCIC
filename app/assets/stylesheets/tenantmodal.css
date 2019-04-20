@@ -1,0 +1,48 @@
+.tenant-modal {
+  height: 660px;
+}
+
+.modal-content {
+  display: flex;
+  flex-direction: row;
+  padding-left: 80px;
+  padding-right: 80px;
+  padding-top: 60px;
+}
+
+.modal-avatar {
+  border-radius: 4px 4px 4px 4px;
+  margin-bottom: 32px;
+}
+
+.basic-info {
+  width: 33%;
+}
+
+.detailed-info {
+  padding-left: 42px;
+}
+
+.modal-subsection {
+  margin-bottom: 24px;
+}
+
+/* scrollable description */
+.description-container {
+  margin-bottom: 24px;
+  width: 530px;
+  height: 84px;
+  overflow: scroll;
+  position: relative;
+  line-height: 1.2em;
+  max-height: 6em;
+}
+
+
+.table-container {
+  border-top: 1px solid #D9D9D9;
+}
+
+.table {
+  padding-top: 42px;
+}

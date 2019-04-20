@@ -3,16 +3,16 @@
 // } from 'antd';
 import React from "react";
 import PropTypes from "prop-types";
-import { Upload, message, Form, Icon, Select, Input, Button, Slider, Switch, DatePicker, InputNumber, Row, Col } from 'antd';
+import { Upload, message, Form, Icon, Select, Input, Button, Slider, Switch, DatePicker, InputNumber, Row, Col, Divider } from 'antd';
 import "antd/dist/antd.css";
 import moment from 'moment';
 import APIRoutes from 'helpers/api_routes';
 import Utils from 'helpers/utils';
 import UploadButton from './UploadButton';
 import SliderBar from './SliderBar';
-import ActiveStorageProvider from "react-activestorage-provider";
 import PicturesWall from './PicturesWall';
 import Avatar from './Avatar';
+import { DirectUploadProvider } from "react-activestorage-provider";
 
 class ProfileFormTenants extends React.Component {
   constructor(props) {
@@ -26,9 +26,8 @@ class ProfileFormTenants extends React.Component {
       housing_types: props.categories.housing_types,
       property_types: props.categories.property_types,
       locations: props.categories.locations,
-      avatar: this.props.tenant.avatar,
-      fileList: [],
-      imageRemoveList: [],
+      avatar: this.props.avatar,
+      form: this.props.client_form,
       disabled: false //to prevent multiple form submissions
     };
     this.handleChange = this.handleChange.bind(this);
@@ -45,8 +44,9 @@ class ProfileFormTenants extends React.Component {
 
   convertToDict() {
     const tenant = this.state.tenant;
-    const keys = ["name", "description", "email", "phone", "rent_min", "rent_max", "housing_type", "property_type", "number_of_bedrooms", "location", "referral_agency_id", "date_needed", "avatar", "number_of_bathrooms", "mobility_aids", "accessible_shower", "car_parking", "lift_access"];
-    const values = [tenant.name, tenant.description, tenant.email, tenant.phone, tenant.rent_min, tenant.rent_max, tenant.housing_type, tenant.property_type, tenant.number_of_bedrooms, tenant.location, tenant.referral_agency_id, tenant.date_needed, tenant.avatar, tenant.number_of_bathrooms, tenant.mobility_aids, tenant.accessible_shower, tenant.car_parking, tenant.lift_access];
+
+    const keys = ["name", "description", "email", "phone", "rent_min", "rent_max", "housing_type", "property_type", "number_of_bedrooms", "location", "referral_agency_id", "date_needed", "avatar", "number_of_bathrooms", "mobility_aids", "accessible_shower", "car_parking", "lift_access", "form"];
+    const values = [tenant.name, tenant.description, tenant.email, tenant.phone, tenant.rent_min, tenant.rent_max, tenant.housing_type, tenant.property_type, tenant.number_of_bedrooms, tenant.location, tenant.referral_agency_id, tenant.date_needed, this.state.avatar, tenant.number_of_bathrooms, tenant.mobility_aids, tenant.accessible_shower, tenant.car_parking, tenant.lift_access, this.state.form];
     let result = keys.reduce((obj, k, i) => ({...obj, [k]: values[i] }), {})
     return result
   }
@@ -63,9 +63,9 @@ class ProfileFormTenants extends React.Component {
     // } else if (this.props.type === "referral_agencies") {
     //   request = APIRoutes.referral_agencies.delete(id)
     // } else {
-      request = APIRoutes.tenants.delete(id)
+    request = APIRoutes.tenants.delete(id)
     // }
-    (request, {
+    fetch(request, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
@@ -79,27 +79,31 @@ class ProfileFormTenants extends React.Component {
   //api edit
   handleEdit = (event) => {
     event.preventDefault();
-    console.log('we in')
-    let id = this.state.tenant.id;
-    var request = null;
-    var body = this.convertToDict()
-    body = JSON.stringify({tenant: body})
-    request = APIRoutes.tenants.update(id)
-    this.removeImages(this.state.imageRemoveList);
-    console.log("TENANT HANDLE_EDIT");
-    fetch(request, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-        "X_CSRF-Token": document.getElementsByName("csrf-token")[0].content
+
+    this.props.form.validateFields(
+      (err) => {
+        if (!err) {
+          let id = this.state.tenant.id;
+          var request = null;
+          var body = this.convertToDict()
+          body = JSON.stringify({tenant: body})
+          request = APIRoutes.tenants.update(id)
+          fetch(request, {
+            method: 'PUT',
+            headers: {
+              'Content-Type': 'application/json',
+              "X_CSRF-Token": document.getElementsByName("csrf-token")[0].content
+            },
+            body: body,
+            credentials: 'same-origin',
+          }).then((data) => {
+            window.location = '/tenants/' + id.toString();
+          }).catch((data) => {
+            window.location = '/tenants/' + id.toString() + '/edit';
+          });
+        }
       },
-      body: body,
-      credentials: 'same-origin',
-    }).then((data) => {
-      window.location = '/tenants/' + id.toString();
-    }).catch((data) => {
-      window.location = '/tenants/' + id.toString() + '/edit';
-    });
+    );
   }
   removeImages(imageList) {
     var i;
@@ -136,9 +140,6 @@ class ProfileFormTenants extends React.Component {
     const tenant = this.state.tenant;
     tenant[attr] = value;
     this.setState({ tenant: tenant })
-    console.log(attr);
-    console.log(value);
-    console.log(tenant);
   }
 
   setFile(e) {
@@ -151,30 +152,18 @@ class ProfileFormTenants extends React.Component {
 
   renderUpload() {
     let buttonProps = null;
+    let imageList = this.setupImages();
       buttonProps = {
         listType: 'picture-card',
-        fileList: this.state.fileList,
+        fileList: imageList,
         onRemoveRequest: (e) => this.state.imageRemoveList.push(e.uid),
         className: 'upload-list-inline',
         onChange: (fileList) => this.handleChangeImage(fileList)
       };
 
-      // <ActiveStorageProvider
-      //   endpoint={{
-      //     path: '/api/tenants/' + this.state.tenant.id.toString(),
-      //     model: "Tenant",
-      //     attribute: 'avatar',
-      //     method: "PUT",
-      //   }}
-      //   headers={{
-      //     'Content-Type': 'application/json'
-      //   }}
-      //   render={Utils.activeStorageUploadRenderer}
-      // />
 
     return (
       <div>
-        Images
         <PicturesWall {...buttonProps} />
       </div>
     )
@@ -187,6 +176,26 @@ class ProfileFormTenants extends React.Component {
   //   <Avatar tenant={this.state.tenant}/>
   // </Form.Item>
 
+  //grabs the active storage image urls from backend, name of pic at end of url
+  setupImages = () => {
+    let fileList = [];
+    let image_object = this.props.image_object;
+    try {
+      fileList.push({uid: image_object.id, url: image_object.url, name: image_object.name});
+      return fileList;
+    } catch(error) {
+      return [];
+    }
+  }
+
+  uploadAvatar = (signedIds) => {
+    this.setState({ avatar: signedIds[0] });
+  }
+
+  uploadForms = (signedIds) => {
+    this.setState({ form: signedIds[0] });
+  }
+
   render() {
     const { getFieldDecorator } = this.props.form;
     const marks = {
@@ -197,11 +206,12 @@ class ProfileFormTenants extends React.Component {
     const Option = Select.Option;
     const { tenant } = this.state;
     const { TextArea } = Input;
+    let uploadImage = this.renderUpload();
 
     return (
       <div className="edit-tenant-container">
         <h1>Edit Client</h1>
-        <Form onSubmit={this.handleEdit}>
+        <Form onSubmit={this.handleEdit} hideRequiredMark={true}>
           <div className="section">
             <h2>Basic Information</h2>
             <div className="grid-container">
@@ -215,32 +225,6 @@ class ProfileFormTenants extends React.Component {
                   }],
                 })(
                   <Input onChange={() => this.handleChange("name")}/>
-                )}
-              </Form.Item>
-              <Form.Item
-                label="Email"
-              >
-                {getFieldDecorator('email', {
-                  initialValue: tenant.email,
-                  rules: [{
-                    required: true, message: 'Please input your email!',
-                  }, {
-                    type: 'email', message: 'The input is not a valid email!'
-                  }],
-                })(
-                  <Input onChange={() => this.handleChange("email")}/>
-                )}
-              </Form.Item>
-              <Form.Item
-                label="Phone Number"
-              >
-                {getFieldDecorator('phone', {
-                  initialValue: tenant.phone,
-                  rules: [{
-                    required: true, message: 'Please input your phone number!',
-                  }]
-                })(
-                  <Input onChange={() => this.handleChange("phone")}/>
                 )}
               </Form.Item>
               <Form.Item
@@ -436,11 +420,6 @@ class ProfileFormTenants extends React.Component {
           <Form.Item
             label="Rent"
           >
-            {getFieldDecorator('rent', {
-              rules: [{
-                required: true, message: 'Please select your range for rent!',
-              }],
-            })(
               <Row>
                 <Col span={4}>
                   <InputNumber
@@ -469,7 +448,6 @@ class ProfileFormTenants extends React.Component {
                   />
                 </Col>
               </Row>
-            )}
           </Form.Item>
         </div>
         <div className="section">
@@ -596,19 +574,13 @@ class ProfileFormTenants extends React.Component {
           <Form.Item
             label="Upload Avatar"
           >
-            <ActiveStorageProvider
-              endpoint={{
-                path: '/api/tenants/' + this.state.tenant.id.toString(),
-                model: "Tenant",
-                attribute: 'avatar',
-                method: "PUT",
-              }}
-              multiple={true}
-              headers={{
-                'Content-Type': 'application/json'
-              }}
-              render={Utils.activeStorageUploadRenderer}
-            />
+            <div className="upload-image">
+              <DirectUploadProvider
+                multiple={false}
+                onSuccess={signedIds => { this.uploadAvatar(signedIds) }}
+                render={(renderProps) => Utils.activeStorageUploadRenderer({ ...renderProps, imageUrl: this.props.image_object.url, type: "avatar" })}
+              />
+            </div>
           </Form.Item>
         </div>
         <div className="section">
@@ -616,26 +588,31 @@ class ProfileFormTenants extends React.Component {
           <Form.Item
             label="Upload Form"
           >
-            <ActiveStorageProvider
-              endpoint={{
-                path: '/api/tenants/' + this.state.tenant.id.toString(),
-                model: "Tenant",
-                attribute: 'form',
-                method: "PUT",
-              }}
-              multiple={true}
-              headers={{
-                'Content-Type': 'application/json'
-              }}
-              render={Utils.activeStorageUploadRenderer}
-            />
+            <div className="upload-form">
+              <DirectUploadProvider
+                multiple={false}
+                onSuccess={signedIds => { this.uploadForms(signedIds) }}
+                render={(renderProps) => Utils.activeStorageUploadRenderer({ ...renderProps, filename: this.props.form_name, type: "form" })}
+              />
+            </div>
           </Form.Item>
         </div>
+        <div className="section">
+          <div className="delete-client">
+            <Row type="flex" style={{ width: 660 }}>
+              <Col span={12}>
+                <div>Delete Client</div>
+              </Col>
+              <Col span={12}>
+                <Button className="delete-button" type="danger" onClick={this.handleDestroy}>Delete Client</Button>
+              </Col>
+            </Row>
+          </div>
+        </div>
           <div className="buttons">
-            <Form.Item
-            >
+            <Form.Item>
             <Button className="previous" onClick={() => {window.location = '/tenants/' + this.state.tenant.id.toString()}}>Cancel</Button>
-            <Button  className="next" type="primary" htmlType="submit">Submit</Button>
+            <Button className="next" type="primary" htmlType="submit">Save Changes</Button>
           </Form.Item>
         </div>
         </Form>

@@ -28,12 +28,12 @@ class CreateFormTenants extends React.Component {
         rent_max: 5000,
         housing_type: undefined,
         property_type: undefined,
-        number_of_bedrooms: 1,
+        number_of_bedrooms: null,
         location: undefined,
         referral_agency_id: this.props.current_userID,
         date_needed: new Date(),
         avatar: null,
-        number_of_bathrooms: 1,
+        number_of_bathrooms: null,
         mobility_aids: undefined,
         accessible_shower: undefined,
         car_parking: undefined,
@@ -197,7 +197,7 @@ class CreateFormTenants extends React.Component {
     return (
       <div className="container">
         <h3>Step 1: blah blah blah</h3>
-        <Form className="grid-container">
+        <Form className="grid-container" hideRequiredMark={true}>
           <Form.Item
             label="Name"
           >
@@ -331,7 +331,7 @@ class CreateFormTenants extends React.Component {
     return (
       <div className="container">
         <h3>Step 2: Housing preferences</h3>
-        <Form>
+        <Form hideRequiredMark={true}>
           <div className="grid-container">
             <Form.Item
               label="Housing Type"
@@ -465,7 +465,7 @@ class CreateFormTenants extends React.Component {
     return (
       <div className="container">
         <div>Step 3: blah blah</div>
-        <Form>
+        <Form hideRequiredMark={true}>
           <div className="grid-container">
             <Form.Item
               label="Mobility Aids"
@@ -544,7 +544,7 @@ class CreateFormTenants extends React.Component {
     return (
       <div className="container">
         <div>Step 4: Wooo description</div>
-        <Form>
+        <Form hideRequiredMark={true}>
           <Form.Item
             label="Description"
           >
@@ -571,7 +571,7 @@ class CreateFormTenants extends React.Component {
     return (
       <div className="container">
         <div>Step 5: Add a profile photo</div>
-        <Form>
+        <Form hideRequiredMark={true}>
           <Form.Item
             label="Upload Avatar"
           >
@@ -603,7 +603,7 @@ class CreateFormTenants extends React.Component {
     return (
       <div className="container">
         <div>Step 5: Add Default Client Form</div>
-        <Form>
+        <Form hideRequiredMark={true}>
           <Form.Item
             label="Upload Form"
           >
