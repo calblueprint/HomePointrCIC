@@ -1,6 +1,6 @@
 .filters-panel {
   margin-left: -10px;
-	display: absolute;
+  display: absolute;
   width: 100%;
   top:0;
   margin-top: -16px;
@@ -60,7 +60,7 @@
 }
 
 .clear-all-filters {
-	margin-left: 36px;
+  margin-left: 36px;
   display: inline-block;
 }
 
