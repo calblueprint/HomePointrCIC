@@ -62,7 +62,6 @@ class PropertyView extends React.Component {
 
   renderDetails() {
     return(
-
       <div className = "details">
         <div className="section">
           <h2 className="section-header"> <Icon type="home" className="icon"/> Basic </h2>
@@ -144,7 +143,7 @@ class PropertyView extends React.Component {
           <h2 className="section-header"> <Icon type="paper-clip" className="icon"/> Additional Paperwork </h2>
           <div className="subsection">
             <Row>
-              <Col span={12}>add forms...</Col>
+              <Col span={12}><a href={this.props.property.form} target="_blank">Form</a></Col>
             </Row>
           </div>
         </div>
@@ -165,7 +164,7 @@ class PropertyView extends React.Component {
           <Carousel autoplay>
             {this.props.property.images.map((image, index) => {
               return (
-                <div key={index}><h3><center><img src={image.url} width="100%"/></center></h3></div>
+                <div key={index}><h3><center><img src={image.url} width="100%" height="350"/></center></h3></div>
               )
             })}
           </Carousel>
