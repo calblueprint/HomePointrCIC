@@ -28,11 +28,10 @@
 /public/packs
 /public/packs-test
 /node_modules
-package-lock.json
+/package-lock.json
 yarn-debug.log*
 yarn-error.log*
 .yarn-integrity
 
 # Ignore application configuration
 /config/application.yml
-
