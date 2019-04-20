@@ -34,13 +34,13 @@ class ApplicationsPairing extends React.Component {
     this.setFilteredProperties = this.setFilteredProperties.bind(this);
     this.renderApplicationSubmissionWrapper = this.renderApplicationSubmissionWrapper.bind(this);
     this.renderPropertyListWrapper = this.renderPropertyListWrapper.bind(this);
-    this.renderTenantView = this.renderTenantView.bind(this);
+    this.finishApplicationProcess = this.finishApplicationProcess.bind(this);
     this.onSubmitProperty = this.onSubmitProperty.bind(this);
   }
 
   onSubmitProperty(e, property) {
-      if (this.state.selectedProperties > 0) {
-          this.state.selectedProperties -= 1;
+      if (this.state.selectedEnd > 0) {
+          this.state.selectedEnd -= 1;
       }
   }
 
@@ -101,11 +101,11 @@ class ApplicationsPairing extends React.Component {
 		this.setState({status:"propertyList"})
 	}
 
-  renderTenantView() {
-    if (this.state.selectedProperties > 0) {
-      debugger;
+  finishApplicationProcess() {
+    if (this.state.selectedEnd > 0) {
       message.error('Please submit all applications!');
     } else {
+      //render tenant view
       window.location = "/tenants/" + this.props.tenant.id;
     }
   }
@@ -124,22 +124,22 @@ class ApplicationsPairing extends React.Component {
         <RATenantView tenant={this.props.tenant} mode="ra_edit" avatar={this.props.tenant.avatar} status={this.props.tenant.priority}/>
       );
     }
-    
+
     //Filtered properties
     let rightComponent = null;
     if (this.state.status == "propertyList") {
       rightComponent = (
         <h1>Potential Homes</h1>,
-        [<PropertyListWrapper {...this.props} toggleMap={this.toggleMap} selectedEnd={this.state.selectedEnd} propertyCompletion={true} CheckboxChange={this.onChangeProperty} selectedTenant={this.props.tenant}/>,
-        <Button key="start_applications" onClick={this.renderApplicationSubmissionWrapper}>Start Applications</Button>]
+        [<Button key="start_applications" onClick={this.renderApplicationSubmissionWrapper}>Start Applications</Button>,
+        <PropertyListWrapper {...this.props} toggleMap={this.toggleMap} selectedEnd={this.state.selectedEnd} propertyCompletion={true} CheckboxChange={this.onChangeProperty} selectedTenant={this.props.tenant}/>]
       );
     }
     else if (this.state.status == "applicationSubmission") {
       rightComponent = (
         <h1>Upload and Submit</h1>,
-        [<ApplicationSubmissionWrapper {...this.props} onSubmitProperty={this.onSubmitProperty} selectedProperties={this.state.properties.slice(0, this.state.selectedEnd)}/>,
-        <Button key="edit_selections" onClick={this.renderPropertyListWrapper}>Edit Selections</Button>,
-        <Button key="edit_selections" onClick={this.renderTenantView}>Finish Application Process</Button>]
+        [<Button key="edit_selections" onClick={this.renderPropertyListWrapper}>Edit Selections</Button>,
+        <Button key="edit_selections" onClick={this.finishApplicationProcess}>Finish Application Process</Button>,
+        <ApplicationSubmissionWrapper {...this.props} onSubmitProperty={this.onSubmitProperty} selectedProperties={this.state.properties.slice(0, this.state.selectedEnd)}/>]
       );
     }
 

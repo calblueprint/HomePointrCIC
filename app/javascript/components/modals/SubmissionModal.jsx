@@ -26,11 +26,8 @@ class SubmissionModal extends React.Component {
   }
 
   handleOk = (e) => {
-<<<<<<< Updated upstream
-=======
-    console.log(e)
+    console.log(e);
     this.props.onSubmitProperty(e, this.props.property)
->>>>>>> Stashed changes
     this.handlePost();
   }
 
