@@ -26,7 +26,6 @@ class SubmissionModal extends React.Component {
   }
 
   handleOk = (e) => {
-    console.log(e);
     this.props.onSubmitProperty(e, this.props.property)
     this.handlePost();
   }
@@ -104,7 +103,6 @@ class SubmissionModal extends React.Component {
   }
 
   render() {
-    debugger
     return (
       <div key="SubmissionModal">
         {this.renderButton()}
