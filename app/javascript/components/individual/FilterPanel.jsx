@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import 'antd/dist/antd.css';
-import { Menu, Dropdown as AntDrop, Icon, Radio, InputNumber, Button, Checkbox, DatePicker, Modal, Row, Col, Slider } from 'antd';
+import { Switch, Menu, Dropdown as AntDrop, Icon, Radio, InputNumber, Button, Checkbox, DatePicker, Modal, Row, Col, Slider } from 'antd';
 import moment from 'moment';
 import APIRoutes from 'helpers/api_routes';
 import '../../../assets/stylesheets/FilterPanel.css';
@@ -111,7 +111,7 @@ class FilterPanel extends React.Component {
       });
     } else if (filter_name == 'capacity') {
       this.setState({
-        capacity: 0, 
+        capacity: 0,
         number_of_bedrooms: 0,
       });
     } else {
@@ -142,7 +142,7 @@ class FilterPanel extends React.Component {
   }
 
   sliderChanges([value1, value2]) {
-    this.setState({ 
+    this.setState({
       rent_min: value1,
       rent_max: value2,
     });
@@ -219,13 +219,13 @@ class FilterPanel extends React.Component {
           />
         </div>
         <div className="buttons-panel">
-          <div 
-            className="clear-btn" 
+          <div
+            className="clear-btn"
             onClick={(e) => this.handleClear("date_available")}
           >
             Clear
           </div>
-          <div 
+          <div
             className="apply-btn"
             onClick={(e) => this.passState("date_available")}
           >
@@ -262,7 +262,7 @@ class FilterPanel extends React.Component {
           >
             Clear
           </div>
-          <div 
+          <div
             className="apply-btn"
             onClick={(e) => this.passState("capacity")}
           >
@@ -308,7 +308,7 @@ class FilterPanel extends React.Component {
           />
         </div>
         <div className="buttons-panel">
-          <div 
+          <div
             className="clear-btn"
             onClick={(e) => this.handleClear("property_type")}
           >
@@ -404,7 +404,7 @@ class FilterPanel extends React.Component {
       <div className="filters-panel">
         <div className="filters-bar">
           <Dropdown overlay={dateFilter} visible={this.state.isDateOpen} trigger={['click']}>
-            <Button 
+            <Button
               className="category-btn"
               onClick={(e) => this.toggleOpen("isDateOpen")}
             >
@@ -412,7 +412,7 @@ class FilterPanel extends React.Component {
             </Button>
           </Dropdown>
           <Dropdown overlay={guestsFilter} visible={this.state.isGuestsOpen} trigger={['click']}>
-            <Button 
+            <Button
               className="category-btn"
               onClick={(e) => this.toggleOpen("isGuestsOpen")}
             >
@@ -420,7 +420,7 @@ class FilterPanel extends React.Component {
             </Button>
           </Dropdown>
           <Dropdown overlay={locationFilter} visible={this.state.isLocationOpen} trigger={['click']}>
-            <Button 
+            <Button
               className="category-btn"
               onClick={(e) => this.toggleOpen("isLocationOpen")}
             >
@@ -428,7 +428,7 @@ class FilterPanel extends React.Component {
             </Button>
           </Dropdown>
           <Dropdown overlay={propertyTypeFilter} visible={this.state.isPropertyTypeOpen} trigger={['click']}>
-            <Button 
+            <Button
               className="category-btn"
               onClick={(e) => this.toggleOpen("isPropertyTypeOpen")}
             >
@@ -436,7 +436,7 @@ class FilterPanel extends React.Component {
             </Button>
           </Dropdown>
           <Dropdown overlay={housingTypeFilter} visible={this.state.isHousingTypeOpen} trigger={['click']}>
-            <Button 
+            <Button
               className="category-btn"
               onClick={(e) => this.toggleOpen("isHousingTypeOpen")}
             >
@@ -444,21 +444,25 @@ class FilterPanel extends React.Component {
             </Button>
           </Dropdown>
           <Dropdown overlay={rentFilter} visible={this.state.isRentOpen} trigger={['click']}>
-            <Button 
+            <Button
               className="category-btn"
               onClick={(e) => this.toggleOpen("isRentOpen")}
             >
               Rent
             </Button>
           </Dropdown>
-        </div>
-        <div className="clear-all-filters">
-          <Button
-            type="primary"
-            onClick={(e) => this.clearAllFilters()}
-          >
-            Reset
-          </Button>
+          <div className="clear-all-filters">
+            <Button
+              type="primary"
+              onClick={(e) => this.clearAllFilters()}
+            >
+              Reset
+            </Button>
+          </div>
+          <div className="map-switch-container">
+            Show Map
+            <Switch className="map-switch" checkedChildren={<Icon type="check" />} unCheckedChildren={<Icon type="close" />} onChange={this.props.toggleMap}/>
+          </div>
         </div>
       </div>
     );
