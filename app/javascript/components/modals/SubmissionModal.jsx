@@ -26,6 +26,7 @@ class SubmissionModal extends React.Component {
   }
 
   handleOk = (e) => {
+    this.props.onSubmitProperty(e, this.props.property)
     this.handlePost();
   }
 

@@ -1,13 +1,13 @@
-.filters-bar {
-  display: flex;
-  justify-content: space-evenly;
-  width: 570px;
-  margin-top: 100px;
-  margin-bottom: 10px;
-}
-
 .filters-panel {
-	display: inline-flex;
+  margin-left: -10px;
+  display: absolute;
+  width: 100%;
+  top:0;
+  margin-top: -16px;
+  padding-bottom: 16px;
+  padding-left: 16px;
+  padding-right: 16px;
+  border-bottom: 1px solid #D9D9D9;
 }
 
 .buttons-panel {
@@ -38,7 +38,7 @@
   padding-top: 15px;
 }
 
-.ant-checkbox-group {  
+.ant-checkbox-group {
   display: grid;
   grid-template-columns: auto auto;
   grid-column-gap: 15px;
@@ -47,10 +47,12 @@
 .category-btn {
   border: 1px solid lightgrey;
   border-radius: 5px;
-  margin-bottom: 22px;
-  padding: 5px; 
+  padding: 5px;
   padding-left: 7px;
   padding-right: 7px;
+  margin-left: 8px;
+  margin-right: 8px;
+  display: inline-block;
 }
 
 .guests {
@@ -58,6 +60,16 @@
 }
 
 .clear-all-filters {
-	margin-top: 100px;
-	margin-left: 51px;
+  margin-left: 36px;
+  display: inline-block;
+}
+
+.map-switch-container {
+  margin-left: 36px;
+  margin-top: 4px;
+  display: inline-block;
+}
+
+.map-switch {
+  margin-left: 8px;
 }
