@@ -41,7 +41,8 @@ Rails.application.routes.draw do
   # resources :applications, only: %i[create show destroy]
   devise_for :users, controllers: {
     sessions: 'sessions',
-    registrations: 'registrations'
+    registrations: 'registrations',
+    passwords: 'passwords'
   }
   devise_scope :user do
     authenticated do
