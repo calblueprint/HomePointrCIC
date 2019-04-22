@@ -33,7 +33,7 @@ class ApplicationsPairing extends React.Component {
     Utils.setup([this.props.tenant], this.props.tenantPriority);
     Utils.setup(this.state.properties, this.props.propertyImages);
     Utils.setup(this.state.properties, this.props.propertyForms);
-    
+
     this.onChangeProperty = this.onChangeProperty.bind(this);
     this.clearTenant = this.clearTenant.bind(this);
     this.toggleMap = this.toggleMap.bind(this);
@@ -137,7 +137,6 @@ class ApplicationsPairing extends React.Component {
         <h1>Potential Homes</h1>,
         [<Button type="primary" key="start_applications" onClick={this.renderApplicationSubmissionWrapper}>Start Applications</Button>,
         <InstructionsModal status={this.state.status}/>,
-        <h2 className="subHeader"> Check the boxes next to homes that suit your client to continue. </h2>,
         <PropertyListWrapper {...this.props} toggleMap={this.toggleMap} selectedEnd={this.state.selectedEnd} propertyCompletion={true} CheckboxChange={this.onChangeProperty} selectedTenant={this.props.tenant}/>]
       );
     }
