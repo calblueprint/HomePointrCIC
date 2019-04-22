@@ -10,6 +10,38 @@ class PropertyModal extends React.Component {
     super(props);
     this.state = {
       visible: this.props.visible,
+      includes_boolean: false,
+      discludes_boolean: false
+    }
+  }
+
+  getIncludes(amenities_str, amenities_bool) {
+    if (amenities_bool) {
+      this.state.includes_boolean = true;
+      return (
+        <Col span={12} className="content-text" id="includes"><p>{amenities_str}</p></Col>
+      );
+    }
+  }
+
+  getDiscludes(amenities_str, amenities_bool) {
+    if (!amenities_bool) {
+      this.state.discludes_boolean = true;
+      return (
+        <Col span={12} className="content-text" id="discludes"><p>{amenities_str}</p></Col>
+      );
+    }
+  }
+
+  renderNone(display_includes) {
+    if (display_includes && !this.state.includes_boolean) {
+      return (
+        <Col span={12} className="content-text"><p>None</p></Col>
+      );
+    } else if (display_includes && !this.state.discludes_boolean) {
+      return (
+        <Col span={12} className="content-text"><p>None</p></Col>
+      );
     }
   }
 
@@ -22,56 +54,18 @@ class PropertyModal extends React.Component {
       )
     } else {
       return (
-        <div key="carousel" style={{backgroundColor: "#545454"}}>
-          <Carousel autoplay>
+        <div key="carousel" style={{backgroundColor: "#D9D9D9"}}>
+          <Carousel autoplay height="320" width="400" className="carousel">
             {this.props.property.images.map((image, index) => {
               return (
                 <div key={index}><h3><center>
-                  {this.props.property.location}
-                  <img src={image.url} margin-top="10%" height="320" width="400"/>
+                  <img className="clip" src={image.url} margin-top="100px" height="320" width="400"/>
                 </center></h3></div>
               )
             })}
           </Carousel>
         </div>
       )
-    }
-  }
-
-  renderBooleans(includes_true) {
-    var includes = "";
-    var discludes = "";
-    if (this.props.property.furniture) {
-      includes += "Furniture, ";
-    } else {
-      discludes += "Furniture, ";
-    }
-    if (this.props.property.utilities_included) {
-      includes += "Utilities, ";
-    } else {
-      discludes += "Utilities, ";
-    }
-    if (this.props.property.accessible_shower) {
-      includes += "Accessible Shower, ";
-    } else {
-      discludes += "Accessible Shower, ";
-    }
-    if (this.props.property.car_parking) {
-      includes += "Car Parking, ";
-    } else {
-      discludes += "Car Parking, ";
-    }
-    if (includes.length >= 2) {
-      includes = includes.slice(0, includes.length-2);
-    }
-    if (discludes.length >= 2) {
-      discludes = discludes.slice(0, discludes.length-2);
-    }
-    if(includes_true) {
-      return(<div> {includes} </div>);
-    }
-    else {
-      return(<div> {discludes} </div>);
     }
   }
 
@@ -84,6 +78,7 @@ class PropertyModal extends React.Component {
           onOk={this.props.onOk}
           onCancel={this.props.onCancel}
           width="1008px"
+          marginTop="-50px"
           footer={null}
         >
         {/*
@@ -92,8 +87,8 @@ class PropertyModal extends React.Component {
         */}
           <div className="flex-container">
             <div className="flex-item">
-              <div className="section">
-                <h1> <Icon type="home" className="icon"/> Basic </h1>
+              <div className="modal-section">
+                <h2 className="modal-section-title"> <Icon type="home" className="icon"/> Basic </h2>
                 <div className="subsection">
                 <Row gutter={32}>
                   <Col span={12} className="title1">Housing Type</Col>
@@ -113,16 +108,16 @@ class PropertyModal extends React.Component {
                 </Row>
                 </div>
               </div>
-              <div className="section">
-                <h1> <Icon type="align-center" className="icon"/> Summary </h1>
+              <div className="modal-section">
+                <h2 className="modal-section-title"> <Icon type="align-center" className="icon"/> Summary </h2>
                 <div className="subsection">
                   <Row gutter={32}>
-                    <Col span={12}>{this.props.property.description}</Col>
+                    <Col span={24}><p className="content-text">{this.props.property.description}</p></Col>
                   </Row>
                 </div>
               </div>
-              <div className="section">
-                <h1> <Icon type="paper-clip" className="icon"/> Additional Paperwork </h1>
+              <div className="modal-section">
+                <h2 className="modal-section-title"> <Icon type="paper-clip" className="icon"/> Additional Paperwork </h2>
                 <div className="subsection">
                   <Row gutter={32}>
                     <Col span={12}>{this.props.property.form ? <a href={this.props.property.form} target="_blank">Housing Form</a> : 'None'}</Col>
@@ -131,8 +126,8 @@ class PropertyModal extends React.Component {
               </div>
             </div>
             <div className="flex-item">
-              <div className="section">
-                <h1> <Icon type="home" className="icon"/> Living Details </h1>
+              <div className="modal-section">
+                <h2 className="modal-section-title"> <Icon type="home" className="icon"/> Living Details </h2>
                 <div className="subsection">
                   <Row gutter={32}>
                     <Col span={8} className="title1">Capacity</Col>
@@ -156,16 +151,32 @@ class PropertyModal extends React.Component {
                   </Row>
                 </div>
               </div>
-              <div className="section">
-                <Row gutter={32}>
-                  <h1> <Icon type="check-circle" className="icon"/> Includes </h1>
-                      {this.renderBooleans(true)}
-                </Row>
-                <Row gutter={32}>
-                  <h1> <Icon type="close-circle" className="icon"/> Does Not Include </h1>
-                      {this.renderBooleans(false)}
-                </Row>
+              <div className="modal-section">
+                <h2 className="modal-section-title"> <Icon type="check-circle" className="icon"/> Includes </h2>
+                <div className="subsection">
+                  <Row>
+                    {this.getIncludes("Furniture", this.props.property.furniture)}
+                    {this.getIncludes("Utilities", this.props.property.utilities_included)}
+                    {this.getIncludes("Accessible shower", this.props.property.accessible_shower)}
+                    {this.getIncludes("Parking", this.props.property.car_parking)}
+                    {this.renderNone(true)}
+                  </Row>
+                </div>
               </div>
+
+              <div className="section">
+                <h2 className="modal-section-title"> <Icon type="close-circle" className="icon"/> Does Not Include </h2>
+                <div className="subsection">
+                  <Row>
+                    {this.getDiscludes("Furniture", this.props.property.furniture)}
+                    {this.getDiscludes("Utilities", this.props.property.utilities_included)}
+                    {this.getDiscludes("Accessible shower", this.props.property.accessible_shower)}
+                    {this.getDiscludes("Parking", this.props.property.car_parking)}
+                    {this.renderNone(false)}
+                  </Row>
+                </div>
+              </div>
+
             </div>
           </div>
 
