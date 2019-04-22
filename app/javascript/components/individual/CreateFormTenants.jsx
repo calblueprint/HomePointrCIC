@@ -45,6 +45,8 @@ class CreateFormTenants extends React.Component {
         local_council: undefined,
         ex_offender: undefined,
         local_area_link: '',
+        avatar: null,
+        form: null,
       },
       categories: props.categories,
       nice_housing_types: props.categories.nice_housing_types,
@@ -86,8 +88,8 @@ class CreateFormTenants extends React.Component {
 
   convertToDict() {
     const tenant = this.state.tenant;
-    const keys = ["name", "description", "email", "phone", "rent_min", "rent_max", "housing_type", "property_type", "number_of_bedrooms", "location", "referral_agency_id", "date_needed", "avatar", "number_of_bathrooms", "mobility_aids", "accessible_shower", "car_parking", "lift_access"];
-    const values = [tenant.name, tenant.description, tenant.email, tenant.phone, tenant.rent_min, tenant.rent_max, tenant.housing_type, tenant.property_type, tenant.number_of_bedrooms, tenant.location, tenant.referral_agency_id, tenant.date_needed, tenant.avatar, tenant.number_of_bathrooms, tenant.mobility_aids, tenant.accessible_shower, tenant.car_parking, tenant.lift_access];
+    const keys = ["name", "description", "email", "phone", "rent_min", "rent_max", "housing_type", "property_type", "number_of_bedrooms", "location", "referral_agency_id", "date_needed", "avatar", "number_of_bathrooms", "mobility_aids", "accessible_shower", "car_parking", "lift_access", "avatar", "form"];
+    const values = [tenant.name, tenant.description, tenant.email, tenant.phone, tenant.rent_min, tenant.rent_max, tenant.housing_type, tenant.property_type, tenant.number_of_bedrooms, tenant.location, tenant.referral_agency_id, tenant.date_needed, tenant.avatar, tenant.number_of_bathrooms, tenant.mobility_aids, tenant.accessible_shower, tenant.car_parking, tenant.lift_access, tenant.avatar, tenant.form];
     let result = keys.reduce((obj, k, i) => ({...obj, [k]: values[i] }), {})
     return result
   }
@@ -566,6 +568,18 @@ class CreateFormTenants extends React.Component {
     )
   }
 
+  uploadAvatar = (signedIds) => {
+    let tenant = this.state.tenant;
+    tenant["avatar"] = signedIds[0];
+    this.setState({ tenant: tenant });
+  }
+
+  uploadForms = (signedIds) => {
+    let tenant = this.state.tenant;
+    tenant["form"] = signedIds[0];
+    this.setState({ tenant: tenant });
+  }
+
   renderStageFive() {
     const { tenant } = this.state;
     return (
@@ -575,19 +589,13 @@ class CreateFormTenants extends React.Component {
           <Form.Item
             label="Upload Avatar"
           >
-            <ActiveStorageProvider
-              endpoint={{
-                path: '/api/tenants/',
-                model: "Tenant",
-                attribute: 'avatar',
-                method: "POST",
-              }}
-              multiple={true}
-              headers={{
-                'Content-Type': 'application/json'
-              }}
-              render={Utils.activeStorageUploadRenderer}
-            />
+            <div className="upload-image">
+              <DirectUploadProvider
+                multiple={false}
+                onSuccess={signedIds => { this.uploadAvatar(signedIds) }}
+                render={(renderProps) => Utils.activeStorageUploadRenderer({ ...renderProps, type: "avatar" })}
+              />
+            </div>
           </Form.Item>
         </Form>
         <div className="buttons">
@@ -607,19 +615,13 @@ class CreateFormTenants extends React.Component {
           <Form.Item
             label="Upload Form"
           >
-            <ActiveStorageProvider
-              endpoint={{
-                path: '/api/tenants/',
-                model: "Tenant",
-                attribute: 'form',
-                method: "POST",
-              }}
-              multiple={true}
-              headers={{
-                'Content-Type': 'application/json'
-              }}
-              render={Utils.activeStorageUploadRenderer}
-            />
+            <div className="upload-form">
+              <DirectUploadProvider
+                multiple={false}
+                onSuccess={signedIds => { this.uploadForms(signedIds) }}
+                render={(renderProps) => Utils.activeStorageUploadRenderer({ ...renderProps, type: "form" })}
+              />
+            </div>
           </Form.Item>
         </Form>
         <div className="buttons">

@@ -105,8 +105,8 @@ class CreatePropertyForm extends React.Component {
 
   convertToDict() {
     const property = this.state.property;
-    const keys = ["capacity", "description", "landlord_id", "rent", "property_type", "housing_type", "date_available", "location", "address", "number_of_bedrooms", "number_of_bathrooms", "floor_number", "mobility_aids", "furniture", "utilities_included", "accessible_shower", "car_parking", "lift_access", "lat", "long"];
-    const values = [property.capacity, property.description, property.landlord_id, property.rent, property.property_type, property.housing_type, property.date_available, property.location, property.address, property.number_of_bedrooms, property.number_of_bathrooms, property.floor_number, property.mobility_aids, property.furniture, property.utilities_included, property.accessible_shower, property.car_parking, property.lift_access, property.lat, property.long];
+    const keys = ["capacity", "description", "landlord_id", "rent", "property_type", "housing_type", "date_available", "location", "address", "number_of_bedrooms", "number_of_bathrooms", "floor_number", "mobility_aids", "furniture", "utilities_included", "accessible_shower", "car_parking", "lift_access", "lat", "long", "images", "form"];
+    const values = [property.capacity, property.description, property.landlord_id, property.rent, property.property_type, property.housing_type, property.date_available, property.location, property.address, property.number_of_bedrooms, property.number_of_bathrooms, property.floor_number, property.mobility_aids, property.furniture, property.utilities_included, property.accessible_shower, property.car_parking, property.lift_access, property.lat, property.long, property.images, property.form];
     console.log(values);
     let result = keys.reduce((obj, k, i) => ({...obj, [k]: values[i] }), {})
     return result
@@ -532,6 +532,23 @@ class CreatePropertyForm extends React.Component {
     )
   }
 
+  uploadImages = (signedIds) => {
+    console.log("signedIds", signedIds);
+    let uploadList = []
+    signedIds.map((signedId) => {
+      uploadList.push(signedId);
+    });
+    let property = this.state.property
+    property["images"] = uploadList;
+    this.setState({ property: property })
+  }
+
+  uploadForms = (signedIds) => {
+    let property = this.state.property
+    property["form"] = signedIds[0];
+    this.setState({ property: property })
+  }
+
   renderStageFour() {
     const { property } = this.state;
     return (
@@ -543,19 +560,14 @@ class CreatePropertyForm extends React.Component {
             <Form.Item
               label="Add images"
             >
-              <ActiveStorageProvider
-                endpoint={{
-                  path: '/api/properties/create',
-                  model: "Property",
-                  attribute: 'images',
-                  method: "POST",
-                }}
-                multiple={true}
-                headers={{
-                  'Content-Type': 'application/json'
-                }}
-                render={Utils.activeStorageUploadRenderer}
-              />
+              <div className="upload-image">
+                {pictureWallRender}
+                <DirectUploadProvider
+                  multiple={true}
+                  onSuccess={signedIds => { this.uploadImages(signedIds) }}
+                  render={(renderProps) => Utils.activeStorageUploadRenderer({ ...renderProps, type: "images" })}
+                />
+              </div>
             </Form.Item>
           </Form>
         </div>
@@ -578,19 +590,13 @@ class CreatePropertyForm extends React.Component {
             <Form.Item
               label="Upload form"
             >
-              <ActiveStorageProvider
-                endpoint={{
-                  path: '/api/properties/create',
-                  model: "Property",
-                  attribute: 'form',
-                  method: "POST",
-                }}
-                multiple={true}
-                headers={{
-                  'Content-Type': 'application/json'
-                }}
-                render={Utils.activeStorageUploadRenderer}
-              />
+              <div className="upload-form">
+                <DirectUploadProvider
+                  multiple={false}
+                  onSuccess={signedIds => { this.uploadForms(signedIds) }}
+                  render={(renderProps) => Utils.activeStorageUploadRenderer({ ...renderProps, type: "form" })}
+                />
+              </div>
             </Form.Item>
           </Form>
         </div>

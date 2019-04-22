@@ -38,7 +38,6 @@ class ProfileFormTenants extends React.Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleChangeDate = this.handleChangeDate.bind(this);
     this.handleChangeSelect = this.handleChangeSelect.bind(this);
-    this.renderUpload = this.renderUpload.bind(this);
     this.setFile = this.setFile.bind(this);
   }
 
@@ -150,43 +149,6 @@ class ProfileFormTenants extends React.Component {
     this.setState({ avatar: files[0] });
   }
 
-  renderUpload() {
-    let buttonProps = null;
-    let imageList = this.setupImages();
-      buttonProps = {
-        listType: 'picture-card',
-        fileList: imageList,
-        onRemoveRequest: (e) => this.state.imageRemoveList.push(e.uid),
-        className: 'upload-list-inline',
-        onChange: (fileList) => this.handleChangeImage(fileList)
-      };
-
-
-    return (
-      <div>
-        <PicturesWall {...buttonProps} />
-      </div>
-    )
-  }
-
-  //AVATAR -- DON'T DELETE
-  // <Form.Item
-  //   label="Upload Avatar"
-  // >
-  //   <Avatar tenant={this.state.tenant}/>
-  // </Form.Item>
-
-  //grabs the active storage image urls from backend, name of pic at end of url
-  setupImages = () => {
-    let fileList = [];
-    let image_object = this.props.image_object;
-    try {
-      fileList.push({uid: image_object.id, url: image_object.url, name: image_object.name});
-      return fileList;
-    } catch(error) {
-      return [];
-    }
-  }
 
   uploadAvatar = (signedIds) => {
     this.setState({ avatar: signedIds[0] });
@@ -206,7 +168,6 @@ class ProfileFormTenants extends React.Component {
     const Option = Select.Option;
     const { tenant } = this.state;
     const { TextArea } = Input;
-    let uploadImage = this.renderUpload();
 
     return (
       <div className="edit-tenant-container">
