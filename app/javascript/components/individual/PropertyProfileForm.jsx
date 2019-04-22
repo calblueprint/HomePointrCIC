@@ -216,7 +216,6 @@ class PropertyProfileForm extends React.Component {
   }
 
   uploadImages = (signedIds) => {
-    console.log("signedIds", signedIds);
     let uploadList = []
     signedIds.map((signedId) => {
       uploadList.push(signedId);
@@ -225,7 +224,6 @@ class PropertyProfileForm extends React.Component {
   }
 
   uploadForms = (signedIds) => {
-    console.log("signedIds", signedIds);
     this.setState({ form: signedIds[0] });
   }
 

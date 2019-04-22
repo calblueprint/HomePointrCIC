@@ -61,9 +61,7 @@ class PropertyView extends React.Component {
   }
 
   renderDetails() {
-    console.log("property", this.props.property);
     return(
-
       <div className = "details">
         <div className="section">
           <h2 className="section-header"> <Icon type="home" className="icon"/> Basic </h2>
