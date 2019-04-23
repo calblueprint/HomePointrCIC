@@ -551,6 +551,7 @@ class CreatePropertyForm extends React.Component {
   }
 
   renderStageFour() {
+    this.forceUpdate();
     const { property } = this.state;
     return (
       <div className="container">
@@ -580,6 +581,7 @@ class CreatePropertyForm extends React.Component {
   }
 
   renderStageFive() {
+    this.forceUpdate();
     const { property } = this.state;
     return (
       <div className="container">

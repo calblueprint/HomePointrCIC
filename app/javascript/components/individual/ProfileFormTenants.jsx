@@ -12,7 +12,7 @@ import UploadButton from './UploadButton';
 import SliderBar from './SliderBar';
 import PicturesWall from './PicturesWall';
 import Avatar from './Avatar';
-import DeleteWarning from '../modals/DeleteWarning';
+import DeleteModal from '../modals/DeleteModal';
 import { DirectUploadProvider } from "react-activestorage-provider";
 
 class ProfileFormTenants extends React.Component {
@@ -575,8 +575,8 @@ class ProfileFormTenants extends React.Component {
               </Col>
               <Col span={12}>
                 <Button className="delete-button" type="danger" onClick={this.showModal}>Delete Client</Button>
-                <DeleteWarning
-                  titie={"Delete Client"}
+                <DeleteModal
+                  title={"client"}
                   onOk={this.handleDestroy}
                   onCancel={this.onCancel}
                   visible={this.state.visible}
