@@ -38,7 +38,7 @@ class PropertyModal extends React.Component {
       return (
         <Col span={12} className="content-text"><p>None</p></Col>
       );
-    } else if (display_includes && !this.state.discludes_boolean) {
+    } else if (!display_includes && !this.state.discludes_boolean) {
       return (
         <Col span={12} className="content-text"><p>None</p></Col>
       );
