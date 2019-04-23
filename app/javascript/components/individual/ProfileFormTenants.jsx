@@ -12,6 +12,7 @@ import UploadButton from './UploadButton';
 import SliderBar from './SliderBar';
 import PicturesWall from './PicturesWall';
 import Avatar from './Avatar';
+import DeleteWarning from '../modals/DeleteWarning';
 import { DirectUploadProvider } from "react-activestorage-provider";
 
 class ProfileFormTenants extends React.Component {
@@ -28,7 +29,7 @@ class ProfileFormTenants extends React.Component {
       locations: props.categories.locations,
       avatar: this.props.avatar,
       form: this.props.client_form,
-      disabled: false //to prevent multiple form submissions
+      visible: false,
     };
     this.handleChange = this.handleChange.bind(this);
     // this.handleCreate = this.handleCreate.bind(this);
@@ -156,6 +157,14 @@ class ProfileFormTenants extends React.Component {
 
   uploadForms = (signedIds) => {
     this.setState({ form: signedIds[0] });
+  }
+
+  onCancel = () => {
+    this.setState({ visible: false });
+  }
+
+  showModal = () => {
+    this.setState({ visible: true });
   }
 
   render() {
@@ -565,7 +574,13 @@ class ProfileFormTenants extends React.Component {
                 <div>Delete Client</div>
               </Col>
               <Col span={12}>
-                <Button className="delete-button" type="danger" onClick={this.handleDestroy}>Delete Client</Button>
+                <Button className="delete-button" type="danger" onClick={this.showModal}>Delete Client</Button>
+                <DeleteWarning
+                  titie={"Delete Client"}
+                  onOk={this.handleDestroy}
+                  onCancel={this.onCancel}
+                  visible={this.state.visible}
+                />
               </Col>
             </Row>
           </div>

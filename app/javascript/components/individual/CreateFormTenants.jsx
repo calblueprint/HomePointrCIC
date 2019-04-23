@@ -14,6 +14,7 @@ import ActiveStorageProvider from "react-activestorage-provider";
 import PicturesWall from './PicturesWall';
 import Avatar from './Avatar';
 import '../../../assets/stylesheets/createFormTenant.css';
+import { DirectUploadProvider } from "react-activestorage-provider";
 
 class CreateFormTenants extends React.Component {
   constructor(props) {

@@ -14,6 +14,7 @@ import ActiveStorageProvider from "react-activestorage-provider";
 import PicturesWall from './PicturesWall';
 import Avatar from './Avatar';
 import '../../../assets/stylesheets/CreatePropertyForm.css';
+import { DirectUploadProvider } from "react-activestorage-provider";
 
 class CreatePropertyForm extends React.Component {
   constructor(props) {
@@ -561,11 +562,10 @@ class CreatePropertyForm extends React.Component {
               label="Add images"
             >
               <div className="upload-image">
-                {pictureWallRender}
                 <DirectUploadProvider
                   multiple={true}
                   onSuccess={signedIds => { this.uploadImages(signedIds) }}
-                  render={(renderProps) => Utils.activeStorageUploadRenderer({ ...renderProps, type: "images" })}
+                  render={(renderProps) => Utils.activeStorageUploadRenderer({ ...renderProps, imageUrl: null, type: "images" })}
                 />
               </div>
             </Form.Item>
@@ -594,7 +594,7 @@ class CreatePropertyForm extends React.Component {
                 <DirectUploadProvider
                   multiple={false}
                   onSuccess={signedIds => { this.uploadForms(signedIds) }}
-                  render={(renderProps) => Utils.activeStorageUploadRenderer({ ...renderProps, type: "form" })}
+                  render={(renderProps) => Utils.activeStorageUploadRenderer({ ...renderProps, imageUrl: null, type: "form" })}
                 />
               </div>
             </Form.Item>
@@ -631,7 +631,7 @@ class CreatePropertyForm extends React.Component {
     }
     if (stage == 2) {
       return (
-        <div>{this.renderStageTwo()}</div>
+        <div>{this.renderStageFour()}</div>
       )
     }
     if (stage == 3) {
@@ -653,6 +653,7 @@ class CreatePropertyForm extends React.Component {
 
   render() {
     let component = this.renderFormStage();
+    // let temp = this.renderStageFour();
     return (
       <div>
         {component}
