@@ -1,5 +1,5 @@
 # frozen_string_literal: true
 
-class SessionsController < Devise::SessionsController
+class PasswordsController < Devise::PasswordsController
   skip_before_action :require_login
 end

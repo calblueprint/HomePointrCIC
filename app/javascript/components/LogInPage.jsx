@@ -93,7 +93,7 @@ class LogInPage extends React.Component {
          { this.renderErrorMsg() }
          <Form.Item>
              <Checkbox onChange={this.handleRememberMe}>Remember me</Checkbox>
-           <a className="login-form-forgot" href="">Forgot password</a>
+           <a className="login-form-forgot" href="/users/password/new">Forgot password</a>
            <Button type="primary" htmlType="submit" className="button">
              Log in
            </Button>

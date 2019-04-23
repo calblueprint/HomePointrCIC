@@ -37,7 +37,7 @@ class PropertyCard extends React.Component {
   // 2. If we want the modal to be rendered on click (aka within Tenant Show Page), display it
   // 3. If user is a landlord, redirect to Property Show page
   onPropertyClick = () => {
-    if (this.state.displayModal || this.state.disableDivClick) {
+    if (this.state.displayModal || this.state.disableDivClick || this.props.noClick) {
       return;
     } else if (this.state.renderModal) {
       this.setState({displayModal: true});

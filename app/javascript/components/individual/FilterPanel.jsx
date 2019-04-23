@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import 'antd/dist/antd.css';
 import { Switch, Menu, Dropdown as AntDrop, Icon, Radio, InputNumber, Button, Checkbox, DatePicker, Modal, Row, Col, Slider } from 'antd';
 import moment from 'moment';
+import Utils from 'helpers/utils';
 import APIRoutes from 'helpers/api_routes';
 import '../../../assets/stylesheets/FilterPanel.css';
 
@@ -50,7 +51,6 @@ class FilterPanel extends React.Component {
     this.getInitialValues = this.getInitialValues.bind(this);
     this.componentDidMount = this.componentDidMount.bind(this);
     this.handleClear = this.handleClear.bind(this);
-    this.titleize = this.titleize.bind(this);
     this.convertToDict = this.convertToDict.bind(this);
     this.getKeyByValue = this.getKeyByValue.bind(this);
     this.clearAllFilters = this.clearAllFilters.bind(this);
@@ -164,15 +164,9 @@ class FilterPanel extends React.Component {
     };
   }
 
-  titleize = (original) => {
-    let result = original.split("_");
-    result[0] =  result[0].charAt(0).toUpperCase() + result[0].slice(1);
-    return result.join(" ");
-  }
-
   convertToDict = (options) => {
     return options.reduce((result, option) => {
-      result[this.titleize(option)] = option;
+      result[Utils.titleize(option)] = option;
       return result;
     }, {});
   }
