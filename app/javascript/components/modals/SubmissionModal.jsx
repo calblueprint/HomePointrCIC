@@ -35,24 +35,38 @@ class SubmissionModal extends React.Component {
     });
   }
 
+  // renderPhotos() {
+  //   if (this.props.property.images == null) {
+  //     return (
+  //       <React.Fragment key='photo'>
+  //         <Avatar size={244} shape="rectangle" icon="home"/>
+  //       </React.Fragment>
+  //     )
+  //   } else {
+  //     return (
+  //       <div key="carousel" style={{backgroundColor: "#545454"}}>
+  //         <Carousel autoplay>
+  //           {this.props.property.images.map((image, index) => {
+  //             return (
+  //               <div key={index}><h3><center>{this.props.property.location}<img className="modal-avatar" src={image.url} margin-top="10%" height="244" width="244"/></center></h3></div>
+  //             )
+  //           })}
+  //         </Carousel>
+  //       </div>
+  //     )
+  //   }
+  // }
+
   renderPhotos() {
     if (this.props.property.images == null) {
       return (
         <React.Fragment key='photo'>
-          <Avatar size={256} shape="rectangle" icon="home"/>
+          <Avatar size={244} shape="rectangle" icon="home"/>
         </React.Fragment>
       )
     } else {
       return (
-        <div key="carousel" style={{backgroundColor: "#545454"}}>
-          <Carousel autoplay>
-            {this.props.property.images.map((image, index) => {
-              return (
-                <div key={index}><h3><center>{this.props.property.location}<img src={image.url} margin-top="10%" height="320" width="400"/></center></h3></div>
-              )
-            })}
-          </Carousel>
-        </div>
+        <img className="modal-avatar" height="224" width="224" src={this.props.property.images[0]["url"]} />
       )
     }
   }
@@ -101,77 +115,145 @@ class SubmissionModal extends React.Component {
       }
   }
 
+  //<Button key="submit" type="primary" onClick={this.handleOk}>Submit</Button>
+
   render() {
     return (
       <div key="SubmissionModal">
         {this.renderButton()}
         <Modal
-          title={this.renderPhotos()}
           visible={this.state.visible}
           onCancel={this.handleCancel}
           onOk={this.handleOk}
           width="1008px"
-          footer={<Button key="submit" type="primary" onClick={this.handleOk}>
-              Submit
-            </Button>}
+          footer={null}
         >
-        {/*
-        look at the renderPhotos thing!
-        <img className="image" style={{backgroundImage: `url(${this.props.property.images[0].url})`}}> </img>
-        */}
-          <div className="flex-container">
-            <div className="flex-item">
-              <div className="section">
-                <h1> <Icon type="home" className="icon"/> Basic </h1>
-                <div className="subsection">
-                <Row gutter={32}>
-                  <Col span={12} className="title1">Housing Type</Col>
-                  <Col span={12} className="title1">Property Type</Col>
-                </Row>
-                <Row gutter={32}>
-                  <Col span={12} className="text1">{this.props.property.housing_type}</Col>
-                  <Col span={12} className="text1">{this.props.property.property_type}</Col>
-                </Row>
-                <Row gutter={32}>
-                  <Col span={12} className="title1">Date Available</Col>
-                  <Col span={12} className="title1">Location</Col>
-                </Row>
-                <Row gutter={32}>
-                  <Col span={12} className="text1">{this.props.property.date_available}</Col>
-                  <Col span={12} className="text1">{this.props.property.location}</Col>
-                </Row>
+          <div className="tenant-modal">
+            <div className="modal-content">
+              <div className="basic-info">
+                {this.renderPhotos()}
+                <div className="modal-subsection">
+                  <h3>Location</h3>
+                  {this.props.property.location}
+                </div>
+                <div className="modal-subsection">
+                  <h3>Housing Type</h3>
+                  {this.props.property.housing_type}
+                </div>
+                <div className="modal-subsection">
+                  <h3>Property Type</h3>
+                  {this.props.property.property_type}
+                </div>
+                <div className="modal-subsection">
+                  <h3>Capacity</h3>
+                  {this.props.property.capacity}
                 </div>
               </div>
-              <div className="section">
-                <h1> <Icon type="paper-clip" className="icon"/> Additional Paperwork </h1>
-                <div className="subsection">
-                  <Row gutter={32}>
-                    <Col span={12}>{this.props.property.form ? <a href={this.props.property.form} target="_blank">Housing Form</a> : 'None'}</Col>
-                  </Row>
+              <div className="detailed-info">
+                <h1>Eventual Name</h1>
+                <div className="tenant-form-container">
+                  <h3>Download Tenant Form</h3>
+                </div>
+                <div className="upload-form-container">
+                  <h3>Upload Tenant Form</h3>
+                  <ActiveStorageProvider
+                    endpoint={{
+                      path: '/api/applications/' ,
+                      model: "Application",
+                      attribute: 'form',
+                      method: "POST",
+                    }}
+                    multiple={true}
+                    headers={{
+                      'Content-Type': 'application/json'
+                    }}
+                    render={Utils.activeStorageUploadRenderer}
+                  />
                 </div>
               </div>
-              <ActiveStorageProvider
-                endpoint={{
-                  path: '/api/applications/' ,
-                  model: "Application",
-                  attribute: 'form',
-                  method: "POST",
-                }}
-                multiple={true}
-                headers={{
-                  'Content-Type': 'application/json'
-                }}
-                render={Utils.activeStorageUploadRenderer}
-              />
-              <h1> Additional Tenant Information </h1>
-              {this.renderTextarea()}
+            </div>
+            <div className="app-buttons">
+              <div className="submit-button">
+                <Button key="submit" type="primary" onClick={this.handleOk}>Submit Application</Button>
+              </div>
             </div>
           </div>
-
         </Modal>
       </div>
-    );
+    )
   }
+
+  // render() {
+  //   return (
+  //     <div key="SubmissionModal">
+  //       {this.renderButton()}
+  //       <Modal
+  //         title={this.renderPhotos()}
+  //         visible={this.state.visible}
+  //         onCancel={this.handleCancel}
+  //         onOk={this.handleOk}
+  //         width="1008px"
+  //         footer={<Button key="submit" type="primary" onClick={this.handleOk}>
+  //             Submit
+  //           </Button>}
+  //       >
+  //       {/*
+  //       look at the renderPhotos thing!
+  //       <img className="image" style={{backgroundImage: `url(${this.props.property.images[0].url})`}}> </img>
+  //       */}
+  //         <div className="flex-container">
+  //           <div className="flex-item">
+  //             <div className="section">
+  //               <h1> <Icon type="home" className="icon"/> Basic </h1>
+  //               <div className="subsection">
+  //               <Row gutter={32}>
+  //                 <Col span={12} className="title1">Housing Type</Col>
+  //                 <Col span={12} className="title1">Property Type</Col>
+  //               </Row>
+  //               <Row gutter={32}>
+  //                 <Col span={12} className="text1">{this.props.property.housing_type}</Col>
+  //                 <Col span={12} className="text1">{this.props.property.property_type}</Col>
+  //               </Row>
+  //               <Row gutter={32}>
+  //                 <Col span={12} className="title1">Date Available</Col>
+  //                 <Col span={12} className="title1">Location</Col>
+  //               </Row>
+  //               <Row gutter={32}>
+  //                 <Col span={12} className="text1">{this.props.property.date_available}</Col>
+  //                 <Col span={12} className="text1">{this.props.property.location}</Col>
+  //               </Row>
+  //               </div>
+  //             </div>
+  //             <div className="section">
+  //               <h1> <Icon type="paper-clip" className="icon"/> Additional Paperwork </h1>
+  //               <div className="subsection">
+  //                 <Row gutter={32}>
+  //                   <Col span={12}>{this.props.property.form ? <a href={this.props.property.form} target="_blank">Housing Form</a> : 'None'}</Col>
+  //                 </Row>
+  //               </div>
+  //             </div>
+  //             <ActiveStorageProvider
+  //               endpoint={{
+  //                 path: '/api/applications/' ,
+  //                 model: "Application",
+  //                 attribute: 'form',
+  //                 method: "POST",
+  //               }}
+  //               multiple={true}
+  //               headers={{
+  //                 'Content-Type': 'application/json'
+  //               }}
+  //               render={Utils.activeStorageUploadRenderer}
+  //             />
+  //             <h1> Additional Tenant Information </h1>
+  //             {this.renderTextarea()}
+  //           </div>
+  //         </div>
+  //
+  //       </Modal>
+  //     </div>
+  //   );
+  // }
 }
 SubmissionModal.propTypes = {
   location: PropTypes.string,

@@ -21,9 +21,9 @@ class PropertyListWrapper extends React.Component {
     updatedProperties = this.props.properties.filter(p => {
       const dateToMoment = moment(filters["date_available"]);
       return (
-        filters["capacity"] <= p.capacity && 
-        filters["rent_min"] <= p.rent && 
-        filters["rent_max"] >= p.rent && 
+        filters["capacity"] <= p.capacity &&
+        filters["rent_min"] <= p.rent &&
+        filters["rent_max"] >= p.rent &&
         filters["number_of_bedrooms"] <= p.number_of_bedrooms
       );
     })
@@ -59,7 +59,7 @@ class PropertyListWrapper extends React.Component {
     }
     this.setState({properties: updatedProperties})
   }
-  
+
   render() {
     return (
       <div key="PropertyListWrapper">
@@ -70,7 +70,15 @@ class PropertyListWrapper extends React.Component {
             Potential Homes
           </div>
         </h1>
-        <ListView avatar={true} selectedEnd={this.props.selectedEnd} resources={this.state.properties} renderModal={true} type="property" checkbox={true} CheckboxChange={this.props.CheckboxChange}/>
+        <ListView
+          avatar={true}
+          selectedEnd={this.props.selectedEnd}
+          resources={this.state.properties}
+          renderModal={true}
+          type="property"
+          checkbox={true}
+          CheckboxChange={this.props.CheckboxChange}
+        />
       </div>
     );
   }
