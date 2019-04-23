@@ -4,7 +4,6 @@ class Property < ApplicationRecord
   # locations not set
   belongs_to :landlord
   has_many_attached :images, dependent: :destroy
-  has_many_attached :image_deletes, dependent: :destroy
   has_one_attached :form, dependent: :destroy
   has_many :applications, dependent: :destroy
   has_many :tenants, through: :applications

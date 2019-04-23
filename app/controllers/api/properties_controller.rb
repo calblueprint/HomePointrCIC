@@ -60,7 +60,6 @@ class Api::PropertiesController < ApplicationController
     form_attr = property_attr.delete("form")
 
     images_param = property_params["images"]
-    delete_images = property_params["image_deletes"]
 
     saved = @property.update(property_attr)
 
@@ -69,10 +68,6 @@ class Api::PropertiesController < ApplicationController
 
       images_param.each do |i|
         @property.images.attach(i)
-      end
-
-      delete_images.each do |i|
-        @property.images.find(i).purge
       end
 
       @property.form.attach(form_attr)
@@ -118,8 +113,7 @@ class Api::PropertiesController < ApplicationController
       :lat,
       :long,
       :form,
-      :images => [],
-      :image_deletes => []
+      :images => []
     )
   end
 end

@@ -64,9 +64,8 @@ class PropertyListWrapper extends React.Component {
     return (
       <div key="PropertyListWrapper">
         <FilterPanel {...this.props} applyFilter={this.handleFilter} />
-        Show Map <Switch checkedChildren={<Icon type="check" />} unCheckedChildren={<Icon type="close" />} onChange={this.props.toggleMap}/>
         <h1>
-          <div style={{ marginLeft: '10%', marginBottom: '2%', marginTop: '2%' }}>
+          <div style={{ marginLeft: '10%', marginBottom: '2%', marginTop: '2%'}} className="property-list-wrapper-header">
             Potential Homes
           </div>
         </h1>

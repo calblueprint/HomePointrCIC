@@ -8,7 +8,6 @@ const Utils = {
       <Avatar handleUpload={handleUpload} uploads={uploads} imageUrl={imageUrl} filename={filename} type={type}/>
 
       {uploads.map(upload => {
-        // console.log(upload)
         switch (upload.state) {
           case 'waiting':
             return <p key={upload.id}>Waiting to upload {upload.file.name}</p>
@@ -41,10 +40,18 @@ const Utils = {
     return obj;
   },
 
+  //combines two dictionaries together {a:1, b:2}, {c:3} -> {a:1, b:2, c:3}
   setup(obj, list) {
     for (var i=0; i < list.length; i++) {
       obj[i] = Utils.extend(obj[i], list[i])
     }
+  },
+
+  //
+  titleize(original) {
+    let result = original.split("_");
+    result[0] =  result[0].charAt(0).toUpperCase() + result[0].slice(1);
+    return result.join(" ");
   },
 
   // render status tag for tenant card

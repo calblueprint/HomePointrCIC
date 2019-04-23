@@ -115,6 +115,13 @@ class PropertiesController < ApplicationController
         @potentialTenantStatuses << { status: a.status }
       end
     end
+
+    @propertyFormPDF = nil
+    if @property.form.attached?
+       @propertyFormPDF = { form: url_for(@property.form) }
+     else
+       @propertyFormPDF = { form: nil }
+     end
   end
 
   def edit
