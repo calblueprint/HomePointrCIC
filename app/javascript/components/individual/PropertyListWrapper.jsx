@@ -65,7 +65,9 @@ class PropertyListWrapper extends React.Component {
       <div key="PropertyListWrapper">
         <FilterPanel {...this.props} applyFilter={this.handleFilter} />
         <h1>
-          <div style={{ marginLeft: '10%', marginBottom: '2%', marginTop: '2%'}} className="property-list-wrapper-header">
+          <div
+            style={{ marginLeft: '10%', marginBottom: '2%', marginTop: '2%'}}
+            className="property-list-wrapper-header">
             Potential Homes
           </div>
         </h1>

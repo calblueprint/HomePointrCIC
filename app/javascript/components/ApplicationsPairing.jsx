@@ -29,10 +29,16 @@ class ApplicationsPairing extends React.Component {
       selectedEnd: 0,
       status: "propertyList"
     };
+
     Utils.setup([this.props.tenant], this.props.tenantImage);
     Utils.setup([this.props.tenant], this.props.tenantPriority);
     Utils.setup(this.state.properties, this.props.propertyImages);
     Utils.setup(this.state.properties, this.props.propertyForms);
+
+    for (var i = 0; i < this.state.properties.length; i ++) {
+      this.state.properties[i]["tenantCount"] = this.props.tenantCounts[i]
+      this.state.properties[i]["potentialTenantCount"] = this.props.potentialTenantCounts[i]
+    }
 
     this.onChangeProperty = this.onChangeProperty.bind(this);
     this.clearTenant = this.clearTenant.bind(this);
@@ -42,6 +48,7 @@ class ApplicationsPairing extends React.Component {
     this.renderPropertyListWrapper = this.renderPropertyListWrapper.bind(this);
     this.finishApplicationProcess = this.finishApplicationProcess.bind(this);
     this.onSubmitProperty = this.onSubmitProperty.bind(this);
+
   }
 
   onSubmitProperty(e, property) {
@@ -121,12 +128,19 @@ class ApplicationsPairing extends React.Component {
 
   render() {
 
+    console.log(this.state.properties);
+
     let leftComponent = null;
     if (this.state.show_map) {
       leftComponent = <MapContainer filtered_properties={this.state.filtered_properties}/>
     } else {
       leftComponent = (
-        <RATenantView tenant={this.props.tenant} mode="ra_edit" avatar={this.props.tenant.avatar} status={this.props.tenant.priority}/>
+        <RATenantView
+          tenant={this.props.tenant}
+          mode="ra_edit"
+          avatar={this.props.tenant.avatar}
+          status={this.props.tenant.priority}
+        />
       );
     }
 
@@ -134,18 +148,62 @@ class ApplicationsPairing extends React.Component {
     let rightComponent = null;
     if (this.state.status == "propertyList") {
       rightComponent = (
-        [<Button type="primary" className="property-list-wrapper-start-app-btn" key="start_applications" onClick={this.renderApplicationSubmissionWrapper}>Start Applications</Button>,
-         <InstructionsModal status={this.state.status}/>,
-         <PropertyListWrapper {...this.props} toggleMap={this.toggleMap} selectedEnd={this.state.selectedEnd} propertyCompletion={true} CheckboxChange={this.onChangeProperty} selectedTenant={this.props.tenant}/>]
+        <div>
+          <div>
+            <Button
+              type="primary"
+              className="property-list-wrapper-start-app-btn"
+              key="start_applications"
+              onClick={this.renderApplicationSubmissionWrapper}>
+              Start Applications
+            </Button>
+          </div>
+          <div>
+           <InstructionsModal status={this.state.status}/>
+          </div>
+          <div>
+           <PropertyListWrapper
+              {...this.props}
+              toggleMap={this.toggleMap}
+              selectedEnd={this.state.selectedEnd}
+              propertyCompletion={true}
+              CheckboxChange={this.onChangeProperty}
+              selectedTenant={this.props.tenant}
+            />
+          </div>
+        </div>
       );
     }
     else if (this.state.status == "applicationSubmission") {
       rightComponent = (
-        <h1>Upload and Submit</h1>,
-        [<Button key="edit_selections" onClick={this.renderPropertyListWrapper}>Edit Selections</Button>,
-        <Button type="primary" key="finish_applications" onClick={this.finishApplicationProcess}>Finish Application Process</Button>,
-        <InstructionsModal status={this.state.status}/>,
-        <ApplicationSubmissionWrapper {...this.props} onSubmitProperty={this.onSubmitProperty} selectedProperties={this.state.properties.slice(0, this.state.selectedEnd)}/>]
+        <div>
+          <h1>Upload and Submit</h1>
+          <div>
+            <Button
+              key="edit_selections"
+              onClick={this.renderPropertyListWrapper}>
+              Edit Selections
+            </Button>
+          </div>
+          <div>
+            <Button
+              type="primary"
+              key="finish_applications"
+              onClick={this.finishApplicationProcess}>
+              Finish Application Process
+            </Button>
+          </div>
+          <div>
+            <InstructionsModal status={this.state.status}/>
+          </div>
+          <div>
+            <ApplicationSubmissionWrapper
+              {...this.props}
+              onSubmitProperty={this.onSubmitProperty}
+              selectedProperties={this.state.properties.slice(0, this.state.selectedEnd)}
+            />
+          </div>
+        </div>
       );
     }
 

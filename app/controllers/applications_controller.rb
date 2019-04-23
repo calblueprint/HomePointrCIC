@@ -16,7 +16,7 @@ class ApplicationsController < ApplicationController
     @tenant.applications.each do |a|
       alreadyApplied << a.property
     end
-    @properties = (@properties - alreadyApplied) | (alreadyApplied - @properties) 
+    @properties = (@properties - alreadyApplied) | (alreadyApplied - @properties)
     @propertyImages = []
     @properties.each do |p|
       if p.images.attached?
@@ -34,6 +34,15 @@ class ApplicationsController < ApplicationController
       else
         @propertyForms << { form: nil }
       end
+    end
+
+    @tenantCounts = []
+    @potentialTenantCounts = []
+    @properties.each do |p|
+      current_count = p.applications.where(status: "housed").size
+      @tenantCounts << current_count
+      app_count = p.applications.where(status: "received").size + p.applications.where(status: "interview").size
+      @potentialTenantCounts << app_count
     end
 
     @housing_type_options = Property.housing_types.keys

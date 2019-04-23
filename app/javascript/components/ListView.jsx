@@ -44,7 +44,13 @@ class ListView extends React.Component {
 
   renderSubmissionModal(resource, index) {
     if (this.props.submission_modal) {
-      return(<SubmissionModal property={resource} onSubmitProperty={this.props.onSubmitProperty} tenant={this.props.tenant}/>)
+      return(
+        <SubmissionModal
+          property={resource}
+          onSubmitProperty={this.props.onSubmitProperty}
+          tenant={this.props.tenant}
+        />
+      )
     }
   }
 

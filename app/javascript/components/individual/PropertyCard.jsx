@@ -39,7 +39,7 @@ class PropertyCard extends React.Component {
   onPropertyClick = () => {
     if (this.state.displayModal || this.state.disableDivClick || this.props.noClick) {
       return;
-    } else if (this.state.renderModal) {
+    } else if (this.state.renderModal || this.props.viewpoint === "submission") {
       this.setState({displayModal: true});
     } else {
       window.location='/properties/' + this.state.property.id;
