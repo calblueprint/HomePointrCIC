@@ -48,9 +48,13 @@
 }
 
 .tenant-form-container {
+  border: 1px solid #D9D9D9;
+  border-radius: 4px;
+  height: 55px;
+  width: 500px;
 
 }
 
 .upload-form-container {
-  
+
 }

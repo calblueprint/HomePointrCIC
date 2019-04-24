@@ -153,8 +153,11 @@ class SubmissionModal extends React.Component {
               </div>
               <div className="detailed-info">
                 <h1>Eventual Name</h1>
-                <div className="tenant-form-container">
+                <div className="modal-subsection">
                   <h3>Download Tenant Form</h3>
+                  <div className="tenant-form-container">
+
+                  </div>
                 </div>
                 <div className="upload-form-container">
                   <h3>Upload Tenant Form</h3>
