@@ -70,13 +70,20 @@ class Api::TenantsController < ApplicationController
       :location,
       :referral_agency_id,
       :date_needed,
-      :avatar,
-      :form,
       :number_of_bathrooms,
       :mobility_aids,
       :accessible_shower,
       :car_parking,
       :lift_access,
+      :family_size,
+      :living_arrangements,
+      :income,
+      :benefits,
+      :local_council,
+      :ex_offender,
+      :local_area_link,
+      :avatar,
+      :form
     )
   end
 end

@@ -109,7 +109,7 @@ class TenantModal extends React.Component {
                 </div>
                 <div className="modal-subsection">
                   <h3>Housing Type</h3>
-                  {this.props.tenant.housing_type}
+                  {Utils.titleize(this.props.tenant.housing_type)}
                 </div>
                 <div className="modal-subsection">
                   <h3>Date Needed</h3>

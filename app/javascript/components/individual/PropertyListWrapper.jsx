@@ -58,15 +58,17 @@ class PropertyListWrapper extends React.Component {
       })
     }
     this.setState({properties: updatedProperties})
+    this.props.setFilteredProperties(updatedProperties)
   }
 
   render() {
+    const properties = this.state.properties;
     return (
       <div key="PropertyListWrapper">
         <FilterPanel {...this.props} applyFilter={this.handleFilter} />
         <h1>
           <div style={{ marginLeft: '10%', marginBottom: '2%', marginTop: '2%'}} className="property-list-wrapper-header">
-            Potential Homes
+            {properties.length} Properties Found
           </div>
         </h1>
         <ListView avatar={true} selectedEnd={this.props.selectedEnd} resources={this.state.properties} renderModal={true} type="property" checkbox={true} CheckboxChange={this.props.CheckboxChange}/>

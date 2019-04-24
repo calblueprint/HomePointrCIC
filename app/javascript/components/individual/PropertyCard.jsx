@@ -134,7 +134,7 @@ class PropertyCard extends React.Component {
           <div className="details-container">
             <Col span={7}>
               <h3>Location</h3>
-              <p>{this.props.property.location}</p>
+              <p>{Utils.titleize(this.props.property.location)}</p>
             </Col>
             <Col span={6}>
               <h3>Current</h3>
