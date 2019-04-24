@@ -50,7 +50,7 @@ class SubmissionModal extends React.Component {
           <Carousel autoplay>
             {this.props.property.images.map((image, index) => {
               return (
-                <div key={index}><h3><center>{this.props.property.location}<img src={image.url} margin-top="10%" height="320" width="400"/></center></h3></div>
+                <div key={index}><h3><center>{Utils.titleize(this.props.property.location)}<img src={image.url} margin-top="10%" height="320" width="400"/></center></h3></div>
               )
             })}
           </Carousel>
@@ -131,8 +131,8 @@ class SubmissionModal extends React.Component {
                   <Col span={12} className="title1">Property Type</Col>
                 </Row>
                 <Row gutter={32}>
-                  <Col span={12} className="text1">{this.props.property.housing_type}</Col>
-                  <Col span={12} className="text1">{this.props.property.property_type}</Col>
+                  <Col span={12} className="text1">{Utils.titleize(this.props.property.housing_type)}</Col>
+                  <Col span={12} className="text1">{Utils.titleize(this.props.property.property_type)}</Col>
                 </Row>
                 <Row gutter={32}>
                   <Col span={12} className="title1">Date Available</Col>
@@ -140,7 +140,7 @@ class SubmissionModal extends React.Component {
                 </Row>
                 <Row gutter={32}>
                   <Col span={12} className="text1">{this.props.property.date_available}</Col>
-                  <Col span={12} className="text1">{this.props.property.location}</Col>
+                  <Col span={12} className="text1">{Utils.titleize(this.props.property.location)}</Col>
                 </Row>
                 </div>
               </div>

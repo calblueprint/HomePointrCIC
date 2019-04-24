@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import {Avatar, Button, Carousel, Tag, Row, Col, Icon} from 'antd';
+import Utils from "helpers/utils";
 import 'antd/dist/antd.css';
 
 class PropertyView extends React.Component {
@@ -77,8 +78,8 @@ class PropertyView extends React.Component {
               <Col span={12}><h3>Property Type</h3></Col>
             </Row>
             <Row>
-              <Col span={12} className="content-text"><p>{this.props.property.housing_type}</p></Col>
-              <Col span={12} className="content-text"><p>{this.props.property.property_type}</p></Col>
+              <Col span={12} className="content-text"><p>{Utils.titleize(this.props.property.housing_type)}</p></Col>
+              <Col span={12} className="content-text"><p>{Utils.titleize(this.props.property.property_type)}</p></Col>
             </Row>
             <Row>
               <Col span={12}><h3>Date Available</h3></Col>
@@ -86,7 +87,7 @@ class PropertyView extends React.Component {
             </Row>
             <Row>
               <Col span={12} className="content-text"><p>{this.props.property.date_available}</p></Col>
-              <Col span={12} className="content-text"><p>{this.props.property.location}</p></Col>
+              <Col span={12} className="content-text"><p>{Utils.titleize(this.props.property.location)}</p></Col>
             </Row>
           </div>
         </div>
