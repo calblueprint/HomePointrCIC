@@ -17,8 +17,7 @@ class EditAccount extends React.Component {
       user: this.props.user,
       email: this.props.email,
       new_password: this.props.current_password,
-      confirm_password: null,
-      disabled: false //to prevent multiple form submissions
+      password_changed: false,
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleEdit = this.handleEdit.bind(this);
@@ -31,8 +30,12 @@ class EditAccount extends React.Component {
    */
   convertToDict() {
     const user = this.state.user;
-    const keys = ["name", "address", "email", "phone", "password"];
-    const values = [user.name, user.address, this.state.email, user.phone, this.state.new_password];
+    var keys = ["name", "address", "email", "phone"];
+    var values = [user.name, user.address, this.state.email, user.phone];
+    if (this.state.password_changed) {
+      keys.push("password");
+      values.push(this.state.new_password);
+    }
     let result = keys.reduce((obj, k, i) => ({...obj, [k]: values[i] }), {})
     return result
   }
@@ -48,7 +51,7 @@ class EditAccount extends React.Component {
 
   //api destroy
   handleDestroy() {
-    
+
     let id = this.props.user.id;
     let type = this.props.type;
     var request = null;
@@ -117,7 +120,8 @@ class EditAccount extends React.Component {
 
   handlePasswordChange = (e) => {
     if (e.target.value != "") {
-      this.setState({ new_password: e.target.value })
+      this.setState({ new_password: e.target.value });
+      this.setState({ password_changed: true });
     }
   }
 
