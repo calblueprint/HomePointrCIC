@@ -362,6 +362,7 @@ class FilterPanel extends React.Component {
                 range marks={marks}
                 min={0}
                 max={5000}
+                value={[this.state.rent_min, this.state.rent_max]}
                 style={{ width: 200, paddingLeft: 10 }}
                 defaultValue={typeof this.state.rent_min === 'number' && typeof this.state.rent_max === 'number' ? [this.state.rent_min, this.state.rent_max] : [0, 5000]}
                 onChange={this.sliderChanges}/>
