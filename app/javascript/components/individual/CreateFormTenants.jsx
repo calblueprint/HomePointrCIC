@@ -14,6 +14,7 @@ import ActiveStorageProvider from "react-activestorage-provider";
 import PicturesWall from './PicturesWall';
 import Avatar from './Avatar';
 import '../../../assets/stylesheets/createFormTenant.css';
+import { DirectUploadProvider } from "react-activestorage-provider";
 
 class CreateFormTenants extends React.Component {
   constructor(props) {
@@ -45,6 +46,8 @@ class CreateFormTenants extends React.Component {
         local_council: undefined,
         ex_offender: undefined,
         local_area_link: '',
+        avatar: null,
+        form: null,
       },
       categories: props.categories,
       nice_housing_types: props.categories.nice_housing_types,
@@ -86,8 +89,8 @@ class CreateFormTenants extends React.Component {
 
   convertToDict() {
     const tenant = this.state.tenant;
-    const keys = ["name", "description", "email", "phone", "rent_min", "rent_max", "housing_type", "property_type", "number_of_bedrooms", "location", "referral_agency_id", "date_needed", "avatar", "number_of_bathrooms", "mobility_aids", "accessible_shower", "car_parking", "lift_access"];
-    const values = [tenant.name, tenant.description, tenant.email, tenant.phone, tenant.rent_min, tenant.rent_max, tenant.housing_type, tenant.property_type, tenant.number_of_bedrooms, tenant.location, tenant.referral_agency_id, tenant.date_needed, tenant.avatar, tenant.number_of_bathrooms, tenant.mobility_aids, tenant.accessible_shower, tenant.car_parking, tenant.lift_access];
+    const keys = ["name", "description", "email", "phone", "rent_min", "rent_max", "housing_type", "property_type", "number_of_bedrooms", "location", "referral_agency_id", "date_needed", "avatar", "number_of_bathrooms", "mobility_aids", "accessible_shower", "car_parking", "lift_access", "local_council", "ex_offender", "local_area_link", "avatar", "form"];
+    const values = [tenant.name, tenant.description, tenant.email, tenant.phone, tenant.rent_min, tenant.rent_max, tenant.housing_type, tenant.property_type, tenant.number_of_bedrooms, tenant.location, tenant.referral_agency_id, tenant.date_needed, tenant.avatar, tenant.number_of_bathrooms, tenant.mobility_aids, tenant.accessible_shower, tenant.car_parking, tenant.lift_access, tenant.local_council, tenant.ex_offender, tenant.local_area_link, tenant.avatar, tenant.form];
     let result = keys.reduce((obj, k, i) => ({...obj, [k]: values[i] }), {})
     return result
   }
@@ -196,7 +199,7 @@ class CreateFormTenants extends React.Component {
     const Option = Select.Option;
     return (
       <div className="container">
-        <h3>Step 1: blah blah blah</h3>
+        <h1>Step 1: Basic Information</h1>
         <Form className="grid-container" hideRequiredMark={true}>
           <Form.Item
             label="Name"
@@ -292,7 +295,13 @@ class CreateFormTenants extends React.Component {
                 required: true, message: 'Please input your household income!',
               }]
             })(
-              <Input onChange={() => this.handleChange("income")}/>
+              <InputNumber
+                style={{ width: 150 }}
+                min={0}
+                max={9999999}
+                value={tenant.income}
+                onChange={(value) => this.handleChangeSelect("income", value)}
+              />
             )}
           </Form.Item>
           <Form.Item
@@ -330,7 +339,7 @@ class CreateFormTenants extends React.Component {
     const { tenant } = this.state;
     return (
       <div className="container">
-        <h3>Step 2: Housing preferences</h3>
+        <h1>Step 2: Housing preferences</h1>
         <Form hideRequiredMark={true}>
           <div className="grid-container">
             <Form.Item
@@ -431,9 +440,10 @@ class CreateFormTenants extends React.Component {
                 </Col>
                 <Col className="slider" span={12}>
                   <Slider
-                    range marks={marks}
                     min={0}
                     max={5000}
+                    range marks={marks}
+                    value={[tenant.rent_min, tenant.rent_max]}
                     style={{ width: 200, paddingLeft: 10 }}
                     defaultValue={typeof tenant.rent_min === 'number' && typeof tenant.rent_max === 'number'? [tenant.rent_min, tenant.rent_max] : [0, 5000]}
                     onChange={this.sliderChanges}/>
@@ -462,11 +472,40 @@ class CreateFormTenants extends React.Component {
     const { tenant } = this.state;
     const { getFieldDecorator } = this.props.form;
     const Option = Select.Option;
+    const { TextArea } = Input;
+
     return (
       <div className="container">
-        <div>Step 3: blah blah</div>
+        <h1>Step 3: A couple more details</h1>
         <Form hideRequiredMark={true}>
           <div className="grid-container">
+            <Form.Item
+              label="Ex-offender?"
+            >
+              {getFieldDecorator('ex_offender', {
+                initialValue: tenant.ex_offender,
+                rules: [{
+                  required: true, message: 'Please select a response!',
+                }],
+              })(
+                <Select placeholder="Select One" value={tenant.ex_offender} onChange={(value) => this.handleChangeSelect("ex_offender", value)}>
+                  <Option value={true}>Yes</Option>
+                  <Option value={false}>No</Option>
+                </Select>
+              )}
+            </Form.Item>
+            <Form.Item
+              label="Status with local council"
+            >
+              {getFieldDecorator('local_council', {
+                initialValue: tenant.local_council,
+                rules: [{
+                  required: true, message: 'Please input your response!',
+                }]
+              })(
+                <Input onChange={() => this.handleChange("local_council")}/>
+              )}
+            </Form.Item>
             <Form.Item
               label="Mobility Aids"
             >
@@ -528,6 +567,18 @@ class CreateFormTenants extends React.Component {
               )}
             </Form.Item>
           </div>
+          <Form.Item
+            label="Describe any links to local area"
+          >
+            {getFieldDecorator('local_area_link', {
+              initialValue: tenant.local_area_link,
+              rules: [{
+                required: true, message: 'Please input your response!',
+              }]
+            })(
+              <TextArea style={{ height: 120, textAlign: "left" }} onChange={() => this.handleChange("local_area_link")}/>
+            )}
+          </Form.Item>
         </Form>
         <div className="buttons">
           <Button className="previous" onClick={() => {this.nextButton(2, "previous")}}>Previous</Button>
@@ -543,7 +594,7 @@ class CreateFormTenants extends React.Component {
     const { TextArea } = Input;
     return (
       <div className="container">
-        <div>Step 4: Wooo description</div>
+        <h1>Step 4: Description</h1>
         <Form hideRequiredMark={true}>
           <Form.Item
             label="Description"
@@ -566,28 +617,34 @@ class CreateFormTenants extends React.Component {
     )
   }
 
+  uploadAvatar = (signedIds) => {
+    let tenant = this.state.tenant;
+    tenant["avatar"] = signedIds[0];
+    this.setState({ tenant: tenant });
+  }
+
+  uploadForms = (signedIds) => {
+    let tenant = this.state.tenant;
+    tenant["form"] = signedIds[0];
+    this.setState({ tenant: tenant });
+  }
+
   renderStageFive() {
     const { tenant } = this.state;
     return (
       <div className="container">
-        <div>Step 5: Add a profile photo</div>
+        <h1>Step 5: Add a profile photo</h1>
         <Form hideRequiredMark={true}>
           <Form.Item
             label="Upload Avatar"
           >
-            <ActiveStorageProvider
-              endpoint={{
-                path: '/api/tenants/',
-                model: "Tenant",
-                attribute: 'avatar',
-                method: "POST",
-              }}
-              multiple={true}
-              headers={{
-                'Content-Type': 'application/json'
-              }}
-              render={Utils.activeStorageUploadRenderer}
-            />
+            <div className="upload-image">
+              <DirectUploadProvider
+                multiple={false}
+                onSuccess={signedIds => { this.uploadAvatar(signedIds) }}
+                render={(renderProps) => Utils.activeStorageUploadRenderer({ ...renderProps, type: "avatar" })}
+              />
+            </div>
           </Form.Item>
         </Form>
         <div className="buttons">
@@ -602,24 +659,18 @@ class CreateFormTenants extends React.Component {
     const { tenant } = this.state;
     return (
       <div className="container">
-        <div>Step 5: Add Default Client Form</div>
+        <div>Step 5: Additional Paperwork (Optional)</div>
         <Form hideRequiredMark={true}>
           <Form.Item
             label="Upload Form"
           >
-            <ActiveStorageProvider
-              endpoint={{
-                path: '/api/tenants/',
-                model: "Tenant",
-                attribute: 'form',
-                method: "POST",
-              }}
-              multiple={true}
-              headers={{
-                'Content-Type': 'application/json'
-              }}
-              render={Utils.activeStorageUploadRenderer}
-            />
+            <div className="upload-form">
+              <DirectUploadProvider
+                multiple={false}
+                onSuccess={signedIds => { this.uploadForms(signedIds) }}
+                render={(renderProps) => Utils.activeStorageUploadRenderer({ ...renderProps, type: "form" })}
+              />
+            </div>
           </Form.Item>
         </Form>
         <div className="buttons">
@@ -681,7 +732,7 @@ class CreateFormTenants extends React.Component {
   render() {
     let component = this.renderFormStage();
     return (
-      <div>
+      <div className="create-tenant-container">
         {component}
       </div>
     )
