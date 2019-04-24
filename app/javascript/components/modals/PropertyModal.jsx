@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from "prop-types";
 import 'antd/dist/antd.css';
 import { Modal, Button, Carousel, Avatar, Layout, Row, Col, Icon} from 'antd';
+import Utils from 'helpers/utils';
 import ApplicationStatusButtons from './../individual/ApplicationStatusButtons'
 import '../../../assets/stylesheets/modal.css';
 
@@ -101,8 +102,8 @@ class PropertyModal extends React.Component {
                   <Col span={12} className="title1">Property Type</Col>
                 </Row>
                 <Row gutter={32}>
-                  <Col span={12} className="text1">{this.props.property.housing_type}</Col>
-                  <Col span={12} className="text1">{this.props.property.property_type}</Col>
+                  <Col span={12} className="text1">{Utils.titleize(this.props.property.housing_type)}</Col>
+                  <Col span={12} className="text1">{Utils.titleize(this.props.property.property_type)}</Col>
                 </Row>
                 <Row gutter={32}>
                   <Col span={12} className="title1">Date Available</Col>
@@ -110,7 +111,7 @@ class PropertyModal extends React.Component {
                 </Row>
                 <Row gutter={32}>
                   <Col span={12} className="text1">{this.props.property.date_available}</Col>
-                  <Col span={12} className="text1">{this.props.property.location}</Col>
+                  <Col span={12} className="text1">{Utils.titleize(this.props.property.location)}</Col>
                 </Row>
                 </div>
               </div>
