@@ -471,6 +471,33 @@ class CreateFormTenants extends React.Component {
         <Form hideRequiredMark={true}>
           <div className="grid-container">
             <Form.Item
+              label="Ex-offender?"
+            >
+              {getFieldDecorator('ex_offender', {
+                initialValue: tenant.ex_offender,
+                rules: [{
+                  required: true, message: 'Please select a response!',
+                }],
+              })(
+                <Select placeholder="Select One" value={tenant.ex_offender} onChange={(value) => this.handleChangeSelect("ex_offender", value)}>
+                  <Option value={true}>Yes</Option>
+                  <Option value={false}>No</Option>
+                </Select>
+              )}
+            </Form.Item>
+            <Form.Item
+              label="Status with local council"
+            >
+              {getFieldDecorator('local_council', {
+                initialValue: tenant.local_council,
+                rules: [{
+                  required: true, message: 'Please input your response!',
+                }]
+              })(
+                <Input onChange={() => this.handleChange("local_council")}/>
+              )}
+            </Form.Item>
+            <Form.Item
               label="Mobility Aids"
             >
               {getFieldDecorator('mobility_aids', {
@@ -528,6 +555,18 @@ class CreateFormTenants extends React.Component {
                   <Option value={true}>Yes</Option>
                   <Option value={false}>No</Option>
                 </Select>
+              )}
+            </Form.Item>
+            <Form.Item
+              label="Describe any links to local area"
+            >
+              {getFieldDecorator('local_area_link', {
+                initialValue: tenant.local_area_link,
+                rules: [{
+                  required: true, message: 'Please input your response!',
+                }]
+              })(
+                <Input onChange={() => this.handleChange("local_area_link")}/>
               )}
             </Form.Item>
           </div>
