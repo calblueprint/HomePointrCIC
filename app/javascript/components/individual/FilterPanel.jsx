@@ -123,6 +123,7 @@ class FilterPanel extends React.Component {
   }
 
   handleClear = (filter_name) => {
+    this.closeAll();
     if (filter_name == 'location' || filter_name == 'property_type' || filter_name == 'housing_type') {
       this.setState({
         [filter_name]: []
@@ -142,6 +143,23 @@ class FilterPanel extends React.Component {
         [filter_name]: 0
       });
     }
+    var activeFilter;
+    if (filter_name == 'location') {
+      activeFilter = 'locationFilterActive';
+    } else if (filter_name == 'capacity' || filter_name == 'number_of_bedrooms') {
+      activeFilter = 'guestsFilterActive';
+    } else if (filter_name == 'rent_min' || filter_name == 'rent_max') {
+      activeFilter = 'rentFilterActive';
+    } else if (filter_name == 'property_type') {
+      activeFilter = 'propertyTypeFilterActive';
+    } else if (filter_name == 'housing_type') {
+      activeFilter = 'housingTypeFilterActive';
+    } else if (filter_name == 'date_available') {
+      activeFilter = 'dateFilterActive';
+    }
+    this.setState({
+      [activeFilter]: false,
+    });
   }
 
   closeAll = () => {
