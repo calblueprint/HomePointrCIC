@@ -489,18 +489,6 @@ class ProfileFormTenants extends React.Component {
               )}
             </Form.Item>
             <Form.Item
-              label="Describe any links to local area"
-            >
-              {getFieldDecorator('local_area_link', {
-                initialValue: tenant.local_area_link,
-                rules: [{
-                  required: true, message: 'Please input your links to local area!',
-                }],
-              })(
-                <Input onChange={() => this.handleChange("local_area_link")}/>
-              )}
-            </Form.Item>
-            <Form.Item
               label="Mobility Aids"
             >
               {getFieldDecorator('mobility_aids', {
@@ -561,6 +549,18 @@ class ProfileFormTenants extends React.Component {
               )}
             </Form.Item>
           </div>
+          <Form.Item
+            label="Describe any links to local area"
+          >
+            {getFieldDecorator('local_area_link', {
+              initialValue: tenant.local_area_link,
+              rules: [{
+                required: true, message: 'Please input your response!',
+              }]
+            })(
+              <TextArea style={{ height: 120, textAlign: "left" }} onChange={() => this.handleChange("local_area_link")}/>
+            )}
+          </Form.Item>
         </div>
         <div className="section">
           <h2>Description</h2>
