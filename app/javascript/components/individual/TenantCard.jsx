@@ -20,11 +20,24 @@ class TenantCard extends React.Component {
     }
   }
 
+
+
   renderAvatar = () => {
-    return(
-      <img className="img" height="144" width="144" src={this.state.tenant.url} />
-    );
+    if (this.state.tenant.url == null) {
+      return (
+        <React.Fragment key='avatar'>
+          <Avatar className="profile-picture" size={144} shape="square" icon="user"/>
+        </React.Fragment>
+      )
+    } else {
+      return (
+        <React.Fragment key='avatar'>
+          <Avatar size={144} shape="square" className="profile-picture" src={this.state.tenant.url}/>
+        </React.Fragment>
+      )
+    }
   }
+
 
 
   // Three cases:

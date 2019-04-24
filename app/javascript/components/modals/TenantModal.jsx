@@ -33,7 +33,7 @@ class TenantModal extends React.Component {
     if (this.props.tenant.url == null) {
       return (
         <React.Fragment key='avatar'>
-          <Avatar size={280} icon="user"/>
+          <Avatar size={280} className="profile-picture" icon="user"/>
         </React.Fragment>
       )
     } else {

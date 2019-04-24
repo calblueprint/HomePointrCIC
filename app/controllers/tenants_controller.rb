@@ -12,6 +12,11 @@ class TenantsController < ApplicationController
   end
 
   def new
+    $activestoragestart = if !ActiveStorage::Blob.last.nil?
+                           ActiveStorage::Blob.last.id
+                         else
+                           0
+                         end
     @tenant = Tenant.new
     authorize @tenant
     @current_userID = current_user.id
