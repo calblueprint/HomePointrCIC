@@ -14,6 +14,7 @@ class EditAccount extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      renderInfoPassword: 0,
       user: this.props.user,
       email: this.props.email,
       new_password: this.props.current_password,
@@ -120,6 +121,23 @@ class EditAccount extends React.Component {
     }
   }
 
+  renderInfo = (which_info, e) => {
+    if (which_info == "password") {
+      this.setState((state) => {
+        return {renderInfoPassword: 1 - state.renderInfoPassword}
+      });
+    }
+  }
+
+  // Renders information dialogue on hover
+  infoDialogueHelper = (which_info, info_text) => {
+    if (which_info == "password" && this.state.renderInfoPassword) {
+      return(
+        <div className="info-dialogue"><p className="info-dialogue-text">{info_text}</p></div>
+      );
+    }
+  }
+
   render() {
     const { getFieldDecorator } = this.props.form;
     const { user } = this.state;
@@ -164,6 +182,8 @@ class EditAccount extends React.Component {
             {/* ITEM 1 */}
             <Col span={12}>
               <Form.Item label="New password">
+                <div onMouseEnter={(e) => this.renderInfo("password", e)} onMouseLeave={(e) => this.renderInfo("password", e)}><Icon type="question-circle" theme="twoTone" className="info-icon"/></div>
+                {this.infoDialogueHelper("password", "Your new password should be minimum 8 characters.")}
                 {getFieldDecorator('password', {
                   rules: [{
                     required: true, message: 'Please input your password!',

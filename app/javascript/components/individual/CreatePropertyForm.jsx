@@ -3,7 +3,7 @@
 // } from 'antd';
 import React from "react";
 import PropTypes from "prop-types";
-import { Upload, message, Form, Icon, Select, Input, Button, Slider, Switch, DatePicker, InputNumber, Row, Col } from 'antd';
+import { Popover, Upload, message, Form, Icon, Select, Input, Button, Slider, Switch, DatePicker, InputNumber, Row, Col } from 'antd';
 import "antd/dist/antd.css";
 import moment from 'moment';
 import APIRoutes from 'helpers/api_routes';
@@ -19,6 +19,9 @@ class CreatePropertyForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      renderInfoHousing: 0,
+      renderInfoProperty: 0,
+      renderInfoCapacity: 0,
       property: {
         capacity: null,
         description: '',
@@ -41,7 +44,7 @@ class CreatePropertyForm extends React.Component {
         lat: null,
         long: null,
         images: null,
-        form: null,
+        form: null
 
         // name: '',
         // description: '',
@@ -211,13 +214,46 @@ class CreatePropertyForm extends React.Component {
     )
   }
 
+  renderInfo = (which_info, e) => {
+    if (which_info == "housing") {
+      this.setState((state) => {
+        return {renderInfoHousing: 1 - state.renderInfoHousing}
+      });
+    } else if (which_info == "property") {
+      this.setState((state) => {
+        return {renderInfoProperty: 1 - state.renderInfoProperty}
+      });
+    } else if (which_info == "capacity") {
+      this.setState((state) => {
+        return {renderInfoCapacity: 1 - state.renderInfoCapacity}
+      });
+    }
+  }
+
+  // Renders information dialogue on hover
+  infoDialogueHelper = (which_info, info_text) => {
+    if (which_info == "housing" && this.state.renderInfoHousing) {
+      return(
+        <div className="info-dialogue"><p className="info-dialogue-text">{info_text}</p></div>
+      );
+    } else if (which_info == "property" && this.state.renderInfoProperty) {
+      return(
+        <div className="info-dialogue"><p className="info-dialogue-text">{info_text}</p></div>
+      );
+    } else if (which_info == "capacity" && this.state.renderInfoCapacity) {
+      return(
+        <div className="info-dialogue"><p className="info-dialogue-text">{info_text}</p></div>
+      );
+    }
+  }
+
   renderStageOne() {
     const { property } = this.state;
     const { getFieldDecorator } = this.props.form;
     const Option = Select.Option;
     return (
-      <div className="container">
-        <h2>Step 1: Tell us about your space.</h2>
+      <div className="property-form-container">
+        <h1>Step 1: Tell us about your space.</h1>
         <Form className="grid-container" hideRequiredMark={true}>
           <Form.Item
             label="Address"
@@ -232,7 +268,7 @@ class CreatePropertyForm extends React.Component {
             )}
           </Form.Item>
           <Form.Item
-            label="Rent"
+            label="Monthly rent"
           >
             {getFieldDecorator('rent', {
               initialValue: property.rent,
@@ -246,6 +282,9 @@ class CreatePropertyForm extends React.Component {
           <Form.Item
             label="Housing type"
           >
+            <div onMouseEnter={(e) => this.renderInfo("housing", e)} onMouseLeave={(e) => this.renderInfo("housing", e)}><Icon type="question-circle" theme="twoTone" className="info-icon"/></div>
+            {this.infoDialogueHelper("housing", "Housing type is housing situation or conditions of your residence.")}
+
             {getFieldDecorator('housing_type', {
               initialValue: property.housing_type,
               rules: [{
@@ -264,6 +303,8 @@ class CreatePropertyForm extends React.Component {
           <Form.Item
             label="Property type"
           >
+            <div onMouseEnter={(e) => this.renderInfo("property", e)} onMouseLeave={(e) => this.renderInfo("property", e)}><Icon type="question-circle" theme="twoTone" className="info-icon"/></div>
+            {this.infoDialogueHelper("property", "Property type is the type of building of your residence.")}
             {getFieldDecorator('property_type', {
               initialValue: property.property_type,
               rules: [{
@@ -312,6 +353,8 @@ class CreatePropertyForm extends React.Component {
           <Form.Item
             label="Capacity"
           >
+            <div onMouseEnter={(e) => this.renderInfo("capacity", e)} onMouseLeave={(e) => this.renderInfo("capacity", e)}><Icon type="question-circle" theme="twoTone" className="info-icon"/></div>
+            {this.infoDialogueHelper("capacity", "Capacity is the number of open spots you have in your residence.")}
             {getFieldDecorator('capacity', {
               initialValue: property.capacity,
               rules: [{
@@ -357,8 +400,8 @@ class CreatePropertyForm extends React.Component {
     const Option = Select.Option;
     const { property } = this.state;
     return (
-      <div className="container">
-        <h2>Step 2: Couple more details.</h2>
+      <div className="property-form-container">
+        <h1>Step 2: Couple more details.</h1>
         <Form hideRequiredMark={true}>
           <div className="grid-container">
             <Form.Item
@@ -500,8 +543,8 @@ class CreatePropertyForm extends React.Component {
     const { getFieldDecorator } = this.props.form;
     const Option = Select.Option;
     return (
-      <div className="container">
-        <h2>Step 3: Set the scene.</h2>
+      <div className="property-form-container">
+        <h1>Step 3: Set the scene.</h1>
         Write a quick summary of your place. You can highlight what's special about your space and the neighborhood.
         <div className="sub-container">
           <Form hideRequiredMark={true}>
@@ -535,9 +578,9 @@ class CreatePropertyForm extends React.Component {
   renderStageFour() {
     const { property } = this.state;
     return (
-      <div className="container">
-        <h2>Step 4: Bring it to life.</h2>
-        Photos help guests imagine staying in your place. You can start with one and add more after you publish.
+      <div className="property-form-container">
+        <h1>Step 4: Bring it to life. (Optional)</h1>
+        This step is optional but definitely highly encouraged. Photos help guests imagine staying in your place. You can start with one and add more after you publish.
         <div className="sub-container">
           <Form hideRequiredMark={true}>
             <Form.Item
@@ -570,8 +613,8 @@ class CreatePropertyForm extends React.Component {
   renderStageFive() {
     const { property } = this.state;
     return (
-      <div className="container">
-        <h2>Step 5: Additional paperwork (Optional)</h2>
+      <div className="property-form-container">
+        <h1>Step 5: Additional paperwork (Optional)</h1>
         Do you require potential clients to fill out any additional paperwork outside of the general client form?
         <div className="sub-container">
           <Form hideRequiredMark={true}>
