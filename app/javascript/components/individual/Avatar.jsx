@@ -12,8 +12,6 @@ class Avatar extends React.Component {
       filename: this.props.filename,
       type: this.props.type,
     };
-    console.log("IN AVATAR");
-    console.log(this.state.imageUrl);
     this.getBase64 = this.getBase64.bind(this);
     this.handleChange = this.handleChange.bind(this);
   }
@@ -40,20 +38,15 @@ class Avatar extends React.Component {
   }
 
   renderDisplay = () => {
-    console.log("RENDER DISPLAY");
-    if (this.state.type == "avatar" && this.state.imageUrl) {
-      console.log("AVATAR RENDERED");
+    if ((this.state.type == "avatar" || this.state.type == "images") && this.state.imageUrl) {
       return (
         <img src={this.state.imageUrl} alt={this.state.filename} width="104px" height="104px"/>
       )
     } else if (this.state.type == "form" && (this.state.imageUrl || this.state.filename)) {
-      console.log("FORM RENDERED");
-      console.log(this.state.filename);
       return (
         <div className="form-box" style={{ backgroundColor: "#ED326C" }}>{this.state.filename}</div>
       )
     } else {
-      console.log("UPLOAD ICON RENDERED");
       return (
         <div>
           <Icon type={this.state.loading ? 'loading' : 'plus'} />

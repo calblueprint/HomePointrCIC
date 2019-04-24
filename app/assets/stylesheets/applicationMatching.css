@@ -9,3 +9,14 @@
   top: -150px;
   left: 500px;
 }
+
+.property-list-wrapper-header {
+  display: inline-block;
+}
+
+.property-list-wrapper-start-app-btn {
+  display: inline-block;
+  margin-left: 550px;
+  position: absolute;
+  top: 90px;
+}

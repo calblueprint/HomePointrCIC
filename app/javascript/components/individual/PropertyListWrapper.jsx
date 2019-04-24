@@ -21,9 +21,9 @@ class PropertyListWrapper extends React.Component {
     updatedProperties = this.props.properties.filter(p => {
       const dateToMoment = moment(filters["date_available"]);
       return (
-        filters["capacity"] <= p.capacity && 
-        filters["rent_min"] <= p.rent && 
-        filters["rent_max"] >= p.rent && 
+        filters["capacity"] <= p.capacity &&
+        filters["rent_min"] <= p.rent &&
+        filters["rent_max"] >= p.rent &&
         filters["number_of_bedrooms"] <= p.number_of_bedrooms
       );
     })
@@ -58,16 +58,17 @@ class PropertyListWrapper extends React.Component {
       })
     }
     this.setState({properties: updatedProperties})
+    this.props.setFilteredProperties(updatedProperties)
   }
-  
+
   render() {
+    const properties = this.state.properties;
     return (
       <div key="PropertyListWrapper">
         <FilterPanel {...this.props} applyFilter={this.handleFilter} />
-        Show Map <Switch checkedChildren={<Icon type="check" />} unCheckedChildren={<Icon type="close" />} onChange={this.props.toggleMap}/>
         <h1>
-          <div style={{ marginLeft: '10%', marginBottom: '2%', marginTop: '2%' }}>
-            Potential Homes
+          <div style={{ marginLeft: '10%', marginBottom: '2%', marginTop: '2%'}} className="property-list-wrapper-header">
+            {properties.length} Properties Found
           </div>
         </h1>
         <ListView avatar={true} selectedEnd={this.props.selectedEnd} resources={this.state.properties} renderModal={true} type="property" checkbox={true} CheckboxChange={this.props.CheckboxChange}/>

@@ -49,6 +49,7 @@ class EditAccount extends React.Component {
 
   //api destroy
   handleDestroy() {
+    
     let id = this.props.user.id;
     let type = this.props.type;
     var request = null;

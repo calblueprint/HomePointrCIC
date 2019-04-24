@@ -33,8 +33,7 @@ class PropertyProfileForm extends React.Component {
       property_types: props.categories.property_types,
       locations: props.categories.locations,
       form: this.props.client_form,
-      images: this.props.images,
-      image_deletes: [],
+      images: [],
       fileList: [],
       imageRemoveList: [],
       disabled: false //to prevent multiple form submissions
@@ -75,8 +74,8 @@ class PropertyProfileForm extends React.Component {
 
   convertToDict() {
     const property = this.state.property;
-    const keys = ["capacity", "description", "landlord_id", "rent", "property_type", "housing_type", "date_available", "location", "address", "number_of_bedrooms", "number_of_bathrooms", "floor_number", "mobility_aids", "furniture", "utilities_included", "accessible_shower", "car_parking", "lift_access", "lat", "long", "images", "image_deletes", "form"];
-    const values = [property.capacity, property.description, property.landlord_id, property.rent, property.property_type, property.housing_type, property.date_available, property.location, property.address, property.number_of_bedrooms, property.number_of_bathrooms, property.floor_number, property.mobility_aids, property.furniture, property.utilities_included, property.accessible_shower, property.car_parking, property.lift_access, property.lat, property.long, this.state.images, this.state.image_deletes, this.state.form];
+    const keys = ["capacity", "description", "landlord_id", "rent", "property_type", "housing_type", "date_available", "location", "address", "number_of_bedrooms", "number_of_bathrooms", "floor_number", "mobility_aids", "furniture", "utilities_included", "accessible_shower", "car_parking", "lift_access", "lat", "long", "images", "form"];
+    const values = [property.capacity, property.description, property.landlord_id, property.rent, property.property_type, property.housing_type, property.date_available, property.location, property.address, property.number_of_bedrooms, property.number_of_bathrooms, property.floor_number, property.mobility_aids, property.furniture, property.utilities_included, property.accessible_shower, property.car_parking, property.lift_access, property.lat, property.long, this.state.images, this.state.form];
     let result = keys.reduce((obj, k, i) => ({...obj, [k]: values[i] }), {})
     return result
   }
@@ -139,7 +138,7 @@ class PropertyProfileForm extends React.Component {
     var i;
     for (i = 0; i < imageList.length; i++) {
       let request = APIRoutes.properties.delete_image(imageList[i]);
-      (request, {
+      fetch(request, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
@@ -565,7 +564,7 @@ class PropertyProfileForm extends React.Component {
                 <DirectUploadProvider
                   multiple={true}
                   onSuccess={signedIds => { this.uploadImages(signedIds) }}
-                  render={Utils.activeStorageUploadRenderer}
+                  render={(renderProps) => Utils.activeStorageUploadRenderer({ ...renderProps, type: "images" })}
                 />
               </div>
             </Form.Item>

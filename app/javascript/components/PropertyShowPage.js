@@ -27,6 +27,7 @@ class PropertyShowPage extends React.Component {
     Utils.setup(this.state.tenantApps, this.props.tenantAppsPDF);
     Utils.setup(this.state.potentialTenantApps, this.props.potentialTenantAppsPDF);
     Utils.setup(this.state.potentialTenants, this.props.potentialTenantStatuses);
+    Utils.setup([this.state.property], [this.props.propertyFormPDF]);
 
     const TabPane = Tabs.TabPane;
     const leftComponent = (

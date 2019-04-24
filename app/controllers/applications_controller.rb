@@ -12,6 +12,11 @@ class ApplicationsController < ApplicationController
                      end
     @tenantPriority = [{ priority: @tenant.priority }]
     @properties = Property.all
+    alreadyApplied = []
+    @tenant.applications.each do |a|
+      alreadyApplied << a.property
+    end
+    @properties = (@properties - alreadyApplied) | (alreadyApplied - @properties) 
     @propertyImages = []
     @properties.each do |p|
       if p.images.attached?

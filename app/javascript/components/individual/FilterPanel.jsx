@@ -1,8 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
 import 'antd/dist/antd.css';
-import { Menu, Dropdown as AntDrop, Icon, Radio, InputNumber, Button, Checkbox, DatePicker, Modal, Row, Col, Slider } from 'antd';
+import { Switch, Menu, Dropdown as AntDrop, Icon, Radio, InputNumber, Button, Checkbox, DatePicker, Modal, Row, Col, Slider } from 'antd';
 import moment from 'moment';
+import Utils from 'helpers/utils';
 import APIRoutes from 'helpers/api_routes';
 import '../../../assets/stylesheets/FilterPanel.css';
 
@@ -28,6 +29,12 @@ class FilterPanel extends React.Component {
       isPropertyTypeOpen: false,
       isHousingTypeOpen: false,
       isRentOpen: false,
+      dateFilterActive: false,
+      guestsFilterActive: false,
+      locationFilterActive: false,
+      propertyTypeFilterActive: false,
+      housingTypeFilterActive: false,
+      rentFilterActive: false,
       actual: {
         location: props.location_options,
         capacity: 0,
@@ -50,7 +57,6 @@ class FilterPanel extends React.Component {
     this.getInitialValues = this.getInitialValues.bind(this);
     this.componentDidMount = this.componentDidMount.bind(this);
     this.handleClear = this.handleClear.bind(this);
-    this.titleize = this.titleize.bind(this);
     this.convertToDict = this.convertToDict.bind(this);
     this.getKeyByValue = this.getKeyByValue.bind(this);
     this.clearAllFilters = this.clearAllFilters.bind(this);
@@ -97,9 +103,27 @@ class FilterPanel extends React.Component {
     });
     this.props.applyFilter(this.state.actual);
     this.closeAll();
+    var activeFilter;
+    if (filter_name == 'location') {
+      activeFilter = 'locationFilterActive';
+    } else if (filter_name == 'capacity' || filter_name == 'number_of_bedrooms') {
+      activeFilter = 'guestsFilterActive';
+    } else if (filter_name == 'rent_min' || filter_name == 'rent_max') {
+      activeFilter = 'rentFilterActive';
+    } else if (filter_name == 'property_type') {
+      activeFilter = 'propertyTypeFilterActive';
+    } else if (filter_name == 'housing_type') {
+      activeFilter = 'housingTypeFilterActive';
+    } else if (filter_name == 'date_available') {
+      activeFilter = 'dateFilterActive';
+    }
+    this.setState({
+      [activeFilter]: true,
+    });
   }
 
   handleClear = (filter_name) => {
+    this.closeAll();
     if (filter_name == 'location' || filter_name == 'property_type' || filter_name == 'housing_type') {
       this.setState({
         [filter_name]: []
@@ -111,7 +135,7 @@ class FilterPanel extends React.Component {
       });
     } else if (filter_name == 'capacity') {
       this.setState({
-        capacity: 0, 
+        capacity: 0,
         number_of_bedrooms: 0,
       });
     } else {
@@ -119,6 +143,23 @@ class FilterPanel extends React.Component {
         [filter_name]: 0
       });
     }
+    var activeFilter;
+    if (filter_name == 'location') {
+      activeFilter = 'locationFilterActive';
+    } else if (filter_name == 'capacity' || filter_name == 'number_of_bedrooms') {
+      activeFilter = 'guestsFilterActive';
+    } else if (filter_name == 'rent_min' || filter_name == 'rent_max') {
+      activeFilter = 'rentFilterActive';
+    } else if (filter_name == 'property_type') {
+      activeFilter = 'propertyTypeFilterActive';
+    } else if (filter_name == 'housing_type') {
+      activeFilter = 'housingTypeFilterActive';
+    } else if (filter_name == 'date_available') {
+      activeFilter = 'dateFilterActive';
+    }
+    this.setState({
+      [activeFilter]: false,
+    });
   }
 
   closeAll = () => {
@@ -142,7 +183,7 @@ class FilterPanel extends React.Component {
   }
 
   sliderChanges([value1, value2]) {
-    this.setState({ 
+    this.setState({
       rent_min: value1,
       rent_max: value2,
     });
@@ -164,15 +205,9 @@ class FilterPanel extends React.Component {
     };
   }
 
-  titleize = (original) => {
-    let result = original.split("_");
-    result[0] =  result[0].charAt(0).toUpperCase() + result[0].slice(1);
-    return result.join(" ");
-  }
-
   convertToDict = (options) => {
     return options.reduce((result, option) => {
-      result[this.titleize(option)] = option;
+      result[Utils.titleize(option)] = option;
       return result;
     }, {});
   }
@@ -195,6 +230,15 @@ class FilterPanel extends React.Component {
       housing_type: this.props.housing_options,
       date_available: null,
     }
+    this.closeAll();
+    this.setState({
+      dateFilterActive: false,
+      guestsFilterActive: false,
+      locationFilterActive: false,
+      propertyTypeFilterActive: false,
+      housingTypeFilterActive: false,
+      rentFilterActive: false,
+    });
     this.props.applyFilter(defaultVals);
   }
 
@@ -219,13 +263,13 @@ class FilterPanel extends React.Component {
           />
         </div>
         <div className="buttons-panel">
-          <div 
-            className="clear-btn" 
+          <div
+            className="clear-btn"
             onClick={(e) => this.handleClear("date_available")}
           >
             Clear
           </div>
-          <div 
+          <div
             className="apply-btn"
             onClick={(e) => this.passState("date_available")}
           >
@@ -262,7 +306,7 @@ class FilterPanel extends React.Component {
           >
             Clear
           </div>
-          <div 
+          <div
             className="apply-btn"
             onClick={(e) => this.passState("capacity")}
           >
@@ -308,7 +352,7 @@ class FilterPanel extends React.Component {
           />
         </div>
         <div className="buttons-panel">
-          <div 
+          <div
             className="clear-btn"
             onClick={(e) => this.handleClear("property_type")}
           >
@@ -368,6 +412,7 @@ class FilterPanel extends React.Component {
                 range marks={marks}
                 min={0}
                 max={5000}
+                value={[this.state.rent_min, this.state.rent_max]}
                 style={{ width: 200, paddingLeft: 10 }}
                 defaultValue={typeof this.state.rent_min === 'number' && typeof this.state.rent_max === 'number' ? [this.state.rent_min, this.state.rent_max] : [0, 5000]}
                 onChange={this.sliderChanges}/>
@@ -404,61 +449,65 @@ class FilterPanel extends React.Component {
       <div className="filters-panel">
         <div className="filters-bar">
           <Dropdown overlay={dateFilter} visible={this.state.isDateOpen} trigger={['click']}>
-            <Button 
-              className="category-btn"
+            <Button
+              className={this.state.dateFilterActive ? "category-btn active-filter-btn" : "category-btn"}
               onClick={(e) => this.toggleOpen("isDateOpen")}
             >
               Date needed
             </Button>
           </Dropdown>
           <Dropdown overlay={guestsFilter} visible={this.state.isGuestsOpen} trigger={['click']}>
-            <Button 
-              className="category-btn"
+            <Button
+              className={this.state.guestsFilterActive ? "category-btn active-filter-btn" : "category-btn"}
               onClick={(e) => this.toggleOpen("isGuestsOpen")}
             >
               Guests
             </Button>
           </Dropdown>
           <Dropdown overlay={locationFilter} visible={this.state.isLocationOpen} trigger={['click']}>
-            <Button 
-              className="category-btn"
+            <Button
+              className={this.state.locationFilterActive ? "category-btn active-filter-btn" : "category-btn"}
               onClick={(e) => this.toggleOpen("isLocationOpen")}
             >
               Location
             </Button>
           </Dropdown>
           <Dropdown overlay={propertyTypeFilter} visible={this.state.isPropertyTypeOpen} trigger={['click']}>
-            <Button 
-              className="category-btn"
+            <Button
+              className={this.state.propertyTypeFilterActive ? "category-btn active-filter-btn" : "category-btn"}
               onClick={(e) => this.toggleOpen("isPropertyTypeOpen")}
             >
               Property type
             </Button>
           </Dropdown>
           <Dropdown overlay={housingTypeFilter} visible={this.state.isHousingTypeOpen} trigger={['click']}>
-            <Button 
-              className="category-btn"
+            <Button
+              className={this.state.housingTypeFilterActive ? "category-btn active-filter-btn" : "category-btn"}
               onClick={(e) => this.toggleOpen("isHousingTypeOpen")}
             >
               Housing type
             </Button>
           </Dropdown>
           <Dropdown overlay={rentFilter} visible={this.state.isRentOpen} trigger={['click']}>
-            <Button 
-              className="category-btn"
+            <Button
+              className={this.state.rentFilterActive ? "category-btn active-filter-btn" : "category-btn"}
               onClick={(e) => this.toggleOpen("isRentOpen")}
             >
               Rent
             </Button>
           </Dropdown>
-        </div>
-        <div className="clear-all-filters">
-          <Button
-            type="primary"
-            onClick={(e) => this.clearAllFilters()}
-          >
-            Reset
-          </Button>
+          <div className="clear-all-filters">
+            <Button
+              type="primary"
+              onClick={(e) => this.clearAllFilters()}
+            >
+              Reset
+            </Button>
+          </div>
+          <div className="map-switch-container">
+            Show Map
+            <Switch className="map-switch" checkedChildren={<Icon type="check" />} unCheckedChildren={<Icon type="close" />} onChange={this.props.toggleMap}/>
+          </div>
         </div>
       </div>
     );
