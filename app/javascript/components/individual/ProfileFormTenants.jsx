@@ -420,8 +420,8 @@ class ProfileFormTenants extends React.Component {
           <Form.Item
             label="Rent"
           >
-              <Row>
-                <Col span={4}>
+              <Row gutter={10}>
+                <Col span={6}>
                   <InputNumber
                     min={0}
                     max={5000}
@@ -430,15 +430,17 @@ class ProfileFormTenants extends React.Component {
                     onChange={() => this.handleChange("rent_min")}
                   />
                 </Col>
-                <Col span={8}>
+                <Col className="slider" span={10}>
                   <Slider
-                    range marks={marks}
                     min={0}
                     max={5000}
+                    range marks={marks}
+                    value={[tenant.rent_min, tenant.rent_max]}
+                    style={{ width: 200, paddingLeft: 10 }}
                     defaultValue={typeof tenant.rent_min === 'number' && typeof tenant.rent_max === 'number'? [tenant.rent_min, tenant.rent_max] : [0, 5000]}
                     onChange={this.sliderChanges}/>
                 </Col>
-                <Col span={4}>
+                <Col span={6}>
                   <InputNumber
                     min={0}
                     max={5000}
