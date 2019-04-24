@@ -57,7 +57,7 @@ class PropertyView extends React.Component {
   renderNameEdit() {
     return (
       <Row>
-        <Col span={19}><h1>{this.props.property.address}</h1></Col>
+        <Col span={19}><h1>{this.props.property.address.split(",")[0]}</h1></Col>
         <Col span={5} className='chips'>
           {/*{Utils.renderStatus(this.props.status, true)}*/}
           <Button key='button' type='default' onClick={this.handleEdit} className='edit-button'>Edit</Button>
