@@ -9,8 +9,7 @@ class Avatar extends React.Component {
     this.state = {
       loading: false,
       imageUrl: this.props.imageUrl,
-      filename: this.props.filename,
-      type: this.props.type,
+      filename: this.props.filename
     };
     this.getBase64 = this.getBase64.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -31,6 +30,14 @@ class Avatar extends React.Component {
         filename: info.file.name,
         loading: false,
       }));
+
+      if (this.props.onURLChange != undefined) {
+        if (this.props.type == "images") {
+          this.props.onURLChange("image", this.state.imageUrl);
+        } else if (this.props.type == "form") {
+          this.props.onURLChange("form", this.state.filename);
+        }
+      }
     }
     if (info.state != 'finished' && info.progress != 100) {
       this.setState({ loading: true });
@@ -39,6 +46,7 @@ class Avatar extends React.Component {
   }
 
   renderDisplay = () => {
+    debugger
     if ((this.state.type == "avatar" || this.state.type == "images") && this.state.imageUrl) {
       return (
         <img src={this.state.imageUrl} alt={this.state.filename} width="104px" height="104px"/>
