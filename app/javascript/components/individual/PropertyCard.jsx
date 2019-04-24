@@ -41,7 +41,7 @@ class PropertyCard extends React.Component {
     } else if (this.state.renderModal) {
       this.setState({displayModal: true});
     } else {
-      window.location='/properties/' + this.state.property.id;
+      window.location='/properties/' + this.props.property.id;
     }
   }
 
@@ -111,7 +111,6 @@ class PropertyCard extends React.Component {
   }
 
   render() {
-    debugger
     return(
       <div
         onMouseEnter={this.renderEdit}
