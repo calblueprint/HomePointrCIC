@@ -18,6 +18,8 @@ class PropertyView extends React.Component {
     window.location = '/properties/' + this.props.property.id.toString() + '/edit'
   }
 
+  // arguments: string of amenity to be displayed, name of prop for amenity in the backend
+  // given the arguments, the function chooses whether or not to display it on the frontend
   getIncludes(amenities_str, amenities_bool) {
     if (amenities_bool) {
       this.state.includes_boolean = true;
@@ -27,6 +29,8 @@ class PropertyView extends React.Component {
     }
   }
 
+  // arguments: string of amenity to be displayed, name of prop for amenity in the backend
+  // given the arguments, the function chooses whether or not to display it on the frontend
   getDiscludes(amenities_str, amenities_bool) {
     if (!amenities_bool) {
       this.state.discludes_boolean = true;
@@ -36,12 +40,14 @@ class PropertyView extends React.Component {
     }
   }
 
+  // arguments: true or false boolean depending on whether we're working with including or not including
+  // if no amenities are to be displayed, display NONE
   renderNone(display_includes) {
     if (display_includes && !this.state.includes_boolean) {
       return (
         <Col span={12} className="content-text"><p>None</p></Col>
       );
-    } else if (display_includes && !this.state.discludes_boolean) {
+    } else if (!display_includes && !this.state.discludes_boolean) {
       return (
         <Col span={12} className="content-text"><p>None</p></Col>
       );
