@@ -1,16 +1,6 @@
 # frozen_string_literal: true
 
 class TenantsController < ApplicationController
-  def index
-    if ReferralAgency.exists?(current_user.id)
-      user = ReferralAgency.find(current_user.id)
-      @tenants = Tenant.where(referral_agency: user)
-    else
-      user = Landlord.find(current_user.id)
-      redirect_to errors_show_path
-    end
-  end
-
   def new
     @tenant = Tenant.new
     authorize @tenant
