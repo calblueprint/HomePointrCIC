@@ -309,7 +309,13 @@ class ProfileFormTenants extends React.Component {
                     required: true, message: 'Please input your household income!',
                   }]
                 })(
-                  <Input onChange={() => this.handleChange("income")}/>
+                  <InputNumber
+                    style={{ width: 150 }}
+                    min={0}
+                    max={9999999}
+                    value={tenant.income}
+                    onChange={(value) => this.handleChangeSelect("income", value)}
+                  />
                 )}
               </Form.Item>
               <Form.Item
