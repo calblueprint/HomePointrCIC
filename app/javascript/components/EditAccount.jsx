@@ -7,6 +7,7 @@ import APIRoutes from 'helpers/api_routes';
 import Utils from 'helpers/utils';
 import ActiveStorageProvider from "react-activestorage-provider";
 import '../../assets/stylesheets/application.css';
+import DeleteModal from './modals/DeleteModal';
 
 
 class EditAccount extends React.Component {
@@ -18,6 +19,7 @@ class EditAccount extends React.Component {
       email: this.props.email,
       new_password: this.props.current_password,
       password_changed: false,
+      visible: false,
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleEdit = this.handleEdit.bind(this);
@@ -124,6 +126,14 @@ class EditAccount extends React.Component {
       this.setState({ password_changed: true });
     }
   }
+
+    onCancel = () => {
+      this.setState({ visible: false });
+    }
+
+    showModal = () => {
+      this.setState({ visible: true });
+    }
 
   render() {
     const { getFieldDecorator } = this.props.form;
@@ -236,7 +246,13 @@ class EditAccount extends React.Component {
             </Col>
             {/* ITEM 2 */}
             <Col span={12}>
-              <Button type="danger" onClick={this.handleDestroy} className="delete-account-btn">Delete account</Button>
+              <Button type="danger" onClick={this.showModal} className="delete-account-btn">Delete account</Button>
+              <DeleteModal
+                title={"account"}
+                onOk={this.handleDestroy}
+                onCancel={this.onCancel}
+                visible={this.state.visible}
+              />
             </Col>
           </Row>
 
@@ -265,7 +281,5 @@ class EditAccount extends React.Component {
     );
   }
 }
-
-
 
 export default Form.create()(EditAccount);
