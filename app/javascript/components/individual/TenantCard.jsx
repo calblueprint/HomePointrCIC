@@ -20,8 +20,6 @@ class TenantCard extends React.Component {
     }
   }
 
-
-
   renderAvatar = () => {
     if (this.state.tenant.url == null) {
       return (
@@ -37,8 +35,6 @@ class TenantCard extends React.Component {
       )
     }
   }
-
-
 
   // Three cases:
   // 1. If the modal is already being displayed or user is hovering on edit, do nothing
@@ -145,10 +141,7 @@ class TenantCard extends React.Component {
         {this.renderModalOnClick()}
       </div>
     );
-
-
   }
-
 }
 
 export default TenantCard;
