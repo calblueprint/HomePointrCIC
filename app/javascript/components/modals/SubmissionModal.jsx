@@ -124,6 +124,7 @@ class SubmissionModal extends React.Component {
           <div className="flex-container">
             <div className="flex-item">
               <div className="section">
+                <h1 className= "modal_name"> {this.props.property.address.split(",")[0]} </h1>
                 <h1> <Icon type="home" className="icon"/> Basic </h1>
                 <div className="subsection">
                 <Row gutter={32}>
