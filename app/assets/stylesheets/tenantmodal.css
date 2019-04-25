@@ -47,14 +47,20 @@
   padding-top: 42px;
 }
 
-.tenant-form-description {
+.h3-margins {
+  margin-bottom: 16px;
+  margin-top: 20px;
+}
+
+.tenant-description-box {
   height: 40px;
   width: 180px;
+  resize: none;
 }
 
 .tenant-form-container {
-  margin-top: 36px;
-  margin-bottom: 32px;
+  margin-top: 20px;
+  margin-bottom: 26px;
 }
 
 .tenant-form-download {
@@ -83,7 +89,7 @@
 }
 
 .upload-details {
-  margin-top: 32px;
+  margin-top: 24px;
 }
 
 .upload-button {
@@ -92,7 +98,7 @@
 
 .submit-button-container {
   float: right;
-  padding-top: 120px;
+  padding-top: 52px;
 }
 
 .no-forms {

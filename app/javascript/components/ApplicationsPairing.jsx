@@ -127,9 +127,6 @@ class ApplicationsPairing extends React.Component {
   }
 
   render() {
-
-    console.log(this.state.properties);
-
     let leftComponent = null;
     if (this.state.show_map) {
       leftComponent = <MapContainer filtered_properties={this.state.filtered_properties}/>

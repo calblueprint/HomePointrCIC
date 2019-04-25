@@ -83,21 +83,6 @@ class SubmissionModal extends React.Component {
     }
   }
 
-  renderTextarea() {
-    const { TextArea } = Input;
-    return (
-      <div>
-        <label>Add a note to about the client.</label>
-        <TextArea
-          rows ={4}
-          onChange={(e) => this.state.description = e.target.value}
-          autosize={false}
-          className="tenant-form-description"
-        />
-      </div>
-    )
-  }
-
   handlePost() {
     let body = {"description": this.state.description, "status": 1, "property_id": this.props.property.id, "tenant_id": this.props.tenant.id};
     body = JSON.stringify({application: body})
@@ -118,6 +103,21 @@ class SubmissionModal extends React.Component {
     }).catch((data) => {
       console.error(data);
     });
+  }
+
+  renderTextarea() {
+    const { TextArea } = Input;
+    return (
+      <div className="tenant-description">
+        <h3 className="h3-margins">Add a note to about the client</h3>
+        <TextArea
+          rows ={4}
+          onChange={(e) => this.state.description = e.target.value}
+          autosize={false}
+          className="tenant-description-box"
+        />
+      </div>
+    )
   }
 
   renderButton() {
@@ -183,6 +183,9 @@ class SubmissionModal extends React.Component {
 
   //<Button key="submit" type="primary" onClick={this.handleOk}>Submit</Button>
 
+  // look at the renderPhotos thing!
+  // <img className="image" style={{backgroundImage: `url(${this.props.property.images[0].url})`}}> </img>
+
   render() {
     return (
       <div key="SubmissionModal">
@@ -194,59 +197,31 @@ class SubmissionModal extends React.Component {
           width="1008px"
           footer={null}
         >
-<<<<<<< HEAD
           <div className="tenant-modal">
             <div className="modal-content">
               <div className="basic-info">
                 {this.renderPhotos()}
                 <div className="modal-subsection">
                   <h3>Location</h3>
-                  {this.props.property.location}
+                  {Utils.titleize(this.props.property.location)}
                 </div>
                 <div className="modal-subsection">
                   <h3>Housing Type</h3>
-                  {this.props.property.housing_type}
+                  {Utils.titleize(this.props.property.housing_type)}
                 </div>
                 <div className="modal-subsection">
                   <h3>Property Type</h3>
-                  {this.props.property.property_type}
+                  {Utils.titleize(this.props.property.property_type)}
                 </div>
                 <div className="modal-subsection">
                   <h3>Capacity</h3>
-                  {this.props.property.capacity}
-=======
-        {/*
-        look at the renderPhotos thing!
-        <img className="image" style={{backgroundImage: `url(${this.props.property.images[0].url})`}}> </img>
-        */}
-          <div className="flex-container">
-            <div className="flex-item">
-              <div className="section">
-                <h1> <Icon type="home" className="icon"/> Basic </h1>
-                <div className="subsection">
-                <Row gutter={32}>
-                  <Col span={12} className="title1">Housing Type</Col>
-                  <Col span={12} className="title1">Property Type</Col>
-                </Row>
-                <Row gutter={32}>
-                  <Col span={12} className="text1">{Utils.titleize(this.props.property.housing_type)}</Col>
-                  <Col span={12} className="text1">{Utils.titleize(this.props.property.property_type)}</Col>
-                </Row>
-                <Row gutter={32}>
-                  <Col span={12} className="title1">Date Available</Col>
-                  <Col span={12} className="title1">Location</Col>
-                </Row>
-                <Row gutter={32}>
-                  <Col span={12} className="text1">{this.props.property.date_available}</Col>
-                  <Col span={12} className="text1">{Utils.titleize(this.props.property.location)}</Col>
-                </Row>
->>>>>>> 5e3d425c01a0fe5ad1eb0befa88543ce8b8f45e7
+                  {this.props.property.capacity} Clients
                 </div>
               </div>
               <div className="detailed-info">
                 <h1>Eventual Name</h1>
-                {this.renderTextarea()}
                 {this.renderFormSubmission()}
+                {this.renderTextarea()}
                 <div className="submit-button-container">
                   <div className="submit-button">
                     <Button key="submit" type="primary" onClick={this.handleOk}>Submit Application</Button>
