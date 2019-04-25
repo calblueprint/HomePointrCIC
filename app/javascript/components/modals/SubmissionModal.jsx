@@ -215,7 +215,7 @@ class SubmissionModal extends React.Component {
                 </div>
                 <div className="modal-subsection">
                   <h3>Capacity</h3>
-                  {this.props.property.capacity} Clients
+                  {(this.props.property.capacity == 1) ? this.props.property.capacity + " Client" : this.props.property.capacity + " Clients"}
                 </div>
               </div>
               <div className="detailed-info">

@@ -143,8 +143,16 @@ class PropertyModal extends React.Component {
                     <Col span={8} className="title1">Rent</Col>
                   </Row>
                   <Row gutter={32}>
-                    <Col span={8} className="text1">{this.props.property.capacity}</Col>
-                    <Col span={8} className="text1">{this.props.property.number_of_openings}</Col>
+                    <Col span={8} className="text1">
+                      {(this.props.property.capacity == 1) ?
+                        this.props.property.capacity + " Client"
+                        : this.props.property.capacity + " Clients"}
+                    </Col>
+                    <Col span={8} className="text1">
+                      {(this.props.property.number_of_openings == 1) ?
+                        this.props.property.number_of_openings + " Client"
+                        : this.props.property.number_of_openings + " Clients"}
+                    </Col>
                     <Col span={8} className="text1">${this.props.property.rent}</Col>
                   </Row>
                   <Row gutter={32}>
