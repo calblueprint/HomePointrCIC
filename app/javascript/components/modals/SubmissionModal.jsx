@@ -219,7 +219,7 @@ class SubmissionModal extends React.Component {
                 </div>
               </div>
               <div className="detailed-info">
-                <h1>Eventual Name</h1>
+                <h1>{this.props.property.address.split(",")[0]}</h1>
                 {this.renderFormSubmission()}
                 {this.renderTextarea()}
                 <div className="submit-button-container">
