@@ -566,6 +566,18 @@ class CreateFormTenants extends React.Component {
                 </Select>
               )}
             </Form.Item>
+            <Form.Item
+              label="Describe any links to local area"
+            >
+              {getFieldDecorator('local_area_link', {
+                initialValue: tenant.local_area_link,
+                rules: [{
+                  required: true, message: 'Please input your response!',
+                }]
+              })(
+                <Input onChange={() => this.handleChange("local_area_link")}/>
+              )}
+            </Form.Item>
           </div>
           <Form.Item
             label="Describe any links to local area"

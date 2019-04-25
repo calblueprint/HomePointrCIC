@@ -7,6 +7,7 @@ import APIRoutes from 'helpers/api_routes';
 import Utils from 'helpers/utils';
 import ActiveStorageProvider from "react-activestorage-provider";
 import '../../assets/stylesheets/application.css';
+import DeleteModal from './modals/DeleteModal';
 
 
 class EditAccount extends React.Component {
@@ -18,7 +19,8 @@ class EditAccount extends React.Component {
       email: this.props.email,
       new_password: this.props.current_password,
       confirm_password: null,
-      disabled: false //to prevent multiple form submissions
+      disabled: false, //to prevent multiple form submissions
+      visible: false,
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleEdit = this.handleEdit.bind(this);
@@ -48,7 +50,7 @@ class EditAccount extends React.Component {
 
   //api destroy
   handleDestroy() {
-    
+
     let id = this.props.user.id;
     let type = this.props.type;
     var request = null;
@@ -119,6 +121,14 @@ class EditAccount extends React.Component {
     if (e.target.value != "") {
       this.setState({ new_password: e.target.value })
     }
+  }
+
+  onCancel = () => {
+    this.setState({ visible: false });
+  }
+
+  showModal = () => {
+    this.setState({ visible: true });
   }
 
   render() {
@@ -232,7 +242,13 @@ class EditAccount extends React.Component {
             </Col>
             {/* ITEM 2 */}
             <Col span={12}>
-              <Button type="danger" onClick={this.handleDestroy} className="delete-account-btn">Delete account</Button>
+              <Button type="danger" onClick={this.showModal} className="delete-account-btn">Delete account</Button>
+              <DeleteModal
+                title={"account"}
+                onOk={this.handleDestroy}
+                onCancel={this.onCancel}
+                visible={this.state.visible}
+              />
             </Col>
           </Row>
 
