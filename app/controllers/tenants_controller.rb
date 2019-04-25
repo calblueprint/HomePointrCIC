@@ -80,7 +80,11 @@ class TenantsController < ApplicationController
         }
      else
        @avatar = nil
-       @image_object = nil
+       @image_object = {
+          id: nil,
+          name: nil,
+          url: nil,
+        }
      end
 
      @client_form = nil
