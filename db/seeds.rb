@@ -110,6 +110,7 @@ def make_tenants
       local_area_link: Faker::HowIMetYourMother.quote
     )
     tenant.avatar.attach(io: File.open('app/assets/images/avatar2.jpg'), filename: 'avatar2.jpg')
+    tenant.form.attach(io: File.open('app/assets/images/sample.pdf'), filename: 'sample.pdf')
     tenant.save
     printf("#{n}/#{NUM_TENTANTS} Tenants \r")
   end

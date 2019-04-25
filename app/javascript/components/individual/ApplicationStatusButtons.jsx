@@ -46,7 +46,7 @@ class ApplicationStatusButtons extends React.Component {
             <Button key="reject" type="danger" onClick={this.handleReject}>Reject</Button>
           </div>
           <div className="interview-button">
-            <Button key="interview" type="default" onClick={this.handleInterview}>Interview</Button>
+            <Button key="interview" type="primary" onClick={this.handleInterview}>Interview</Button>
           </div>
         </div>
       );

@@ -66,7 +66,7 @@ class RATenantView extends React.Component {
               <Col span={12}><h3>Family Size</h3></Col>
             </Row>
             <Row>
-              <Col span={12} className="content-text"><p>{this.props.tenant.location}</p></Col>
+              <Col span={12} className="content-text"><p>{Utils.titleize(this.props.tenant.location)}</p></Col>
               <Col span={12} className="content-text"><p>{this.props.tenant.family_size}</p></Col>
             </Row>
             <Row>
@@ -95,8 +95,8 @@ class RATenantView extends React.Component {
             </Row>
             <Row>
               <Col span={8} className="content-text"><p>{this.props.tenant.date_needed}</p></Col>
-              <Col span={8} className="content-text"><p>{this.props.tenant.property_type}</p></Col>
-              <Col span={8} className="content-text"><p>{this.props.tenant.housing_type}</p></Col>
+              <Col span={8} className="content-text"><p>{Utils.titleize(this.props.tenant.property_type)}</p></Col>
+              <Col span={8} className="content-text"><p>{Utils.titleize(this.props.tenant.housing_type)}</p></Col>
             </Row>
             <Row>
               <Col span={8}><h3>Rent Min</h3></Col>

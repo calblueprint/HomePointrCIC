@@ -68,6 +68,16 @@ class SubmissionModal extends React.Component {
       )
     } else {
       return (
+        // <div key="carousel" style={{backgroundColor: "#545454"}}>
+        //   <Carousel autoplay>
+        //     {this.props.property.images.map((image, index) => {
+        //       return (
+        //         <div key={index}><h3><center>{Utils.titleize(this.props.property.location)}<img src={image.url} margin-top="10%" height="320" width="400"/></center></h3></div>
+        //       )
+        //     })}
+        //   </Carousel>
+        // </div>
+
         <img className="modal-avatar" height="224" width="224" src={this.props.property.images[0]["url"]} />
       )
     }
@@ -184,6 +194,7 @@ class SubmissionModal extends React.Component {
           width="1008px"
           footer={null}
         >
+<<<<<<< HEAD
           <div className="tenant-modal">
             <div className="modal-content">
               <div className="basic-info">
@@ -203,6 +214,33 @@ class SubmissionModal extends React.Component {
                 <div className="modal-subsection">
                   <h3>Capacity</h3>
                   {this.props.property.capacity}
+=======
+        {/*
+        look at the renderPhotos thing!
+        <img className="image" style={{backgroundImage: `url(${this.props.property.images[0].url})`}}> </img>
+        */}
+          <div className="flex-container">
+            <div className="flex-item">
+              <div className="section">
+                <h1> <Icon type="home" className="icon"/> Basic </h1>
+                <div className="subsection">
+                <Row gutter={32}>
+                  <Col span={12} className="title1">Housing Type</Col>
+                  <Col span={12} className="title1">Property Type</Col>
+                </Row>
+                <Row gutter={32}>
+                  <Col span={12} className="text1">{Utils.titleize(this.props.property.housing_type)}</Col>
+                  <Col span={12} className="text1">{Utils.titleize(this.props.property.property_type)}</Col>
+                </Row>
+                <Row gutter={32}>
+                  <Col span={12} className="title1">Date Available</Col>
+                  <Col span={12} className="title1">Location</Col>
+                </Row>
+                <Row gutter={32}>
+                  <Col span={12} className="text1">{this.props.property.date_available}</Col>
+                  <Col span={12} className="text1">{Utils.titleize(this.props.property.location)}</Col>
+                </Row>
+>>>>>>> 5e3d425c01a0fe5ad1eb0befa88543ce8b8f45e7
                 </div>
               </div>
               <div className="detailed-info">

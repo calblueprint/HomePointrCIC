@@ -164,6 +164,7 @@ class ApplicationsPairing extends React.Component {
           <div>
            <PropertyListWrapper
               {...this.props}
+              setFilteredProperties={this.setFilteredProperties}
               toggleMap={this.toggleMap}
               selectedEnd={this.state.selectedEnd}
               propertyCompletion={true}
