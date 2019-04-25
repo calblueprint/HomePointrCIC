@@ -39,14 +39,6 @@ class RATenantView extends React.Component {
     }
   }
 
-  renderTags() {
-    return (
-      <div key='tags'>
-        {this.props.tagValues.slice(0, -1).map(tag => <Tag key={tag}>{tag}</Tag>)}
-      </div>
-    )
-  }
-
   renderDetails() {
     return(
       <div className="details">

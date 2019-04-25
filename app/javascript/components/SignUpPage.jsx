@@ -4,9 +4,7 @@ import "antd/dist/antd.css";
 import Utils from 'helpers/utils';
 import { Form, Icon, Input, Button, Checkbox, Select, Col, Row } from 'antd';
 import APIRoutes from 'helpers/api_routes';
-//import ErrorMessage from './individual/ErrorMessage.jsx';
 import '../../assets/stylesheets/entrypages.css';
-var logo = require('../../assets/images/logo.png');
 
 class SignUpPage extends React.Component {
  constructor(props) {
@@ -44,7 +42,6 @@ class SignUpPage extends React.Component {
    this.setState({
      inputs: inputs
    });
-   console.log(this.state);
  }
 
  renderErrorMsg = () => {
