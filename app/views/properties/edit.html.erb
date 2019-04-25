@@ -1,3 +1,4 @@
+<% @title = "Edit Property" %>
 <%= form_with(model: @property, local: true) do |form| %>
   <%= react_component("individual/PropertyProfileForm", props={ property_id: @property.id, current_userID: @current_userID, property: @property, categories: @categories, image_objects: @image_objects, client_form: @client_form, form_name: @form_name }) %>
 <% end %>

@@ -1,3 +1,4 @@
+<% @title = "Edit Account" %>
 <%= form_with(model: @referral_agency, local: true) do |form| %>
   <%= react_component("EditAccount", props={ user: @user, type: "referral_agency", current_password: @current_password, email: @email }) %>
 <% end %>
