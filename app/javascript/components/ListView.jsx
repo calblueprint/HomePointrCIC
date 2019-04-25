@@ -35,7 +35,7 @@ class ListView extends React.Component {
   renderCheckbox(property, index) {
     if (this.props.checkbox) {
       if (index < this.props.selectedEnd) {
-        return (<Checkbox className="checkbox" defaultChecked={true} onChange={(e) => this.props.CheckboxChange(e, property)}>Checkbox</Checkbox>)
+        return (<Checkbox className="checkbox" defaultChecked={true} onChange={(e) => this.props.CheckboxChange(e, property)}></Checkbox>)
       } else {
         return (<Checkbox className="checkbox" onChange={(e) => this.props.CheckboxChange(e, property)}/>)
       }
@@ -44,7 +44,7 @@ class ListView extends React.Component {
 
   renderSubmissionModal(resource, index) {
     if (this.props.submission_modal) {
-      return(<SubmissionModal property={resource} tenant={this.props.tenant}/>)
+      return(<SubmissionModal property={resource} onSubmitProperty={this.props.onSubmitProperty} tenant={this.props.tenant}/>)
     }
   }
 
@@ -93,7 +93,7 @@ class ListView extends React.Component {
   render() {
     return this.state.resources.map((resource, index) => {
       return (
-        <div>
+        <div key={resource.id}>
           <Row gutter={16} key={index}>
             {this.state.type === "property" ? (
               <div>
@@ -105,6 +105,7 @@ class ListView extends React.Component {
                   property={resource}
                   displayTag={this.state.displayTag}
                   renderModal={this.props.renderModal}
+                  noClick={this.props.noClick}
                   viewpoint={this.props.viewpoint}
                   key={index}
                 />

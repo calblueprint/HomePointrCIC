@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import {Avatar, Button, Carousel, Tag, Row, Col, Icon} from 'antd';
+import Utils from "helpers/utils";
 import 'antd/dist/antd.css';
 
 class PropertyView extends React.Component {
@@ -18,6 +19,8 @@ class PropertyView extends React.Component {
     window.location = '/properties/' + this.props.property.id.toString() + '/edit'
   }
 
+  // arguments: string of amenity to be displayed, name of prop for amenity in the backend
+  // given the arguments, the function chooses whether or not to display it on the frontend
   getIncludes(amenities_str, amenities_bool) {
     if (amenities_bool) {
       this.state.includes_boolean = true;
@@ -27,6 +30,8 @@ class PropertyView extends React.Component {
     }
   }
 
+  // arguments: string of amenity to be displayed, name of prop for amenity in the backend
+  // given the arguments, the function chooses whether or not to display it on the frontend
   getDiscludes(amenities_str, amenities_bool) {
     if (!amenities_bool) {
       this.state.discludes_boolean = true;
@@ -36,12 +41,14 @@ class PropertyView extends React.Component {
     }
   }
 
+  // arguments: true or false boolean depending on whether we're working with including or not including
+  // if no amenities are to be displayed, display NONE
   renderNone(display_includes) {
     if (display_includes && !this.state.includes_boolean) {
       return (
         <Col span={12} className="content-text"><p>None</p></Col>
       );
-    } else if (display_includes && !this.state.discludes_boolean) {
+    } else if (!display_includes && !this.state.discludes_boolean) {
       return (
         <Col span={12} className="content-text"><p>None</p></Col>
       );
@@ -51,7 +58,7 @@ class PropertyView extends React.Component {
   renderNameEdit() {
     return (
       <Row>
-        <Col span={19}><h1>{this.props.property.address}</h1></Col>
+        <Col span={19}><h1>{this.props.property.address.split(",")[0]}</h1></Col>
         <Col span={5} className='chips'>
           {/*{Utils.renderStatus(this.props.status, true)}*/}
           <Button key='button' type='default' onClick={this.handleEdit} className='edit-button'>Edit</Button>
@@ -62,7 +69,6 @@ class PropertyView extends React.Component {
 
   renderDetails() {
     return(
-
       <div className = "details">
         <div className="section">
           <h2 className="section-header"> <Icon type="home" className="icon"/> Basic </h2>
@@ -72,8 +78,8 @@ class PropertyView extends React.Component {
               <Col span={12}><h3>Property Type</h3></Col>
             </Row>
             <Row>
-              <Col span={12} className="content-text"><p>{this.props.property.housing_type}</p></Col>
-              <Col span={12} className="content-text"><p>{this.props.property.property_type}</p></Col>
+              <Col span={12} className="content-text"><p>{Utils.titleize(this.props.property.housing_type)}</p></Col>
+              <Col span={12} className="content-text"><p>{Utils.titleize(this.props.property.property_type)}</p></Col>
             </Row>
             <Row>
               <Col span={12}><h3>Date Available</h3></Col>
@@ -81,7 +87,7 @@ class PropertyView extends React.Component {
             </Row>
             <Row>
               <Col span={12} className="content-text"><p>{this.props.property.date_available}</p></Col>
-              <Col span={12} className="content-text"><p>{this.props.property.location}</p></Col>
+              <Col span={12} className="content-text"><p>{Utils.titleize(this.props.property.location)}</p></Col>
             </Row>
           </div>
         </div>
@@ -144,7 +150,7 @@ class PropertyView extends React.Component {
           <h2 className="section-header"> <Icon type="paper-clip" className="icon"/> Additional Paperwork </h2>
           <div className="subsection">
             <Row>
-              <Col span={12}>add forms...</Col>
+              <Col span={12}><a href={this.props.property.form} target="_blank">Form</a></Col>
             </Row>
           </div>
         </div>
@@ -165,7 +171,7 @@ class PropertyView extends React.Component {
           <Carousel autoplay>
             {this.props.property.images.map((image, index) => {
               return (
-                <div key={index}><h3><center><img src={image.url} width="100%"/></center></h3></div>
+                <div key={index}><h3><center><img src={image.url} width="100%" height="350"/></center></h3></div>
               )
             })}
           </Carousel>

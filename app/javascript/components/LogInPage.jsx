@@ -5,7 +5,6 @@ import Utils from 'helpers/utils';
 import { Form, Icon, Input, Button, Checkbox } from 'antd';
 import APIRoutes from 'helpers/api_routes';
 import '../../assets/stylesheets/entrypages.css';
-var logo = require('../../assets/images/logo.png');
 
 class LogInPage extends React.Component {
  constructor(props) {
@@ -93,7 +92,7 @@ class LogInPage extends React.Component {
          { this.renderErrorMsg() }
          <Form.Item>
              <Checkbox onChange={this.handleRememberMe}>Remember me</Checkbox>
-           <a className="login-form-forgot" href="">Forgot password</a>
+           <a className="login-form-forgot" href="/users/password/new">Forgot password</a>
            <Button type="primary" htmlType="submit" className="button">
              Log in
            </Button>

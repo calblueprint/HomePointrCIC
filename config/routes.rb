@@ -32,7 +32,7 @@ Rails.application.routes.draw do
   resources :referral_agencies, only: %i[create show update edit destroy]
   resources :landlords, only: %i[create show update edit destroy]
   resources :properties, only: %i[new create update index edit show destroy]
-  resources :tenants, only: %i[new create edit update show index destroy]
+  resources :tenants, only: %i[new create edit update show destroy]
   resources :applications, only: %i[index new create edit update show destroy]
   # resources :properties, :only => [:create, :update, :show, :destroy]
   resources :properties
@@ -41,7 +41,8 @@ Rails.application.routes.draw do
   # resources :applications, only: %i[create show destroy]
   devise_for :users, controllers: {
     sessions: 'sessions',
-    registrations: 'registrations'
+    registrations: 'registrations',
+    passwords: 'passwords'
   }
   devise_scope :user do
     authenticated do

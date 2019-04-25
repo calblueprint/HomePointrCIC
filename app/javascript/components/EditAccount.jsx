@@ -7,6 +7,7 @@ import APIRoutes from 'helpers/api_routes';
 import Utils from 'helpers/utils';
 import ActiveStorageProvider from "react-activestorage-provider";
 import '../../assets/stylesheets/application.css';
+import DeleteModal from './modals/DeleteModal';
 
 
 class EditAccount extends React.Component {
@@ -14,11 +15,12 @@ class EditAccount extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      renderInfoPassword: 0,
       user: this.props.user,
       email: this.props.email,
       new_password: this.props.current_password,
-      confirm_password: null,
-      disabled: false //to prevent multiple form submissions
+      password_changed: false,
+      visible: false,
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleEdit = this.handleEdit.bind(this);
@@ -31,8 +33,12 @@ class EditAccount extends React.Component {
    */
   convertToDict() {
     const user = this.state.user;
-    const keys = ["name", "address", "email", "phone", "password"];
-    const values = [user.name, user.address, this.state.email, user.phone, this.state.new_password];
+    var keys = ["name", "address", "email", "phone"];
+    var values = [user.name, user.address, this.state.email, user.phone];
+    if (this.state.password_changed) {
+      keys.push("password");
+      values.push(this.state.new_password);
+    }
     let result = keys.reduce((obj, k, i) => ({...obj, [k]: values[i] }), {})
     return result
   }
@@ -48,6 +54,7 @@ class EditAccount extends React.Component {
 
   //api destroy
   handleDestroy() {
+
     let id = this.props.user.id;
     let type = this.props.type;
     var request = null;
@@ -116,8 +123,34 @@ class EditAccount extends React.Component {
 
   handlePasswordChange = (e) => {
     if (e.target.value != "") {
-      this.setState({ new_password: e.target.value })
+      this.setState({ new_password: e.target.value });
+      this.setState({ password_changed: true });
     }
+  }
+
+  renderInfo = (which_info, e) => {
+    if (which_info == "password") {
+      this.setState((state) => {
+        return {renderInfoPassword: 1 - state.renderInfoPassword}
+      });
+    }
+  }
+
+  // Renders information dialogue on hover
+  infoDialogueHelper = (which_info, info_text) => {
+    if (which_info == "password" && this.state.renderInfoPassword) {
+      return(
+        <div className="info-dialogue"><p className="info-dialogue-text">{info_text}</p></div>
+      );
+    }
+  }
+
+  onCancel = () => {
+    this.setState({ visible: false });
+  }
+
+  showModal = () => {
+    this.setState({ visible: true });
   }
 
   render() {
@@ -164,6 +197,8 @@ class EditAccount extends React.Component {
             {/* ITEM 1 */}
             <Col span={12}>
               <Form.Item label="New password">
+                <div onMouseEnter={(e) => this.renderInfo("password", e)} onMouseLeave={(e) => this.renderInfo("password", e)}><Icon type="question-circle" theme="twoTone" className="info-icon"/></div>
+                {this.infoDialogueHelper("password", "Your new password should be minimum 8 characters.")}
                 {getFieldDecorator('password', {
                   rules: [{
                     required: true, message: 'Please input your password!',
@@ -231,7 +266,14 @@ class EditAccount extends React.Component {
             </Col>
             {/* ITEM 2 */}
             <Col span={12}>
-              <Button type="danger" onClick={this.handleDestroy} className="delete-account-btn">Delete account</Button>
+              <Button type="danger" onClick={this.showModal} className="delete-account-btn">Delete account</Button>
+              <DeleteModal
+                title={"delete this account"}
+                onOk={this.handleDestroy}
+                onCancel={this.onCancel}
+                visible={this.state.visible}
+                operation={"Delete"}
+              />
             </Col>
           </Row>
 
@@ -260,7 +302,5 @@ class EditAccount extends React.Component {
     );
   }
 }
-
-
 
 export default Form.create()(EditAccount);

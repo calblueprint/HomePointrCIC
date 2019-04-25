@@ -5,6 +5,7 @@ import 'antd/dist/antd.css';
 import moment from 'moment';
 import APIRoutes from 'helpers/api_routes';
 import ConfirmModal from '../modals/ConfirmModal'
+import DeleteModal from '../modals/DeleteModal'
 
 class ApplicationStatusButtons extends React.Component {
   constructor(props) {
@@ -67,7 +68,7 @@ class ApplicationStatusButtons extends React.Component {
   renderConfirmationModal = (operation) => {
     if (operation === "Reject") {
       return(
-        <ConfirmModal
+        <DeleteModal
           message={"reject this client"}
           operation={"Reject"}
           onOk={this.handleReject}
@@ -97,7 +98,7 @@ class ApplicationStatusButtons extends React.Component {
       )
     } else if (operation === "Remove") {
       return(
-        <ConfirmModal
+        <DeleteModal
           message={"remove this client"}
           operation={"Remove Client"}
           onOk={this.removeTenant}

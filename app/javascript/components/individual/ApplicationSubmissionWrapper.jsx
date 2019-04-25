@@ -20,7 +20,7 @@ class ApplicationSubmissionWrapper extends React.Component {
           paddingTop: "5%",
         }}
       >
-        <ListView avatar={true} resources={this.props.selectedProperties} tenant={this.props.tenant} renderModal={true} type="property" checkbox={false} submission_modal={true} CheckboxChange={this.props.CheckboxChange}/>
+        <ListView avatar={true} resources={this.props.selectedProperties} onSubmitProperty={this.props.onSubmitProperty} tenant={this.props.tenant} noClick={true} renderModal={false} type="property" checkbox={false} submission_modal={true} CheckboxChange={this.props.CheckboxChange}/>
       </div>
     );
   }

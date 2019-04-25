@@ -39,9 +39,4 @@ const SplitViewContainer = props => (
 	</div>
 );
 
-SplitViewContainer.propTypes = {
-  leftComponent: PropTypes.element,
-  rightComponent: PropTypes.element
-};
-
 export default SplitViewContainer;
