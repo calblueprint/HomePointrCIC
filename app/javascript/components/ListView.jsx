@@ -99,7 +99,7 @@ class ListView extends React.Component {
   render() {
     return this.state.resources.map((resource, index) => {
       return (
-        <div>
+        <div key={resource.id}>
           <Row gutter={16} key={index}>
             {this.state.type === "property" ? (
               <div>

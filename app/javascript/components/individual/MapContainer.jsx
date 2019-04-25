@@ -41,6 +41,7 @@ export class MapContainer extends React.Component {
     return this.props.filtered_properties.map((data) => {
       return (
         <Marker
+          key={data.id}
           name={data.address}
           onClick={this.onMarkerClick}
           position={{ lat: data.lat, lng: data.long }}

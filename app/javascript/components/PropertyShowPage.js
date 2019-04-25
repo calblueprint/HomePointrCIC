@@ -51,16 +51,18 @@ class PropertyShowPage extends React.Component {
             </div>
           </TabPane>
           <TabPane tab="Your Clients" key="2">
-            <ListView
-              applications={this.props.tenantApps}
-              resources={this.state.tenants}
-              type="tenant"
-              avatar={true}
-              checkbox={false}
-              displayTag={false}
-              renderModal={true}
-              viewpoint="LL"
-            />
+            <div className="tab-cards">
+              <ListView
+                applications={this.props.tenantApps}
+                resources={this.state.tenants}
+                type="tenant"
+                avatar={true}
+                checkbox={false}
+                displayTag={false}
+                renderModal={true}
+                viewpoint="LL"
+              />
+            </div>
           </TabPane>
         </Tabs>
       </div>

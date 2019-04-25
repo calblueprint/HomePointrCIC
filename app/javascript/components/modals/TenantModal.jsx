@@ -31,9 +31,19 @@ class TenantModal extends React.Component {
   }
 
   renderAvatar = () => {
-    return(
-      <img className="modal-avatar" height="224" width="224" src={this.props.tenant.url} />
-    );
+    if (this.props.tenant.url == null) {
+      return (
+        <React.Fragment key='avatar'>
+          <Avatar size={280} className="profile-picture" icon="user"/>
+        </React.Fragment>
+      )
+    } else {
+      return (
+        <React.Fragment key='avatar'>
+          <Avatar size={280} className="profile-picture" src={this.props.tenant.url}/>
+        </React.Fragment>
+      )
+    }
   }
 
   statusHelper = () => {

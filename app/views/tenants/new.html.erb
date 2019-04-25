@@ -1,3 +1,4 @@
+<% @title = "Create Client" %>
 <%= form_with(model: @tenant, local: true) do |form| %>
   <%= react_component("individual/CreateFormTenants", props={ current_userID: @current_userID, categories: @categories}) %>
 <% end %>

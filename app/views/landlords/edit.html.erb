@@ -1,3 +1,4 @@
+<% @title = "Edit Account" %>
 <%= form_with(model: @landlord, local: true) do |form| %>
   <%= react_component("EditAccount", props={ user: @user, type: "landlord", current_password: @current_password, email: @email }) %>
 <% end %>
