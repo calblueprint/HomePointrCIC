@@ -8,6 +8,7 @@ import '../../../assets/stylesheets/modal.css';
 import ActiveStorageProvider from "react-activestorage-provider";
 import Utils from 'helpers/utils';
 import APIRoutes from 'helpers/api_routes';
+import ConfirmModal from './ConfirmModal';
 
 class SubmissionModal extends React.Component {
   constructor(props) {
@@ -15,7 +16,8 @@ class SubmissionModal extends React.Component {
     this.state = {
       visible: false,
       description: "",
-      disabled:false
+      disabled: false,
+      displaySubmitModal: 0
     }
     this.handlePost = this.handlePost.bind(this);
   }
@@ -35,6 +37,28 @@ class SubmissionModal extends React.Component {
     this.setState({
       visible: false,
     });
+  }
+
+  toggleConfirmationModal = (operation) => {
+    if (operation === "Submit") {
+      this.setState((state) => {
+        return {displaySubmitModal: 1 - state.displaySubmitModal}
+      });
+    }
+  }
+
+  renderSubmitModal = (operation) => {
+    if (operation === "Submit") {
+      return(
+        <ConfirmModal
+          message={"submit this application"}
+          operation={"Submit Application"}
+          onOk={this.handleOk}
+          onCancel={() => this.toggleConfirmationModal("Submit")}
+          visible={this.state.displaySubmitModal}
+        />
+      )
+    }
   }
 
   // renderPhotos() {
@@ -137,7 +161,7 @@ class SubmissionModal extends React.Component {
       return(
         <div>
           <div className="modal-subsection">
-            <div className="tenant-form-container">
+            <div className="tenant-form-download-container">
               <h3>Download Client Form</h3>
               <div className="tenant-form-download">
                 <div className="tenant-form-link">
@@ -224,7 +248,13 @@ class SubmissionModal extends React.Component {
                 {this.renderTextarea()}
                 <div className="submit-button-container">
                   <div className="submit-button">
-                    <Button key="submit" type="primary" onClick={this.handleOk}>Submit Application</Button>
+                    <Button
+                      key="submit"
+                      type="primary"
+                      onClick={() => this.toggleConfirmationModal("Submit")}>
+                      Submit Application
+                    </Button>
+                    {this.renderSubmitModal("Submit")}
                   </div>
                 </div>
               </div>
