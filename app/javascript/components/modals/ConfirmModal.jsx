@@ -1,9 +1,9 @@
-import React from "react";
 import PropTypes from "prop-types";
-import "antd/dist/antd.css";
-import { Modal, Button, Icon } from "antd";
+import React from "react";
+import 'antd/dist/antd.css';
+import { Modal, Button, Icon } from 'antd';
 
-class DeleteModal extends React.Component {
+class ConfirmModal extends React.Component {
   constructor(props) {
     super(props);
   }
@@ -17,8 +17,10 @@ class DeleteModal extends React.Component {
           onCancel={this.props.onCancel}
           footer={
             <div>
-              <Button onClick={this.props.onCancel}>Cancel</Button>
-              <Button key="submit" type="danger" onClick={this.props.onOk}>
+              <Button onClick={this.props.onCancel}>
+                Cancel
+              </Button>
+              <Button key="submit" type="primary" onClick={this.props.onOk}>
                 {this.props.operation}
               </Button>
             </div>
@@ -31,4 +33,4 @@ class DeleteModal extends React.Component {
   }
 }
 
-export default DeleteModal;
+export default ConfirmModal;

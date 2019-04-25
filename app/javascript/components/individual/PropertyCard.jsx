@@ -123,7 +123,7 @@ class PropertyCard extends React.Component {
         <div className="content-container">
           <div className="header-container">
             <Col span={21}>
-              <h2 className="title">{this.props.property.address.split(",")[0]}</h2>
+              <h2 className="property-title">{this.props.property.address.split(",")[0]}</h2>
               <div className="status-tag">
                 {this.renderStatus()}
               </div>
