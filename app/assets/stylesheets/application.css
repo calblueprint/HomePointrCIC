@@ -68,12 +68,14 @@ p {
 .h1-indent {
   margin-left: 10%;
   margin-bottom: 63px;
+  margin-right: 165px;
   display: inline-block;
 }
 
 .new-app-btn {
   display: inline-block;
-  float: right;
-  margin-right: 250px;
+  /* float: right; */
+  /* margin-right: 26%; */
   margin-top: 8px;
+  width: 208px;
 }

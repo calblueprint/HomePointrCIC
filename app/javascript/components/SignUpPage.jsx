@@ -96,7 +96,7 @@ class SignUpPage extends React.Component {
 
   handlePageSwitch = () => {
     if (this.state.page == 0 && !this.state.inputs.type) {
-        alert("Error");
+        alert("Please select whether you are a landlord or represent a referral agency");
     } else {
         this.setState({ page: 1 - this.state.page });
     }

@@ -1,7 +1,9 @@
 .split-screen-tabs {
-  margin-top: 54px;
+  margin-top: 34px;
+  margin-left: 20px;
 }
 
 .tab-cards {
+  margin-top: 24px;
   margin-left: 54px;
 }
