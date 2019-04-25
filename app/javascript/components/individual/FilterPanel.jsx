@@ -29,6 +29,12 @@ class FilterPanel extends React.Component {
       isPropertyTypeOpen: false,
       isHousingTypeOpen: false,
       isRentOpen: false,
+      dateFilterActive: false,
+      guestsFilterActive: false,
+      locationFilterActive: false,
+      propertyTypeFilterActive: false,
+      housingTypeFilterActive: false,
+      rentFilterActive: false,
       actual: {
         location: props.location_options,
         capacity: 0,
@@ -97,9 +103,27 @@ class FilterPanel extends React.Component {
     });
     this.props.applyFilter(this.state.actual);
     this.closeAll();
+    var activeFilter;
+    if (filter_name == 'location') {
+      activeFilter = 'locationFilterActive';
+    } else if (filter_name == 'capacity' || filter_name == 'number_of_bedrooms') {
+      activeFilter = 'guestsFilterActive';
+    } else if (filter_name == 'rent_min' || filter_name == 'rent_max') {
+      activeFilter = 'rentFilterActive';
+    } else if (filter_name == 'property_type') {
+      activeFilter = 'propertyTypeFilterActive';
+    } else if (filter_name == 'housing_type') {
+      activeFilter = 'housingTypeFilterActive';
+    } else if (filter_name == 'date_available') {
+      activeFilter = 'dateFilterActive';
+    }
+    this.setState({
+      [activeFilter]: true,
+    });
   }
 
   handleClear = (filter_name) => {
+    this.closeAll();
     if (filter_name == 'location' || filter_name == 'property_type' || filter_name == 'housing_type') {
       this.setState({
         [filter_name]: []
@@ -119,6 +143,23 @@ class FilterPanel extends React.Component {
         [filter_name]: 0
       });
     }
+    var activeFilter;
+    if (filter_name == 'location') {
+      activeFilter = 'locationFilterActive';
+    } else if (filter_name == 'capacity' || filter_name == 'number_of_bedrooms') {
+      activeFilter = 'guestsFilterActive';
+    } else if (filter_name == 'rent_min' || filter_name == 'rent_max') {
+      activeFilter = 'rentFilterActive';
+    } else if (filter_name == 'property_type') {
+      activeFilter = 'propertyTypeFilterActive';
+    } else if (filter_name == 'housing_type') {
+      activeFilter = 'housingTypeFilterActive';
+    } else if (filter_name == 'date_available') {
+      activeFilter = 'dateFilterActive';
+    }
+    this.setState({
+      [activeFilter]: false,
+    });
   }
 
   closeAll = () => {
@@ -189,6 +230,15 @@ class FilterPanel extends React.Component {
       housing_type: this.props.housing_options,
       date_available: null,
     }
+    this.closeAll();
+    this.setState({
+      dateFilterActive: false,
+      guestsFilterActive: false,
+      locationFilterActive: false,
+      propertyTypeFilterActive: false,
+      housingTypeFilterActive: false,
+      rentFilterActive: false,
+    });
     this.props.applyFilter(defaultVals);
   }
 
@@ -362,6 +412,7 @@ class FilterPanel extends React.Component {
                 range marks={marks}
                 min={0}
                 max={5000}
+                value={[this.state.rent_min, this.state.rent_max]}
                 style={{ width: 200, paddingLeft: 10 }}
                 defaultValue={typeof this.state.rent_min === 'number' && typeof this.state.rent_max === 'number' ? [this.state.rent_min, this.state.rent_max] : [0, 5000]}
                 onChange={this.sliderChanges}/>
@@ -399,7 +450,7 @@ class FilterPanel extends React.Component {
         <div className="filters-bar">
           <Dropdown overlay={dateFilter} visible={this.state.isDateOpen} trigger={['click']}>
             <Button
-              className="category-btn"
+              className={this.state.dateFilterActive ? "category-btn active-filter-btn" : "category-btn"}
               onClick={(e) => this.toggleOpen("isDateOpen")}
             >
               Date needed
@@ -407,7 +458,7 @@ class FilterPanel extends React.Component {
           </Dropdown>
           <Dropdown overlay={guestsFilter} visible={this.state.isGuestsOpen} trigger={['click']}>
             <Button
-              className="category-btn"
+              className={this.state.guestsFilterActive ? "category-btn active-filter-btn" : "category-btn"}
               onClick={(e) => this.toggleOpen("isGuestsOpen")}
             >
               Guests
@@ -415,7 +466,7 @@ class FilterPanel extends React.Component {
           </Dropdown>
           <Dropdown overlay={locationFilter} visible={this.state.isLocationOpen} trigger={['click']}>
             <Button
-              className="category-btn"
+              className={this.state.locationFilterActive ? "category-btn active-filter-btn" : "category-btn"}
               onClick={(e) => this.toggleOpen("isLocationOpen")}
             >
               Location
@@ -423,7 +474,7 @@ class FilterPanel extends React.Component {
           </Dropdown>
           <Dropdown overlay={propertyTypeFilter} visible={this.state.isPropertyTypeOpen} trigger={['click']}>
             <Button
-              className="category-btn"
+              className={this.state.propertyTypeFilterActive ? "category-btn active-filter-btn" : "category-btn"}
               onClick={(e) => this.toggleOpen("isPropertyTypeOpen")}
             >
               Property type
@@ -431,7 +482,7 @@ class FilterPanel extends React.Component {
           </Dropdown>
           <Dropdown overlay={housingTypeFilter} visible={this.state.isHousingTypeOpen} trigger={['click']}>
             <Button
-              className="category-btn"
+              className={this.state.housingTypeFilterActive ? "category-btn active-filter-btn" : "category-btn"}
               onClick={(e) => this.toggleOpen("isHousingTypeOpen")}
             >
               Housing type
@@ -439,7 +490,7 @@ class FilterPanel extends React.Component {
           </Dropdown>
           <Dropdown overlay={rentFilter} visible={this.state.isRentOpen} trigger={['click']}>
             <Button
-              className="category-btn"
+              className={this.state.rentFilterActive ? "category-btn active-filter-btn" : "category-btn"}
               onClick={(e) => this.toggleOpen("isRentOpen")}
             >
               Rent

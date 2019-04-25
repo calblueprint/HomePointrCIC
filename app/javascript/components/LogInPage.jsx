@@ -5,7 +5,6 @@ import Utils from 'helpers/utils';
 import { Form, Icon, Input, Button, Checkbox } from 'antd';
 import APIRoutes from 'helpers/api_routes';
 import '../../assets/stylesheets/entrypages.css';
-var logo = require('../../assets/images/logo.png');
 
 class LogInPage extends React.Component {
  constructor(props) {

@@ -10,7 +10,6 @@ class PropertyCard extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      property: this.props.property,
       displayTag: this.props.displayTag,
       renderModal: this.props.renderModal,
       displayModal: false,
@@ -21,9 +20,9 @@ class PropertyCard extends React.Component {
   }
 
   renderAvatar = () => {
-    if (this.state.property.images) {
+    if (this.props.property.images) {
       return(
-        <img className="img" height="144" width="144" src={this.state.property.images[0].url} />
+        <img className="img" height="144" width="144" src={this.props.property.images[0].url} />
       );
     } else {
       return(
@@ -42,7 +41,7 @@ class PropertyCard extends React.Component {
     } else if (this.state.renderModal) {
       this.setState({displayModal: true});
     } else {
-      window.location='/properties/' + this.state.property.id;
+      window.location='/properties/' + this.props.property.id;
     }
   }
 
@@ -57,7 +56,7 @@ class PropertyCard extends React.Component {
     if (this.state.renderModal && !this.state.renderEdit) {
       return(
         <PropertyModal
-          property={this.state.property}
+          property={this.props.property}
           visible={this.state.displayModal}
           onOk={this.onDismiss}
           onCancel={this.onDismiss}
@@ -83,7 +82,7 @@ class PropertyCard extends React.Component {
   }
 
   handleEdit = () => {
-    window.location = '/properties/' + this.state.property.id.toString() + '/edit'
+    window.location = '/properties/' + this.props.property.id.toString() + '/edit'
   }
 
   // Renders edit button on card hover
@@ -104,9 +103,9 @@ class PropertyCard extends React.Component {
 
   // If we want the status to be shown, aka the property has a status, render the tag
   renderStatus = () => {
-    if (this.state.property.status) {
+    if (this.props.property.status) {
       return(
-        Utils.renderStatus(this.state.property.status, this.state.displayTag)
+        Utils.renderStatus(this.props.property.status, this.state.displayTag)
       );
     }
   }
@@ -123,7 +122,7 @@ class PropertyCard extends React.Component {
         <div className="content-container">
           <div className="header-container">
             <Col span={21}>
-              <h2 className="title">Eventual Name</h2>
+              <h2 className="title">{this.props.property.address.split(",")[0]}</h2>
               <div className="status-tag">
                 {this.renderStatus()}
               </div>
@@ -135,19 +134,19 @@ class PropertyCard extends React.Component {
           <div className="details-container">
             <Col span={7}>
               <h3>Location</h3>
-              <p>{this.state.property.location}</p>
+              <p>{Utils.titleize(this.props.property.location)}</p>
             </Col>
             <Col span={6}>
               <h3>Current</h3>
-              <p>{this.state.property.tenantCount}</p>
+              <p>{this.props.property.tenantCount}</p>
             </Col>
             <Col span={6}>
               <h3>Apps</h3>
-              <p>{this.state.property.potentialTenantCount}</p>
+              <p>{this.props.property.potentialTenantCount}</p>
             </Col>
             <Col span={5}>
               <h3>Openings</h3>
-              <p>{this.state.property.capacity - this.state.property.tenantCount}</p>
+              <p>{this.props.property.capacity - this.props.property.tenantCount}</p>
             </Col>
           </div>
         </div>

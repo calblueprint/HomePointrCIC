@@ -136,7 +136,7 @@ class ApplicationsPairing extends React.Component {
       rightComponent = (
         [<Button type="primary" className="property-list-wrapper-start-app-btn" key="start_applications" onClick={this.renderApplicationSubmissionWrapper}>Start Applications</Button>,
          <InstructionsModal status={this.state.status}/>,
-         <PropertyListWrapper {...this.props} toggleMap={this.toggleMap} selectedEnd={this.state.selectedEnd} propertyCompletion={true} CheckboxChange={this.onChangeProperty} selectedTenant={this.props.tenant}/>]
+         <PropertyListWrapper {...this.props} setFilteredProperties={this.setFilteredProperties} toggleMap={this.toggleMap} selectedEnd={this.state.selectedEnd} propertyCompletion={true} CheckboxChange={this.onChangeProperty} selectedTenant={this.props.tenant}/>]
       );
     }
     else if (this.state.status == "applicationSubmission") {

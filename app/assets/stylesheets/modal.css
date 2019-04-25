@@ -41,16 +41,21 @@
   margin-right: 32px;
 }
 
-.section:not(:last-child) {
+.modal-section:not(:last-child) {
   border-bottom: 1px solid #D9D9D9;
 }
 
-.section:last-child {
+.modal-section:last-child {
   border-bottom: 0px solid #D9D9D9;
 }
 
 .subsection {
   margin-left: 32px;
+}
+
+.modal-section-title {
+  margin-top: 24px;
+  margin-bottom: 16px;
 }
 
 .icon {

@@ -16,7 +16,7 @@ class ApplicationsController < ApplicationController
     @tenant.applications.each do |a|
       alreadyApplied << a.property
     end
-    @properties = (@properties - alreadyApplied) | (alreadyApplied - @properties) 
+    @properties = (@properties - alreadyApplied) | (alreadyApplied - @properties)
     @propertyImages = []
     @properties.each do |p|
       if p.images.attached?

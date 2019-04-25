@@ -135,9 +135,14 @@ class PropertiesController < ApplicationController
     @images = []
     @image_objects = []
 
-    @property.images.each do |image|
-      @images << image.signed_id
-      @image_objects << { id: image.id, name: image.filename, url: rails_blob_path(image, :host => 'localhost') }
+    if @property.images.attached? == true
+      @property.images.each do |image|
+        @images << image.signed_id
+        @image_objects << { id: image.id, name: image.filename, url: rails_blob_path(image, :host => 'localhost') }
+      end
+    else
+      @images << nil
+      @image_objects << nil
     end
 
     @client_form = nil

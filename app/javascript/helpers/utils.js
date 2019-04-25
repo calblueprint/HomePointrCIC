@@ -50,7 +50,10 @@ const Utils = {
   //
   titleize(original) {
     let result = original.split("_");
-    result[0] =  result[0].charAt(0).toUpperCase() + result[0].slice(1);
+    var i;
+    for (i = 0; i < result.length; i++) { 
+      result[i] =  result[i].charAt(0).toUpperCase() + result[i].slice(1);
+    }
     return result.join(" ");
   },
 

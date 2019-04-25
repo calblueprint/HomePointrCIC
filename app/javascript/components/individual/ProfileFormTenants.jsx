@@ -19,6 +19,8 @@ class ProfileFormTenants extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      renderInfoHousing: 0,
+      renderInfoProperty: 0,
       tenant: props.tenant,
       categories: props.categories,
       nice_housing_types: props.categories.nice_housing_types,
@@ -159,12 +161,38 @@ class ProfileFormTenants extends React.Component {
     this.setState({ form: signedIds[0] });
   }
 
+<<<<<<< HEAD
   onCancel = () => {
     this.setState({ visible: false });
   }
 
   showModal = () => {
     this.setState({ visible: true });
+=======
+  renderInfo = (which_info, e) => {
+    if (which_info == "housing") {
+      this.setState((state) => {
+        return {renderInfoHousing: 1 - state.renderInfoHousing}
+      });
+    } else if (which_info == "property") {
+      this.setState((state) => {
+        return {renderInfoProperty: 1 - state.renderInfoProperty}
+      });
+    }
+  }
+
+  // Renders information dialogue on hover
+  infoDialogueHelper = (which_info, info_text) => {
+    if (which_info == "housing" && this.state.renderInfoHousing) {
+      return(
+        <div className="info-dialogue"><p className="info-dialogue-text">{info_text}</p></div>
+      );
+    } else if (which_info == "property" && this.state.renderInfoProperty) {
+      return(
+        <div className="info-dialogue"><p className="info-dialogue-text">{info_text}</p></div>
+      );
+    }
+>>>>>>> 57e2797b1fd46cf9910a72dab122a6c1cd1122d5
   }
 
   render() {
@@ -271,7 +299,7 @@ class ProfileFormTenants extends React.Component {
                 )}
               </Form.Item>
               <Form.Item
-                label="Household Income"
+                label="Annual Household Income"
               >
                 {getFieldDecorator('income', {
                   initialValue: tenant.income,
@@ -279,7 +307,13 @@ class ProfileFormTenants extends React.Component {
                     required: true, message: 'Please input your household income!',
                   }]
                 })(
-                  <Input onChange={() => this.handleChange("income")}/>
+                  <InputNumber
+                    style={{ width: 150 }}
+                    min={0}
+                    max={9999999}
+                    value={tenant.income}
+                    onChange={(value) => this.handleChangeSelect("income", value)}
+                  />
                 )}
               </Form.Item>
               <Form.Item
@@ -305,6 +339,8 @@ class ProfileFormTenants extends React.Component {
             <Form.Item
               label="Property Type"
             >
+              <div onMouseEnter={(e) => this.renderInfo("property", e)} onMouseLeave={(e) => this.renderInfo("property", e)}><Icon type="question-circle" theme="twoTone" className="info-icon"/></div>
+              {this.infoDialogueHelper("property", "Property type is the type of building of your residence.")}
               {getFieldDecorator('property_type', {
                 initialValue: tenant.property_type,
                 rules: [{
@@ -323,6 +359,8 @@ class ProfileFormTenants extends React.Component {
             <Form.Item
               label="Housing Type"
               >
+              <div onMouseEnter={(e) => this.renderInfo("housing", e)} onMouseLeave={(e) => this.renderInfo("housing", e)}><Icon type="question-circle" theme="twoTone" className="info-icon"/></div>
+              {this.infoDialogueHelper("housing", "Housing type is housing situation or conditions of your residence.")}
               {getFieldDecorator('housing_type', {
                 initialValue: tenant.housing_type,
                 rules: [{
@@ -388,10 +426,10 @@ class ProfileFormTenants extends React.Component {
             </Form.Item>
           </div>
           <Form.Item
-            label="Rent"
+            label="Monthly Rent"
           >
-              <Row>
-                <Col span={4}>
+              <Row gutter={10}>
+                <Col span={6}>
                   <InputNumber
                     min={0}
                     max={5000}
@@ -400,15 +438,17 @@ class ProfileFormTenants extends React.Component {
                     onChange={() => this.handleChange("rent_min")}
                   />
                 </Col>
-                <Col span={8}>
+                <Col className="slider" span={10}>
                   <Slider
-                    range marks={marks}
                     min={0}
                     max={5000}
+                    range marks={marks}
+                    value={[tenant.rent_min, tenant.rent_max]}
+                    style={{ width: 200, paddingLeft: 10 }}
                     defaultValue={typeof tenant.rent_min === 'number' && typeof tenant.rent_max === 'number'? [tenant.rent_min, tenant.rent_max] : [0, 5000]}
                     onChange={this.sliderChanges}/>
                 </Col>
-                <Col span={4}>
+                <Col span={6}>
                   <InputNumber
                     min={0}
                     max={5000}
@@ -448,18 +488,6 @@ class ProfileFormTenants extends React.Component {
                 }],
               })(
                 <Input onChange={() => this.handleChange("local_council")}/>
-              )}
-            </Form.Item>
-            <Form.Item
-              label="Describe any links to local area"
-            >
-              {getFieldDecorator('local_area_link', {
-                initialValue: tenant.local_area_link,
-                rules: [{
-                  required: true, message: 'Please input your links to local area!',
-                }],
-              })(
-                <Input onChange={() => this.handleChange("local_area_link")}/>
               )}
             </Form.Item>
             <Form.Item
@@ -523,6 +551,18 @@ class ProfileFormTenants extends React.Component {
               )}
             </Form.Item>
           </div>
+          <Form.Item
+            label="Describe any links to local area"
+          >
+            {getFieldDecorator('local_area_link', {
+              initialValue: tenant.local_area_link,
+              rules: [{
+                required: true, message: 'Please input your response!',
+              }]
+            })(
+              <TextArea style={{ height: 120, textAlign: "left" }} onChange={() => this.handleChange("local_area_link")}/>
+            )}
+          </Form.Item>
         </div>
         <div className="section">
           <h2>Description</h2>
@@ -571,7 +611,7 @@ class ProfileFormTenants extends React.Component {
           <div className="delete-client">
             <Row type="flex" style={{ width: 660 }}>
               <Col span={12}>
-                <div>Delete Client</div>
+                <div><h2>Delete Client</h2></div>
               </Col>
               <Col span={12}>
                 <Button className="delete-button" type="danger" onClick={this.showModal}>Delete Client</Button>

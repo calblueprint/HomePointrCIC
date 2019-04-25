@@ -20,6 +20,8 @@ class CreateFormTenants extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      renderInfoHousing: 0,
+      renderInfoProperty: 0,
       tenant: {
         name: '',
         description: '',
@@ -89,8 +91,8 @@ class CreateFormTenants extends React.Component {
 
   convertToDict() {
     const tenant = this.state.tenant;
-    const keys = ["name", "description", "email", "phone", "rent_min", "rent_max", "housing_type", "property_type", "number_of_bedrooms", "location", "referral_agency_id", "date_needed", "avatar", "number_of_bathrooms", "mobility_aids", "accessible_shower", "car_parking", "lift_access", "avatar", "form"];
-    const values = [tenant.name, tenant.description, tenant.email, tenant.phone, tenant.rent_min, tenant.rent_max, tenant.housing_type, tenant.property_type, tenant.number_of_bedrooms, tenant.location, tenant.referral_agency_id, tenant.date_needed, tenant.avatar, tenant.number_of_bathrooms, tenant.mobility_aids, tenant.accessible_shower, tenant.car_parking, tenant.lift_access, tenant.avatar, tenant.form];
+    const keys = ["name", "description", "email", "phone", "rent_min", "rent_max", "housing_type", "property_type", "number_of_bedrooms", "location", "referral_agency_id", "date_needed", "avatar", "number_of_bathrooms", "mobility_aids", "accessible_shower", "car_parking", "lift_access", "family_size", "living_arrangements", "income", "benefits", "local_council", "ex_offender", "local_area_link", "avatar", "form"];
+    const values = [tenant.name, tenant.description, tenant.email, tenant.phone, tenant.rent_min, tenant.rent_max, tenant.housing_type, tenant.property_type, tenant.number_of_bedrooms, tenant.location, tenant.referral_agency_id, tenant.date_needed, tenant.avatar, tenant.number_of_bathrooms, tenant.mobility_aids, tenant.accessible_shower, tenant.car_parking, tenant.lift_access, tenant.family_size, tenant.living_arrangements, tenant.income, tenant.benefits, tenant.local_council, tenant.ex_offender, tenant.local_area_link, tenant.avatar, tenant.form];
     let result = keys.reduce((obj, k, i) => ({...obj, [k]: values[i] }), {})
     return result
   }
@@ -193,13 +195,38 @@ class CreateFormTenants extends React.Component {
     )
   }
 
+  renderInfo = (which_info, e) => {
+    if (which_info == "housing") {
+      this.setState((state) => {
+        return {renderInfoHousing: 1 - state.renderInfoHousing}
+      });
+    } else if (which_info == "property") {
+      this.setState((state) => {
+        return {renderInfoProperty: 1 - state.renderInfoProperty}
+      });
+    }
+  }
+
+  // Renders information dialogue on hover
+  infoDialogueHelper = (which_info, info_text) => {
+    if (which_info == "housing" && this.state.renderInfoHousing) {
+      return(
+        <div className="info-dialogue"><p className="info-dialogue-text">{info_text}</p></div>
+      );
+    } else if (which_info == "property" && this.state.renderInfoProperty) {
+      return(
+        <div className="info-dialogue"><p className="info-dialogue-text">{info_text}</p></div>
+      );
+    }
+  }
+
   renderStageOne() {
     const { tenant } = this.state;
     const { getFieldDecorator } = this.props.form;
     const Option = Select.Option;
     return (
-      <div className="container">
-        <h3>Step 1: blah blah blah</h3>
+      <div className="tenant-form-container">
+        <h1>Step 1: Basic information</h1>
         <Form className="grid-container" hideRequiredMark={true}>
           <Form.Item
             label="Name"
@@ -287,7 +314,7 @@ class CreateFormTenants extends React.Component {
             )}
           </Form.Item>
           <Form.Item
-            label="Household Income"
+            label="Annual Household Income"
           >
             {getFieldDecorator('income', {
               initialValue: tenant.income,
@@ -295,7 +322,13 @@ class CreateFormTenants extends React.Component {
                 required: true, message: 'Please input your household income!',
               }]
             })(
-              <Input onChange={() => this.handleChange("income")}/>
+              <InputNumber
+                style={{ width: 150 }}
+                min={0}
+                max={9999999}
+                value={tenant.income}
+                onChange={(value) => this.handleChangeSelect("income", value)}
+              />
             )}
           </Form.Item>
           <Form.Item
@@ -332,13 +365,15 @@ class CreateFormTenants extends React.Component {
     const Option = Select.Option;
     const { tenant } = this.state;
     return (
-      <div className="container">
-        <h3>Step 2: Housing preferences</h3>
+      <div className="tenant-form-container">
+        <h1>Step 2: Housing preferences</h1>
         <Form hideRequiredMark={true}>
           <div className="grid-container">
             <Form.Item
               label="Housing Type"
               >
+              <div onMouseEnter={(e) => this.renderInfo("housing", e)} onMouseLeave={(e) => this.renderInfo("housing", e)}><Icon type="question-circle" theme="twoTone" className="info-icon"/></div>
+              {this.infoDialogueHelper("housing", "Housing type is housing situation or conditions of your residence.")}
               {getFieldDecorator('housing_type', {
                 initialValue: tenant.housing_type,
                 rules: [{
@@ -357,6 +392,8 @@ class CreateFormTenants extends React.Component {
             <Form.Item
               label="Property Type"
             >
+              <div onMouseEnter={(e) => this.renderInfo("property", e)} onMouseLeave={(e) => this.renderInfo("property", e)}><Icon type="question-circle" theme="twoTone" className="info-icon"/></div>
+              {this.infoDialogueHelper("property", "Property type is the type of building of your residence.")}
               {getFieldDecorator('property_type', {
                 initialValue: tenant.property_type,
                 rules: [{
@@ -420,7 +457,7 @@ class CreateFormTenants extends React.Component {
             </Form.Item>
           </div>
           <Form.Item
-            label="Rent"
+            label="Monthly Rent"
           >
               <Row gutter={10}>
                 <Col span={6}>
@@ -434,9 +471,10 @@ class CreateFormTenants extends React.Component {
                 </Col>
                 <Col className="slider" span={12}>
                   <Slider
-                    range marks={marks}
                     min={0}
                     max={5000}
+                    range marks={marks}
+                    value={[tenant.rent_min, tenant.rent_max]}
                     style={{ width: 200, paddingLeft: 10 }}
                     defaultValue={typeof tenant.rent_min === 'number' && typeof tenant.rent_max === 'number'? [tenant.rent_min, tenant.rent_max] : [0, 5000]}
                     onChange={this.sliderChanges}/>
@@ -465,9 +503,11 @@ class CreateFormTenants extends React.Component {
     const { tenant } = this.state;
     const { getFieldDecorator } = this.props.form;
     const Option = Select.Option;
+    const { TextArea } = Input;
+
     return (
-      <div className="container">
-        <div>Step 3: blah blah</div>
+      <div className="tenant-form-container">
+        <div><h1>Step 3: Does your client need ...</h1></div>
         <Form hideRequiredMark={true}>
           <div className="grid-container">
             <Form.Item
@@ -570,6 +610,18 @@ class CreateFormTenants extends React.Component {
               )}
             </Form.Item>
           </div>
+          <Form.Item
+            label="Describe any links to local area"
+          >
+            {getFieldDecorator('local_area_link', {
+              initialValue: tenant.local_area_link,
+              rules: [{
+                required: true, message: 'Please input your response!',
+              }]
+            })(
+              <TextArea style={{ height: 120, textAlign: "left" }} onChange={() => this.handleChange("local_area_link")}/>
+            )}
+          </Form.Item>
         </Form>
         <div className="buttons">
           <Button className="previous" onClick={() => {this.nextButton(2, "previous")}}>Previous</Button>
@@ -584,8 +636,8 @@ class CreateFormTenants extends React.Component {
     const { getFieldDecorator } = this.props.form;
     const { TextArea } = Input;
     return (
-      <div className="container">
-        <div>Step 4: Wooo description</div>
+      <div className="tenant-form-container">
+        <div><h1>Step 4: Short bio about your client</h1></div>
         <Form hideRequiredMark={true}>
           <Form.Item
             label="Description"
@@ -623,8 +675,8 @@ class CreateFormTenants extends React.Component {
   renderStageFive() {
     const { tenant } = this.state;
     return (
-      <div className="container">
-        <div>Step 5: Add a profile photo</div>
+      <div className="tenant-form-container">
+        <div><h1>Step 5: Add a profile photo (Optional)</h1></div>
         <Form hideRequiredMark={true}>
           <Form.Item
             label="Upload Avatar"
@@ -649,8 +701,8 @@ class CreateFormTenants extends React.Component {
   renderStageSix() {
     const { tenant } = this.state;
     return (
-      <div className="container">
-        <div>Step 5: Add Default Client Form</div>
+      <div className="tenant-form-container">
+        <div><h1>Step 5: Add Default Client Form</h1></div>
         <Form hideRequiredMark={true}>
           <Form.Item
             label="Upload Form"
@@ -723,7 +775,7 @@ class CreateFormTenants extends React.Component {
   render() {
     let component = this.renderFormStage();
     return (
-      <div>
+      <div className="create-tenant-container">
         {component}
       </div>
     )

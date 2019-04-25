@@ -22,6 +22,9 @@ class PropertyProfileForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      renderInfoHousing: 0,
+      renderInfoProperty: 0,
+      renderInfoCapacity: 0,
       property: props.property,
       categories: props.categories,
       nice_housing_types: props.categories.nice_housing_types,
@@ -255,6 +258,39 @@ class PropertyProfileForm extends React.Component {
     this.setState({ visible: true });
   }
 
+  renderInfo = (which_info, e) => {
+    if (which_info == "housing") {
+      this.setState((state) => {
+        return {renderInfoHousing: 1 - state.renderInfoHousing}
+      });
+    } else if (which_info == "property") {
+      this.setState((state) => {
+        return {renderInfoProperty: 1 - state.renderInfoProperty}
+      });
+    } else if (which_info == "capacity") {
+      this.setState((state) => {
+        return {renderInfoCapacity: 1 - state.renderInfoCapacity}
+      });
+    }
+  }
+
+  // Renders information dialogue on hover
+  infoDialogueHelper = (which_info, info_text) => {
+    if (which_info == "housing" && this.state.renderInfoHousing) {
+      return(
+        <div className="info-dialogue"><p className="info-dialogue-text">{info_text}</p></div>
+      );
+    } else if (which_info == "property" && this.state.renderInfoProperty) {
+      return(
+        <div className="info-dialogue"><p className="info-dialogue-text">{info_text}</p></div>
+      );
+    } else if (which_info == "capacity" && this.state.renderInfoCapacity) {
+      return(
+        <div className="info-dialogue"><p className="info-dialogue-text">{info_text}</p></div>
+      );
+    }
+  }
+
   //AVATAR -- DON'T DELETE
   // <Form.Item
   //   label="Upload Avatar"
@@ -285,7 +321,7 @@ class PropertyProfileForm extends React.Component {
                     required: true, message: 'Please input the address!',
                   }],
                 })(
-                  <Input id="address"/>
+                  <Input id="address" size="8"/>
                 )}
               </Form.Item>
               <Form.Item
@@ -303,6 +339,8 @@ class PropertyProfileForm extends React.Component {
               <Form.Item
                 label="Housing type"
               >
+                <div onMouseEnter={(e) => this.renderInfo("housing", e)} onMouseLeave={(e) => this.renderInfo("housing", e)}><Icon type="question-circle" theme="twoTone" className="info-icon"/></div>
+                {this.infoDialogueHelper("housing", "Housing type is housing situation or conditions of your residence.")}
                 {getFieldDecorator('housing_type', {
                   initialValue: property.housing_type,
                   rules: [{
@@ -321,6 +359,8 @@ class PropertyProfileForm extends React.Component {
               <Form.Item
                 label="Property type"
               >
+                <div onMouseEnter={(e) => this.renderInfo("property", e)} onMouseLeave={(e) => this.renderInfo("property", e)}><Icon type="question-circle" theme="twoTone" className="info-icon"/></div>
+                {this.infoDialogueHelper("property", "Property type is the type of building of your residence.")}
                 {getFieldDecorator('property_type', {
                   initialValue: property.property_type,
                   rules: [{
@@ -351,6 +391,8 @@ class PropertyProfileForm extends React.Component {
               <Form.Item
                 label="Capacity"
               >
+                <div onMouseEnter={(e) => this.renderInfo("capacity", e)} onMouseLeave={(e) => this.renderInfo("capacity", e)}><Icon type="question-circle" theme="twoTone" className="info-icon"/></div>
+                {this.infoDialogueHelper("capacity", "Capacity is the number of open spots you have in your residence.")}
                 {getFieldDecorator('capacity', {
                   initialValue: property.capacity,
                   rules: [{
@@ -554,7 +596,7 @@ class PropertyProfileForm extends React.Component {
             <div className="delete-client">
               <Row type="flex" style={{ width: 660 }}>
                 <Col span={12}>
-                  <div>Delete Client</div>
+                  <div><h2>Delete Client</h2></div>
                 </Col>
                 <Col span={12}>
                   <Button className="delete-button" type="danger" onClick={this.showModal}>Delete Property</Button>
