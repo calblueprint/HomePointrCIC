@@ -78,7 +78,12 @@ class SubmissionModal extends React.Component {
     return (
       <div>
         <label>Add a note to about the client.</label>
-        <TextArea rows ={4} onChange={(e) => this.state.description = e.target.value} autosize={true}/>
+        <TextArea
+          rows ={4}
+          onChange={(e) => this.state.description = e.target.value}
+          autosize={false}
+          className="tenant-form-description"
+        />
       </div>
     )
   }
@@ -117,6 +122,55 @@ class SubmissionModal extends React.Component {
       }
   }
 
+  renderFormSubmission() {
+    if (this.props.property.form) {
+      return(
+        <div>
+          <div className="modal-subsection">
+            <div className="tenant-form-container">
+              <h3>Download Client Form</h3>
+              <div className="tenant-form-download">
+                <div className="tenant-form-link">
+                  <a href={this.props.property.form} target="_blank">Client Information Form</a>
+                </div>
+                <Icon className="tenant-form-icon" type="cloud-download" theme="outlined" />
+              </div>
+            </div>
+          </div>
+          <div className="upload-form-container">
+            <div className="upload-details">
+              <h3>Upload Client Form</h3>
+              <div className="upload-button">
+                <ActiveStorageProvider
+                  endpoint={{
+                    path: '/api/applications/' ,
+                    model: "Application",
+                    attribute: 'form',
+                    method: "POST",
+                  }}
+                  multiple={true}
+                  headers={{
+                    'Content-Type': 'application/json'
+                  }}
+                  render={Utils.activeStorageUploadRenderer}
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      );
+    } else {
+      return(
+        <div>
+          <div className="no-forms">
+          This property does not have an associated Client Information Form. You may proceed
+          to submit your application!
+          </div>
+        </div>
+      );
+    }
+  }
+
   //<Button key="submit" type="primary" onClick={this.handleOk}>Submit</Button>
 
   render() {
@@ -153,33 +207,13 @@ class SubmissionModal extends React.Component {
               </div>
               <div className="detailed-info">
                 <h1>Eventual Name</h1>
-                <div className="modal-subsection">
-                  <h3>Download Tenant Form</h3>
-                  <div className="tenant-form-container">
-
+                {this.renderTextarea()}
+                {this.renderFormSubmission()}
+                <div className="submit-button-container">
+                  <div className="submit-button">
+                    <Button key="submit" type="primary" onClick={this.handleOk}>Submit Application</Button>
                   </div>
                 </div>
-                <div className="upload-form-container">
-                  <h3>Upload Tenant Form</h3>
-                  <ActiveStorageProvider
-                    endpoint={{
-                      path: '/api/applications/' ,
-                      model: "Application",
-                      attribute: 'form',
-                      method: "POST",
-                    }}
-                    multiple={true}
-                    headers={{
-                      'Content-Type': 'application/json'
-                    }}
-                    render={Utils.activeStorageUploadRenderer}
-                  />
-                </div>
-              </div>
-            </div>
-            <div className="app-buttons">
-              <div className="submit-button">
-                <Button key="submit" type="primary" onClick={this.handleOk}>Submit Application</Button>
               </div>
             </div>
           </div>

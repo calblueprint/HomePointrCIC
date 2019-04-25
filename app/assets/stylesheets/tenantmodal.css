@@ -47,14 +47,55 @@
   padding-top: 42px;
 }
 
+.tenant-form-description {
+  height: 40px;
+  width: 180px;
+}
+
 .tenant-form-container {
+  margin-top: 36px;
+  margin-bottom: 32px;
+}
+
+.tenant-form-download {
   border: 1px solid #D9D9D9;
   border-radius: 4px;
   height: 55px;
   width: 500px;
+  margin-top: 16px;
+  padding-top: 17px;
+  padding-left: 20px;
+  padding-right: 20px;
+}
 
+.tenant-form-link {
+  display: inline-block;
+}
+
+.tenant-form-icon {
+  float: right;
+  display: inline-block;
+  font-size: 20px;
 }
 
 .upload-form-container {
+  border-top: 1px solid #D9D9D9;
+}
 
+.upload-details {
+  margin-top: 32px;
+}
+
+.upload-button {
+  margin-top: 16px;
+}
+
+.submit-button-container {
+  float: right;
+  padding-top: 120px;
+}
+
+.no-forms {
+  width: 504px;
+  height: 320px;
 }
