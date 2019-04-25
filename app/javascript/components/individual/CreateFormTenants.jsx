@@ -20,6 +20,8 @@ class CreateFormTenants extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      renderInfoHousing: 0,
+      renderInfoProperty: 0,
       tenant: {
         name: '',
         description: '',
@@ -193,13 +195,38 @@ class CreateFormTenants extends React.Component {
     )
   }
 
+  renderInfo = (which_info, e) => {
+    if (which_info == "housing") {
+      this.setState((state) => {
+        return {renderInfoHousing: 1 - state.renderInfoHousing}
+      });
+    } else if (which_info == "property") {
+      this.setState((state) => {
+        return {renderInfoProperty: 1 - state.renderInfoProperty}
+      });
+    }
+  }
+
+  // Renders information dialogue on hover
+  infoDialogueHelper = (which_info, info_text) => {
+    if (which_info == "housing" && this.state.renderInfoHousing) {
+      return(
+        <div className="info-dialogue"><p className="info-dialogue-text">{info_text}</p></div>
+      );
+    } else if (which_info == "property" && this.state.renderInfoProperty) {
+      return(
+        <div className="info-dialogue"><p className="info-dialogue-text">{info_text}</p></div>
+      );
+    }
+  }
+
   renderStageOne() {
     const { tenant } = this.state;
     const { getFieldDecorator } = this.props.form;
     const Option = Select.Option;
     return (
-      <div className="container">
-        <h1>Step 1: Basic Information</h1>
+      <div className="tenant-form-container">
+        <h1>Step 1: Basic information</h1>
         <Form className="grid-container" hideRequiredMark={true}>
           <Form.Item
             label="Name"
@@ -287,7 +314,7 @@ class CreateFormTenants extends React.Component {
             )}
           </Form.Item>
           <Form.Item
-            label="Household Income"
+            label="Annual Household Income"
           >
             {getFieldDecorator('income', {
               initialValue: tenant.income,
@@ -338,13 +365,15 @@ class CreateFormTenants extends React.Component {
     const Option = Select.Option;
     const { tenant } = this.state;
     return (
-      <div className="container">
+      <div className="tenant-form-container">
         <h1>Step 2: Housing preferences</h1>
         <Form hideRequiredMark={true}>
           <div className="grid-container">
             <Form.Item
               label="Housing Type"
               >
+              <div onMouseEnter={(e) => this.renderInfo("housing", e)} onMouseLeave={(e) => this.renderInfo("housing", e)}><Icon type="question-circle" theme="twoTone" className="info-icon"/></div>
+              {this.infoDialogueHelper("housing", "Housing type is housing situation or conditions of your residence.")}
               {getFieldDecorator('housing_type', {
                 initialValue: tenant.housing_type,
                 rules: [{
@@ -363,6 +392,8 @@ class CreateFormTenants extends React.Component {
             <Form.Item
               label="Property Type"
             >
+              <div onMouseEnter={(e) => this.renderInfo("property", e)} onMouseLeave={(e) => this.renderInfo("property", e)}><Icon type="question-circle" theme="twoTone" className="info-icon"/></div>
+              {this.infoDialogueHelper("property", "Property type is the type of building of your residence.")}
               {getFieldDecorator('property_type', {
                 initialValue: tenant.property_type,
                 rules: [{
@@ -426,7 +457,7 @@ class CreateFormTenants extends React.Component {
             </Form.Item>
           </div>
           <Form.Item
-            label="Rent"
+            label="Monthly Rent"
           >
               <Row gutter={10}>
                 <Col span={6}>
@@ -475,8 +506,8 @@ class CreateFormTenants extends React.Component {
     const { TextArea } = Input;
 
     return (
-      <div className="container">
-        <h1>Step 3: A couple more details</h1>
+      <div className="tenant-form-container">
+        <div><h1>Step 3: Does your client need ...</h1></div>
         <Form hideRequiredMark={true}>
           <div className="grid-container">
             <Form.Item
@@ -593,8 +624,8 @@ class CreateFormTenants extends React.Component {
     const { getFieldDecorator } = this.props.form;
     const { TextArea } = Input;
     return (
-      <div className="container">
-        <h1>Step 4: Description</h1>
+      <div className="tenant-form-container">
+        <div><h1>Step 4: Short bio about your client</h1></div>
         <Form hideRequiredMark={true}>
           <Form.Item
             label="Description"
@@ -632,8 +663,8 @@ class CreateFormTenants extends React.Component {
   renderStageFive() {
     const { tenant } = this.state;
     return (
-      <div className="container">
-        <h1>Step 5: Add a profile photo</h1>
+      <div className="tenant-form-container">
+        <div><h1>Step 5: Add a profile photo (Optional)</h1></div>
         <Form hideRequiredMark={true}>
           <Form.Item
             label="Upload Avatar"
@@ -658,8 +689,8 @@ class CreateFormTenants extends React.Component {
   renderStageSix() {
     const { tenant } = this.state;
     return (
-      <div className="container">
-        <div>Step 5: Additional Paperwork (Optional)</div>
+      <div className="tenant-form-container">
+        <div><h1>Step 5: Add Default Client Form</h1></div>
         <Form hideRequiredMark={true}>
           <Form.Item
             label="Upload Form"
