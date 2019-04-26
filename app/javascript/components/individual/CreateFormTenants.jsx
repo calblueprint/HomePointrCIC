@@ -62,7 +62,9 @@ class CreateFormTenants extends React.Component {
       fileList: [],
       imageRemoveList: [],
       disabled: false, //to prevent multiple form submissions
-      stage: 1
+      stage: 1,
+      imageUrl: null,
+      formName: null,
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleCreate = this.handleCreate.bind(this);
@@ -81,6 +83,7 @@ class CreateFormTenants extends React.Component {
     this.renderStageSix = this.renderStageSix.bind(this);
     this.renderFormStage = this.renderFormStage.bind(this);
     this.nextButton = this.nextButton.bind(this);
+    this.onURLChange = this.onURLChange.bind(this);
   }
 
   // componentDidMount() {
@@ -97,6 +100,13 @@ class CreateFormTenants extends React.Component {
     return result
   }
 
+  onURLChange(key, callback_value) {
+    if (key == "image") {
+      this.state.imageUrl = callback_value;
+    } else if (key == "form") {
+      this.state.formName = callback_value;
+    }
+  }
 
   // api create
   handleCreate() {
@@ -507,7 +517,7 @@ class CreateFormTenants extends React.Component {
 
     return (
       <div className="tenant-form-container">
-        <div><h1>Step 3: Does your client need ...</h1></div>
+        <div><h1>Step 3: Some more information</h1></div>
         <Form hideRequiredMark={true}>
           <div className="grid-container">
             <Form.Item
@@ -671,9 +681,10 @@ class CreateFormTenants extends React.Component {
           >
             <div className="upload-image">
               <DirectUploadProvider
+                key={'image'}
                 multiple={false}
                 onSuccess={signedIds => { this.uploadAvatar(signedIds) }}
-                render={(renderProps) => Utils.activeStorageUploadRenderer({ ...renderProps, type: "avatar" })}
+                render={(renderProps) => Utils.activeStorageUploadRenderer({ ...renderProps, onURLChange: this.onURLChange, imageUrl: this.state.imageUrl, type: "images" })}
               />
             </div>
           </Form.Item>
@@ -697,9 +708,10 @@ class CreateFormTenants extends React.Component {
           >
             <div className="upload-form">
               <DirectUploadProvider
+                key={'form'}
                 multiple={false}
                 onSuccess={signedIds => { this.uploadForms(signedIds) }}
-                render={(renderProps) => Utils.activeStorageUploadRenderer({ ...renderProps, type: "form" })}
+                render={(renderProps) => Utils.activeStorageUploadRenderer({ ...renderProps, onURLChange: this.onURLChange, filename: this.state.formName, type: "form" })}
               />
             </div>
           </Form.Item>

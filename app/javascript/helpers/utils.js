@@ -3,9 +3,10 @@ import { Tag, Upload, Icon, message } from 'antd';
 import Avatar from '../components/individual/Avatar.jsx';
 
 const Utils = {
-  activeStorageUploadRenderer: ({ handleUpload, uploads, ready, imageUrl, filename, type }) => {
+  activeStorageUploadRenderer: ({ handleUpload, uploads, ready, onURLChange, imageUrl, filename, type }) => {
+    debugger
     return(<div>
-      <Avatar handleUpload={handleUpload} uploads={uploads} imageUrl={imageUrl} filename={filename} type={type}/>
+      <Avatar handleUpload={handleUpload} uploads={uploads} onURLChange={onURLChange} imageUrl={imageUrl} filename={filename} type={type}/>
 
       {uploads.map(upload => {
         switch (upload.state) {
