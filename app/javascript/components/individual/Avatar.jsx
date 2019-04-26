@@ -33,9 +33,9 @@ class Avatar extends React.Component {
 
       if (this.props.onURLChange != undefined) {
         if (this.props.type == "images") {
-          this.props.onURLChange("image", this.state.imageUrl);
+          this.getBase64(info.file, imageUrl => this.props.onURLChange("image", imageUrl));
         } else if (this.props.type == "form") {
-          this.props.onURLChange("form", this.state.filename);
+          this.props.onURLChange("form", info.file.name);
         }
       }
     }
@@ -46,13 +46,11 @@ class Avatar extends React.Component {
   }
 
   renderDisplay = () => {
-    debugger
-    if ((this.state.type == "avatar" || this.state.type == "images") && this.state.imageUrl) {
+    if (this.props.type == "images" && (this.state.imageUrl || this.state.filename)) {
       return (
         <img src={this.state.imageUrl} alt={this.state.filename} width="104px" height="104px"/>
       )
-    } else if (this.state.type == "form" && (this.state.imageUrl || this.state.filename)) {
-      console.log('in display for form');
+    } else if (this.props.type == "form" && (this.state.imageUrl || this.state.filename)) {
       return (
         <div className="form-box" style={{ backgroundColor: "#ED326C" }}>{this.state.filename}</div>
       )

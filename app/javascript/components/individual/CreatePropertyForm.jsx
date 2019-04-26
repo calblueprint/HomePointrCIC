@@ -46,8 +46,6 @@ class CreatePropertyForm extends React.Component {
         long: null,
         images: null,
         form: null,
-        imageUrl: null,
-        formName: null,
         // name: '',
         // description: '',
         // email: '',
@@ -73,6 +71,8 @@ class CreatePropertyForm extends React.Component {
         // ex_offender: true,
         // local_area_link: '',
       },
+      imageUrl: null,
+      formName: null,
       categories: props.categories,
       nice_housing_types: props.categories.nice_housing_types,
       nice_property_types: props.categories.nice_property_types,
@@ -113,19 +113,14 @@ class CreatePropertyForm extends React.Component {
     const property = this.state.property;
     const keys = ["capacity", "description", "landlord_id", "rent", "property_type", "housing_type", "date_available", "location", "address", "number_of_bedrooms", "number_of_bathrooms", "floor_number", "mobility_aids", "furniture", "utilities_included", "accessible_shower", "car_parking", "lift_access", "lat", "long", "images", "form"];
     const values = [property.capacity, property.description, property.landlord_id, property.rent, property.property_type, property.housing_type, property.date_available, property.location, property.address, property.number_of_bedrooms, property.number_of_bathrooms, property.floor_number, property.mobility_aids, property.furniture, property.utilities_included, property.accessible_shower, property.car_parking, property.lift_access, property.lat, property.long, property.images, property.form];
-    console.log(values);
     let result = keys.reduce((obj, k, i) => ({...obj, [k]: values[i] }), {})
     return result
   }
 
   onURLChange(key, callback_value) {
     if (key == "image") {
-      console.log(callback_value)
-      // this.setState({ imageUrl: callback_value });
       this.state.imageUrl = callback_value;
     } else if (key == "form") {
-      console.log(callback_value)
-      // this.setState({ formName: callback_value });
       this.state.formName = callback_value;
     }
   }
@@ -410,119 +405,6 @@ class CreatePropertyForm extends React.Component {
     )
   }
 
-  // <Form.Item
-  //           label="Rent"
-  //         >
-  //           {getFieldDecorator('rent', {
-  //             initialValue: property.rent,
-  //             rules: [{
-  //               required: true, message: 'Please input the rent!',
-  //             }],
-  //           })(
-  //             <Input onChange={() => this.handleChange("rent")}/>
-  //           )}
-  //         </Form.Item>
-  //         <Form.Item
-  //           label="Housing type"
-  //         >
-  //           {getFieldDecorator('housing_type', {
-  //             initialValue: property.housing_type,
-  //             rules: [{
-  //               required: true, message: 'Please select housing type!',
-  //             }],
-  //           })(
-  //             <Select placeholder="Select One" value={property.housing_type} onChange={(value) => this.handleChangeSelect("housing_type", value)}>
-  //             {
-  //               this.state.nice_housing_types.map((obj, i) => {
-  //                 return <Option key={i} value={this.state.housing_types[i]}>{obj}</Option>
-  //               })
-  //             }
-  //             </Select>
-  //           )}
-  //         </Form.Item>
-  //         <Form.Item
-  //           label="Property type"
-  //         >
-  //           {getFieldDecorator('property_type', {
-  //             initialValue: property.property_type,
-  //             rules: [{
-  //               required: true, message: 'Please select a property type!',
-  //             }],
-  //           })(
-  //             <Select placeholder="Select One" value={property.property_type} onChange={(value) => this.handleChangeSelect("property_type", value)}>
-  //             {
-  //               this.state.nice_property_types.map((obj, i) => {
-  //                 return <Option key={i} value={this.state.property_types[i]}>{obj}</Option>
-  //               })
-  //             }
-  //             </Select>
-  //           )}
-  //         </Form.Item>
-  //         <Form.Item
-  //           label="Location"
-  //         >
-  //         {getFieldDecorator('location', {
-  //           initialValue: property.location,
-  //           rules: [{
-  //             required: true, message: 'Please pick a location!',
-  //           }],
-  //         })(
-  //           <Select placeholder="Select One" value={property.location} onChange={(value) => this.handleChangeSelect("location", value)}>
-  //           {
-  //             this.state.nice_locations.map((obj, i) => {
-  //               return <Option key={i} value={this.state.locations[i]}>{obj}</Option>
-  //             })
-  //           }
-  //           </Select>
-  //         )}
-  //         </Form.Item>
-  //         <Form.Item
-  //           label="Date available"
-  //         >
-  //           {getFieldDecorator('date_available', {
-  //             initialValue: property.date_available ? moment() : moment(property.date_available),
-  //             rules: [{
-  //               required: true, message: 'Please select the date available!',
-  //             }],
-  //           })(
-  //             <DatePicker onChange={this.handleChangeDate}/>
-  //           )}
-  //         </Form.Item>
-  //         <Form.Item
-  //           label="Capacity"
-  //         >
-  //           {getFieldDecorator('capacity', {
-  //             initialValue: property.capacity,
-  //             rules: [{
-  //               required: true, message: 'Please input the capacity!',
-  //             }],
-  //           })(
-  //             <InputNumber
-  //               min={0}
-  //               max={100}
-  //               value={property.capacity}
-  //               onChange={(value) => this.handleChangeSelect("capacity", value)}
-  //             />
-  //           )}
-  //         </Form.Item>
-  //         <Form.Item
-  //           label="Number of bedrooms"
-  //         >
-  //           {getFieldDecorator('number_of_bedrooms', {
-  //             initialValue: property.number_of_bedrooms,
-  //             rules: [{
-  //               required: true, message: 'Please pick the number of bedrooms!',
-  //             }],
-  //           })(
-  //             <InputNumber
-  //               min={0}
-  //               max={10}
-  //               value={property.number_of_bedrooms}
-  //               onChange={(value) => this.handleChangeSelect("number_of_bedrooms", value)}
-  //             />
-  //           )}
-  //         </Form.Item>
-
   renderStageTwo() {
     const { getFieldDecorator } = this.props.form;
     const Option = Select.Option;
@@ -720,7 +602,6 @@ class CreatePropertyForm extends React.Component {
   }
 
   renderStageFour() {
-    this.forceUpdate();
     const { property } = this.state;
     return (
       <div className="property-form-container">
@@ -803,7 +684,7 @@ class CreatePropertyForm extends React.Component {
     }
     if (stage == 2) {
       return (
-        <div>{this.renderStageFour()}</div>
+        <div>{this.renderStageTwo()}</div>
       )
     }
     if (stage == 3) {
