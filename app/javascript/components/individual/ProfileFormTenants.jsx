@@ -161,14 +161,14 @@ class ProfileFormTenants extends React.Component {
     this.setState({ form: signedIds[0] });
   }
 
-<<<<<<< HEAD
   onCancel = () => {
     this.setState({ visible: false });
   }
 
   showModal = () => {
     this.setState({ visible: true });
-=======
+  }
+
   renderInfo = (which_info, e) => {
     if (which_info == "housing") {
       this.setState((state) => {
@@ -192,7 +192,6 @@ class ProfileFormTenants extends React.Component {
         <div className="info-dialogue"><p className="info-dialogue-text">{info_text}</p></div>
       );
     }
->>>>>>> 57e2797b1fd46cf9910a72dab122a6c1cd1122d5
   }
 
   render() {
@@ -588,7 +587,7 @@ class ProfileFormTenants extends React.Component {
               <DirectUploadProvider
                 multiple={false}
                 onSuccess={signedIds => { this.uploadAvatar(signedIds) }}
-                render={(renderProps) => Utils.activeStorageUploadRenderer({ ...renderProps, imageUrl: this.props.image_object.url, type: "avatar" })}
+                render={(renderProps) => Utils.activeStorageUploadRenderer({ ...renderProps, imageUrl: this.props.image_object.url, type: "images" })}
               />
             </div>
           </Form.Item>
