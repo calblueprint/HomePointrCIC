@@ -282,7 +282,7 @@ class CreateFormTenants extends React.Component {
           {getFieldDecorator('location', {
             initialValue: tenant.location,
             rules: [{
-              required: true, message: 'Please pick a location!',
+              required: true, message: 'Please select a location!',
             }],
           })(
             <Select placeholder="Select One" value={tenant.location} onChange={(value) => this.handleChangeSelect("location", value)}>
@@ -300,7 +300,7 @@ class CreateFormTenants extends React.Component {
             {getFieldDecorator('family_size', {
               initialValue: tenant.family_size,
               rules: [{
-                required: true, message: 'Please pick you family size!',
+                required: true, message: 'Please select your family size!',
               }],
             })(
               <InputNumber
@@ -387,7 +387,7 @@ class CreateFormTenants extends React.Component {
               {getFieldDecorator('housing_type', {
                 initialValue: tenant.housing_type,
                 rules: [{
-                  required: true, message: 'Please pick a housing type!',
+                  required: true, message: 'Please select a housing type!',
                 }],
               })(
                 <Select placeholder="Select One" value={tenant.housing_type} onChange={(value) => this.handleChangeSelect("housing_type", value)}>
@@ -407,7 +407,7 @@ class CreateFormTenants extends React.Component {
               {getFieldDecorator('property_type', {
                 initialValue: tenant.property_type,
                 rules: [{
-                  required: true, message: 'Please pick a property type!',
+                  required: true, message: 'Please select a property type!',
                 }],
               })(
                 <Select placeholder="Select One" value={tenant.property_type} onChange={(value) => this.handleChangeSelect("property_type", value)}>
@@ -425,7 +425,7 @@ class CreateFormTenants extends React.Component {
               {getFieldDecorator('number_of_bedrooms', {
                 initialValue: tenant.number_of_bedrooms,
                 rules: [{
-                  required: true, message: 'Please pick a number of bedrooms!',
+                  required: true, message: 'Please input a number of bedrooms!',
                 }],
               })(
                 <InputNumber
@@ -442,7 +442,7 @@ class CreateFormTenants extends React.Component {
               {getFieldDecorator('number_of_bathrooms', {
                 initialValue: tenant.number_of_bathrooms,
                 rules: [{
-                  required: true, message: 'Please pick a number of bathrooms!',
+                  required: true, message: 'Please input a number of bathrooms!',
                 }],
               })(
                 <InputNumber
