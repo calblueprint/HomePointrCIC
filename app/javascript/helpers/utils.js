@@ -4,7 +4,6 @@ import Avatar from '../components/individual/Avatar.jsx';
 
 const Utils = {
   activeStorageUploadRenderer: ({ handleUpload, uploads, ready, onURLChange, imageUrl, filename, type }) => {
-    debugger
     return(<div>
       <Avatar handleUpload={handleUpload} uploads={uploads} onURLChange={onURLChange} imageUrl={imageUrl} filename={filename} type={type}/>
 
