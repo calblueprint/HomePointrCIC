@@ -63,9 +63,9 @@ Rails.application.routes.draw do
     end
   end
 
-  Rails.application.routes.draw do
-    # existing paths
-    match '*path' => 'errors#error_404', via: :all
-  end
+  # Rails.application.routes.draw do
+  #   # existing paths
+  #   match '*path' => 'errors#error_404', via: :all
+  # end
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end
