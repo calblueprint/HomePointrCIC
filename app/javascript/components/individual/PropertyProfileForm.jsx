@@ -15,6 +15,7 @@ import PicturesWall from './PicturesWall';
 import Avatar from './Avatar';
 import '../../../assets/stylesheets/PropertyProfileForm.css';
 import { DirectUploadProvider } from "react-activestorage-provider";
+import DeleteModal from '../modals/DeleteModal';
 
 
 class PropertyProfileForm extends React.Component {
@@ -36,7 +37,7 @@ class PropertyProfileForm extends React.Component {
       images: [],
       fileList: [],
       imageRemoveList: [],
-      disabled: false //to prevent multiple form submissions
+      visible: false,
     };
     this.handleChange = this.handleChange.bind(this);
     this.componentDidMount = this.componentDidMount.bind(this);
@@ -247,6 +248,14 @@ class PropertyProfileForm extends React.Component {
         <PicturesWall {...buttonProps} />
       </div>
     )
+  }
+
+  onCancel = () => {
+    this.setState({ visible: false });
+  }
+
+  showModal = () => {
+    this.setState({ visible: true });
   }
 
   renderInfo = (which_info, e) => {
@@ -590,7 +599,13 @@ class PropertyProfileForm extends React.Component {
                   <div><h2>Delete Client</h2></div>
                 </Col>
                 <Col span={12}>
-                  <Button className="delete-button" type="danger" onClick={this.handleDestroy}>Delete Property</Button>
+                  <Button className="delete-button" type="danger" onClick={this.showModal}>Delete Property</Button>
+                  <DeleteModal
+                    title={"property"}
+                    onOk={this.handleDestroy}
+                    onCancel={this.onCancel}
+                    visible={this.state.visible}
+                  />
                 </Col>
               </Row>
             </div>

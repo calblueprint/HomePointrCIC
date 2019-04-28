@@ -14,6 +14,7 @@ import ActiveStorageProvider from "react-activestorage-provider";
 import PicturesWall from './PicturesWall';
 import Avatar from './Avatar';
 import '../../../assets/stylesheets/CreatePropertyForm.css';
+import { DirectUploadProvider } from "react-activestorage-provider";
 
 class CreatePropertyForm extends React.Component {
   constructor(props) {
@@ -44,33 +45,10 @@ class CreatePropertyForm extends React.Component {
         lat: null,
         long: null,
         images: null,
-        form: null
-
-        // name: '',
-        // description: '',
-        // email: '',
-        // phone: '',
-        // rent: 0,
-        // housing_type: "other_housing_type",
-        // property_type: "other_property_type",
-        // num_bedrooms: 1,
-        // location: "other_location",
-        // referral_agency_id: this.props.current_userID,
-        // date_needed: new Date(),
-        // avatar: null,
-        // number_of_bathrooms: 1,
-        // mobility_aids: true,
-        // accessible_shower: true,
-        // car_parking: true,
-        // lift_access: true,
-        // family_size: 1,
-        // living_arrangements: '',
-        // income: '',
-        // benefits: true,
-        // local_council: true,
-        // ex_offender: true,
-        // local_area_link: '',
+        form: null,
       },
+      imageUrl: null,
+      formName: null,
       categories: props.categories,
       nice_housing_types: props.categories.nice_housing_types,
       nice_property_types: props.categories.nice_property_types,
@@ -100,6 +78,7 @@ class CreatePropertyForm extends React.Component {
     this.nextButton = this.nextButton.bind(this);
     this.handleAuto = this.handleAuto.bind(this);
     this.componentDidMount = this.componentDidMount.bind(this);
+    this.onURLChange = this.onURLChange.bind(this);
   }
 
   componentDidMount() {
@@ -108,11 +87,18 @@ class CreatePropertyForm extends React.Component {
 
   convertToDict() {
     const property = this.state.property;
-    const keys = ["capacity", "description", "landlord_id", "rent", "property_type", "housing_type", "date_available", "location", "address", "number_of_bedrooms", "number_of_bathrooms", "floor_number", "mobility_aids", "furniture", "utilities_included", "accessible_shower", "car_parking", "lift_access", "lat", "long"];
-    const values = [property.capacity, property.description, property.landlord_id, property.rent, property.property_type, property.housing_type, property.date_available, property.location, property.address, property.number_of_bedrooms, property.number_of_bathrooms, property.floor_number, property.mobility_aids, property.furniture, property.utilities_included, property.accessible_shower, property.car_parking, property.lift_access, property.lat, property.long];
-    console.log(values);
+    const keys = ["capacity", "description", "landlord_id", "rent", "property_type", "housing_type", "date_available", "location", "address", "number_of_bedrooms", "number_of_bathrooms", "floor_number", "mobility_aids", "furniture", "utilities_included", "accessible_shower", "car_parking", "lift_access", "lat", "long", "images", "form"];
+    const values = [property.capacity, property.description, property.landlord_id, property.rent, property.property_type, property.housing_type, property.date_available, property.location, property.address, property.number_of_bedrooms, property.number_of_bathrooms, property.floor_number, property.mobility_aids, property.furniture, property.utilities_included, property.accessible_shower, property.car_parking, property.lift_access, property.lat, property.long, property.images, property.form];
     let result = keys.reduce((obj, k, i) => ({...obj, [k]: values[i] }), {})
     return result
+  }
+
+  onURLChange(key, callback_value) {
+    if (key == "image") {
+      this.state.imageUrl = callback_value;
+    } else if (key == "form") {
+      this.state.formName = callback_value;
+    }
   }
 
   // autocomplete
@@ -575,6 +561,22 @@ class CreatePropertyForm extends React.Component {
     )
   }
 
+  uploadImages = (signedIds) => {
+    let uploadList = []
+    signedIds.map((signedId) => {
+      uploadList.push(signedId);
+    });
+    let property = this.state.property
+    property["images"] = uploadList;
+    this.setState({ property: property });
+  }
+
+  uploadForms = (signedIds) => {
+    let property = this.state.property
+    property["form"] = signedIds[0];
+    this.setState({ property: property })
+  }
+
   renderStageFour() {
     const { property } = this.state;
     return (
@@ -586,19 +588,14 @@ class CreatePropertyForm extends React.Component {
             <Form.Item
               label="Add images"
             >
-              <ActiveStorageProvider
-                endpoint={{
-                  path: '/api/properties/create',
-                  model: "Property",
-                  attribute: 'images',
-                  method: "POST",
-                }}
-                multiple={true}
-                headers={{
-                  'Content-Type': 'application/json'
-                }}
-                render={Utils.activeStorageUploadRenderer}
-              />
+              <div className="upload-image">
+                <DirectUploadProvider
+                  key={'image'}
+                  multiple={true}
+                  onSuccess={signedIds => { this.uploadImages(signedIds) }}
+                  render={(renderProps) => Utils.activeStorageUploadRenderer({ ...renderProps, onURLChange: this.onURLChange, imageUrl: this.state.imageUrl, type: "images" })}
+                />
+              </div>
             </Form.Item>
           </Form>
         </div>
@@ -621,19 +618,14 @@ class CreatePropertyForm extends React.Component {
             <Form.Item
               label="Upload form"
             >
-              <ActiveStorageProvider
-                endpoint={{
-                  path: '/api/properties/create',
-                  model: "Property",
-                  attribute: 'form',
-                  method: "POST",
-                }}
-                multiple={true}
-                headers={{
-                  'Content-Type': 'application/json'
-                }}
-                render={Utils.activeStorageUploadRenderer}
-              />
+              <div className="upload-form">
+                <DirectUploadProvider
+                  key={'form'}
+                  multiple={false}
+                  onSuccess={signedIds => { this.uploadForms(signedIds) }}
+                  render={(renderProps) => Utils.activeStorageUploadRenderer({ ...renderProps, onURLChange: this.onURLChange, filename: this.state.formName, type: "form" })}
+                />
+              </div>
             </Form.Item>
           </Form>
         </div>
@@ -690,6 +682,7 @@ class CreatePropertyForm extends React.Component {
 
   render() {
     let component = this.renderFormStage();
+    // let temp = this.renderStageFour();
     return (
       <div>
         {component}

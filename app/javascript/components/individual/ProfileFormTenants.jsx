@@ -12,6 +12,7 @@ import UploadButton from './UploadButton';
 import SliderBar from './SliderBar';
 import PicturesWall from './PicturesWall';
 import Avatar from './Avatar';
+import DeleteModal from '../modals/DeleteModal';
 import { DirectUploadProvider } from "react-activestorage-provider";
 
 class ProfileFormTenants extends React.Component {
@@ -30,7 +31,7 @@ class ProfileFormTenants extends React.Component {
       locations: props.categories.locations,
       avatar: this.props.avatar,
       form: this.props.client_form,
-      disabled: false //to prevent multiple form submissions
+      visible: false,
     };
     this.handleChange = this.handleChange.bind(this);
     // this.handleCreate = this.handleCreate.bind(this);
@@ -40,7 +41,6 @@ class ProfileFormTenants extends React.Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleChangeDate = this.handleChangeDate.bind(this);
     this.handleChangeSelect = this.handleChangeSelect.bind(this);
-    this.renderUpload = this.renderUpload.bind(this);
     this.setFile = this.setFile.bind(this);
   }
 
@@ -152,43 +152,6 @@ class ProfileFormTenants extends React.Component {
     this.setState({ avatar: files[0] });
   }
 
-  renderUpload() {
-    let buttonProps = null;
-    let imageList = this.setupImages();
-      buttonProps = {
-        listType: 'picture-card',
-        fileList: imageList,
-        onRemoveRequest: (e) => this.state.imageRemoveList.push(e.uid),
-        className: 'upload-list-inline',
-        onChange: (fileList) => this.handleChangeImage(fileList)
-      };
-
-
-    return (
-      <div>
-        <PicturesWall {...buttonProps} />
-      </div>
-    )
-  }
-
-  //AVATAR -- DON'T DELETE
-  // <Form.Item
-  //   label="Upload Avatar"
-  // >
-  //   <Avatar tenant={this.state.tenant}/>
-  // </Form.Item>
-
-  //grabs the active storage image urls from backend, name of pic at end of url
-  setupImages = () => {
-    let fileList = [];
-    let image_object = this.props.image_object;
-    try {
-      fileList.push({uid: image_object.id, url: image_object.url, name: image_object.name});
-      return fileList;
-    } catch(error) {
-      return [];
-    }
-  }
 
   uploadAvatar = (signedIds) => {
     this.setState({ avatar: signedIds[0] });
@@ -196,6 +159,14 @@ class ProfileFormTenants extends React.Component {
 
   uploadForms = (signedIds) => {
     this.setState({ form: signedIds[0] });
+  }
+
+  onCancel = () => {
+    this.setState({ visible: false });
+  }
+
+  showModal = () => {
+    this.setState({ visible: true });
   }
 
   renderInfo = (which_info, e) => {
@@ -233,7 +204,6 @@ class ProfileFormTenants extends React.Component {
     const Option = Select.Option;
     const { tenant } = this.state;
     const { TextArea } = Input;
-    let uploadImage = this.renderUpload();
 
     return (
       <div className="edit-tenant-container">
@@ -617,7 +587,7 @@ class ProfileFormTenants extends React.Component {
               <DirectUploadProvider
                 multiple={false}
                 onSuccess={signedIds => { this.uploadAvatar(signedIds) }}
-                render={(renderProps) => Utils.activeStorageUploadRenderer({ ...renderProps, imageUrl: this.props.image_object.url, type: "avatar" })}
+                render={(renderProps) => Utils.activeStorageUploadRenderer({ ...renderProps, imageUrl: this.props.image_object.url, type: "images" })}
               />
             </div>
           </Form.Item>
@@ -643,7 +613,13 @@ class ProfileFormTenants extends React.Component {
                 <div><h2>Delete Client</h2></div>
               </Col>
               <Col span={12}>
-                <Button className="delete-button" type="danger" onClick={this.handleDestroy}>Delete Client</Button>
+                <Button className="delete-button" type="danger" onClick={this.showModal}>Delete Client</Button>
+                <DeleteModal
+                  title={"client"}
+                  onOk={this.handleDestroy}
+                  onCancel={this.onCancel}
+                  visible={this.state.visible}
+                />
               </Col>
             </Row>
           </div>
