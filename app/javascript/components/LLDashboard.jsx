@@ -33,7 +33,15 @@ class LLDashboard extends React.Component {
   renderView() {
     if (this.state.resources.length === 0) {
       return(
-        <Avatar shape="square" src="/assets/leaves.png" size={350}/>
+        <div>
+          <img src={'/assets/noPropertiesYet.png'} />
+          <div style={{ paddingLeft: '35%', paddingBottom: '5px' }}>
+            <h2>No properties yet</h2>
+          </div>
+          <div style={{ paddingLeft: '25%' }}>
+            <h3>Click on 'Add new property' to get started.</h3>
+          </div>
+        </div>
       )
     } else {
       return(
