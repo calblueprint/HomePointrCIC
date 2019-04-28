@@ -17,7 +17,8 @@ class SubmissionModal extends React.Component {
       visible: false,
       description: "",
       disabled: false,
-      displaySubmitModal: 0
+      displaySubmitModal: 0,
+      form: null
     }
     this.handlePost = this.handlePost.bind(this);
   }
@@ -29,7 +30,8 @@ class SubmissionModal extends React.Component {
   }
 
   handleOk = (e) => {
-    this.props.onSubmitProperty(e, this.props.property)
+    this.toggleConfirmationModal("Submit");
+    this.props.onSubmitProperty(e, this.props.property);
     this.handlePost();
   }
 
@@ -61,28 +63,6 @@ class SubmissionModal extends React.Component {
     }
   }
 
-  // renderPhotos() {
-  //   if (this.props.property.images == null) {
-  //     return (
-  //       <React.Fragment key='photo'>
-  //         <Avatar size={244} shape="rectangle" icon="home"/>
-  //       </React.Fragment>
-  //     )
-  //   } else {
-  //     return (
-  //       <div key="carousel" style={{backgroundColor: "#545454"}}>
-  //         <Carousel autoplay>
-  //           {this.props.property.images.map((image, index) => {
-  //             return (
-  //               <div key={index}><h3><center>{this.props.property.location}<img className="modal-avatar" src={image.url} margin-top="10%" height="244" width="244"/></center></h3></div>
-  //             )
-  //           })}
-  //         </Carousel>
-  //       </div>
-  //     )
-  //   }
-  // }
-
   renderPhotos() {
     if (this.props.property.images == null) {
       return (
@@ -92,16 +72,6 @@ class SubmissionModal extends React.Component {
       )
     } else {
       return (
-        // <div key="carousel" style={{backgroundColor: "#545454"}}>
-        //   <Carousel autoplay>
-        //     {this.props.property.images.map((image, index) => {
-        //       return (
-        //         <div key={index}><h3><center>{Utils.titleize(this.props.property.location)}<img src={image.url} margin-top="10%" height="320" width="400"/></center></h3></div>
-        //       )
-        //     })}
-        //   </Carousel>
-        // </div>
-
         <img className="modal-avatar" height="224" width="224" src={this.props.property.images[0]["url"]} />
       )
     }
@@ -133,7 +103,7 @@ class SubmissionModal extends React.Component {
     const { TextArea } = Input;
     return (
       <div className="tenant-description">
-        <h3 className="h3-margins">Add a note to about the client</h3>
+        <h3 className="h3-margins">Add a note to about the client (optional)</h3>
         <TextArea
           rows ={4}
           onChange={(e) => this.state.description = e.target.value}
