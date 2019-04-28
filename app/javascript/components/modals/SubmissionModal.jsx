@@ -207,9 +207,6 @@ class SubmissionModal extends React.Component {
     }
   }
 
-  // look at the renderPhotos thing!
-  // <img className="image" style={{backgroundImage: `url(${this.props.property.images[0].url})`}}> </img>
-
   render() {
     return (
       <div key="SubmissionModal">
@@ -265,77 +262,6 @@ class SubmissionModal extends React.Component {
     )
   }
 
-  // render() {
-  //   return (
-  //     <div key="SubmissionModal">
-  //       {this.renderButton()}
-  //       <Modal
-  //         title={this.renderPhotos()}
-  //         visible={this.state.visible}
-  //         onCancel={this.handleCancel}
-  //         onOk={this.handleOk}
-  //         width="1008px"
-  //         footer={<Button key="submit" type="primary" onClick={this.handleOk}>
-  //             Submit
-  //           </Button>}
-  //       >
-  //       {/*
-  //       look at the renderPhotos thing!
-  //       <img className="image" style={{backgroundImage: `url(${this.props.property.images[0].url})`}}> </img>
-  //       */}
-  //         <div className="flex-container">
-  //           <div className="flex-item">
-  //             <div className="section">
-  //               <h1> <Icon type="home" className="icon"/> Basic </h1>
-  //               <div className="subsection">
-  //               <Row gutter={32}>
-  //                 <Col span={12} className="title1">Housing Type</Col>
-  //                 <Col span={12} className="title1">Property Type</Col>
-  //               </Row>
-  //               <Row gutter={32}>
-  //                 <Col span={12} className="text1">{this.props.property.housing_type}</Col>
-  //                 <Col span={12} className="text1">{this.props.property.property_type}</Col>
-  //               </Row>
-  //               <Row gutter={32}>
-  //                 <Col span={12} className="title1">Date Available</Col>
-  //                 <Col span={12} className="title1">Location</Col>
-  //               </Row>
-  //               <Row gutter={32}>
-  //                 <Col span={12} className="text1">{this.props.property.date_available}</Col>
-  //                 <Col span={12} className="text1">{this.props.property.location}</Col>
-  //               </Row>
-  //               </div>
-  //             </div>
-  //             <div className="section">
-  //               <h1> <Icon type="paper-clip" className="icon"/> Additional Paperwork </h1>
-  //               <div className="subsection">
-  //                 <Row gutter={32}>
-  //                   <Col span={12}>{this.props.property.form ? <a href={this.props.property.form} target="_blank">Housing Form</a> : 'None'}</Col>
-  //                 </Row>
-  //               </div>
-  //             </div>
-  //             <ActiveStorageProvider
-  //               endpoint={{
-  //                 path: '/api/applications/' ,
-  //                 model: "Application",
-  //                 attribute: 'form',
-  //                 method: "POST",
-  //               }}
-  //               multiple={true}
-  //               headers={{
-  //                 'Content-Type': 'application/json'
-  //               }}
-  //               render={Utils.activeStorageUploadRenderer}
-  //             />
-  //             <h1> Additional Tenant Information </h1>
-  //             {this.renderTextarea()}
-  //           </div>
-  //         </div>
-  //
-  //       </Modal>
-  //     </div>
-  //   );
-  // }
 }
 SubmissionModal.propTypes = {
   location: PropTypes.string,
