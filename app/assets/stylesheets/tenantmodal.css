@@ -58,6 +58,10 @@
   resize: none;
 }
 
+.tenant-description-no-form {
+  margin-bottom: 200px;
+}
+
 .tenant-form-download-container {
   margin-top: 20px;
   margin-bottom: 26px;
@@ -103,5 +107,9 @@
 
 .no-forms {
   width: 504px;
-  height: 320px;
+  height: 70px;
+}
+
+.submit-error-message {
+  color: red;
 }

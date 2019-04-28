@@ -9,6 +9,7 @@ import ActiveStorageProvider from "react-activestorage-provider";
 import Utils from 'helpers/utils';
 import APIRoutes from 'helpers/api_routes';
 import ConfirmModal from './ConfirmModal';
+import { DirectUploadProvider } from "react-activestorage-provider";
 
 class SubmissionModal extends React.Component {
   constructor(props) {
@@ -18,7 +19,8 @@ class SubmissionModal extends React.Component {
       description: "",
       disabled: false,
       displaySubmitModal: 0,
-      form: null
+      form: null,
+      hasError: false
     }
     this.handlePost = this.handlePost.bind(this);
   }
@@ -41,11 +43,56 @@ class SubmissionModal extends React.Component {
     });
   }
 
+  handlePost() {
+    let body = {"description": this.state.description, "status": 1, "property_id": this.props.property.id, "tenant_id": this.props.tenant.id, "form": this.state.form};
+    body = JSON.stringify({application: body})
+    let request = APIRoutes.applications.create
+    fetch(request, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        "X_CSRF-Token": document.getElementsByName("csrf-token")[0].content
+      },
+      body: body,
+      credentials: 'same-origin',
+    }).then((data) => {
+      this.setState({
+        visible: false,
+        disabled: true,
+      });
+    }).catch((data) => {
+      console.error(data);
+    });
+  }
+
   toggleConfirmationModal = (operation) => {
     if (operation === "Submit") {
       this.setState((state) => {
         return {displaySubmitModal: 1 - state.displaySubmitModal}
       });
+    }
+  }
+
+  uploadForms = (signedIds) => {
+    this.setState({ form: signedIds[0]} );
+  }
+
+  formErrorCheck = () => {
+    if (this.props.property.form && !this.state.form) {
+      this.setState({ hasError: true });
+    } else {
+      this.setState({ hasError: false });
+      this.toggleConfirmationModal("Submit");
+    }
+  }
+
+  renderErrorMsg = () => {
+    if (this.state.hasError) {
+      return(
+        <div className="submit-error-message">
+          Please upload the completed client form.
+        </div>
+      );
     }
   }
 
@@ -77,41 +124,33 @@ class SubmissionModal extends React.Component {
     }
   }
 
-  handlePost() {
-    let body = {"description": this.state.description, "status": 1, "property_id": this.props.property.id, "tenant_id": this.props.tenant.id};
-    body = JSON.stringify({application: body})
-    let request = APIRoutes.applications.create
-    fetch(request, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        "X_CSRF-Token": document.getElementsByName("csrf-token")[0].content
-      },
-      body: body,
-      credentials: 'same-origin',
-    }).then((data) => {
-      this.setState({
-        visible: false,
-        disabled: true,
-      });
-    }).catch((data) => {
-      console.error(data);
-    });
-  }
-
   renderTextarea() {
     const { TextArea } = Input;
-    return (
-      <div className="tenant-description">
-        <h3 className="h3-margins">Add a note to about the client (optional)</h3>
-        <TextArea
-          rows ={4}
-          onChange={(e) => this.state.description = e.target.value}
-          autosize={false}
-          className="tenant-description-box"
-        />
-      </div>
-    )
+    if (this.props.property.form) {
+      return (
+        <div className="tenant-description">
+          <h3 className="h3-margins">Add a note to about the client (optional)</h3>
+          <TextArea
+            rows ={4}
+            onChange={(e) => this.state.description = e.target.value}
+            autosize={false}
+            className="tenant-description-box"
+          />
+        </div>
+      );
+    } else {
+      return (
+        <div className="tenant-description-no-form">
+          <h3 className="h3-margins">Add a note to about the client (optional)</h3>
+          <TextArea
+            rows ={4}
+            onChange={(e) => this.state.description = e.target.value}
+            autosize={false}
+            className="tenant-description-box"
+          />
+        </div>
+      );
+    }
   }
 
   renderButton() {
@@ -145,20 +184,13 @@ class SubmissionModal extends React.Component {
             <div className="upload-details">
               <h3>Upload Client Form</h3>
               <div className="upload-button">
-                <ActiveStorageProvider
-                  endpoint={{
-                    path: '/api/applications/' ,
-                    model: "Application",
-                    attribute: 'form',
-                    method: "POST",
-                  }}
-                  multiple={true}
-                  headers={{
-                    'Content-Type': 'application/json'
-                  }}
-                  render={Utils.activeStorageUploadRenderer}
+                <DirectUploadProvider
+                  multiple={false}
+                  onSuccess={signedIds => { this.uploadForms(signedIds) }}
+                  render={(renderProps) => Utils.activeStorageUploadRenderer({ ...renderProps, type: "form" })}
                 />
               </div>
+              {this.renderErrorMsg()}
             </div>
           </div>
         </div>
@@ -167,15 +199,13 @@ class SubmissionModal extends React.Component {
       return(
         <div>
           <div className="no-forms">
-          This property does not have an associated Client Information Form. You may proceed
-          to submit your application!
+            This property does not have an associated Client Information Form.
+            You may proceed to submit your application after filling out the optional client description!
           </div>
         </div>
       );
     }
   }
-
-  //<Button key="submit" type="primary" onClick={this.handleOk}>Submit</Button>
 
   // look at the renderPhotos thing!
   // <img className="image" style={{backgroundImage: `url(${this.props.property.images[0].url})`}}> </img>
@@ -221,7 +251,7 @@ class SubmissionModal extends React.Component {
                     <Button
                       key="submit"
                       type="primary"
-                      onClick={() => this.toggleConfirmationModal("Submit")}>
+                      onClick={this.formErrorCheck}>
                       Submit Application
                     </Button>
                     {this.renderSubmitModal("Submit")}
