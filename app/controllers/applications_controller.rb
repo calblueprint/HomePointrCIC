@@ -30,10 +30,19 @@ class ApplicationsController < ApplicationController
     @propertyForms = []
     @properties.each do |p|
       if p.form.attached?
-        @propertyForms << { form: url_for(p.form) }
+        @propertyForms << { form: url_for(p.form), form_name: p.form.filename }
       else
-        @propertyForms << { form: nil }
+        @propertyForms << { form: nil, form_name: nil }
       end
+    end
+
+    @tenantCounts = []
+    @potentialTenantCounts = []
+    @properties.each do |p|
+      current_count = p.applications.where(status: "housed").size
+      @tenantCounts << current_count
+      app_count = p.applications.where(status: "received").size + p.applications.where(status: "interview").size
+      @potentialTenantCounts << app_count
     end
 
     @housing_type_options = Property.housing_types.keys

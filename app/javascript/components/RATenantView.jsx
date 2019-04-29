@@ -39,6 +39,18 @@ class RATenantView extends React.Component {
     }
   }
 
+  renderForm() {
+    if (this.props.clientForm) {
+      return (
+        <a href={this.props.clientForm} target="_blank">{this.props.formName}</a>
+      );
+    } else {
+      return (
+        <p>No Form</p>
+      );
+    }
+  }
+
   renderDetails() {
     return(
       <div className="details">
@@ -111,7 +123,7 @@ class RATenantView extends React.Component {
         <div className="section">
           <h2 className="section-header"> <Icon type="paper-clip" className="icon"/> Client Form </h2>
           <div className="subsection">
-            <p> add forms... </p>
+            {this.renderForm()}
           </div>
         </div>
       </div>

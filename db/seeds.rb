@@ -137,6 +137,7 @@ def make_received_apps
       tenant_id: n,
       description: 'received description'
     )
+    application.form.attach(io: File.open('app/assets/images/sample.pdf'), filename: 'sample.pdf')
     application.save
     printf("#{n}/10 Received Applications \r")
   end
@@ -153,6 +154,7 @@ def make_rejected_apps
       tenant_id: n,
       description: 'rejected description'
     )
+    application.form.attach(io: File.open('app/assets/images/sample.pdf'), filename: 'sample.pdf')
     application.save
     printf("#{n}/5 Rejected Applications \r")
   end
@@ -181,6 +183,7 @@ def make_special_apps(start, fin, stat_num, custom)
         tenant_id: n,
         description: 'special description'
       )
+      application.form.attach(io: File.open('app/assets/images/sample.pdf'), filename: 'sample.pdf')
       application.save
       new_stat = 1
       printf("#{special_num}/5 #{custom} Applications, #{received}/20 Received Applications \r")

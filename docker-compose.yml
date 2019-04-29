@@ -45,7 +45,7 @@ services:
       - db
       - spring
       # Uncomment this line if you'd like to enable Webpack Dev Server
-      - sh
+      # - sh
   sh:
     build: .
     command: ./bin/webpack-dev-server

@@ -52,6 +52,16 @@ class TenantsController < ApplicationController
       app_count = p.applications.where(status: "received").size + p.applications.where(status: "interview").size
       @potentialTenantCounts << app_count
     end
+
+    @client_form = nil
+    @form_name = nil
+    if @tenant.form.attached? == true
+      @client_form = @tenant.form.signed_id
+      @form_name = @tenant.form.filename
+    else
+      @client_form = nil
+      @form_name = nil
+    end
   end
 
   def edit
