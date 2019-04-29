@@ -39,14 +39,6 @@ class RATenantView extends React.Component {
     }
   }
 
-  renderTags() {
-    return (
-      <div key='tags'>
-        {this.props.tagValues.slice(0, -1).map(tag => <Tag key={tag}>{tag}</Tag>)}
-      </div>
-    )
-  }
-
   renderDetails() {
     return(
       <div className="details">
@@ -58,8 +50,8 @@ class RATenantView extends React.Component {
               <Col span={12}><h3>Phone</h3></Col>
             </Row>
             <Row>
-              <Col span={12} className="content-text"><p>{this.props.tenant.email}</p></Col>
-              <Col span={12} className="content-text"><p>{this.props.tenant.phone}</p></Col>
+              <Col span={12} className="content-text">{this.props.tenant.email}</Col>
+              <Col span={12} className="content-text">{this.props.tenant.phone}</Col>
             </Row>
             <Row>
               <Col span={12}><h3>Location</h3></Col>

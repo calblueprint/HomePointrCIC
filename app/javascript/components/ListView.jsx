@@ -44,7 +44,13 @@ class ListView extends React.Component {
 
   renderSubmissionModal(resource, index) {
     if (this.props.submission_modal) {
-      return(<SubmissionModal property={resource} onSubmitProperty={this.props.onSubmitProperty} tenant={this.props.tenant}/>)
+      return(
+        <SubmissionModal
+          property={resource}
+          onSubmitProperty={this.props.onSubmitProperty}
+          tenant={this.props.tenant}
+        />
+      )
     }
   }
 
@@ -93,7 +99,7 @@ class ListView extends React.Component {
   render() {
     return this.state.resources.map((resource, index) => {
       return (
-        <div>
+        <div key={resource.id}>
           <Row gutter={16} key={index}>
             {this.state.type === "property" ? (
               <div>

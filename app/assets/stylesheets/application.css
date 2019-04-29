@@ -27,19 +27,20 @@ body {
 
 h1 {
   font-size: 24px;
-  font-weight: normal;
+  font-weight: 400 !important;
   margin-top: 0;
 }
 
 h2 {
   font-size: 18px;
-  font-weight: normal;
+  font-weight: normal !important;
   line-height: 22px;
   margin: 0;
 }
 
 h3 {
   text-transform: uppercase;
+  font-weight: normal !important;
   font-size: 10px;
   margin-bottom: 4px;
   color: rgba(0,0,0,0.3);
@@ -68,12 +69,12 @@ p {
 .h1-indent {
   margin-left: 10%;
   margin-bottom: 63px;
+  margin-right: 165px;
   display: inline-block;
 }
 
 .new-app-btn {
   display: inline-block;
-  float: right;
-  margin-right: 250px;
   margin-top: 8px;
+  width: 208px;
 }

@@ -20,6 +20,8 @@ class CreateFormTenants extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      renderInfoHousing: 0,
+      renderInfoProperty: 0,
       tenant: {
         name: '',
         description: '',
@@ -60,7 +62,9 @@ class CreateFormTenants extends React.Component {
       fileList: [],
       imageRemoveList: [],
       disabled: false, //to prevent multiple form submissions
-      stage: 1
+      stage: 1,
+      imageUrl: null,
+      formName: null,
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleCreate = this.handleCreate.bind(this);
@@ -79,6 +83,7 @@ class CreateFormTenants extends React.Component {
     this.renderStageSix = this.renderStageSix.bind(this);
     this.renderFormStage = this.renderFormStage.bind(this);
     this.nextButton = this.nextButton.bind(this);
+    this.onURLChange = this.onURLChange.bind(this);
   }
 
   // componentDidMount() {
@@ -95,6 +100,13 @@ class CreateFormTenants extends React.Component {
     return result
   }
 
+  onURLChange(key, callback_value) {
+    if (key == "image") {
+      this.state.imageUrl = callback_value;
+    } else if (key == "form") {
+      this.state.formName = callback_value;
+    }
+  }
 
   // api create
   handleCreate() {
@@ -193,13 +205,38 @@ class CreateFormTenants extends React.Component {
     )
   }
 
+  renderInfo = (which_info, e) => {
+    if (which_info == "housing") {
+      this.setState((state) => {
+        return {renderInfoHousing: 1 - state.renderInfoHousing}
+      });
+    } else if (which_info == "property") {
+      this.setState((state) => {
+        return {renderInfoProperty: 1 - state.renderInfoProperty}
+      });
+    }
+  }
+
+  // Renders information dialogue on hover
+  infoDialogueHelper = (which_info, info_text) => {
+    if (which_info == "housing" && this.state.renderInfoHousing) {
+      return(
+        <div className="info-dialogue"><p className="info-dialogue-text">{info_text}</p></div>
+      );
+    } else if (which_info == "property" && this.state.renderInfoProperty) {
+      return(
+        <div className="info-dialogue"><p className="info-dialogue-text">{info_text}</p></div>
+      );
+    }
+  }
+
   renderStageOne() {
     const { tenant } = this.state;
     const { getFieldDecorator } = this.props.form;
     const Option = Select.Option;
     return (
-      <div className="container">
-        <h1>Step 1: Basic Information</h1>
+      <div className="tenant-form-container">
+        <h1>Step 1: Basic information</h1>
         <Form className="grid-container" hideRequiredMark={true}>
           <Form.Item
             label="Name"
@@ -245,7 +282,7 @@ class CreateFormTenants extends React.Component {
           {getFieldDecorator('location', {
             initialValue: tenant.location,
             rules: [{
-              required: true, message: 'Please pick a location!',
+              required: true, message: 'Please select a location!',
             }],
           })(
             <Select placeholder="Select One" value={tenant.location} onChange={(value) => this.handleChangeSelect("location", value)}>
@@ -263,7 +300,7 @@ class CreateFormTenants extends React.Component {
             {getFieldDecorator('family_size', {
               initialValue: tenant.family_size,
               rules: [{
-                required: true, message: 'Please pick you family size!',
+                required: true, message: 'Please select your family size!',
               }],
             })(
               <InputNumber
@@ -287,7 +324,7 @@ class CreateFormTenants extends React.Component {
             )}
           </Form.Item>
           <Form.Item
-            label="Household Income"
+            label="Annual Household Income"
           >
             {getFieldDecorator('income', {
               initialValue: tenant.income,
@@ -338,17 +375,19 @@ class CreateFormTenants extends React.Component {
     const Option = Select.Option;
     const { tenant } = this.state;
     return (
-      <div className="container">
+      <div className="tenant-form-container">
         <h1>Step 2: Housing preferences</h1>
         <Form hideRequiredMark={true}>
           <div className="grid-container">
             <Form.Item
               label="Housing Type"
               >
+              <div onMouseEnter={(e) => this.renderInfo("housing", e)} onMouseLeave={(e) => this.renderInfo("housing", e)}><Icon type="question-circle" theme="twoTone" className="info-icon"/></div>
+              {this.infoDialogueHelper("housing", "Housing type is housing situation or conditions of your residence.")}
               {getFieldDecorator('housing_type', {
                 initialValue: tenant.housing_type,
                 rules: [{
-                  required: true, message: 'Please pick a housing type!',
+                  required: true, message: 'Please select a housing type!',
                 }],
               })(
                 <Select placeholder="Select One" value={tenant.housing_type} onChange={(value) => this.handleChangeSelect("housing_type", value)}>
@@ -363,10 +402,12 @@ class CreateFormTenants extends React.Component {
             <Form.Item
               label="Property Type"
             >
+              <div onMouseEnter={(e) => this.renderInfo("property", e)} onMouseLeave={(e) => this.renderInfo("property", e)}><Icon type="question-circle" theme="twoTone" className="info-icon"/></div>
+              {this.infoDialogueHelper("property", "Property type is the type of building of your residence.")}
               {getFieldDecorator('property_type', {
                 initialValue: tenant.property_type,
                 rules: [{
-                  required: true, message: 'Please pick a property type!',
+                  required: true, message: 'Please select a property type!',
                 }],
               })(
                 <Select placeholder="Select One" value={tenant.property_type} onChange={(value) => this.handleChangeSelect("property_type", value)}>
@@ -384,7 +425,7 @@ class CreateFormTenants extends React.Component {
               {getFieldDecorator('number_of_bedrooms', {
                 initialValue: tenant.number_of_bedrooms,
                 rules: [{
-                  required: true, message: 'Please pick a number of bedrooms!',
+                  required: true, message: 'Please input a number of bedrooms!',
                 }],
               })(
                 <InputNumber
@@ -401,7 +442,7 @@ class CreateFormTenants extends React.Component {
               {getFieldDecorator('number_of_bathrooms', {
                 initialValue: tenant.number_of_bathrooms,
                 rules: [{
-                  required: true, message: 'Please pick a number of bathrooms!',
+                  required: true, message: 'Please input a number of bathrooms!',
                 }],
               })(
                 <InputNumber
@@ -426,7 +467,7 @@ class CreateFormTenants extends React.Component {
             </Form.Item>
           </div>
           <Form.Item
-            label="Rent"
+            label="Monthly Rent"
           >
               <Row gutter={10}>
                 <Col span={6}>
@@ -475,8 +516,8 @@ class CreateFormTenants extends React.Component {
     const { TextArea } = Input;
 
     return (
-      <div className="container">
-        <h1>Step 3: A couple more details</h1>
+      <div className="tenant-form-container">
+        <div><h1>Step 3: Some more information</h1></div>
         <Form hideRequiredMark={true}>
           <div className="grid-container">
             <Form.Item
@@ -593,8 +634,8 @@ class CreateFormTenants extends React.Component {
     const { getFieldDecorator } = this.props.form;
     const { TextArea } = Input;
     return (
-      <div className="container">
-        <h1>Step 4: Description</h1>
+      <div className="tenant-form-container">
+        <div><h1>Step 4: Short bio about your client</h1></div>
         <Form hideRequiredMark={true}>
           <Form.Item
             label="Description"
@@ -632,17 +673,18 @@ class CreateFormTenants extends React.Component {
   renderStageFive() {
     const { tenant } = this.state;
     return (
-      <div className="container">
-        <h1>Step 5: Add a profile photo</h1>
+      <div className="tenant-form-container">
+        <div><h1>Step 5: Add a profile photo (Optional)</h1></div>
         <Form hideRequiredMark={true}>
           <Form.Item
             label="Upload Avatar"
           >
             <div className="upload-image">
               <DirectUploadProvider
+                key={'image'}
                 multiple={false}
                 onSuccess={signedIds => { this.uploadAvatar(signedIds) }}
-                render={(renderProps) => Utils.activeStorageUploadRenderer({ ...renderProps, type: "avatar" })}
+                render={(renderProps) => Utils.activeStorageUploadRenderer({ ...renderProps, onURLChange: this.onURLChange, imageUrl: this.state.imageUrl, type: "images" })}
               />
             </div>
           </Form.Item>
@@ -658,17 +700,19 @@ class CreateFormTenants extends React.Component {
   renderStageSix() {
     const { tenant } = this.state;
     return (
-      <div className="container">
-        <div>Step 5: Additional Paperwork (Optional)</div>
+      <div className="tenant-form-container">
+        <div><h1>Step 5: Add Default Client Form</h1></div>
+        Click <a href="https://drive.google.com/file/d/1cHdyVvPWnnzwo6u1qChB-V8kIJTRSsAh/view?usp=sharing" target="_blank">here</a> to download assessment form.
         <Form hideRequiredMark={true}>
           <Form.Item
             label="Upload Form"
           >
             <div className="upload-form">
               <DirectUploadProvider
+                key={'form'}
                 multiple={false}
                 onSuccess={signedIds => { this.uploadForms(signedIds) }}
-                render={(renderProps) => Utils.activeStorageUploadRenderer({ ...renderProps, type: "form" })}
+                render={(renderProps) => Utils.activeStorageUploadRenderer({ ...renderProps, onURLChange: this.onURLChange, filename: this.state.formName, type: "form" })}
               />
             </div>
           </Form.Item>

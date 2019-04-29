@@ -4,14 +4,13 @@ import "antd/dist/antd.css";
 import Utils from 'helpers/utils';
 import { Form, Icon, Input, Button, Checkbox, Select, Col, Row } from 'antd';
 import APIRoutes from 'helpers/api_routes';
-//import ErrorMessage from './individual/ErrorMessage.jsx';
 import '../../assets/stylesheets/entrypages.css';
-var logo = require('../../assets/images/logo.png');
 
 class SignUpPage extends React.Component {
  constructor(props) {
    super(props);
    this.state = {
+     renderInfoPassword: 0,
      inputs: {
        type: '',
        name: '',
@@ -43,7 +42,6 @@ class SignUpPage extends React.Component {
    this.setState({
      inputs: inputs
    });
-   console.log(this.state);
  }
 
  renderErrorMsg = () => {
@@ -98,9 +96,26 @@ class SignUpPage extends React.Component {
 
   handlePageSwitch = () => {
     if (this.state.page == 0 && !this.state.inputs.type) {
-        alert("Error");
+        alert("Please select whether you are a landlord or represent a referral agency");
     } else {
         this.setState({ page: 1 - this.state.page });
+    }
+  }
+
+  renderInfo = (which_info, e) => {
+    if (which_info == "password") {
+      this.setState((state) => {
+        return {renderInfoPassword: 1 - state.renderInfoPassword}
+      });
+    }
+  }
+
+  // Renders information dialogue on hover
+  infoDialogueHelper = (which_info, info_text) => {
+    if (which_info == "password" && this.state.renderInfoPassword) {
+      return(
+        <div className="info-dialogue"><p className="info-dialogue-text">{info_text}</p></div>
+      );
     }
   }
 
@@ -143,6 +158,8 @@ class SignUpPage extends React.Component {
             {/* ITEM 1 */}
             <Col span={12}>
               <Form.Item label="Password">
+                <div onMouseEnter={(e) => this.renderInfo("password", e)} onMouseLeave={(e) => this.renderInfo("password", e)}><Icon type="question-circle" theme="twoTone" className="info-icon"/></div>
+                {this.infoDialogueHelper("password", "Your password should be minimum 8 characters.")}
                 <Input
                 type="password"
                 name="password"

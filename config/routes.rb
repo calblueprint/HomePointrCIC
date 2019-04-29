@@ -13,7 +13,7 @@ Rails.application.routes.draw do
       root to: "users#index"
     end
   get 'home/index'
-  get 'errors/show'
+  get 'errors/error_404'
   
   get 'applications/new/:id' => 'applications#new'
 
@@ -32,7 +32,7 @@ Rails.application.routes.draw do
   resources :referral_agencies, only: %i[create show update edit destroy]
   resources :landlords, only: %i[create show update edit destroy]
   resources :properties, only: %i[new create update index edit show destroy]
-  resources :tenants, only: %i[new create edit update show index destroy]
+  resources :tenants, only: %i[new create edit update show destroy]
   resources :applications, only: %i[index new create edit update show destroy]
   # resources :properties, :only => [:create, :update, :show, :destroy]
   resources :properties
@@ -62,5 +62,10 @@ Rails.application.routes.draw do
       end
     end
   end
+
+  # Rails.application.routes.draw do
+  #   # existing paths
+  #   match '*path' => 'errors#error_404', via: :all
+  # end
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

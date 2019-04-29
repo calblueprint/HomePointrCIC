@@ -42,6 +42,11 @@
   width: 175px;
 }
 
+.property-title {
+  display: inline-block;
+  width: 230px;
+}
+
 .content-container {
   display: inline-block;
   position: absolute;

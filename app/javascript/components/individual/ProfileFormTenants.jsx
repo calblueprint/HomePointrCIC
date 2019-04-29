@@ -12,12 +12,15 @@ import UploadButton from './UploadButton';
 import SliderBar from './SliderBar';
 import PicturesWall from './PicturesWall';
 import Avatar from './Avatar';
+import DeleteModal from '../modals/DeleteModal';
 import { DirectUploadProvider } from "react-activestorage-provider";
 
 class ProfileFormTenants extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      renderInfoHousing: 0,
+      renderInfoProperty: 0,
       tenant: props.tenant,
       categories: props.categories,
       nice_housing_types: props.categories.nice_housing_types,
@@ -28,7 +31,7 @@ class ProfileFormTenants extends React.Component {
       locations: props.categories.locations,
       avatar: this.props.avatar,
       form: this.props.client_form,
-      disabled: false //to prevent multiple form submissions
+      visible: false,
     };
     this.handleChange = this.handleChange.bind(this);
     // this.handleCreate = this.handleCreate.bind(this);
@@ -38,7 +41,6 @@ class ProfileFormTenants extends React.Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleChangeDate = this.handleChangeDate.bind(this);
     this.handleChangeSelect = this.handleChangeSelect.bind(this);
-    this.renderUpload = this.renderUpload.bind(this);
     this.setFile = this.setFile.bind(this);
   }
 
@@ -102,7 +104,9 @@ class ProfileFormTenants extends React.Component {
             window.location = '/tenants/' + id.toString() + '/edit';
           });
         }
-      },
+      } else {
+        window.scrollTo(0, 0);
+      }
     );
   }
   removeImages(imageList) {
@@ -150,43 +154,6 @@ class ProfileFormTenants extends React.Component {
     this.setState({ avatar: files[0] });
   }
 
-  renderUpload() {
-    let buttonProps = null;
-    let imageList = this.setupImages();
-      buttonProps = {
-        listType: 'picture-card',
-        fileList: imageList,
-        onRemoveRequest: (e) => this.state.imageRemoveList.push(e.uid),
-        className: 'upload-list-inline',
-        onChange: (fileList) => this.handleChangeImage(fileList)
-      };
-
-
-    return (
-      <div>
-        <PicturesWall {...buttonProps} />
-      </div>
-    )
-  }
-
-  //AVATAR -- DON'T DELETE
-  // <Form.Item
-  //   label="Upload Avatar"
-  // >
-  //   <Avatar tenant={this.state.tenant}/>
-  // </Form.Item>
-
-  //grabs the active storage image urls from backend, name of pic at end of url
-  setupImages = () => {
-    let fileList = [];
-    let image_object = this.props.image_object;
-    try {
-      fileList.push({uid: image_object.id, url: image_object.url, name: image_object.name});
-      return fileList;
-    } catch(error) {
-      return [];
-    }
-  }
 
   uploadAvatar = (signedIds) => {
     this.setState({ avatar: signedIds[0] });
@@ -194,6 +161,39 @@ class ProfileFormTenants extends React.Component {
 
   uploadForms = (signedIds) => {
     this.setState({ form: signedIds[0] });
+  }
+
+  onCancel = () => {
+    this.setState({ visible: false });
+  }
+
+  showModal = () => {
+    this.setState({ visible: true });
+  }
+
+  renderInfo = (which_info, e) => {
+    if (which_info == "housing") {
+      this.setState((state) => {
+        return {renderInfoHousing: 1 - state.renderInfoHousing}
+      });
+    } else if (which_info == "property") {
+      this.setState((state) => {
+        return {renderInfoProperty: 1 - state.renderInfoProperty}
+      });
+    }
+  }
+
+  // Renders information dialogue on hover
+  infoDialogueHelper = (which_info, info_text) => {
+    if (which_info == "housing" && this.state.renderInfoHousing) {
+      return(
+        <div className="info-dialogue"><p className="info-dialogue-text">{info_text}</p></div>
+      );
+    } else if (which_info == "property" && this.state.renderInfoProperty) {
+      return(
+        <div className="info-dialogue"><p className="info-dialogue-text">{info_text}</p></div>
+      );
+    }
   }
 
   render() {
@@ -206,7 +206,6 @@ class ProfileFormTenants extends React.Component {
     const Option = Select.Option;
     const { tenant } = this.state;
     const { TextArea } = Input;
-    let uploadImage = this.renderUpload();
 
     return (
       <div className="edit-tenant-container">
@@ -259,7 +258,7 @@ class ProfileFormTenants extends React.Component {
               {getFieldDecorator('location', {
                 initialValue: tenant.location,
                 rules: [{
-                  required: true, message: 'Please pick a number of bedrooms!',
+                  required: true, message: 'Please input a number of bedrooms!',
                 }],
               })(
                 <Select onChange={(value) => this.handleChangeSelect("location", value)}>
@@ -277,7 +276,7 @@ class ProfileFormTenants extends React.Component {
                 {getFieldDecorator('family_size', {
                   initialValue: tenant.family_size,
                   rules: [{
-                    required: true, message: 'Please pick you family size!',
+                    required: true, message: 'Please input your family size!',
                   }],
                 })(
                   <InputNumber
@@ -301,7 +300,7 @@ class ProfileFormTenants extends React.Component {
                 )}
               </Form.Item>
               <Form.Item
-                label="Household Income"
+                label="Annual Household Income"
               >
                 {getFieldDecorator('income', {
                   initialValue: tenant.income,
@@ -341,10 +340,12 @@ class ProfileFormTenants extends React.Component {
             <Form.Item
               label="Property Type"
             >
+              <div onMouseEnter={(e) => this.renderInfo("property", e)} onMouseLeave={(e) => this.renderInfo("property", e)}><Icon type="question-circle" theme="twoTone" className="info-icon"/></div>
+              {this.infoDialogueHelper("property", "Property type is the type of building of your residence.")}
               {getFieldDecorator('property_type', {
                 initialValue: tenant.property_type,
                 rules: [{
-                  required: true, message: 'Please pick a number of bedrooms!',
+                  required: true, message: 'Please input a number of bedrooms!',
                 }],
               })(
                 <Select onChange={(value) => this.handleChangeSelect("property_type", value)}>
@@ -359,10 +360,12 @@ class ProfileFormTenants extends React.Component {
             <Form.Item
               label="Housing Type"
               >
+              <div onMouseEnter={(e) => this.renderInfo("housing", e)} onMouseLeave={(e) => this.renderInfo("housing", e)}><Icon type="question-circle" theme="twoTone" className="info-icon"/></div>
+              {this.infoDialogueHelper("housing", "Housing type is housing situation or conditions of your residence.")}
               {getFieldDecorator('housing_type', {
                 initialValue: tenant.housing_type,
                 rules: [{
-                  required: true, message: 'Please pick a number of bedrooms!',
+                  required: true, message: 'Please input a number of bedrooms!',
                 }],
               })(
                 <Select onChange={(value) => this.handleChangeSelect("housing_type", value)}>
@@ -380,7 +383,7 @@ class ProfileFormTenants extends React.Component {
               {getFieldDecorator('date_needed', {
                 initialValue: moment(tenant.date_needed, "YYYY-MM-DD"),
                 rules: [{
-                  required: true, message: 'Please pick the date needed!',
+                  required: true, message: 'Please input the date needed!',
                 }],
               })(
                 <DatePicker onChange={this.handleChangeDate}/>
@@ -392,7 +395,7 @@ class ProfileFormTenants extends React.Component {
               {getFieldDecorator('number_of_bedrooms', {
                 initialValue: tenant.number_of_bedrooms,
                 rules: [{
-                  required: true, message: 'Please pick a number of bedrooms!',
+                  required: true, message: 'Please input a number of bedrooms!',
                 }],
               })(
                 <InputNumber
@@ -410,7 +413,7 @@ class ProfileFormTenants extends React.Component {
               {getFieldDecorator('number_of_bathrooms', {
                 initialValue: tenant.number_of_bathrooms,
                 rules: [{
-                  required: true, message: 'Please pick a number of bedrooms!',
+                  required: true, message: 'Please input a number of bedrooms!',
                 }],
               })(
                 <InputNumber
@@ -424,7 +427,7 @@ class ProfileFormTenants extends React.Component {
             </Form.Item>
           </div>
           <Form.Item
-            label="Rent"
+            label="Monthly Rent"
           >
               <Row gutter={10}>
                 <Col span={6}>
@@ -586,7 +589,7 @@ class ProfileFormTenants extends React.Component {
               <DirectUploadProvider
                 multiple={false}
                 onSuccess={signedIds => { this.uploadAvatar(signedIds) }}
-                render={(renderProps) => Utils.activeStorageUploadRenderer({ ...renderProps, imageUrl: this.props.image_object.url, type: "avatar" })}
+                render={(renderProps) => Utils.activeStorageUploadRenderer({ ...renderProps, imageUrl: this.props.image_object.url, type: "images" })}
               />
             </div>
           </Form.Item>
@@ -609,10 +612,17 @@ class ProfileFormTenants extends React.Component {
           <div className="delete-client">
             <Row type="flex" style={{ width: 660 }}>
               <Col span={12}>
-                <div>Delete Client</div>
+                <div><h2>Delete Client</h2></div>
               </Col>
               <Col span={12}>
-                <Button className="delete-button" type="danger" onClick={this.handleDestroy}>Delete Client</Button>
+                <Button className="delete-button" type="danger" onClick={this.showModal}>Delete Client</Button>
+                <DeleteModal
+                  onOk={this.handleDestroy}
+                  onCancel={this.onCancel}
+                  visible={this.state.visible}
+                  message={"delete this client"}
+                  operation={"Delete"}
+                />
               </Col>
             </Row>
           </div>

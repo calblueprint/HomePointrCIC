@@ -38,7 +38,7 @@ class PropertyCard extends React.Component {
   onPropertyClick = () => {
     if (this.state.displayModal || this.state.disableDivClick || this.props.noClick) {
       return;
-    } else if (this.state.renderModal) {
+    } else if (this.state.renderModal || this.props.viewpoint === "submission") {
       this.setState({displayModal: true});
     } else {
       window.location='/properties/' + this.props.property.id;
@@ -111,6 +111,7 @@ class PropertyCard extends React.Component {
   }
 
   render() {
+    const openings = this.props.property.capacity - this.props.property.tenantCount;
     return(
       <div
         onMouseEnter={this.renderEdit}
@@ -122,7 +123,7 @@ class PropertyCard extends React.Component {
         <div className="content-container">
           <div className="header-container">
             <Col span={21}>
-              <h2 className="title">Eventual Name</h2>
+              <h2 className="property-title">{this.props.property.address.split(",")[0]}</h2>
               <div className="status-tag">
                 {this.renderStatus()}
               </div>
@@ -132,21 +133,27 @@ class PropertyCard extends React.Component {
             </Col>
           </div>
           <div className="details-container">
-            <Col span={7}>
+            <Col span={6}>
               <h3>Location</h3>
               <p>{Utils.titleize(this.props.property.location)}</p>
             </Col>
             <Col span={6}>
               <h3>Current</h3>
-              <p>{this.props.property.tenantCount}</p>
+              <p>{(this.props.property.tenantCount == 1) ?
+                this.props.property.tenantCount + " Client"
+                : this.props.property.tenantCount + " Clients"}</p>
             </Col>
             <Col span={6}>
               <h3>Apps</h3>
-              <p>{this.props.property.potentialTenantCount}</p>
+              <p>{(this.props.property.potentialTenantCount == 1) ?
+                this.props.property.potentialTenantCount + " App"
+                : this.props.property.potentialTenantCount + " Apps"}</p>
             </Col>
-            <Col span={5}>
+            <Col span={6}>
               <h3>Openings</h3>
-              <p>{this.props.property.capacity - this.props.property.tenantCount}</p>
+              <p>{(openings == 1) ?
+                openings + " Client"
+                : openings + " Clients"}</p>
             </Col>
           </div>
         </div>

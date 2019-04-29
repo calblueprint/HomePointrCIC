@@ -3,7 +3,7 @@
 // } from 'antd';
 import React from "react";
 import PropTypes from "prop-types";
-import { Upload, message, Form, Icon, Select, Input, Button, Slider, Switch, DatePicker, InputNumber, Row, Col } from 'antd';
+import { Popover, Upload, message, Form, Icon, Select, Input, Button, Slider, Switch, DatePicker, InputNumber, Row, Col } from 'antd';
 import "antd/dist/antd.css";
 import moment from 'moment';
 import APIRoutes from 'helpers/api_routes';
@@ -14,11 +14,15 @@ import ActiveStorageProvider from "react-activestorage-provider";
 import PicturesWall from './PicturesWall';
 import Avatar from './Avatar';
 import '../../../assets/stylesheets/CreatePropertyForm.css';
+import { DirectUploadProvider } from "react-activestorage-provider";
 
 class CreatePropertyForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      renderInfoHousing: 0,
+      renderInfoProperty: 0,
+      renderInfoCapacity: 0,
       property: {
         capacity: null,
         description: '',
@@ -42,32 +46,9 @@ class CreatePropertyForm extends React.Component {
         long: null,
         images: null,
         form: null,
-
-        // name: '',
-        // description: '',
-        // email: '',
-        // phone: '',
-        // rent: 0,
-        // housing_type: "other_housing_type",
-        // property_type: "other_property_type",
-        // num_bedrooms: 1,
-        // location: "other_location",
-        // referral_agency_id: this.props.current_userID,
-        // date_needed: new Date(),
-        // avatar: null,
-        // number_of_bathrooms: 1,
-        // mobility_aids: true,
-        // accessible_shower: true,
-        // car_parking: true,
-        // lift_access: true,
-        // family_size: 1,
-        // living_arrangements: '',
-        // income: '',
-        // benefits: true,
-        // local_council: true,
-        // ex_offender: true,
-        // local_area_link: '',
       },
+      imageUrl: null,
+      formName: null,
       categories: props.categories,
       nice_housing_types: props.categories.nice_housing_types,
       nice_property_types: props.categories.nice_property_types,
@@ -97,6 +78,7 @@ class CreatePropertyForm extends React.Component {
     this.nextButton = this.nextButton.bind(this);
     this.handleAuto = this.handleAuto.bind(this);
     this.componentDidMount = this.componentDidMount.bind(this);
+    this.onURLChange = this.onURLChange.bind(this);
   }
 
   componentDidMount() {
@@ -105,11 +87,18 @@ class CreatePropertyForm extends React.Component {
 
   convertToDict() {
     const property = this.state.property;
-    const keys = ["capacity", "description", "landlord_id", "rent", "property_type", "housing_type", "date_available", "location", "address", "number_of_bedrooms", "number_of_bathrooms", "floor_number", "mobility_aids", "furniture", "utilities_included", "accessible_shower", "car_parking", "lift_access", "lat", "long"];
-    const values = [property.capacity, property.description, property.landlord_id, property.rent, property.property_type, property.housing_type, property.date_available, property.location, property.address, property.number_of_bedrooms, property.number_of_bathrooms, property.floor_number, property.mobility_aids, property.furniture, property.utilities_included, property.accessible_shower, property.car_parking, property.lift_access, property.lat, property.long];
-    console.log(values);
+    const keys = ["capacity", "description", "landlord_id", "rent", "property_type", "housing_type", "date_available", "location", "address", "number_of_bedrooms", "number_of_bathrooms", "floor_number", "mobility_aids", "furniture", "utilities_included", "accessible_shower", "car_parking", "lift_access", "lat", "long", "images", "form"];
+    const values = [property.capacity, property.description, property.landlord_id, property.rent, property.property_type, property.housing_type, property.date_available, property.location, property.address, property.number_of_bedrooms, property.number_of_bathrooms, property.floor_number, property.mobility_aids, property.furniture, property.utilities_included, property.accessible_shower, property.car_parking, property.lift_access, property.lat, property.long, property.images, property.form];
     let result = keys.reduce((obj, k, i) => ({...obj, [k]: values[i] }), {})
     return result
+  }
+
+  onURLChange(key, callback_value) {
+    if (key == "image") {
+      this.state.imageUrl = callback_value;
+    } else if (key == "form") {
+      this.state.formName = callback_value;
+    }
   }
 
   // autocomplete
@@ -211,13 +200,46 @@ class CreatePropertyForm extends React.Component {
     )
   }
 
+  renderInfo = (which_info, e) => {
+    if (which_info == "housing") {
+      this.setState((state) => {
+        return {renderInfoHousing: 1 - state.renderInfoHousing}
+      });
+    } else if (which_info == "property") {
+      this.setState((state) => {
+        return {renderInfoProperty: 1 - state.renderInfoProperty}
+      });
+    } else if (which_info == "capacity") {
+      this.setState((state) => {
+        return {renderInfoCapacity: 1 - state.renderInfoCapacity}
+      });
+    }
+  }
+
+  // Renders information dialogue on hover
+  infoDialogueHelper = (which_info, info_text) => {
+    if (which_info == "housing" && this.state.renderInfoHousing) {
+      return(
+        <div className="info-dialogue"><p className="info-dialogue-text">{info_text}</p></div>
+      );
+    } else if (which_info == "property" && this.state.renderInfoProperty) {
+      return(
+        <div className="info-dialogue"><p className="info-dialogue-text">{info_text}</p></div>
+      );
+    } else if (which_info == "capacity" && this.state.renderInfoCapacity) {
+      return(
+        <div className="info-dialogue"><p className="info-dialogue-text">{info_text}</p></div>
+      );
+    }
+  }
+
   renderStageOne() {
     const { property } = this.state;
     const { getFieldDecorator } = this.props.form;
     const Option = Select.Option;
     return (
-      <div className="container">
-        <h2>Step 1: Tell us about your space.</h2>
+      <div className="property-form-container">
+        <h1>Step 1: Tell us about your space.</h1>
         <Form className="grid-container" hideRequiredMark={true}>
           <Form.Item
             label="Address"
@@ -232,7 +254,7 @@ class CreatePropertyForm extends React.Component {
             )}
           </Form.Item>
           <Form.Item
-            label="Rent"
+            label="Monthly rent"
           >
             {getFieldDecorator('rent', {
               initialValue: property.rent,
@@ -246,6 +268,9 @@ class CreatePropertyForm extends React.Component {
           <Form.Item
             label="Housing type"
           >
+            <div onMouseEnter={(e) => this.renderInfo("housing", e)} onMouseLeave={(e) => this.renderInfo("housing", e)}><Icon type="question-circle" theme="twoTone" className="info-icon"/></div>
+            {this.infoDialogueHelper("housing", "Housing type is housing situation or conditions of your residence.")}
+
             {getFieldDecorator('housing_type', {
               initialValue: property.housing_type,
               rules: [{
@@ -264,6 +289,8 @@ class CreatePropertyForm extends React.Component {
           <Form.Item
             label="Property type"
           >
+            <div onMouseEnter={(e) => this.renderInfo("property", e)} onMouseLeave={(e) => this.renderInfo("property", e)}><Icon type="question-circle" theme="twoTone" className="info-icon"/></div>
+            {this.infoDialogueHelper("property", "Property type is the type of building of your residence.")}
             {getFieldDecorator('property_type', {
               initialValue: property.property_type,
               rules: [{
@@ -285,7 +312,7 @@ class CreatePropertyForm extends React.Component {
           {getFieldDecorator('location', {
             initialValue: property.location,
             rules: [{
-              required: true, message: 'Please pick a location!',
+              required: true, message: 'Please select a location!',
             }],
           })(
             <Select placeholder="Select One" value={property.location} onChange={(value) => this.handleChangeSelect("location", value)}>
@@ -312,6 +339,8 @@ class CreatePropertyForm extends React.Component {
           <Form.Item
             label="Capacity"
           >
+            <div onMouseEnter={(e) => this.renderInfo("capacity", e)} onMouseLeave={(e) => this.renderInfo("capacity", e)}><Icon type="question-circle" theme="twoTone" className="info-icon"/></div>
+            {this.infoDialogueHelper("capacity", "Capacity is the number of open spots you have in your residence.")}
             {getFieldDecorator('capacity', {
               initialValue: property.capacity,
               rules: [{
@@ -332,7 +361,7 @@ class CreatePropertyForm extends React.Component {
             {getFieldDecorator('number_of_bedrooms', {
               initialValue: property.number_of_bedrooms,
               rules: [{
-                required: true, message: 'Please pick the number of bedrooms!',
+                required: true, message: 'Please input the number of bedrooms!',
               }],
             })(
               <InputNumber
@@ -357,8 +386,8 @@ class CreatePropertyForm extends React.Component {
     const Option = Select.Option;
     const { property } = this.state;
     return (
-      <div className="container">
-        <h2>Step 2: Couple more details.</h2>
+      <div className="property-form-container">
+        <h1>Step 2: Couple more details.</h1>
         <Form hideRequiredMark={true}>
           <div className="grid-container">
             <Form.Item
@@ -500,8 +529,8 @@ class CreatePropertyForm extends React.Component {
     const { getFieldDecorator } = this.props.form;
     const Option = Select.Option;
     return (
-      <div className="container">
-        <h2>Step 3: Set the scene.</h2>
+      <div className="property-form-container">
+        <h1>Step 3: Set the scene.</h1>
         Write a quick summary of your place. You can highlight what's special about your space and the neighborhood.
         <div className="sub-container">
           <Form hideRequiredMark={true}>
@@ -532,30 +561,41 @@ class CreatePropertyForm extends React.Component {
     )
   }
 
+  uploadImages = (signedIds) => {
+    let uploadList = []
+    signedIds.map((signedId) => {
+      uploadList.push(signedId);
+    });
+    let property = this.state.property
+    property["images"] = uploadList;
+    this.setState({ property: property });
+  }
+
+  uploadForms = (signedIds) => {
+    let property = this.state.property
+    property["form"] = signedIds[0];
+    this.setState({ property: property })
+  }
+
   renderStageFour() {
     const { property } = this.state;
     return (
-      <div className="container">
-        <h2>Step 4: Bring it to life.</h2>
-        Photos help guests imagine staying in your place. You can start with one and add more after you publish.
+      <div className="property-form-container">
+        <h1>Step 4: Bring it to life. (Optional)</h1>
+        This step is optional but definitely highly encouraged. Photos help guests imagine staying in your place. You can start with one and add more after you publish.
         <div className="sub-container">
           <Form hideRequiredMark={true}>
             <Form.Item
               label="Add images"
             >
-              <ActiveStorageProvider
-                endpoint={{
-                  path: '/api/properties/create',
-                  model: "Property",
-                  attribute: 'images',
-                  method: "POST",
-                }}
-                multiple={true}
-                headers={{
-                  'Content-Type': 'application/json'
-                }}
-                render={Utils.activeStorageUploadRenderer}
-              />
+              <div className="upload-image">
+                <DirectUploadProvider
+                  key={'image'}
+                  multiple={true}
+                  onSuccess={signedIds => { this.uploadImages(signedIds) }}
+                  render={(renderProps) => Utils.activeStorageUploadRenderer({ ...renderProps, onURLChange: this.onURLChange, imageUrl: this.state.imageUrl, type: "images" })}
+                />
+              </div>
             </Form.Item>
           </Form>
         </div>
@@ -570,27 +610,22 @@ class CreatePropertyForm extends React.Component {
   renderStageFive() {
     const { property } = this.state;
     return (
-      <div className="container">
-        <h2>Step 5: Additional paperwork (Optional)</h2>
+      <div className="property-form-container">
+        <h1>Step 5: Additional paperwork (Optional)</h1>
         Do you require potential clients to fill out any additional paperwork outside of the general client form?
         <div className="sub-container">
           <Form hideRequiredMark={true}>
             <Form.Item
               label="Upload form"
             >
-              <ActiveStorageProvider
-                endpoint={{
-                  path: '/api/properties/create',
-                  model: "Property",
-                  attribute: 'form',
-                  method: "POST",
-                }}
-                multiple={true}
-                headers={{
-                  'Content-Type': 'application/json'
-                }}
-                render={Utils.activeStorageUploadRenderer}
-              />
+              <div className="upload-form">
+                <DirectUploadProvider
+                  key={'form'}
+                  multiple={false}
+                  onSuccess={signedIds => { this.uploadForms(signedIds) }}
+                  render={(renderProps) => Utils.activeStorageUploadRenderer({ ...renderProps, onURLChange: this.onURLChange, filename: this.state.formName, type: "form" })}
+                />
+              </div>
             </Form.Item>
           </Form>
         </div>
@@ -647,6 +682,7 @@ class CreatePropertyForm extends React.Component {
 
   render() {
     let component = this.renderFormStage();
+    // let temp = this.renderStageFour();
     return (
       <div>
         {component}

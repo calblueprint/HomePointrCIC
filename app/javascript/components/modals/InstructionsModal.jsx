@@ -20,7 +20,6 @@ class InstructionsModal extends React.Component {
   }
 
   handleCancel = (e) => {
-    console.log(e);
     this.setState({
       visible: false,
     });

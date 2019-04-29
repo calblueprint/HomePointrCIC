@@ -46,3 +46,70 @@
 .table {
   padding-top: 42px;
 }
+
+.h3-margins {
+  margin-bottom: 16px;
+  margin-top: 20px;
+}
+
+.tenant-description-box {
+  height: 40px;
+  width: 180px;
+  resize: none;
+}
+
+.tenant-description-no-form {
+  margin-bottom: 200px;
+}
+
+.tenant-form-download-container {
+  margin-top: 20px;
+  margin-bottom: 26px;
+}
+
+.tenant-form-download {
+  border: 1px solid #D9D9D9;
+  border-radius: 4px;
+  height: 55px;
+  width: 500px;
+  margin-top: 16px;
+  padding-top: 17px;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.tenant-form-link {
+  display: inline-block;
+}
+
+.tenant-form-icon {
+  float: right;
+  display: inline-block;
+  font-size: 20px;
+}
+
+.upload-form-container {
+  border-top: 1px solid #D9D9D9;
+}
+
+.upload-details {
+  margin-top: 24px;
+}
+
+.upload-button {
+  margin-top: 16px;
+}
+
+.submit-button-container {
+  float: right;
+  padding-top: 52px;
+}
+
+.no-forms {
+  width: 504px;
+  height: 70px;
+}
+
+.submit-error-message {
+  color: red;
+}

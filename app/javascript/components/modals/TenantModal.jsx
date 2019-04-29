@@ -19,7 +19,8 @@ class TenantModal extends React.Component {
         <ApplicationStatusButtons
           property_id={this.props.application.property_id}
           application_id={this.props.application.id}
-          status={this.props.application.status}/>
+          status={this.props.application.status}
+          />
         )
   }
 
@@ -30,9 +31,19 @@ class TenantModal extends React.Component {
   }
 
   renderAvatar = () => {
-    return(
-      <img className="modal-avatar" height="224" width="224" src={this.props.tenant.url} />
-    );
+    if (this.props.tenant.url == null) {
+      return (
+        <React.Fragment key='avatar'>
+          <Avatar size={280} className="profile-picture" icon="user"/>
+        </React.Fragment>
+      )
+    } else {
+      return (
+        <React.Fragment key='avatar'>
+          <Avatar size={280} className="profile-picture" src={this.props.tenant.url}/>
+        </React.Fragment>
+      )
+    }
   }
 
   statusHelper = () => {
@@ -49,13 +60,13 @@ class TenantModal extends React.Component {
   render() {
     const dataSource = [{
       fileName: 'Tenant Application',
-      lastUpdated: 'THIS WILL BE UPDATED',
-      attachment: 'THIS TOO',
+      lastUpdated: this.props.tenant.updated_at.split("T")[0],
+      attachment: <a href={this.props.tenant.form_url} download>Download</a>,
       key: '1'
     }, {
       fileName: 'Additional Files',
-      lastUpdated: this.props.application.updated_at,
-      attachment: 'Download',
+      lastUpdated: this.props.application.updated_at.split("T")[0],
+      attachment: <a href={this.props.application.url} download>Download</a>,
       key: '2'
     }];
 
@@ -110,6 +121,7 @@ class TenantModal extends React.Component {
                 <h1>{this.props.tenant.name}</h1>
                 {this.statusHelper()}
                 <div className="description-container">
+                  <h3>Description</h3>
                   {this.props.tenant.description}
                 </div>
                 <div className="table-container">
