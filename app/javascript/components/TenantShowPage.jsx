@@ -36,6 +36,37 @@ class TenantShowPage extends React.Component {
     window.location = "/applications/new/" + this.props.tenant.id.toString();
   }
 
+  renderApplications() {
+    if (this.state.applications.length !== 0) {
+      return(
+        <ListView
+          key={this.props.tenant.id}
+          applications={this.state.applications}
+          resources={this.state.properties}
+          property_modal={true}
+          type="property"
+          displayTag={true}
+          renderModal={true}
+          viewpoint="RA"
+        />
+      );
+    } else {
+      return(
+        <div>
+          <img src={'/assets/noApplications.png'} className="empty-tab-img"/>
+          <div className="empty-tab-text">
+            <div className="empty-tab-header">
+              <h2>No applications yet</h2>
+            </div>
+            <div className="empty-tab-description">
+              <h3>Click on 'New applications' to get started.</h3>
+            </div>
+          </div>
+        </div>
+      );
+    }
+  }
+
   render() {
     Utils.setup(this.state.applications, this.props.form);
     Utils.setup(this.state.properties, this.props.propertyimages);
@@ -59,16 +90,7 @@ class TenantShowPage extends React.Component {
         <Button type="primary" className="new-app-btn" onClick={this.handleRedirect}>
           + New Applications
         </Button>
-        <ListView
-          key={this.props.tenant.id}
-          applications={this.state.applications}
-          resources={this.state.properties}
-          property_modal={true}
-          type="property"
-          displayTag={true}
-          renderModal={true}
-          viewpoint="RA"
-        />
+        {this.renderApplications()}
       </div>
     );
 
