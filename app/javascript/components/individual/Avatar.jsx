@@ -46,7 +46,6 @@ class Avatar extends React.Component {
   }
 
   renderDisplay = () => {
-    debugger
     if (this.props.type == "images" && (this.state.imageUrl || this.state.filename)) {
       return (
         <img src={this.state.imageUrl} alt={this.state.filename} width="104px" height="104px"/>

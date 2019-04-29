@@ -4,7 +4,6 @@ import Avatar from '../components/individual/Avatar.jsx';
 
 const Utils = {
   activeStorageUploadRenderer: ({ handleUpload, uploads, ready, onURLChange, imageUrl, filename, type }) => {
-    debugger
     return(<div>
       <Avatar handleUpload={handleUpload} uploads={uploads} onURLChange={onURLChange} imageUrl={imageUrl} filename={filename} type={type}/>
 
@@ -52,7 +51,7 @@ const Utils = {
   titleize(original) {
     let result = original.split("_");
     var i;
-    for (i = 0; i < result.length; i++) { 
+    for (i = 0; i < result.length; i++) {
       result[i] =  result[i].charAt(0).toUpperCase() + result[i].slice(1);
     }
     return result.join(" ");

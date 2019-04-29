@@ -14,8 +14,15 @@ class LogInPage extends React.Component {
      password: '',
      remember_me: 0,
      errorMessage: '',
-     hasError: false
+     hasError: false,
+     cry: this.props.errors
    }
+   console.log("PRINT ERROR BISH");
+   console.log(this.props.errors)
+ }
+
+ componentWillMount() {
+
  }
 
  handleChange = (event) => {
@@ -50,18 +57,35 @@ class LogInPage extends React.Component {
      body: payload,
      credentials: 'same-origin',
    }).catch((response) => {
-     this.setState({
-       hasError: true,
-       errorMessage: 'Wrong email or password'});
+     // if (this.props.errors) {
+     //   return(
+     //     <div><p>{ this.props.errors }</p></div>
+     //   )
+     // }
+     // this.setState({
+     //   hasError: true,
+     //   errorMessage: 'Wrong email or password'});
    }).then((response) => {
-     window.location = '/';
+     if (this.state.cry) {
+       console.log(this.props.errors);
+       this.setState({
+         hasError: true,
+         errorMessage: 'Wrong email or password',
+         cry: ''});
+     } else {
+       this.setState({
+         hasError: false,
+         errorMessage: ''});
+        // window.location = '/';
+     }
+
    });
   }
 
  renderErrorMsg = () => {
-   if (this.state.hasError) {
+   if (this.state.cry) {
      return (
-       <div><p>{ this.state.errorMessage }</p></div>
+       <div><p>{ 'Wrong email or password' }</p></div>
      );
    }
  }
