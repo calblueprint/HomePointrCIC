@@ -312,7 +312,7 @@ class CreatePropertyForm extends React.Component {
           {getFieldDecorator('location', {
             initialValue: property.location,
             rules: [{
-              required: true, message: 'Please pick a location!',
+              required: true, message: 'Please select a location!',
             }],
           })(
             <Select placeholder="Select One" value={property.location} onChange={(value) => this.handleChangeSelect("location", value)}>
@@ -361,7 +361,7 @@ class CreatePropertyForm extends React.Component {
             {getFieldDecorator('number_of_bedrooms', {
               initialValue: property.number_of_bedrooms,
               rules: [{
-                required: true, message: 'Please pick the number of bedrooms!',
+                required: true, message: 'Please input the number of bedrooms!',
               }],
             })(
               <InputNumber

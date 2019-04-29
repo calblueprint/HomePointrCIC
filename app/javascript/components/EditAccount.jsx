@@ -268,7 +268,7 @@ class EditAccount extends React.Component {
             <Col span={12}>
               <Button type="danger" onClick={this.showModal} className="delete-account-btn">Delete account</Button>
               <DeleteModal
-                title={"delete this account"}
+                message={"delete this account"}
                 onOk={this.handleDestroy}
                 onCancel={this.onCancel}
                 visible={this.state.visible}
