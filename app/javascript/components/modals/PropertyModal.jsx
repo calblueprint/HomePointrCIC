@@ -128,7 +128,7 @@ class PropertyModal extends React.Component {
                 <h2 className="modal-section-title"> <Icon type="paper-clip" className="icon"/> Additional Paperwork </h2>
                 <div className="subsection">
                   <Row gutter={32}>
-                    <Col span={12}>{this.props.property.form ? <a href={this.props.property.form} target="_blank">Housing Form</a> : 'None'}</Col>
+                    <Col span={12}>{this.props.property.form ? <a href={this.props.property.form} target="_blank">{this.props.property.form_name}</a> : 'None'}</Col>
                   </Row>
                 </div>
               </div>
