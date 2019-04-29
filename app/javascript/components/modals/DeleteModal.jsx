@@ -9,7 +9,6 @@ class DeleteModal extends React.Component {
   }
 
   render() {
-    console.log(this.props.title);
     return (
       <div>
         <Modal
@@ -18,16 +17,14 @@ class DeleteModal extends React.Component {
           onCancel={this.props.onCancel}
           footer={
             <div>
-              <Button onClick={this.props.onCancel}>
-                Cancel
-              </Button>
+              <Button onClick={this.props.onCancel}>Cancel</Button>
               <Button key="submit" type="danger" onClick={this.props.onOk}>
-                Delete
+                {this.props.operation}
               </Button>
             </div>
           }
         >
-          <p>Are you sure you want to delete {this.props.title}?</p>
+          <p>Are you sure you want to {this.props.message}?</p>
         </Modal>
       </div>
     );
