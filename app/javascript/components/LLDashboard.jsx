@@ -30,20 +30,8 @@ class LLDashboard extends React.Component {
     }
   }
 
-  renderView() {
-    if (this.state.resources.length === 0) {
-      return(
-        <div>
-          <img src={'/assets/noPropertiesYet.png'} />
-          <div style={{ paddingLeft: '35%', paddingBottom: '5px' }}>
-            <h2>No properties yet</h2>
-          </div>
-          <div style={{ paddingLeft: '25%' }}>
-            <h3>Click on 'Add new property' to get started.</h3>
-          </div>
-        </div>
-      )
-    } else {
+  renderProperties() {
+    if (this.state.resources.length !== 0) {
       return(
         <ListView
           resources={this.state.resources}
@@ -53,7 +41,21 @@ class LLDashboard extends React.Component {
           displayTag={true}
           renderModal={false}
           viewpoint="LL"
-        />
+        />  
+      )
+    } else {
+      return(
+        <div>
+          <img src={'/assets/noProperties.png'} className="empty-dashboard-img"/>
+          <div className="empty-dashboard-text">
+            <div className="empty-dashboard-header">
+              <h2>No properties yet</h2>
+            </div>
+            <div className="empty-dashboard-description">
+              <h3>Click on 'Add new property' to get started.</h3>
+            </div>
+          </div>
+        </div>
       )
     }
   }
@@ -64,7 +66,7 @@ class LLDashboard extends React.Component {
       <div className="dashboard-container">
         <div className="dash-items-container">
           <h2 className="dashboard-h2">Properties</h2>
-          {this.renderView()}
+          {this.renderProperties()}
         </div>
         <div className="dash-button-container">
           <Button

@@ -20,6 +20,72 @@ class PropertyShowPage extends React.Component {
     }
   }
 
+  renderYourClients() {
+    if (this.state.tenants.length !== 0) {
+      return(
+        <div>
+          <ListView
+            applications={this.props.tenantApps}
+            resources={this.state.tenants}
+            type="tenant"
+            avatar={true}
+            checkbox={false}
+            displayTag={false}
+            renderModal={true}
+            viewpoint="LL"
+          />
+        </div>
+      );
+    } else {
+      return(
+        <div>
+          <img src={'/assets/noClients.png'} className="empty-tab-img"/>
+          <div className="empty-tab-text">
+            <div className="empty-tab-header">
+              <h2>No clients yet</h2>
+            </div>
+            <div className="empty-tab-description">
+              <h3>Once clients are offered tenancy, they'll be shown here!</h3>
+            </div>
+          </div>
+        </div>
+      );
+    }
+  }
+
+  renderPendingApplications() {
+    if (this.state.tenants.length !== 0) {
+      return(
+        <div>
+          <ListView
+            applications={this.props.potentialTenantApps}
+            resources={this.state.potentialTenants}
+            type="tenant"
+            avatar={true}
+            checkbox={false}
+            displayTag={true}
+            renderModal={true}
+            viewpoint="LL"
+          />
+        </div>
+      );
+    } else {
+      return(
+        <div>
+          <img src={'/assets/noApplications.png'} className="empty-tab-img"/>
+          <div className="empty-tab-text">
+            <div className="empty-tab-header">
+              <h2>No applications yet</h2>
+            </div>
+            <div className="empty-tab-description">
+              <h3>Applications to live at {this.state.property.address.split(",")[0]} will be displayed here.</h3>
+            </div>
+          </div>
+        </div>
+      );
+    }
+  }
+
   render() {
     Utils.setup([this.state.property], this.props.images);
     Utils.setup([this.state.property], [this.props.propertyFormPDF]);
@@ -45,30 +111,12 @@ class PropertyShowPage extends React.Component {
         <Tabs defaultActiveKey="1">
           <TabPane tab="Pending Applications" key="1">
             <div className="tab-cards">
-              <ListView
-                applications={this.props.potentialTenantApps}
-                resources={this.state.potentialTenants}
-                type="tenant"
-                avatar={true}
-                checkbox={false}
-                displayTag={true}
-                renderModal={true}
-                viewpoint="LL"
-              />
+              {this.renderPendingApplications()}
             </div>
           </TabPane>
           <TabPane tab="Your Clients" key="2">
             <div className="tab-cards">
-              <ListView
-                applications={this.props.tenantApps}
-                resources={this.state.tenants}
-                type="tenant"
-                avatar={true}
-                checkbox={false}
-                displayTag={false}
-                renderModal={true}
-                viewpoint="LL"
-              />
+              {this.renderYourClients()}
             </div>
           </TabPane>
         </Tabs>

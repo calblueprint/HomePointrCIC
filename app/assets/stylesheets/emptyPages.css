@@ -1,0 +1,33 @@
+.empty-dashboard-img {
+  height: 360px;
+  width: 650px;
+  margin-left: 20%;
+  margin-bottom: 10px;
+}
+
+.empty-dashboard-text {
+  text-align: center;
+  margin-left: 20%;
+  width: 650px;
+}
+
+.empty-dashboard-header {
+  margin-bottom: 5px;
+}
+
+.empty-tab-img {
+  height: 360px;
+  width: 650px;
+  margin-left: 10%;
+  margin-bottom: 10px;
+}
+
+.empty-tab-text {
+  text-align: center;
+  margin-left: 10%;
+  width: 650px;
+}
+
+.empty-tab-header {
+  margin-bottom: 5px;
+}
