@@ -55,9 +55,11 @@ class PropertyModal extends React.Component {
   renderPhotos() {
     if (this.props.property.images == null) {
       return (
-        <React.Fragment key='photo'>
-          <Avatar size={256} shape="rectangle" icon="home"/>
-        </React.Fragment>
+        <div style={{ paddingLeft: '36%', paddingTop: '2%' }}>
+          <React.Fragment key='photo'>
+            <Avatar size={256} shape="rectangle" icon="home"/>
+          </React.Fragment>
+        </div>
       )
     } else {
       return (
@@ -94,7 +96,7 @@ class PropertyModal extends React.Component {
         */}
           <div className="flex-container">
             <div className="flex-item">
-              <div className="modal-section">
+              <div className="modal-section" style={{ paddingTop: '5%' }}>
                 <h1 className= "modal_name"> {this.props.property.address.split(",")[0]} </h1>
                 <h2 className="modal-section-title"> <Icon type="home" className="icon"/> Basic </h2>
                 <div className="subsection">
