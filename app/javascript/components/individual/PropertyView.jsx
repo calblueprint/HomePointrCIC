@@ -159,11 +159,13 @@ class PropertyView extends React.Component {
   }
 
   renderPhotos() {
-    if (this.props.property.images == null) {
+    if (this.props.property.images.length == 0) {
       return (
-        <React.Fragment key='photo'>
-          <Avatar size={256} shape="square" icon="home"/>
-        </React.Fragment>
+        <div style={{ paddingLeft: '23%', paddingTop: '7%', paddingBottom: '5%' }}>
+          <React.Fragment key='photo'>
+            <Avatar size={256} shape="square" icon="home"/>
+          </React.Fragment>
+        </div>
       )
     } else {
       return (
