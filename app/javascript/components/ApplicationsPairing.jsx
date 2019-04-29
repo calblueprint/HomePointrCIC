@@ -31,10 +31,16 @@ class ApplicationsPairing extends React.Component {
       selectedEnd: 0,
       status: "propertyList"
     };
+
     Utils.setup([this.props.tenant], this.props.tenantImage);
     Utils.setup([this.props.tenant], this.props.tenantPriority);
     Utils.setup(this.state.properties, this.props.propertyImages);
     Utils.setup(this.state.properties, this.props.propertyForms);
+
+    for (var i = 0; i < this.state.properties.length; i ++) {
+      this.state.properties[i]["tenantCount"] = this.props.tenantCounts[i]
+      this.state.properties[i]["potentialTenantCount"] = this.props.potentialTenantCounts[i]
+    }
 
     this.onChangeProperty = this.onChangeProperty.bind(this);
     this.clearTenant = this.clearTenant.bind(this);
@@ -44,6 +50,7 @@ class ApplicationsPairing extends React.Component {
     this.renderPropertyListWrapper = this.renderPropertyListWrapper.bind(this);
     this.finishApplicationProcess = this.finishApplicationProcess.bind(this);
     this.onSubmitProperty = this.onSubmitProperty.bind(this);
+
   }
 
   onSubmitProperty(e, property) {
@@ -147,13 +154,17 @@ class ApplicationsPairing extends React.Component {
   }
 
   render() {
-
     let leftComponent = null;
     if (this.state.show_map) {
       leftComponent = <MapContainer filtered_properties={this.state.filtered_properties}/>
     } else {
       leftComponent = (
-        <RATenantView tenant={this.props.tenant} mode="ra_edit" avatar={this.props.tenant.avatar} status={this.props.tenant.priority}/>
+        <RATenantView
+          tenant={this.props.tenant}
+          mode="ra_edit"
+          avatar={this.props.tenant.avatar}
+          status={this.props.tenant.priority}
+        />
       );
     }
 
