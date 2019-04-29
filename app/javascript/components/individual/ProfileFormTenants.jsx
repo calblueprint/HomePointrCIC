@@ -104,7 +104,9 @@ class ProfileFormTenants extends React.Component {
             window.location = '/tenants/' + id.toString() + '/edit';
           });
         }
-      },
+      } else {
+        window.scrollTo(0, 0);
+      }
     );
   }
   removeImages(imageList) {
