@@ -30,9 +30,9 @@ class ApplicationsController < ApplicationController
     @propertyForms = []
     @properties.each do |p|
       if p.form.attached?
-        @propertyForms << { form: url_for(p.form) }
+        @propertyForms << { form: url_for(p.form), form_name: p.form.filename }
       else
-        @propertyForms << { form: nil }
+        @propertyForms << { form: nil, form_name: nil }
       end
     end
 

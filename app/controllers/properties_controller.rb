@@ -130,9 +130,9 @@ class PropertiesController < ApplicationController
 
     @propertyFormPDF = nil
     if @property.form.attached?
-       @propertyFormPDF = { form: url_for(@property.form) }
+       @propertyFormPDF = { form: url_for(@property.form), form_name: @property.form.filename }
      else
-       @propertyFormPDF = { form: nil }
+       @propertyFormPDF = { form: nil, form_name: nil }
      end
   end
 

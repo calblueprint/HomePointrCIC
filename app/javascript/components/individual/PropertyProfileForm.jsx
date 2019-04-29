@@ -132,6 +132,8 @@ class PropertyProfileForm extends React.Component {
           }).catch((data) => {
             window.location = '/';
           });
+        } else {
+          window.scrollTo(0, 0);
         }
       });
   }
@@ -408,7 +410,7 @@ class PropertyProfileForm extends React.Component {
                 {getFieldDecorator('number_of_bedrooms', {
                   initialValue: property.number_of_bedrooms,
                   rules: [{
-                    required: true, message: 'Please pick the number of bedrooms!',
+                    required: true, message: 'Please input the number of bedrooms!',
                   }],
                 })(
                   <InputNumber
@@ -596,15 +598,16 @@ class PropertyProfileForm extends React.Component {
             <div className="delete-client">
               <Row type="flex" style={{ width: 660 }}>
                 <Col span={12}>
-                  <div><h2>Delete Client</h2></div>
+                  <div><h2>Delete Property</h2></div>
                 </Col>
                 <Col span={12}>
                   <Button className="delete-button" type="danger" onClick={this.showModal}>Delete Property</Button>
                   <DeleteModal
-                    title={"property"}
                     onOk={this.handleDestroy}
                     onCancel={this.onCancel}
                     visible={this.state.visible}
+                    message={"delete this property"}
+                    operation={"Delete"}
                   />
                 </Col>
               </Row>

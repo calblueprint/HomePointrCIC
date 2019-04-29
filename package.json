@@ -3,7 +3,7 @@
   "private": true,
   "dependencies": {
     "@rails/activestorage": "^6.0.0-alpha",
-    "@rails/webpacker": "^3.5.5",
+    "@rails/webpacker": "^4.0.2",
     "activestorage": "^5.2.2-1",
     "antd": "^3.10.4",
     "babel-cli": "^6.26.0",
@@ -17,10 +17,11 @@
     "react-activestorage-provider": "^0.6.0",
     "react-dom": "^16.6.1",
     "react-places-autocomplete": "^7.2.1",
-    "react_ujs": "^2.4.4",
-    "webpack": "3.11.0"
+    "react_ujs": "^2.4.4"
   },
   "devDependencies": {
+    "file-loader": "^3.0.1",
+    "webpack": "^2.1.0-beta.22",
     "webpack-dev-server": "^2.11.2"
   }
 }

@@ -46,7 +46,6 @@ class ProfileFormTenants extends React.Component {
 
   convertToDict() {
     const tenant = this.state.tenant;
-
     const keys = ["name", "description", "email", "phone", "rent_min", "rent_max", "housing_type", "property_type", "number_of_bedrooms", "location", "referral_agency_id", "date_needed", "avatar", "number_of_bathrooms", "mobility_aids", "accessible_shower", "car_parking", "lift_access", "form"];
     const values = [tenant.name, tenant.description, tenant.email, tenant.phone, tenant.rent_min, tenant.rent_max, tenant.housing_type, tenant.property_type, tenant.number_of_bedrooms, tenant.location, tenant.referral_agency_id, tenant.date_needed, this.state.avatar, tenant.number_of_bathrooms, tenant.mobility_aids, tenant.accessible_shower, tenant.car_parking, tenant.lift_access, this.state.form];
     let result = keys.reduce((obj, k, i) => ({...obj, [k]: values[i] }), {})
@@ -103,8 +102,10 @@ class ProfileFormTenants extends React.Component {
           }).catch((data) => {
             window.location = '/tenants/' + id.toString() + '/edit';
           });
+        } else {
+          window.scrollTo(0, 0);
         }
-      },
+      }
     );
   }
   removeImages(imageList) {
@@ -256,7 +257,7 @@ class ProfileFormTenants extends React.Component {
               {getFieldDecorator('location', {
                 initialValue: tenant.location,
                 rules: [{
-                  required: true, message: 'Please pick a number of bedrooms!',
+                  required: true, message: 'Please input a number of bedrooms!',
                 }],
               })(
                 <Select onChange={(value) => this.handleChangeSelect("location", value)}>
@@ -274,7 +275,7 @@ class ProfileFormTenants extends React.Component {
                 {getFieldDecorator('family_size', {
                   initialValue: tenant.family_size,
                   rules: [{
-                    required: true, message: 'Please pick you family size!',
+                    required: true, message: 'Please input your family size!',
                   }],
                 })(
                   <InputNumber
@@ -343,7 +344,7 @@ class ProfileFormTenants extends React.Component {
               {getFieldDecorator('property_type', {
                 initialValue: tenant.property_type,
                 rules: [{
-                  required: true, message: 'Please pick a number of bedrooms!',
+                  required: true, message: 'Please input a number of bedrooms!',
                 }],
               })(
                 <Select onChange={(value) => this.handleChangeSelect("property_type", value)}>
@@ -363,7 +364,7 @@ class ProfileFormTenants extends React.Component {
               {getFieldDecorator('housing_type', {
                 initialValue: tenant.housing_type,
                 rules: [{
-                  required: true, message: 'Please pick a number of bedrooms!',
+                  required: true, message: 'Please input a number of bedrooms!',
                 }],
               })(
                 <Select onChange={(value) => this.handleChangeSelect("housing_type", value)}>
@@ -381,7 +382,7 @@ class ProfileFormTenants extends React.Component {
               {getFieldDecorator('date_needed', {
                 initialValue: moment(tenant.date_needed, "YYYY-MM-DD"),
                 rules: [{
-                  required: true, message: 'Please pick the date needed!',
+                  required: true, message: 'Please input the date needed!',
                 }],
               })(
                 <DatePicker onChange={this.handleChangeDate}/>
@@ -393,7 +394,7 @@ class ProfileFormTenants extends React.Component {
               {getFieldDecorator('number_of_bedrooms', {
                 initialValue: tenant.number_of_bedrooms,
                 rules: [{
-                  required: true, message: 'Please pick a number of bedrooms!',
+                  required: true, message: 'Please input a number of bedrooms!',
                 }],
               })(
                 <InputNumber
@@ -411,7 +412,7 @@ class ProfileFormTenants extends React.Component {
               {getFieldDecorator('number_of_bathrooms', {
                 initialValue: tenant.number_of_bathrooms,
                 rules: [{
-                  required: true, message: 'Please pick a number of bedrooms!',
+                  required: true, message: 'Please input a number of bedrooms!',
                 }],
               })(
                 <InputNumber
@@ -615,10 +616,11 @@ class ProfileFormTenants extends React.Component {
               <Col span={12}>
                 <Button className="delete-button" type="danger" onClick={this.showModal}>Delete Client</Button>
                 <DeleteModal
-                  title={"client"}
                   onOk={this.handleDestroy}
                   onCancel={this.onCancel}
                   visible={this.state.visible}
+                  message={"delete this client"}
+                  operation={"Delete"}
                 />
               </Col>
             </Row>
