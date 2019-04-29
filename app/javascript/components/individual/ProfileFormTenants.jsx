@@ -103,9 +103,9 @@ class ProfileFormTenants extends React.Component {
           }).catch((data) => {
             window.location = '/tenants/' + id.toString() + '/edit';
           });
-        }
-      } else {
+        } else {
         window.scrollTo(0, 0);
+        }
       }
     );
   }
