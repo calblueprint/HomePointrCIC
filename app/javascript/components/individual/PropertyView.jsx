@@ -150,7 +150,7 @@ class PropertyView extends React.Component {
           <h2 className="section-header"> <Icon type="paper-clip" className="icon"/> Additional Paperwork </h2>
           <div className="subsection">
             <Row>
-              <Col span={12}><a href={this.props.property.form} target="_blank">Form</a></Col>
+              <Col span={12}><a href={this.props.property.form} target="_blank">{this.props.property.form_name}</a></Col>
             </Row>
           </div>
         </div>
