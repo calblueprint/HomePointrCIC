@@ -19,6 +19,8 @@ class ApplicationsPairing extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      renderInfoPropertyList: 0,
+      renderInfoSubmission: 0,
       selectedProperties: [], //array of strings
       description: null,
       properties: props.properties,
@@ -29,10 +31,16 @@ class ApplicationsPairing extends React.Component {
       selectedEnd: 0,
       status: "propertyList"
     };
+
     Utils.setup([this.props.tenant], this.props.tenantImage);
     Utils.setup([this.props.tenant], this.props.tenantPriority);
     Utils.setup(this.state.properties, this.props.propertyImages);
     Utils.setup(this.state.properties, this.props.propertyForms);
+
+    for (var i = 0; i < this.state.properties.length; i ++) {
+      this.state.properties[i]["tenantCount"] = this.props.tenantCounts[i]
+      this.state.properties[i]["potentialTenantCount"] = this.props.potentialTenantCounts[i]
+    }
 
     this.onChangeProperty = this.onChangeProperty.bind(this);
     this.clearTenant = this.clearTenant.bind(this);
@@ -42,6 +50,7 @@ class ApplicationsPairing extends React.Component {
     this.renderPropertyListWrapper = this.renderPropertyListWrapper.bind(this);
     this.finishApplicationProcess = this.finishApplicationProcess.bind(this);
     this.onSubmitProperty = this.onSubmitProperty.bind(this);
+
   }
 
   onSubmitProperty(e, property) {
@@ -119,14 +128,43 @@ class ApplicationsPairing extends React.Component {
     }
   }
 
-  render() {
+  renderInfo = (which_info, e) => {
+    if (which_info == "propertyList") {
+      this.setState((state) => {
+        return {renderInfoPropertyList: 1 - state.renderInfoPropertyList}
+      });
+    } else if (which_info == "applicationSubmission") {
+      this.setState((state) => {
+        return {renderInfoSubmission: 1 - state.renderInfoSubmission}
+      });
+    }
+  }
 
+  // Renders information dialogue on hover
+  infoDialogueHelper = (which_info, info_text) => {
+    if (which_info == "propertyList" && this.state.renderInfoPropertyList) {
+      return(
+        <div id="prop-list-info-dialogue"><p className="application-info-dialogue-text">{info_text}</p></div>
+      );
+    } else if (which_info == "applicationSubmission" && this.state.renderInfoSubmission) {
+      return(
+        <div id="submission-info-dialogue"><p className="application-info-dialogue-text">{info_text}</p></div>
+      );
+    }
+  }
+
+  render() {
     let leftComponent = null;
     if (this.state.show_map) {
       leftComponent = <MapContainer filtered_properties={this.state.filtered_properties}/>
     } else {
       leftComponent = (
-        <RATenantView tenant={this.props.tenant} mode="ra_edit" avatar={this.props.tenant.avatar} status={this.props.tenant.priority}/>
+        <RATenantView
+          tenant={this.props.tenant}
+          mode="ra_edit"
+          avatar={this.props.tenant.avatar}
+          status={this.props.tenant.priority}
+        />
       );
     }
 
@@ -134,18 +172,26 @@ class ApplicationsPairing extends React.Component {
     let rightComponent = null;
     if (this.state.status == "propertyList") {
       rightComponent = (
-        [<Button type="primary" className="property-list-wrapper-start-app-btn" key="start_applications" onClick={this.renderApplicationSubmissionWrapper}>Start Applications</Button>,
-         <InstructionsModal status={this.state.status}/>,
-         <PropertyListWrapper {...this.props} setFilteredProperties={this.setFilteredProperties} toggleMap={this.toggleMap} selectedEnd={this.state.selectedEnd} propertyCompletion={true} CheckboxChange={this.onChangeProperty} selectedTenant={this.props.tenant}/>]
+        <div>
+          <Button type="primary" className="property-list-wrapper-start-app-btn" key="start_applications" onClick={this.renderApplicationSubmissionWrapper}>Start Applications</Button>
+          <div onMouseEnter={(e) => this.renderInfo("propertyList", e)} onMouseLeave={(e) => this.renderInfo("propertyList", e)} id="prop-list-info-icon-wrapper"><Icon type="question-circle" theme="twoTone" id="prop-list-info-icon"/></div>
+          {this.infoDialogueHelper("propertyList", "Step 1: Use the filter panel and checkboxes to select properties best suited for your client.")}
+           <PropertyListWrapper {...this.props} setFilteredProperties={this.setFilteredProperties} toggleMap={this.toggleMap} selectedEnd={this.state.selectedEnd} propertyCompletion={true} CheckboxChange={this.onChangeProperty} selectedTenant={this.props.tenant}/>
+         </div>
       );
     }
     else if (this.state.status == "applicationSubmission") {
       rightComponent = (
-        <h1>Upload and Submit</h1>,
-        [<Button key="edit_selections" onClick={this.renderPropertyListWrapper}>Edit Selections</Button>,
-        <Button type="primary" key="finish_applications" onClick={this.finishApplicationProcess}>Finish Application Process</Button>,
-        <InstructionsModal status={this.state.status}/>,
-        <ApplicationSubmissionWrapper {...this.props} onSubmitProperty={this.onSubmitProperty} selectedProperties={this.state.properties.slice(0, this.state.selectedEnd)}/>]
+        <div>
+          <h1 className="submission-title">Upload and Submit</h1>
+          <div className="app-submission-btns-wrapper">
+            <Button key="edit_selections" className="app-submission-btns" onClick={this.renderPropertyListWrapper}>Edit Selections</Button>
+            <Button type="primary" className="app-submission-btns" key="finish_applications" onClick={this.finishApplicationProcess}>Finish Application Process</Button>
+          </div>
+          <div onMouseEnter={(e) => this.renderInfo("applicationSubmission", e)} onMouseLeave={(e) => this.renderInfo("applicationSubmission", e)} id="submission-info-icon-wrapper"><Icon type="question-circle" theme="twoTone" id="submission-info-icon"/></div>
+          {this.infoDialogueHelper("applicationSubmission", "Step 2: Click on the button next to each property to add client information and download, fill out, and upload forms.")}
+          <ApplicationSubmissionWrapper {...this.props} onSubmitProperty={this.onSubmitProperty} selectedProperties={this.state.properties.slice(0, this.state.selectedEnd)}/>
+        </div>
       );
     }
 

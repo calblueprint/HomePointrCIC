@@ -36,6 +36,15 @@ class ApplicationsController < ApplicationController
       end
     end
 
+    @tenantCounts = []
+    @potentialTenantCounts = []
+    @properties.each do |p|
+      current_count = p.applications.where(status: "housed").size
+      @tenantCounts << current_count
+      app_count = p.applications.where(status: "received").size + p.applications.where(status: "interview").size
+      @potentialTenantCounts << app_count
+    end
+
     @housing_type_options = Property.housing_types.keys
     @property_type_options = Property.property_types.keys
     @location_options = Property.locations.keys
