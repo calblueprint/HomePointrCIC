@@ -61,25 +61,49 @@ class PropertyListWrapper extends React.Component {
     this.props.setFilteredProperties(updatedProperties)
   }
 
+  renderProperties() {
+    const numProperties = this.state.properties.length;
+    if (numProperties !== 0) {
+      return(
+        <div>
+          <h1>
+            <div style={{ marginLeft: '10%', marginBottom: '2%', marginTop: '2%'}} className="property-list-wrapper-header">
+              {numProperties} Properties Found
+            </div>
+          </h1>
+          <ListView
+            avatar={true}
+            selectedEnd={this.props.selectedEnd}
+            resources={this.state.properties}
+            renderModal={true}
+            type="property"
+            checkbox={true}
+            CheckboxChange={this.props.CheckboxChange}
+          />
+        </div>
+      )
+    } else {
+      return(
+        <div>
+          <img src={'/assets/noProperties.png'} className="empty-tab-img"/>
+          <div className="empty-tab-text">
+            <div className="empty-tab-header">
+              <h2>No properties found</h2>
+            </div>
+            <div className="empty-tab-description">
+              <h3>No properties were found with your selected filters.</h3>
+            </div>
+          </div>
+        </div>
+      )
+    }
+  }
+
   render() {
-    const properties = this.state.properties;
     return (
       <div key="PropertyListWrapper">
         <FilterPanel {...this.props} applyFilter={this.handleFilter} />
-        <h1>
-          <div style={{ marginLeft: '10%', marginBottom: '2%', marginTop: '2%'}} className="property-list-wrapper-header">
-            {properties.length} Properties Found
-          </div>
-        </h1>
-        <ListView
-          avatar={true}
-          selectedEnd={this.props.selectedEnd}
-          resources={this.state.properties}
-          renderModal={true}
-          type="property"
-          checkbox={true}
-          CheckboxChange={this.props.CheckboxChange}
-        />
+        {this.renderProperties()}
       </div>
     );
   }
