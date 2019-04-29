@@ -19,7 +19,8 @@ class TenantModal extends React.Component {
         <ApplicationStatusButtons
           property_id={this.props.application.property_id}
           application_id={this.props.application.id}
-          status={this.props.application.status}/>
+          status={this.props.application.status}
+          />
         )
   }
 

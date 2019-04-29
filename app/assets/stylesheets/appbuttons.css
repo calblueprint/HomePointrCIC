@@ -28,3 +28,8 @@
   width: 100%;
   margin: 10px;
 }
+
+.submit-button {
+  display: inline-block;
+  width: 160px;
+}
