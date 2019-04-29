@@ -49,6 +49,8 @@ class TenantShowPage extends React.Component {
         mode="ra_edit"
         avatar={this.props.url}
         status={this.props.status}
+        clientForm={this.props.clientForm}
+        formName={this.props.formName}
       />
     );
     const rightComponent = (
