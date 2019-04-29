@@ -18,13 +18,10 @@ class RADashboard extends React.Component {
     window.location = '/tenants/new'
   }
 
-  render() {
-    Utils.setup(this.state.tenants, this.props.tenantImages);
-    Utils.setup(this.state.tenants, this.props.tenantStatuses);
-    return (
-      <div className="dashboard-container">
+  renderTenants() {
+    if (this.state.tenants.length !== 0) {
+      return(
         <div>
-          <h2 className='dashboard-h2'>Client Dashboard</h2>
           <ListView
             resources={this.state.tenants}
             type="tenant"
@@ -34,6 +31,33 @@ class RADashboard extends React.Component {
             renderModal={false}
             viewpoint="RA"
           />
+        </div>
+      )
+    } else {
+      return(
+        <div>
+          <img src={'/assets/noClients.png'} className="empty-dashboard-img"/>
+          <div className="empty-dashboard-text">
+            <div className="empty-dashboard-header">
+              <h2>No clients yet</h2>
+            </div>
+            <div className="empty-dashboard-description">
+              <h3>Click on 'Add new client' to get started.</h3>
+            </div>
+          </div>
+        </div>
+      )
+    }
+  }
+
+  render() {
+    Utils.setup(this.state.tenants, this.props.tenantImages);
+    Utils.setup(this.state.tenants, this.props.tenantStatuses);
+    return (
+      <div className="dashboard-container">
+        <div>
+          <h2 className='dashboard-h2'>Client Dashboard</h2>
+          {this.renderTenants()}
         </div>
         <div>
           <Button
