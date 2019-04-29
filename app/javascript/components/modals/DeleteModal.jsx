@@ -1,7 +1,7 @@
-import React from 'react';
+import React from "react";
 import PropTypes from "prop-types";
-import 'antd/dist/antd.css';
-import { Modal, Button, Icon } from 'antd';
+import "antd/dist/antd.css";
+import { Modal, Button, Icon } from "antd";
 
 class DeleteModal extends React.Component {
   constructor(props) {
