@@ -1,2 +1,40 @@
-<% @title = "Log In" %>
-<%= react_component("LogInPage") %>
+  <div class="small-frame">
+    <%= image_tag("logo.png", :alt => "logo", :class=>"logo") %>
+    <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+    <div style="color: red;">
+      <%= devise_error_messages! %>
+        <% flash.each do |key, value| %>
+           <div class="flash <%= key %>"><%= value %></div>
+        <% end %>
+    </div>
+
+        <%= f.email_field :email, class: "login-field", placeholder: "Username", style: "border-style: solid; border-width: 1px; border-color: #D9D9D9; margin-bottom: 30px;", autofocus: true, autocomplete: "email" %>
+
+        <%= f.password_field :password, class: "login-field", placeholder: "Password", style: "border-style: solid; border-width: 1px; border-color: #D9D9D9;", autocomplete: "current-password" %>
+
+      <div style="display: flex; margin-top: 30px; margin-bottom: 15px;">
+        <% if devise_mapping.rememberable? -%>
+          <div class="mb4" style="margin-right: 50px;">
+            <%= f.check_box :remember_me %>
+            <%= f.label :remember_me %>
+          </div>
+        <% end -%>
+
+        <%- if devise_mapping.recoverable? && controller_name != 'passwords' && controller_name != 'registrations' %>
+          <div class="mb4">
+          <%= link_to "Forgot password", new_password_path(resource_name) %><br />
+          </div>
+        <% end -%>
+      </div>
+
+      <div class="flex justify-between">
+        <%= f.submit "Login", class: "button", style: "background-color: #1890FF; margin-bottom: 15px;"%>
+        <div style="display:flex;">
+          <p>or&nbsp</p>
+          <%- if devise_mapping.registerable? && controller_name != 'registrations' %>
+            <%= link_to "register now!", new_registration_path(resource_name) %><br />
+          <% end -%>
+        </div>
+      </div>
+    <% end %>
+  </div>
