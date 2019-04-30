@@ -11,6 +11,7 @@ class RADashboard extends React.Component {
     super(props);
     this.state = {
       tenants: props.tenants,
+      ordered: []
     }
   }
 
@@ -18,12 +19,28 @@ class RADashboard extends React.Component {
     window.location = '/tenants/new'
   }
 
+  reorder() {
+    let accepted = [];
+    let noApps = [];
+    let other = [];
+    for (let i = 0; i < this.state.tenants.length; i++) {
+      if(this.state.tenants[i].status === 0) {  //accepted
+        accepted.push(this.state.tenants[i])
+      } else if (this.state.tenants[i].status === 4) { //noapps
+        noApps.push(this.state.tenants[i])
+      } else {
+        other.push(this.state.tenants[i])
+      }
+    }
+    this.state.ordered = noApps.concat(other.concat(accepted))
+  }
+
   renderTenants() {
     if (this.state.tenants.length !== 0) {
       return(
         <div>
           <ListView
-            resources={this.state.tenants}
+            resources={this.state.ordered}
             type="tenant"
             avatar={true}
             tenant_modal={false}
@@ -53,6 +70,7 @@ class RADashboard extends React.Component {
   render() {
     Utils.setup(this.state.tenants, this.props.tenantImages);
     Utils.setup(this.state.tenants, this.props.tenantStatuses);
+    this.reorder();
     return (
       <div className="dashboard-container">
         <div>
@@ -70,7 +88,6 @@ class RADashboard extends React.Component {
       </div>
     );
   }
-
 }
 
 export default RADashboard;
