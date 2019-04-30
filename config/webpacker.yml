@@ -30,27 +30,27 @@ default: &default
 
 development:
   <<: *default
-  compile: true
+  compile: false
 
   # Reference: https://webpack.js.org/configuration/dev-server/
-  # dev_server:
-  #   https: false
-  #   host: sh
-  #   port: 3035
-  #   public: 0.0.0.0:3035
-  #   hmr: true
-  #   # Inline should be set to true if using HMR
-  #   inline: true
-  #   overlay: true
-  #   compress: true
-  #   disable_host_check: true
-  #   use_local_ip: false
-  #   quiet: false
-  #   headers:
-  #     'Access-Control-Allow-Origin': '*'
-  #   watch_options:
-  #     ignored: /node_modules/
-  #     poll: 1000
+  dev_server:
+    https: false
+    host: sh
+    port: 3035
+    public: 0.0.0.0:3035
+    hmr: true
+    # Inline should be set to true if using HMR
+    inline: true
+    overlay: true
+    compress: true
+    disable_host_check: true
+    use_local_ip: false
+    quiet: false
+    headers:
+      'Access-Control-Allow-Origin': '*'
+    watch_options:
+      ignored: /node_modules/
+      poll: 1000
 
 
 test:
@@ -68,3 +68,4 @@ production:
 
   # Cache manifest.json for performance
   cache_manifest: true
+  

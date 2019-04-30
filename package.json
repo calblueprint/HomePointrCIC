@@ -3,14 +3,13 @@
   "private": true,
   "dependencies": {
     "@rails/activestorage": "^6.0.0-alpha",
-    "@rails/webpacker": "3.5",
+    "@rails/webpacker": "^3.5.5",
     "activestorage": "^5.2.2-1",
     "antd": "^3.10.4",
     "babel-cli": "^6.26.0",
     "babel-loader": "7",
     "babel-plugin-transform-es2015-destructuring": "^6.23.0",
     "babel-preset-react": "^6.24.1",
-    "file-loader": "^3.0.1",
     "google-maps-react": "^2.0.2",
     "moment": "^2.22.2",
     "places.js": "^1.16.1",
@@ -18,10 +17,10 @@
     "react-activestorage-provider": "^0.6.0",
     "react-dom": "^16.6.1",
     "react-places-autocomplete": "^7.2.1",
-    "react_ujs": "^2.4.4"
+    "react_ujs": "^2.4.4",
+    "webpack": "3.11.0"
   },
   "devDependencies": {
-    "webpack": "^2.2.0 || ^3.0.0",
-    "webpack-dev-server": ">=3.1.11"
+    "webpack-dev-server": "^2.11.2"
   }
 }
