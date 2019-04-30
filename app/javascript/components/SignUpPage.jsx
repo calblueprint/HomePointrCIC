@@ -4,7 +4,8 @@ import "antd/dist/antd.css";
 import Utils from 'helpers/utils';
 import { Form, Icon, Input, Button, Checkbox, Select, Col, Row } from 'antd';
 import APIRoutes from 'helpers/api_routes';
-import '../../assets/stylesheets/entrypages.css';
+import '../../assets/stylesheets/signup.css';
+import logo from '../../assets/images/logo.png';
 
 class SignUpPage extends React.Component {
  constructor(props) {
@@ -126,7 +127,6 @@ class SignUpPage extends React.Component {
 
           {/* HOMEPOINTR LOGO */}
           <div className="logo"/>
-
           {/* FIRST ROW */}
           <Row gutter={60}>
             {/* ITEM 1 */}
@@ -269,7 +269,7 @@ class SignUpPage extends React.Component {
         <Form layout="vertical">
 
           {/* HOMEPOINTR LOGO */}
-          <div className="logo"/>
+          <img src={logo} alt={"logo"} className="logo"/>
 
           {/* ROW 1 */}
           <Row>
