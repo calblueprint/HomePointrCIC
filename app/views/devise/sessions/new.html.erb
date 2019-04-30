@@ -1,7 +1,7 @@
   <div class="small-frame">
     <%= image_tag("logo.png", :alt => "logo", :class=>"logo") %>
     <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-    <div style="color: red;">
+    <div style="color: red; margin-botom: 10px;">
       <%= devise_error_messages! %>
         <% flash.each do |key, value| %>
            <div class="flash <%= key %>"><%= value %></div>
