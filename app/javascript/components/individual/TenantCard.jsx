@@ -29,7 +29,9 @@ class TenantCard extends React.Component {
       )
     } else {
       return (
-          <img className="img" height="144" width="144" src={this.state.tenant.url}/>
+        <div className="card-avatar-wrapper">
+          <img className="img" height="144" width="144" src={this.state.tenant.url} className="card-avatar"/>
+        </div>
       )
     }
   }
