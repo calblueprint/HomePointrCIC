@@ -83,6 +83,7 @@ class PropertyModal extends React.Component {
           marginTop="-50px"
           footer={null}
         >
+        <div className="property-modal">
           <div className="flex-container">
             <div className="flex-item">
               <div className="modal-section" style={{ paddingTop: '5%' }}>
@@ -186,7 +187,7 @@ class PropertyModal extends React.Component {
 
             </div>
           </div>
-
+         </div>
         </Modal>
       </div>
     );

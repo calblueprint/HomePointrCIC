@@ -1,3 +1,7 @@
+.property-modal {
+  height: 570px;
+}
+
 .modal-h1 {
   font-size: 18px;
   font-weight: normal;
@@ -20,8 +24,8 @@
 
 .property-description-container {
   margin-bottom: 24px;
-  width: 400px;
-  height: 84px;
+  width: 340px;
+  height: 60px;
   overflow: scroll;
   position: relative;
   line-height: 1.2em;
