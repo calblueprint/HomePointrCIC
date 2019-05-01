@@ -7,7 +7,6 @@ class Carousel extends React.Component {
       images: this.props.images,
       imgCount: this.props.images.length,
       currentImg: 0,
-      location: this.props.location
     }
   }
 
@@ -37,7 +36,7 @@ class Carousel extends React.Component {
 
 
   render() {
-    if (this.state.location === "modal") {
+    if (this.props.location === "modal") {
       if (this.state.imgCount !== 1) {
         return (
           <div className="carousel-modal">
@@ -60,7 +59,7 @@ class Carousel extends React.Component {
           </div>
         );
       }
-    } else if (this.state.location === "view") {
+    } else if (this.props.location === "view") {
       if (this.state.imgCount !== 1) {
         return (
           <div className="carousel-view">
@@ -82,8 +81,6 @@ class Carousel extends React.Component {
       }
     }
   }
-
-
 }
 
 export default Carousel;
