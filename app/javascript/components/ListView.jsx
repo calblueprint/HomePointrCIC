@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import { Checkbox, Card, Col, Row, Button, Avatar, Icon } from "antd";
 import TenantModal from "./modals/TenantModal";
 import PropertyModal from "./modals/PropertyModal";
-import ApplicationModal from "./modals/ApplicationModal";
 import SubmissionModal from "./modals/SubmissionModal";
 import Utils from 'helpers/utils';
 import "antd/dist/antd.css";
