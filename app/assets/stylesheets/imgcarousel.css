@@ -64,10 +64,10 @@
 .left-arrow-view {
   top: 0;
   left: 0;
-  position: absolute;
+  position: relative;
   z-index: 3;
   margin-left: 15px;
-  margin-top: 200px;
+  margin-top: -180px;
 }
 
 .arrow-img {
@@ -88,8 +88,8 @@
 .right-arrow-view {
   top: 0;
   left: 0;
-  position: absolute;
+  position: relative;
   z-index: 3;
   margin-left: 420px;
-  margin-top: 200px;
+  margin-top: -40px;
 }

@@ -24,9 +24,9 @@ class RATenantView extends React.Component {
       )
     } else {
       return (
-        <React.Fragment key='avatar'>
-          <Avatar size={280} className="profile-picture" src={this.props.avatar}/>
-        </React.Fragment>
+        <div className="profile-picture-wrapper" key='avatar'>
+          <img className="profile-picture" src={this.props.avatar}/>
+        </div>
       )
     }
   }
