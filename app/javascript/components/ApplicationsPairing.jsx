@@ -11,7 +11,6 @@ import SplitViewContainer from "./individual/SplitViewContainer.jsx";
 import PropertyListWrapper from "./individual/PropertyListWrapper.jsx";
 import ApplicationSubmissionWrapper from "./individual/ApplicationSubmissionWrapper.jsx";
 import RATenantView from "./RATenantView.jsx";
-import InstructionsModal from "./modals/InstructionsModal.jsx";
 import MapContainer from './individual/MapContainer';
 
 class ApplicationsPairing extends React.Component {
