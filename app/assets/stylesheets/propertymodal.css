@@ -18,6 +18,16 @@
   margin-bottom: 24px;
 }
 
+.property-description-container {
+  margin-bottom: 24px;
+  width: 400px;
+  height: 84px;
+  overflow: scroll;
+  position: relative;
+  line-height: 1.2em;
+  max-height: 6em;
+}
+
 .flex-container {
   padding: 0;
   margin-top: -24px;

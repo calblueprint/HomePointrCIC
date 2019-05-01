@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import 'antd/dist/antd.css';
 import { Modal, Button, Icon, Card, Avatar, Table } from 'antd';
 import ApplicationStatusButtons from './../individual/ApplicationStatusButtons'
-import '../../../assets/stylesheets/modal.css';
+import '../../../assets/stylesheets/tenantmodal.css';
 import Utils from "helpers/utils";
 
 class TenantModal extends React.Component {

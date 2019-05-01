@@ -4,7 +4,7 @@ import 'antd/dist/antd.css';
 import { Modal, Button, Avatar, Layout, Row, Col, Icon} from 'antd';
 import Utils from 'helpers/utils';
 import ApplicationStatusButtons from './../individual/ApplicationStatusButtons'
-import '../../../assets/stylesheets/modal.css';
+import '../../../assets/stylesheets/propertymodal.css';
 import Carousel from '../individual/Carousel';
 
 class PropertyModal extends React.Component {
@@ -111,7 +111,7 @@ class PropertyModal extends React.Component {
                 <h2 className="modal-section-title"> <Icon type="align-center" className="icon"/> Summary </h2>
                 <div className="subsection">
                   <Row gutter={32}>
-                    <Col span={24}><p className="content-text">{this.props.property.description}</p></Col>
+                    <Col span={24}><p className="property-description-container">{this.props.property.description}</p></Col>
                   </Row>
                 </div>
               </div>
