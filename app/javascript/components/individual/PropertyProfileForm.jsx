@@ -162,6 +162,7 @@ class PropertyProfileForm extends React.Component {
     property["date_available"] = date.format("YYYY-MM-DD");
     this.setState({ property: property });
   }
+  
   handleChangeSelect(attr, value) {
     const property = this.state.property;
     property[attr] = value;

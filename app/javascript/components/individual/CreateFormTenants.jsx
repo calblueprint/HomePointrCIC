@@ -476,7 +476,7 @@ class CreateFormTenants extends React.Component {
                     max={5000}
                     style={{ width: 80 }}
                     value={tenant.rent_min}
-                    onChange={() => this.handleChange("rent_min")}
+                    onChange={(value) => this.handleChangeSelect("rent_min", value)}
                   />
                 </Col>
                 <Col className="slider" span={12}>
@@ -495,7 +495,7 @@ class CreateFormTenants extends React.Component {
                     max={5000}
                     style={{ width: 80 }}
                     value={tenant.rent_max}
-                    onChange={() => this.handleChange("rent_max")}
+                    onChange={(value) => this.handleChangeSelect("rent_max", value)}
                   />
                 </Col>
               </Row>

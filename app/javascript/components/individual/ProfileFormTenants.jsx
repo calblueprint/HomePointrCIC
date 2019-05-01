@@ -432,10 +432,10 @@ class ProfileFormTenants extends React.Component {
                 <Col span={6}>
                   <InputNumber
                     min={0}
-                    max={5000}
+                    max={this.state.tenant.rent_min}
                     style={{ marginLeft: 16}}
                     value={tenant.rent_min}
-                    onChange={() => this.handleChange("rent_min")}
+                    onChange={(value) => this.handleChangeSelect("rent_min", value)}
                   />
                 </Col>
                 <Col className="slider" span={10}>
@@ -450,11 +450,11 @@ class ProfileFormTenants extends React.Component {
                 </Col>
                 <Col span={6}>
                   <InputNumber
-                    min={0}
+                    min={this.state.tenant.rent_max}
                     max={5000}
                     style={{ marginLeft: 16 }}
                     value={tenant.rent_max}
-                    onChange={() => this.handleChange("rent_max")}
+                    onChange={(value) => this.handleChangeSelect("rent_max", value)}
                   />
                 </Col>
               </Row>
