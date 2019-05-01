@@ -61,3 +61,8 @@
   color: #D9D9D9;
   padding-left: 8px;
 }
+
+.email_error {
+  font-size: 14px;
+  color: #f5222d;
+}

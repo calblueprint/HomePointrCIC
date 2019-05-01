@@ -30,6 +30,11 @@ class SignUpPage extends React.Component {
    const name = event.target.name;
    const value = event.target.value;
    const inputs = this.state.inputs;
+
+   if (name == "email" && this.state.emailError) {
+    this.setState({ emailError: false });
+   }
+
    inputs[name] = value;
    this.setState({
      inputs: inputs
@@ -47,7 +52,7 @@ class SignUpPage extends React.Component {
  renderEmailError = () => {
    if (this.state.emailError) {
      return (
-       <div style={{ color: "red", fontSize: "5px" }}><p>This email has already been taken</p></div>
+       <div className="email_error">This email has already been taken</div>
      );
    }
  }
