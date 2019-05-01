@@ -1,8 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {Avatar, Button, Carousel, Tag, Row, Col, Icon} from 'antd';
+import {Avatar, Button, Tag, Row, Col, Icon} from 'antd';
 import Utils from "helpers/utils";
 import 'antd/dist/antd.css';
+import Carousel from '../individual/Carousel';
 
 class PropertyView extends React.Component {
   constructor(props) {
@@ -170,13 +171,7 @@ class PropertyView extends React.Component {
     } else {
       return (
         <div key="carousel" style={{backgroundColor: "#D9D9D9"}}>
-          <Carousel autoplay>
-            {this.props.property.images.map((image, index) => {
-              return (
-                <div key={index}><h3><center><img src={image.url} width="100%" height="350"/></center></h3></div>
-              )
-            })}
-          </Carousel>
+          <Carousel images={this.props.property.images} location="view"/>
         </div>
       )
     }

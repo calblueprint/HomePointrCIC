@@ -1,10 +1,11 @@
 import React from 'react';
 import PropTypes from "prop-types";
 import 'antd/dist/antd.css';
-import { Modal, Button, Carousel, Avatar, Layout, Row, Col, Icon} from 'antd';
+import { Modal, Button, Avatar, Layout, Row, Col, Icon} from 'antd';
 import Utils from 'helpers/utils';
 import ApplicationStatusButtons from './../individual/ApplicationStatusButtons'
 import '../../../assets/stylesheets/modal.css';
+import Carousel from '../individual/Carousel';
 
 class PropertyModal extends React.Component {
   constructor(props) {
@@ -63,16 +64,8 @@ class PropertyModal extends React.Component {
       )
     } else {
       return (
-        <div key="carousel" style={{backgroundColor: "#D9D9D9"}}>
-          <Carousel autoplay height="320" width="400" className="carousel">
-            {this.props.property.images.map((image, index) => {
-              return (
-                <div key={index}><h3><center>
-                  <img className="clip" src={image.url} margin-top="100px" height="320" width="400"/>
-                </center></h3></div>
-              )
-            })}
-          </Carousel>
+        <div key="carousel">
+          <Carousel images={this.props.property.images} location="modal"/>
         </div>
       )
     }
@@ -90,10 +83,6 @@ class PropertyModal extends React.Component {
           marginTop="-50px"
           footer={null}
         >
-        {/*
-        look at the renderPhotos thing!
-        <img className="image" style={{backgroundImage: `url(${this.props.property.images[0].url})`}}> </img>
-        */}
           <div className="flex-container">
             <div className="flex-item">
               <div className="modal-section" style={{ paddingTop: '5%' }}>

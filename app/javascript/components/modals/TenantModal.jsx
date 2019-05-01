@@ -34,14 +34,14 @@ class TenantModal extends React.Component {
     if (this.props.tenant.url == null) {
       return (
         <React.Fragment key='avatar'>
-          <Avatar size={280} className="profile-picture" icon="user"/>
+          <Avatar size={224} className="modal-avatar" icon="user"/>
         </React.Fragment>
       )
     } else {
       return (
-        <React.Fragment key='avatar'>
-          <Avatar size={280} className="profile-picture" src={this.props.tenant.url}/>
-        </React.Fragment>
+        <div className="modal-avatar-wrapper">
+          <img className="modal-avatar" height="224" width="224" src={this.props.tenant.url}/>
+        </div>
       )
     }
   }

@@ -2,7 +2,7 @@
 import React from 'react';
 import PropTypes from "prop-types";
 import 'antd/dist/antd.css';
-import { Modal, Button, Carousel, Avatar, Layout, Row, Col, Upload, Icon, Input } from 'antd';
+import { Modal, Button, Avatar, Layout, Row, Col, Upload, Icon, Input } from 'antd';
 import ApplicationStatusButtons from './../individual/ApplicationStatusButtons'
 import '../../../assets/stylesheets/modal.css';
 import ActiveStorageProvider from "react-activestorage-provider";
