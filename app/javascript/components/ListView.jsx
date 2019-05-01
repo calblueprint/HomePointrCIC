@@ -80,16 +80,6 @@ class ListView extends React.Component {
     }
   }
 
-  // renderApplicationStatus(index) {
-  //   if (this.props.applications) {
-  //     return Utils.renderStatus(this.props.applications[index].status, true)
-  //   }
-  // }
-
-  renderApplicationModal(app) {
-    return(<ApplicationModal application={app}/>)
-  }
-
   getApplication = (index) => {
     if (this.props.applications) {
       return this.props.applications[index];

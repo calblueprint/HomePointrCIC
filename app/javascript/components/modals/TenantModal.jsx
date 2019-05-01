@@ -26,7 +26,7 @@ class TenantModal extends React.Component {
 
   renderAttachment() {
     if (this.props.application) {
-      return(<p><a href={this.props.application.url}><Icon type="paper-clip" />Attachment</a></p>)
+      return(<p><a href={this.props.application.url} target="_blank"><Icon type="paper-clip" />Attachment</a></p>)
     }
   }
 
@@ -61,12 +61,12 @@ class TenantModal extends React.Component {
     const dataSource = [{
       fileName: 'Tenant Application',
       lastUpdated: this.props.tenant.updated_at.split("T")[0],
-      attachment: <a href={this.props.tenant.form_url} download>Download</a>,
+      attachment: <a href={this.props.tenant.form_url target="_blank"} download>Download</a>,
       key: '1'
     }, {
       fileName: 'Additional Files',
       lastUpdated: this.props.application.updated_at.split("T")[0],
-      attachment: <a href={this.props.application.url} download>Download</a>,
+      attachment: <a href={this.props.application.url target="_blank"} download>Download</a>,
       key: '2'
     }];
 
@@ -81,7 +81,7 @@ class TenantModal extends React.Component {
     }, {
       title: 'Attachment',
       dataIndex: 'attachment',
-      render: download => <a href={this.props.application.url}>{download}</a>,
+      render: download => <a href={this.props.application.url target="_blank"}>{download}</a>,
       key: 'attachment'
     }];
 
