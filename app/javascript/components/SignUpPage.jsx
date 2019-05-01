@@ -4,15 +4,15 @@ import "antd/dist/antd.css";
 import Utils from 'helpers/utils';
 import { Form, Icon, Input, Button, Checkbox, Select, Col, Row } from 'antd';
 import APIRoutes from 'helpers/api_routes';
-import '../../assets/stylesheets/entrypages.css';
+import '../../assets/stylesheets/signup.css';
+import logo from '../../assets/images/logo.png';
 
 class SignUpPage extends React.Component {
  constructor(props) {
    super(props);
    this.state = {
-     renderInfoPassword: 0,
      inputs: {
-       type: '',
+       type: undefined,
        name: '',
        email: '',
        password: '',
@@ -21,7 +21,7 @@ class SignUpPage extends React.Component {
        address: ''
      },
      errorMessage: '',
-     hasError: false,
+     emailError: false,
      page: 0
    }
  }
@@ -30,6 +30,11 @@ class SignUpPage extends React.Component {
    const name = event.target.name;
    const value = event.target.value;
    const inputs = this.state.inputs;
+
+   if (name == "email" && this.state.emailError) {
+    this.setState({ emailError: false });
+   }
+
    inputs[name] = value;
    this.setState({
      inputs: inputs
@@ -44,111 +49,136 @@ class SignUpPage extends React.Component {
    });
  }
 
- renderErrorMsg = () => {
-   if (this.state.hasError) {
+ renderEmailError = () => {
+   if (this.state.emailError) {
      return (
-       <div className="errormsg"><p>{this.state.errorMessage}</p></div>
+       <div className="email_error">This email has already been taken</div>
      );
    }
  }
 
  handleSubmit = (event) => {
    event.preventDefault();
-   const sign_up_route = '/users';
-   const state = this.state.inputs;
-   let payload = {
-     type: state.type,
-     name: state.name,
-     email: state.email,
-     password: state.password,
-     phone: state.phone,
-     address: state.address
-   }
+   this.props.form.validateFields(
+     (err) => {
+       if (!err) {
+         const sign_up_route = '/users';
+         const state = this.state.inputs;
+         let payload = {
+           type: state.type,
+           name: state.name,
+           email: state.email,
+           password: state.password,
+           phone: state.phone,
+           address: state.address
+         }
 
-   if (state.password !== state.password_confirmation) {
-     this.setState({
-       hasError: true,
-       errorMessage: 'Passwords must match'});
-     this.renderErrorMsg();
-   } else {
-     payload = JSON.stringify({ user: payload });
-     fetch(sign_up_route, {
-       method: 'POST',
-       headers: {
-         'Content-Type': 'application/json',
-         "X_CSRF-Token": document.getElementsByName("csrf-token")[0].content
-       },
-       body: payload,
-       credentials: 'same-origin',
-     }).catch((response) => {
-       this.setState({
-         hasError: true,
-         errorMessage: 'Missing or inadequate input'});
-     }).then((response) => {
-       window.location = '/';
-     });
-   }
+         if (this.props.emails.includes(state.email)) {
+           this.setState({
+             emailError: true });
+         } else {
+           payload = JSON.stringify({ user: payload });
+           fetch(sign_up_route, {
+             method: 'POST',
+             headers: {
+               'Content-Type': 'application/json',
+               "X_CSRF-Token": document.getElementsByName("csrf-token")[0].content
+             },
+             body: payload,
+             credentials: 'same-origin',
+           }).catch((response) => {
+             this.setState({
+               errorMessage: 'Missing or inadequate input'});
+           }).then((response) => {
+             window.location = '/';
+           });
+         }
+       }
+     },
+   );
   }
 
   redirectToLogin = () => {
     window.location = '/users/sign_in'
   }
 
-  handlePageSwitch = () => {
-    if (this.state.page == 0 && !this.state.inputs.type) {
-        alert("Please select whether you are a landlord or represent a referral agency");
-    } else {
-        this.setState({ page: 1 - this.state.page });
-    }
-  }
-
-  renderInfo = (which_info, e) => {
-    if (which_info == "password") {
-      this.setState((state) => {
-        return {renderInfoPassword: 1 - state.renderInfoPassword}
-      });
-    }
-  }
-
-  // Renders information dialogue on hover
-  infoDialogueHelper = (which_info, info_text) => {
-    if (which_info == "password" && this.state.renderInfoPassword) {
-      return(
-        <div className="info-dialogue"><p className="info-dialogue-text">{info_text}</p></div>
+  handlePageSwitch = (type) => {
+    if (type == "next") {
+      this.props.form.validateFields(
+        (err) => {
+          if (!err) {
+            this.setState({ page: 1 - this.state.page });
+          }
+        },
       );
+    } else if (type == "previous") {
+      this.setState({ page: 1 - this.state.page });
     }
   }
+
+  compareToFirstPassword = (rule, value, callback) => {
+    const form = this.props.form;
+    if (value && value !== this.state.inputs.password) {
+      callback('Two passwords that you enter is inconsistent!');
+    } else {
+      callback();
+    }
+  }
+
+  validateToNextPassword = (rule, value, callback) => {
+    const form = this.props.form;
+    if (value) {
+      form.validateFields(['confirm'], { force: true });
+    }
+    callback();
+  }
+
 
   renderNextPage = () => {
+    const { getFieldDecorator } = this.props.form;
     return (
       <div className="big-frame">
-        <Form onSubmit={this.handleSubmit} layout="vertical">
+        <Form onSubmit={this.handleSubmit} layout="vertical" hideRequiredMark={true}>
 
           {/* HOMEPOINTR LOGO */}
           <div className="logo"/>
-
           {/* FIRST ROW */}
           <Row gutter={60}>
             {/* ITEM 1 */}
             <Col span={12}>
               <Form.Item label="Full name">
-                <Input
-                type="string"
-                name="name"
-                value={this.state.inputs.name}
-                onChange={this.handleChange}
-                />
+                {getFieldDecorator('name', {
+                  rules: [{
+                    required: true, message: 'Please input your full name!',
+                  }]
+                })(
+                  <Input
+                  type="string"
+                  name="name"
+                  value={this.state.inputs.name}
+                  onChange={this.handleChange}
+                  />
+                )}
               </Form.Item>
             </Col>
             {/* ITEM 2 */}
             <Col span={12}>
               <Form.Item label="Email">
-                <Input
-                type="string"
-                name="email"
-                value={this.state.inputs.email}
-                onChange={this.handleChange}
-                />
+                {getFieldDecorator('email', {
+                  rules: [{
+                    required: true, message: 'Please input your email!',
+                  }, {
+                    type: 'email', message: 'The input is not a valid email!'
+                  }],
+                })(
+                  <Input
+                  type="string"
+                  name="email"
+                  value={this.state.inputs.email}
+                  onChange={this.handleChange}
+                  />
+                )}
+                { this.renderEmailError() }
               </Form.Item>
             </Col>
           </Row>
@@ -158,25 +188,39 @@ class SignUpPage extends React.Component {
             {/* ITEM 1 */}
             <Col span={12}>
               <Form.Item label="Password">
-                <div onMouseEnter={(e) => this.renderInfo("password", e)} onMouseLeave={(e) => this.renderInfo("password", e)}><Icon type="question-circle" theme="twoTone" className="info-icon"/></div>
-                {this.infoDialogueHelper("password", "Your password should be minimum 8 characters.")}
-                <Input
-                type="password"
-                name="password"
-                value={this.state.inputs.password}
-                onChange={this.handleChange}
-                />
+                {getFieldDecorator('password', {
+                  rules: [{
+                    required: true, message: 'Please input your password!',
+                  }, {
+                    validator: this.validateToNextPassword,
+                  }],
+                })(
+                  <Input
+                  type="password"
+                  name="password"
+                  value={this.state.inputs.password}
+                  onChange={this.handleChange}
+                  />
+                )}
               </Form.Item>
             </Col>
             {/* ITEM 2 */}
             <Col span={12}>
               <Form.Item label="Confirm password">
-                <Input
-                type="password"
-                name="password_confirmation"
-                value={this.state.inputs.password_confirmation}
-                onChange={this.handleChange}
-                />
+                {getFieldDecorator('confirm', {
+                  rules: [{
+                    required: true, message: 'Please confirm your password!',
+                  }, {
+                    validator: this.compareToFirstPassword,
+                  }],
+                })(
+                  <Input
+                  type="password"
+                  name="password_confirmation"
+                  value={this.state.inputs.password_confirmation}
+                  onChange={this.handleChange}
+                  />
+                )}
               </Form.Item>
             </Col>
           </Row>
@@ -186,28 +230,39 @@ class SignUpPage extends React.Component {
             {/* ITEM 1 */}
             <Col span={12}>
               <Form.Item label="Phone number">
-                <Input
-                type="string"
-                name="phone"
-                value={this.state.inputs.phone}
-                onChange={this.handleChange}
-                />
-            </Form.Item>
+                {getFieldDecorator('phone', {
+                  rules: [{
+                    required: true, message: 'Please input your phone number!',
+                  }],
+                })(
+                  <Input
+                  type="string"
+                  name="phone"
+                  value={this.state.inputs.phone}
+                  onChange={this.handleChange}
+                  />
+                )}
+              </Form.Item>
             </Col>
             {/* ITEM 2 */}
             <Col span={12}>
               <Form.Item label="Address">
-                <Input
-                type="string"
-                name="address"
-                value={this.state.inputs.address}
-                onChange={this.handleChange}
-                />
+                {getFieldDecorator('address', {
+                  rules: [{
+                    required: true, message: 'Please input your address!',
+                  }],
+                })(
+                  <Input
+                  type="string"
+                  name="address"
+                  value={this.state.inputs.address}
+                  onChange={this.handleChange}
+                  />
+                )}
               </Form.Item>
             </Col>
           </Row>
 
-          { this.renderErrorMsg() }
           {/* BUTTONS ROW */}
           <Row gutter={60} className="buttons-container">
             {/* ITEM 1 */}
@@ -218,7 +273,7 @@ class SignUpPage extends React.Component {
               <Row gutter={30}>
                 {/* BUTTON 1 */}
                 <Col span={12} style={{ textAlign: 'right'}}>
-                  <Button className="button" onClick={this.handlePageSwitch} className="button">
+                  <Button className="button" onClick={() => this.handlePageSwitch("previous")} className="button">
                     Previous
                   </Button>
                 </Col>
@@ -237,52 +292,39 @@ class SignUpPage extends React.Component {
       );
   }
 
-  /* RENDER SELECT DROPDOWN WITH VALUE IF TYPE IS NOT NULL*/
-  renderValueSelect = () => {
-    return (
-      <Select
-        value={(this.state.inputs.type)}
-        onChange={this.handleSelectChange}
-      >
-        <Select.Option value="Landlord">Landlord</Select.Option>
-        <Select.Option value="ReferralAgency">Referral agency</Select.Option>
-      </Select>
-    );
-  }
-
-  /* RENDER SELECT DROPDOWN WITH PLACEHOLDER IF TYPE IS NULL*/
-  renderPlaceholderSelect = () => {
-    return (
-      <Select
-        placeholder="Select one"
-        onChange={this.handleSelectChange}
-      >
-        <Select.Option value="Landlord">Landlord</Select.Option>
-        <Select.Option value="ReferralAgency">Referral agency</Select.Option>
-      </Select>
-    );
-  }
-
   renderInitialPage = () => {
+    const { getFieldDecorator } = this.props.form;
+
     return (
       <div className="small-frame">
-        <Form layout="vertical">
+        <Form layout="vertical" hideRequiredMark={true}>
 
           {/* HOMEPOINTR LOGO */}
-          <div className="logo"/>
+          <img src={logo} alt={"logo"} className="logo"/>
 
           {/* ROW 1 */}
           <Row>
           {/* ITEM 1 */}
             <Col span={24}>
-
               <Form.Item label="I am a...">
-                { (this.state.inputs.type) ? this.renderValueSelect() : this.renderPlaceholderSelect() }
+                {getFieldDecorator('type', {
+                  initialValue: this.state.inputs.type,
+                  rules: [{
+                    required: true, message: 'Please choose a response!',
+                  }],
+                })(
+                  <Select
+                    placeholder="Select one"
+                    value={this.state.inputs.type}
+                    onChange={this.handleSelectChange}
+                  >
+                    <Select.Option value="Landlord">Landlord</Select.Option>
+                    <Select.Option value="ReferralAgency">Referral agency</Select.Option>
+                  </Select>
+                )}
               </Form.Item>
             </Col>
           </Row>
-
-          { this.renderErrorMsg() }
 
           {/* BUTTONS ROW */}
           <Row gutter={32} className="buttons-container">
@@ -294,7 +336,7 @@ class SignUpPage extends React.Component {
             </Col>
             {/* BUTTON 2 */}
             <Col span={12}>
-              <Button type="primary" className="button" onClick={this.handlePageSwitch}>
+              <Button type="primary" className="button" onClick={() => this.handlePageSwitch("next")}>
                 Next
               </Button>
             </Col>
@@ -322,4 +364,4 @@ class SignUpPage extends React.Component {
  }
 }
 
-export default SignUpPage;
+export default Form.create()(SignUpPage);
