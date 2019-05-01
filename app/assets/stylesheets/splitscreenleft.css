@@ -1,7 +1,11 @@
+.split-screen-left-avatar {
+  padding-top: 8%;
+}
 
 .split-screen-left-text {
   padding-left: 36px;
-  padding-right: 36px
+  padding-right: 36px;
+  padding-top: 6%;
 }
 
 .content-text {

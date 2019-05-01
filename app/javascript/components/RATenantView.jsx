@@ -132,7 +132,7 @@ class RATenantView extends React.Component {
 
   render() {
     return (
-      <div className="split-screen-left">
+      <div className="split-screen-left-avatar">
         {this.renderAvatar()}
         <div className="split-screen-left-text">
           <Row>
