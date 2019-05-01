@@ -16,7 +16,6 @@
     "react": "^16.6.1",
     "react-activestorage-provider": "^0.6.0",
     "react-dom": "^16.6.1",
-    "react-places-autocomplete": "^7.2.1",
     "react_ujs": "^2.4.4",
     "webpack": "3.11.0"
   },

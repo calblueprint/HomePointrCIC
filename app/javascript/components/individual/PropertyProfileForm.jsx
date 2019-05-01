@@ -60,8 +60,7 @@ class PropertyProfileForm extends React.Component {
     var placesAutocomplete = places({
       appId: 'plT4Z8MULV0O',
       apiKey: '48e619128b523ff86727e917eb1fa1d3',
-      // container: document.querySelectorAll('div.ant-row.ant-form-item')[0].children[1].querySelector('div').querySelector('span').querySelector('input')
-      container: document.querySelector('#address')
+      container: this.autocompleteElem
     });
     placesAutocomplete.on('change', (e) => {
       const new_property = this.state.property;
@@ -69,7 +68,6 @@ class PropertyProfileForm extends React.Component {
       new_property['lat'] = e.suggestion.latlng.lat;
       new_property['long'] = e.suggestion.latlng.lng;
       this.setState({ property: new_property });
-      document.querySelector('#address').value = e.suggestion.value;
     });
   }
 
@@ -158,6 +156,7 @@ class PropertyProfileForm extends React.Component {
     property[attr] = event.target.value;
     this.setState({ property: property });
   }
+
   handleChangeDate(date) {
     const property = this.state.property;
     property["date_available"] = date.format("YYYY-MM-DD");
@@ -317,14 +316,7 @@ class PropertyProfileForm extends React.Component {
               <Form.Item
                 label="Address"
               >
-                {getFieldDecorator('address', {
-                  initialValue: property.address,
-                  rules: [{
-                    required: true, message: 'Please input the address!',
-                  }],
-                })(
-                  <Input id="address" size="8"/>
-                )}
+                  <input id="address" onChange={() => this.handleChange("address")} ref={(ref) => { this.autocompleteElem = ref; }} size="8"/>
               </Form.Item>
               <Form.Item
                 label="Rent"
