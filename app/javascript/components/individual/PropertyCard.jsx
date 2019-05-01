@@ -22,7 +22,9 @@ class PropertyCard extends React.Component {
   renderAvatar = () => {
     if (this.props.property.images) {
       return(
-        <img className="img" height="144" width="144" src={this.props.property.images[0].url} />
+        <div className="card-avatar-wrapper">
+          <img className="img" src={this.props.property.images[0].url} className="card-avatar"/>
+        </div>
       );
     } else {
       return(
