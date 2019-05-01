@@ -21,7 +21,7 @@ class SignUpPage extends React.Component {
        address: ''
      },
      errorMessage: '',
-     hasError: false,
+     emailError: false,
      page: 0
    }
  }
@@ -44,10 +44,10 @@ class SignUpPage extends React.Component {
    });
  }
 
- renderErrorMsg = () => {
-   if (this.state.hasError) {
+ renderEmailError = () => {
+   if (this.state.emailError) {
      return (
-       <div className="errormsg"><p>{this.state.errorMessage}</p></div>
+       <div style={{ color: "red", fontSize: "5px" }}><p>This email has already been taken</p></div>
      );
    }
  }
@@ -68,11 +68,9 @@ class SignUpPage extends React.Component {
            address: state.address
          }
 
-         if (state.password !== state.password_confirmation) {
+         if (this.props.emails.includes(state.email)) {
            this.setState({
-             hasError: true,
-             errorMessage: 'Passwords must match'});
-           this.renderErrorMsg();
+             emailError: true });
          } else {
            payload = JSON.stringify({ user: payload });
            fetch(sign_up_route, {
@@ -85,7 +83,6 @@ class SignUpPage extends React.Component {
              credentials: 'same-origin',
            }).catch((response) => {
              this.setState({
-               hasError: true,
                errorMessage: 'Missing or inadequate input'});
            }).then((response) => {
              window.location = '/';
@@ -176,6 +173,7 @@ class SignUpPage extends React.Component {
                   onChange={this.handleChange}
                   />
                 )}
+                { this.renderEmailError() }
               </Form.Item>
             </Col>
           </Row>
@@ -260,7 +258,6 @@ class SignUpPage extends React.Component {
             </Col>
           </Row>
 
-          { this.renderErrorMsg() }
           {/* BUTTONS ROW */}
           <Row gutter={60} className="buttons-container">
             {/* ITEM 1 */}
@@ -323,8 +320,6 @@ class SignUpPage extends React.Component {
               </Form.Item>
             </Col>
           </Row>
-
-          { this.renderErrorMsg() }
 
           {/* BUTTONS ROW */}
           <Row gutter={32} className="buttons-container">

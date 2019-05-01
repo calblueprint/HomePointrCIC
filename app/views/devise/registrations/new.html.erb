@@ -1,2 +1,7 @@
 <% @title = "Sign Up" %>
-<%= react_component("SignUpPage") %>
+<% @emails = [] %>
+<% User.all.each do |user| %>
+  <% @emails << user.email%>
+<% end %>
+<% puts @emails %>
+<%= react_component("SignUpPage", props={ emails: @emails })%>
