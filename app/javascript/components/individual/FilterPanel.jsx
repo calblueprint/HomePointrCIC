@@ -123,7 +123,6 @@ class FilterPanel extends React.Component {
   }
 
   handleClear = (filter_name) => {
-    this.closeAll();
     if (filter_name == 'location' || filter_name == 'property_type' || filter_name == 'housing_type') {
       this.setState({
         [filter_name]: []
@@ -192,7 +191,7 @@ class FilterPanel extends React.Component {
   getInitialValues = () => {
     if (this.props.tenant) {
       let tenant = this.props.tenant;
-      this.setState({
+      let initialVals = {
         location: [tenant.location],
         capacity: tenant.family_size,
         rent_min: tenant.rent_min,
@@ -201,7 +200,17 @@ class FilterPanel extends React.Component {
         property_type: [tenant.property_type],
         housing_type: [tenant.housing_type],
         date_available: moment(tenant.date_needed),
+      };
+      this.setState(initialVals);
+      this.setState({
+        dateFilterActive: true,
+        guestsFilterActive: true,
+        locationFilterActive: true,
+        propertyTypeFilterActive: true,
+        housingTypeFilterActive: true,
+        rentFilterActive: true,
       });
+      this.props.applyFilter(initialVals);
     };
   }
 
