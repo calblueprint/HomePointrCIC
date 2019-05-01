@@ -544,7 +544,10 @@ class CreateFormTenants extends React.Component {
                   required: true, message: 'Please input your response!',
                 }]
               })(
-                <Input onChange={() => this.handleChange("local_council")}/>
+                <Select placeholder="Select One" value={tenant.local_council} onChange={(value) => this.handleChangeSelect("local_council", value)}>
+                  <Option value={true}>Yes</Option>
+                  <Option value={false}>No</Option>
+                </Select>
               )}
             </Form.Item>
             <Form.Item
