@@ -518,7 +518,8 @@ FilterPanel.propTypes = {
   location_options: PropTypes.array,
   property_options: PropTypes.array,
   housing_options: PropTypes.array,
-  tenant: PropTypes.object
+  tenant: PropTypes.object,
+  applyFilter: PropTypes.func
 };
 
 export default FilterPanel;

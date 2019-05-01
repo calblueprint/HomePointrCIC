@@ -13,7 +13,6 @@ class NavBar extends React.Component {
   }
 
   handleEdit() {
-    //switch to the ProfileForm Edit
     window.location = "/" + this.props.type + "/" + this.props.id + "/edit";
   }
 

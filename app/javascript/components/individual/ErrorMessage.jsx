@@ -14,4 +14,8 @@ class ErrorMessage extends React.Component {
   }
 }
 
+ErrorMessage.propTypes = {
+  message: PropTypes.string
+};
+
 export default ErrorMessage;

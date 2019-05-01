@@ -64,7 +64,7 @@ export class MapContainer extends React.Component {
           lng: -4
         }}
       >
-        
+
         {this.markersList()}
 
         <InfoWindow
@@ -83,6 +83,11 @@ export class MapContainer extends React.Component {
     );
   }
 }
+
+MapContainer.propTypes = {
+  filtered_properties: PropTypes.array,
+  google: PropTypes.object
+};
 
 export default GoogleApiWrapper({
   apiKey: "AIzaSyBb_iss2krVXSMsIsacWlIsVrc-7r6xBPE"

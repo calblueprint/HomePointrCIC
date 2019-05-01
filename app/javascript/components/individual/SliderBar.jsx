@@ -2,9 +2,10 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import 'antd/dist/antd.css';
 import { Slider, Switch, InputNumber } from 'antd';
+import PropTypes from "prop-types";
 
 class SliderBar extends React.Component {
-  
+
   constructor(props) {
     super(props);
     this.state = {
@@ -50,5 +51,11 @@ class SliderBar extends React.Component {
   }
 }
 
+SliderBar.propTypes = {
+  lowValue: PropTypes.number,
+  highValue: PropTypes.number,
+  updateFunc: PropTypes.func,
+  index: PropTypes.number
+};
+
 export default SliderBar;
-          

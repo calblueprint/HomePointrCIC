@@ -1,6 +1,3 @@
-// import {
-//   Form, Input, Tooltip, Icon, Cascader, Select, Row, Col, Checkbox, Button, AutoComplete,
-// } from 'antd';
 import React from "react";
 import PropTypes from "prop-types";
 import { Upload, message, Form, Icon, Select, Input, Button, Slider, Switch, DatePicker, InputNumber, Row, Col } from 'antd';

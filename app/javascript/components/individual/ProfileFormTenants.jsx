@@ -1,6 +1,3 @@
-// import {
-//   Form, Input, Tooltip, Icon, Cascader, Select, Row, Col, Checkbox, Button, AutoComplete,
-// } from 'antd';
 import React from "react";
 import PropTypes from "prop-types";
 import { Upload, message, Form, Icon, Select, Input, Button, Slider, Switch, DatePicker, InputNumber, Row, Col, Divider } from 'antd';
@@ -640,5 +637,5 @@ class ProfileFormTenants extends React.Component {
     )
   }
 }
-// const WrappedProfileFormTenants = Form.create({name: 'profileTenants'})(ProfileFormTenants);
+
 export default Form.create()(ProfileFormTenants);

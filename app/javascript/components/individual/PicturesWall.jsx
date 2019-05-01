@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import 'antd/dist/antd.css';
 import { Upload, Icon, Modal } from 'antd';
+import PropTypes from "prop-types";
 
 class PicturesWall extends React.Component {
 
@@ -64,5 +65,10 @@ class PicturesWall extends React.Component {
     );
   }
 }
+
+PicturesWall.propTypes = {
+  fileList: PropTypes.array,
+  onRemoveRequest: PropTypes.func
+};
 
 export default PicturesWall;

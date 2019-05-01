@@ -111,7 +111,9 @@ class PropertyListWrapper extends React.Component {
 
 PropertyListWrapper.propTypes = {
   properties: PropTypes.array,
-  selectedTenant: PropTypes.object,
+  setFilteredProperties: PropTypes.func,
+  selectedEnd: PropTypes.number,
+  CheckboxChange: PropTypes.func
 };
 
 export default PropertyListWrapper;

@@ -1,6 +1,7 @@
 import { Upload, Icon, message } from 'antd';
 import React from "react";
 import '../../../assets/stylesheets/avatar.css';
+import PropTypes from "prop-types";
 
 class Avatar extends React.Component {
 
@@ -113,5 +114,14 @@ class Avatar extends React.Component {
     );
   }
 }
+
+Avatar.propTypes = {
+  imageUrl: PropTypes.string,
+  filename: PropTypes.string,
+  onURLChange: PropTypes.func,
+  type: PropTypes.string,
+  handleUpload: PropTypes.func,
+  uploads: PropTypes.object
+};
 
 export default Avatar;

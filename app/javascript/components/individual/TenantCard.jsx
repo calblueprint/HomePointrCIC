@@ -144,4 +144,12 @@ class TenantCard extends React.Component {
   }
 }
 
+TenantCard.propTypes = {
+  displayTag: PropTypes.bool,
+  renderModal: PropTypes.bool,
+  viewpoint: PropTypes.string,
+  application: PropTypes.object,
+  tenant: PropTypes.object
+};
+
 export default TenantCard;

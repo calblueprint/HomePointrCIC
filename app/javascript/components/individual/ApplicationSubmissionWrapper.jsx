@@ -38,8 +38,10 @@ class ApplicationSubmissionWrapper extends React.Component {
 }
 
 ApplicationSubmissionWrapper.propTypes = {
-  properties: PropTypes.array,
-  selectedTenant: PropTypes.object,
+  selectedProperties: PropTypes.array,
+  onSubmitProperty: PropTypes.func,
+  tenant: PropTypes.object,
+  CheckboxChange: PropTypes.func
 };
 
 export default ApplicationSubmissionWrapper;

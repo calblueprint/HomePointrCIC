@@ -160,10 +160,15 @@ class PropertyCard extends React.Component {
         {this.renderModalOnClick()}
       </div>
     );
-
-
   }
-
 }
+
+PropertyCard.propTypes = {
+  displayTag: PropTypes.bool,
+  renderModal: PropTypes.bool,
+  viewpoint: PropTypes.string,
+  noClick: PropTypes.bool,
+  property: PropTypes.object
+};
 
 export default PropertyCard;

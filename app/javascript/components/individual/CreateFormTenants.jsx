@@ -1,6 +1,3 @@
-// import {
-//   Form, Input, Tooltip, Icon, Cascader, Select, Row, Col, Checkbox, Button, AutoComplete,
-// } from 'antd';
 import React from "react";
 import PropTypes from "prop-types";
 import { Upload, message, Form, Icon, Select, Input, Button, Slider, Switch, DatePicker, InputNumber, Row, Col } from 'antd';
@@ -85,12 +82,6 @@ class CreateFormTenants extends React.Component {
     this.nextButton = this.nextButton.bind(this);
     this.onURLChange = this.onURLChange.bind(this);
   }
-
-  // componentDidMount() {
-  //   render() {
-  //     return <div>{this.renderStageOne()}</div>
-  //   }
-  // }
 
   convertToDict() {
     const tenant = this.state.tenant;
@@ -183,19 +174,6 @@ class CreateFormTenants extends React.Component {
         className: 'upload-list-inline',
         onChange: (fileList) => this.handleChangeImage(fileList)
       };
-
-      // <ActiveStorageProvider
-      //   endpoint={{
-      //     path: '/api/tenants/' + this.state.tenant.id.toString(),
-      //     model: "Tenant",
-      //     attribute: 'avatar',
-      //     method: "PUT",
-      //   }}
-      //   headers={{
-      //     'Content-Type': 'application/json'
-      //   }}
-      //   render={Utils.activeStorageUploadRenderer}
-      // />
 
     return (
       <div>
@@ -783,5 +761,5 @@ class CreateFormTenants extends React.Component {
   }
 
 }
-// const WrappedProfileFormTenants = Form.create({name: 'profileTenants'})(ProfileFormTenants);
+
 export default Form.create()(CreateFormTenants);

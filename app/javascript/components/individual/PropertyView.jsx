@@ -15,7 +15,6 @@ class PropertyView extends React.Component {
   }
 
   handleEdit() {
-    //switch to the ProfileForm Edit
     window.location = '/properties/' + this.props.property.id.toString() + '/edit'
   }
 
@@ -60,7 +59,6 @@ class PropertyView extends React.Component {
       <Row>
         <Col span={19}><h1>{this.props.property.address.split(",")[0]}</h1></Col>
         <Col span={5} className='chips'>
-          {/*{Utils.renderStatus(this.props.status, true)}*/}
           <Button key='button' type='default' onClick={this.handleEdit} className='edit-button'>Edit</Button>
         </Col>
       </Row>
@@ -205,16 +203,7 @@ class PropertyView extends React.Component {
 }
 
 PropertyView.propTypes = {
-  id: PropTypes.number,
-  name: PropTypes.string,
-  description: PropTypes.string,
-  tagValues: PropTypes.array,
-  images: PropTypes.array,
-  canceledit: PropTypes.bool,
-};
-
-PropertyView.defaultProps = {
-  canceledit: true,
+  property: PropTypes.object
 };
 
 export default PropertyView;
