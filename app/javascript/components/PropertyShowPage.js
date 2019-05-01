@@ -143,12 +143,19 @@ PropertyShowPage.propTypes = {
   tagValues: PropTypes.array,
   images: PropTypes.array,
   tenants: PropTypes.array,
+  property: PropTypes.object,
+  propertyFormPDF: PropTypes.string,
+  tenantDefaultPDF: PropTypes.string,
   tenantImages: PropTypes.array,
   potentialTenants: PropTypes.array,
   potentialTenantsImages: PropTypes.array,
+  potentialTenantStatuses: PropTypes.array,
+  potentialTenantDefaultPDF: PropTypes.array,
   tenantApps: PropTypes.array,
   potentialTenantApps: PropTypes.array,
   tenantAppsPDF: PropTypes.array,
   potentialTenantAppsPDF: PropTypes.array,
+  numTenants: PropTypes.number
 };
+
 export default PropertyShowPage;

@@ -90,4 +90,10 @@ class RADashboard extends React.Component {
   }
 }
 
+RADashboard.propTypes = {
+  tenants: PropTypes.array,
+  tenantImages: PropTypes.array,
+  tenantStatuses: PropTypes.array
+};
+
 export default RADashboard;

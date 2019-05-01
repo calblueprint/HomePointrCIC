@@ -150,12 +150,9 @@ class RATenantView extends React.Component {
 }
 
 RATenantView.propTypes = {
-  id: PropTypes.number,
-  name: PropTypes.string,
-  mode: PropTypes.string,
-  description: PropTypes.string,
-  tagValues: PropTypes.array,
-  status: PropTypes.number,
+  tenant: PropTypes.object,
+  clientForm: PropTypes.string,
+  formName: PropTypes.string,
   avatar: PropTypes.string,
 };
 

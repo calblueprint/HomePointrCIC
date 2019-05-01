@@ -364,4 +364,9 @@ class SignUpPage extends React.Component {
  }
 }
 
+SignUpPage.propTypes = {
+  form: PropTypes.object,
+  emails: PropTypes.string
+};
+
 export default Form.create()(SignUpPage);

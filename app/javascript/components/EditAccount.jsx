@@ -303,4 +303,9 @@ class EditAccount extends React.Component {
   }
 }
 
+EditAccount.propTypes = {
+  user: PropTypes.object,
+  type: PropTypes.string
+};
+
 export default Form.create()(EditAccount);

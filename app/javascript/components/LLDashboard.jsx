@@ -41,7 +41,7 @@ class LLDashboard extends React.Component {
           displayTag={true}
           renderModal={false}
           viewpoint="LL"
-        />  
+        />
       )
     } else {
       return(
@@ -84,6 +84,9 @@ class LLDashboard extends React.Component {
 LLDashboard.propTypes = {
   resources: PropTypes.array,
   images: PropTypes.array,
-  type: PropTypes.string
+  type: PropTypes.string,
+  tenantCounts: PropTypes.array,
+  potentialTenantCounts: PropTypes.array
 };
+
 export default LLDashboard;

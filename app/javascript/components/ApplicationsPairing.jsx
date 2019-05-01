@@ -209,10 +209,11 @@ ApplicationsPairing.propTypes = {
   tenant: PropTypes.object,
   tenantImage: PropTypes.array,
   tenantPriority: PropTypes.array,
+  tenantCounts: PropTypes.array,
+  potentialTenantCounts: PropTypes.array,
   properties: PropTypes.array,
-  housing_options: PropTypes.array,
-  property_options: PropTypes.array,
-  location_options: PropTypes.array
+  propertyImages: PropTypes.array,
+  propertyForms: PropTypes.array,
 };
 
 export default ApplicationsPairing;

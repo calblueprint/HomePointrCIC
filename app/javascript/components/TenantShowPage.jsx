@@ -22,12 +22,8 @@ class TenantShowPage extends React.Component {
   // properties the tenant has applied to (for use in the PropertyCards)
   countSetupHelper = () => {
     for (var i = 0; i < this.state.properties.length; i++) {
-      this.state.properties[i]["tenantCount"] = this.props.propertyTenantCounts[
-        i
-      ];
-      this.state.properties[i][
-        "potentialTenantCount"
-      ] = this.props.propertyAppCounts[i];
+      this.state.properties[i]["tenantCount"] = this.props.propertyTenantCounts[i];
+      this.state.properties[i]["potentialTenantCount"] = this.props.propertyAppCounts[i];
     }
     this.handleRedirect = this.handleRedirect.bind(this);
   };
@@ -106,10 +102,18 @@ class TenantShowPage extends React.Component {
 TenantShowPage.propTypes = {
   status: PropTypes.number,
   applications: PropTypes.array,
+  propertyTenantCounts: PropTypes.array,
+  propertyAppCounts: PropTypes.array,
   form: PropTypes.array,
   tenant: PropTypes.object,
   properties: PropTypes.array,
-  tagValues: PropTypes.array,
-  url: PropTypes.string
+  propertyimages: PropType.array,
+  propertyForms: PropType.array,
+  propertyStatuses: PropType.array,
+  url: PropTypes.string,
+  status: PropTypes.string,
+  clientForm: PropTypes.string,
+  formName: PropTypes.string
 };
+
 export default TenantShowPage;

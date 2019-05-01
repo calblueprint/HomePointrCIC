@@ -80,12 +80,6 @@ class ListView extends React.Component {
     }
   }
 
-  // renderApplicationStatus(index) {
-  //   if (this.props.applications) {
-  //     return Utils.renderStatus(this.props.applications[index].status, true)
-  //   }
-  // }
-
   renderApplicationModal(app) {
     return(<ApplicationModal application={app}/>)
   }
@@ -143,6 +137,16 @@ ListView.propTypes = {
   tenantSelect: PropTypes.bool,
   checkbox: PropTypes.bool,
   avatar: PropTypes.bool,
+  type: PropTypes.string,
+  displayTag: PropTypes.bool,
+  renderModal: PropTypes.bool,
+  selectedEnd: PropTypes.number,
+  CheckboxChange: PropTypes.func,
+  submission_modal: PropTypes.bool,
+  onSubmitProperty: PropTypes.func,
+  tenant: PropTypes.object,
+  selectTenantFunc: PropTypes.func,
+  viewpoint: PropTypes.string
 };
 
 ListView.defaultProps = {
