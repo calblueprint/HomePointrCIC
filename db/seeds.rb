@@ -3,8 +3,8 @@
 # Constants
 
 # Please set the following to at LEAST 10
-NUM_LANDLORDS = 10
-NUM_REFERRAL_AGENCIES = 10
+NUM_LANDLORDS = 2
+NUM_REFERRAL_AGENCIES = 2
 
 # Please set the following to a multiple of 3. RECOMMENDED: 30 for both
 NUM_PROPERTIES = 30
