@@ -33,4 +33,12 @@ class ConfirmModal extends React.Component {
   }
 }
 
+ConfirmModal.propTypes = {
+  visible: PropTypes.bool,
+  onOk: PropTypes.func,
+  onCancel: PropTypes.func,
+  operation: PropTypes.string,
+  message: PropTypes.message
+};
+
 export default ConfirmModal;

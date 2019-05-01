@@ -16,12 +16,12 @@ class TenantModal extends React.Component {
 
   handleButtons() {
     return(
-        <ApplicationStatusButtons
-          property_id={this.props.application.property_id}
-          application_id={this.props.application.id}
-          status={this.props.application.status}
-          />
-        )
+      <ApplicationStatusButtons
+        property_id={this.props.application.property_id}
+        application_id={this.props.application.id}
+        status={this.props.application.status}
+        />
+      )
   }
 
   renderAttachment() {
@@ -137,8 +137,6 @@ class TenantModal extends React.Component {
             </div>
             {this.handleButtons()}
           </div>
-
-
         </Modal>
       </div>
     );
@@ -146,15 +144,12 @@ class TenantModal extends React.Component {
 }
 
 TenantModal.propTypes = {
-  email: PropTypes.string,
-  phone: PropTypes.string,
-  description: PropTypes.string,
+  visible: PropTypes.bool,
+  tenant: PropTypes.object,
+  displayTag: PropTypes.bool,
   name: PropTypes.string,
-  app: PropTypes.object,
-};
-
-TenantModal.defaultProps = {
-  app: null,
+  onOk: PropTypes.func,
+  onCancel: PropTypes.func
 };
 
 export default TenantModal;

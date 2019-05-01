@@ -1,4 +1,3 @@
-
 import React from 'react';
 import PropTypes from "prop-types";
 import 'antd/dist/antd.css';
@@ -264,9 +263,9 @@ class SubmissionModal extends React.Component {
 
 }
 SubmissionModal.propTypes = {
-  location: PropTypes.string,
-  description: PropTypes.string,
-  images: PropTypes.array,
+  onSubmitProperty: PropTypes.func,
+  property: PropTypes.object,
+  tenant: PropTypes.object
 };
 
 export default SubmissionModal;

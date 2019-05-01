@@ -31,4 +31,12 @@ class DeleteModal extends React.Component {
   }
 }
 
+DeleteModal.propTypes = {
+  visible: PropTypes.bool,
+  onOk: PropTypes.func,
+  onCancel: PropTypes.func,
+  operation: PropTypes.string,
+  message: PropTypes.message
+};
+
 export default DeleteModal;

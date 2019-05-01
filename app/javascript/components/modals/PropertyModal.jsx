@@ -90,10 +90,6 @@ class PropertyModal extends React.Component {
           marginTop="-50px"
           footer={null}
         >
-        {/*
-        look at the renderPhotos thing!
-        <img className="image" style={{backgroundImage: `url(${this.props.property.images[0].url})`}}> </img>
-        */}
           <div className="flex-container">
             <div className="flex-item">
               <div className="modal-section" style={{ paddingTop: '5%' }}>
@@ -205,9 +201,10 @@ class PropertyModal extends React.Component {
 }
 
 PropertyModal.propTypes = {
-  location: PropTypes.string,
-  description: PropTypes.string,
-  images: PropTypes.array,
+  property: PropTypes.object,
+  visible: PropTypes.bool,
+  onOk: PropTypes.func,
+  onCancel: PropTypes.func
 };
 
 export default PropertyModal;

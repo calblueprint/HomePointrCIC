@@ -1,5 +1,6 @@
 import React from "react";
 import { Icon, Modal, Button } from 'antd';
+import PropTypes from "prop-types";
 
 class InstructionsModal extends React.Component {
   constructor(props) {
@@ -62,5 +63,9 @@ class InstructionsModal extends React.Component {
     );
   }
 }
+
+InstructionsModal.propTypes = {
+  status: PropTypes.string
+};
 
 export default InstructionsModal;
