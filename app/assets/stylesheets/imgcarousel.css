@@ -1,0 +1,95 @@
+.carousel-modal {
+  height: 204px;
+  width: 960px;
+}
+
+.carousel-view {
+  height: 304px;
+  width: 480px;
+  margin-bottom: 20px;
+}
+
+.carousel-img-view {
+  position: relative;
+  z-index: 0;
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+}
+
+.carousel-img-modal {
+  position: relative;
+  z-index: 0;
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+}
+
+.carousel-img-modal:hover {
+  cursor: pointer;
+}
+
+.carousel-img-modal:active {
+  position: relative;
+  width: 100%;
+  height: auto;
+  z-index: 2;
+}
+
+.expand-text {
+  top: 0;
+  left: 0;
+  margin-left: 424px;
+  margin-top: 200px;
+  position: absolute;
+  z-index: 1;
+}
+
+.h3-expand {
+  color: white;
+  text-transform: uppercase;
+  font-weight: normal !important;
+  font-size: 10px;
+}
+
+.left-arrow-modal {
+  top: 0;
+  left: 0;
+  position: absolute;
+  z-index: 3;
+  margin-left: 50px;
+  margin-top: 95px;
+}
+
+.left-arrow-view {
+  top: 0;
+  left: 0;
+  position: absolute;
+  z-index: 3;
+  margin-left: 15px;
+  margin-top: 200px;
+}
+
+.arrow-img {
+  height: 42px;
+  width: 40px;
+  cursor: pointer;
+}
+
+.right-arrow-modal {
+  top: 0;
+  left: 0;
+  position: absolute;
+  z-index: 3;
+  margin-left: 930px;
+  margin-top: 95px;
+}
+
+.right-arrow-view {
+  top: 0;
+  left: 0;
+  position: absolute;
+  z-index: 3;
+  margin-left: 420px;
+  margin-top: 200px;
+}
