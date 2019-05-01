@@ -54,7 +54,7 @@ class PropertyShowPage extends React.Component {
   }
 
   renderPendingApplications() {
-    if (this.state.tenants.length !== 0) {
+    if (this.props.potentialTenantApps.length !== 0) {
       return(
         <div>
           <ListView
