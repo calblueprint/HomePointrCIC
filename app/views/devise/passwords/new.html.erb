@@ -1,6 +1,6 @@
-<div class="small-frame">
+<div class="small-frame" style="padding-top:50px; padding-bottom: 80px;">
 	<%= image_tag("logo.png", :alt => "logo", :class=>"logo") %>
-	<h2 style="margin-bottom: 20px;">Forgot your password?</h2>
+	<h2 style="margin-bottom: 20px; margin-top: -20px;">Forgot your password?</h2>
 	<%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f| %>
 	  <%= devise_error_messages! %>
 
@@ -11,18 +11,14 @@
 		 </div>
 
 	  <div style="display: flex; margin-bottom: 50px;">
-			<div class="mb4" style="margin-right: 160px; margin-top: 5px;">
-				<%- if controller_name != 'sessions' %>
-				  <%= link_to "Log in", new_session_path(resource_name)%><br />
-				<% end -%>
-			</div>
-			<div class="mb4" style="margin-top: 5px;">
-				<%- if devise_mapping.registerable? && controller_name != 'registrations' %>
-				  <%= link_to "Sign up", new_registration_path(resource_name) %><br />
-				<% end -%>
-			</div>
-		</div>
-
+			<%- if controller_name != 'sessions' %>
+			  <%= link_to "Log in", new_session_path(resource_name)%><br />
+			<% end -%>
+      <p>&nbspor&nbsp</p>
+			<%- if devise_mapping.registerable? && controller_name != 'registrations' %>
+			  <%= link_to "Sign up", new_registration_path(resource_name) %><br />
+			<% end -%>
+    </div>
 	<% end %>
 
 </div>
