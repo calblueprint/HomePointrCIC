@@ -476,7 +476,7 @@ class CreateFormTenants extends React.Component {
                     max={5000}
                     style={{ width: 80 }}
                     value={tenant.rent_min}
-                    onChange={() => this.handleChange("rent_min")}
+                    onChange={(value) => this.handleChangeSelect("rent_min", value)}
                   />
                 </Col>
                 <Col className="slider" span={12}>
@@ -495,7 +495,7 @@ class CreateFormTenants extends React.Component {
                     max={5000}
                     style={{ width: 80 }}
                     value={tenant.rent_max}
-                    onChange={() => this.handleChange("rent_max")}
+                    onChange={(value) => this.handleChangeSelect("rent_max", value)}
                   />
                 </Col>
               </Row>
@@ -544,7 +544,10 @@ class CreateFormTenants extends React.Component {
                   required: true, message: 'Please input your response!',
                 }]
               })(
-                <Input onChange={() => this.handleChange("local_council")}/>
+                <Select placeholder="Select One" value={tenant.local_council} onChange={(value) => this.handleChangeSelect("local_council", value)}>
+                  <Option value={true}>Yes</Option>
+                  <Option value={false}>No</Option>
+                </Select>
               )}
             </Form.Item>
             <Form.Item
@@ -702,7 +705,7 @@ class CreateFormTenants extends React.Component {
     return (
       <div className="tenant-form-container">
         <div><h1>Step 5: Add Default Client Form</h1></div>
-        Click <a href="https://drive.google.com/file/d/1cHdyVvPWnnzwo6u1qChB-V8kIJTRSsAh/view?usp=sharing" target="_blank">here</a> to download assessment form.
+        <p>Click <a className="client-form-link" href="https://drive.google.com/file/d/1cHdyVvPWnnzwo6u1qChB-V8kIJTRSsAh/view?usp=sharing" target="_blank">here</a> to download assessment form.</p>
         <Form hideRequiredMark={true}>
           <Form.Item
             label="Upload Form"

@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import { Checkbox, Card, Col, Row, Button, Avatar, Icon } from "antd";
 import TenantModal from "./modals/TenantModal";
 import PropertyModal from "./modals/PropertyModal";
-import ApplicationModal from "./modals/ApplicationModal";
 import SubmissionModal from "./modals/SubmissionModal";
 import Utils from 'helpers/utils';
 import "antd/dist/antd.css";
@@ -78,16 +77,6 @@ class ListView extends React.Component {
     if (this.props.tenantSelect) {
       return(<Button type="default" onClick={(e) => this.props.selectTenantFunc(e, resource)}>Select Client</Button>)
     }
-  }
-
-  // renderApplicationStatus(index) {
-  //   if (this.props.applications) {
-  //     return Utils.renderStatus(this.props.applications[index].status, true)
-  //   }
-  // }
-
-  renderApplicationModal(app) {
-    return(<ApplicationModal application={app}/>)
   }
 
   getApplication = (index) => {

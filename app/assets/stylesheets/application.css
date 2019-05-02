@@ -51,6 +51,7 @@ p {
   font-weight: normal;
   line-height: 22px;
   margin: 0;
+  display: inline-block;
 }
 
 .tag {

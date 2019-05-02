@@ -10,9 +10,17 @@
   padding-top: 60px;
 }
 
+.modal-avatar-wrapper {
+  height: 224px;
+  width: 224px;
+  margin-bottom: 32px;
+}
+
 .modal-avatar {
   border-radius: 4px 4px 4px 4px;
-  margin-bottom: 32px;
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
 }
 
 .basic-info {

@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import 'antd/dist/antd.css';
 import { Modal, Button, Icon, Card, Avatar, Table } from 'antd';
 import ApplicationStatusButtons from './../individual/ApplicationStatusButtons'
-import '../../../assets/stylesheets/modal.css';
+import '../../../assets/stylesheets/tenantmodal.css';
 import Utils from "helpers/utils";
 
 class TenantModal extends React.Component {
@@ -26,7 +26,7 @@ class TenantModal extends React.Component {
 
   renderAttachment() {
     if (this.props.application) {
-      return(<p><a href={this.props.application.url}><Icon type="paper-clip" />Attachment</a></p>)
+      return(<p><a href={this.props.application.url} target="_blank"><Icon type="paper-clip" />Attachment</a></p>)
     }
   }
 
@@ -34,14 +34,14 @@ class TenantModal extends React.Component {
     if (this.props.tenant.url == null) {
       return (
         <React.Fragment key='avatar'>
-          <Avatar size={280} className="profile-picture" icon="user"/>
+          <Avatar size={224} className="modal-avatar" icon="user"/>
         </React.Fragment>
       )
     } else {
       return (
-        <React.Fragment key='avatar'>
-          <Avatar size={280} className="profile-picture" src={this.props.tenant.url}/>
-        </React.Fragment>
+        <div className="modal-avatar-wrapper">
+          <img className="modal-avatar" height="224" width="224" src={this.props.tenant.url}/>
+        </div>
       )
     }
   }
@@ -61,12 +61,12 @@ class TenantModal extends React.Component {
     const dataSource = [{
       fileName: 'Tenant Application',
       lastUpdated: this.props.tenant.updated_at.split("T")[0],
-      attachment: <a href={this.props.tenant.form_url} download>Download</a>,
+      attachment: <a href={this.props.tenant.form_url} target="_blank" download>Download</a>,
       key: '1'
     }, {
       fileName: 'Additional Files',
       lastUpdated: this.props.application.updated_at.split("T")[0],
-      attachment: <a href={this.props.application.url} download>Download</a>,
+      attachment: <a href={this.props.application.url} target="_blank" download>Download</a>,
       key: '2'
     }];
 
@@ -81,7 +81,7 @@ class TenantModal extends React.Component {
     }, {
       title: 'Attachment',
       dataIndex: 'attachment',
-      render: download => <a href={this.props.application.url}>{download}</a>,
+      render: download => <a href={this.props.application.url} target="_blank">{download}</a>,
       key: 'attachment'
     }];
 
