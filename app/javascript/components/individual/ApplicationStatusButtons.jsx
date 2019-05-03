@@ -13,7 +13,7 @@ class ApplicationStatusButtons extends React.Component {
     this.state = {
       displayRejectModal: 0,
       displayInterviewModal: 0,
-      displayAcceptModal: 0,
+      displayOfferTenancyModal: 0,
       displayRemoveModal: 0
     };
     this.handleStatus = this.handleStatus.bind(this);
@@ -40,7 +40,7 @@ class ApplicationStatusButtons extends React.Component {
 
   handleReject = () => this.handleStatus("rejected");
   handleInterview = () => this.handleStatus("interview");
-  handleAccept = () => this.handleStatus("housed");
+  handleOfferTenancy = () => this.handleStatus("offer_of_tenancy");
   removeTenant = () => this.handleStatus("rejected");
 
 // rejected: 0, received: 1, interview: 2, housed: 3
@@ -54,9 +54,9 @@ class ApplicationStatusButtons extends React.Component {
       this.setState((state) => {
         return {displayInterviewModal: 1 - state.displayInterviewModal}
       });
-    } else if (operation === "Accept") {
+    } else if (operation === "Offer Tenancy") {
       this.setState((state) => {
-        return {displayAcceptModal: 1 - state.displayAcceptModal}
+        return {displayOfferTenancyModal: 1 - state.displayOfferTenancyModal}
       });
     } else if (operation === "Remove") {
       this.setState((state) => {
@@ -86,14 +86,14 @@ class ApplicationStatusButtons extends React.Component {
           visible={this.state.displayInterviewModal}
         />
       )
-    } else if (operation === "Accept") {
+    } else if (operation === "Offer Tenancy") {
       return(
         <ConfirmModal
           message={"offer this client tenancy"}
           operation={"Offer Tenancy"}
-          onOk={this.handleAccept}
-          onCancel={() => this.toggleConfirmationModal("Accept")}
-          visible={this.state.displayAcceptModal}
+          onOk={this.handleOfferTenancy}
+          onCancel={() => this.toggleConfirmationModal("Offer Tenancy")}
+          visible={this.state.displayOfferTenancyModal}
         />
       )
     } else if (operation === "Remove") {
@@ -146,16 +146,16 @@ class ApplicationStatusButtons extends React.Component {
               Reject
             </Button>
           </div>
-          <div className="accept-button">
+          <div className="offer-tenancy-button">
             <Button
-              key="accept"
+              key="offer_of_tenancy"
               type="primary"
-              onClick={() => this.toggleConfirmationModal("Accept")}>
+              onClick={() => this.toggleConfirmationModal("Offer Tenancy")}>
               Offer Tenancy
             </Button>
           </div>
           {this.renderConfirmationModal("Reject")}
-          {this.renderConfirmationModal("Accept")}
+          {this.renderConfirmationModal("Offer Tenancy")}
         </div>
       );
     } else if (this.props.status === "housed") {

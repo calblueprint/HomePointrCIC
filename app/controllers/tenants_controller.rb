@@ -49,7 +49,7 @@ class TenantsController < ApplicationController
     @properties.each do |p|
       current_count = p.applications.where(status: "housed").size
       @tenantCounts << current_count
-      app_count = p.applications.where(status: "received").size + p.applications.where(status: "interview").size
+      app_count = p.applications.where(status: "received").size + p.applications.where(status: "interview").size + p.application.where(status: "offer_of_tenancy")
       @potentialTenantCounts << app_count
     end
 

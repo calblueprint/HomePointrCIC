@@ -106,7 +106,7 @@ class PropertiesController < ApplicationController
                             { form_url: nil }
                           end
         @tenantApps << a
-      elsif (a.status == 'received') || (a.status == 'interview')
+      elsif (a.status == 'received') || (a.status == 'interview') || (a.status == 'offer_of_tenancy')
         @potentialTenants << a.tenant
         @potentialTenantsImages << if a.tenant.avatar.attached?
                                      { url: url_for(a.tenant.avatar) }

@@ -76,6 +76,9 @@ const Utils = {
         case "rejected":
           status = 3;
           break;
+        case "offer_of_tenancy":
+          status = 5;
+          break;
       }
     }
 
@@ -84,7 +87,8 @@ const Utils = {
         1: ["Interviewing", "blue"],
         2: ["Applied", "purple"],
         3: ["Declined", "red"],
-        4: ["No Applications", "gold"]
+        4: ["No Applications", "gold"],
+        5: ["Offer Tenancy", "brown"]
     }
 
     if (displayTag) {

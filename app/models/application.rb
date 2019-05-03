@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
 class Application < ApplicationRecord
-  enum status: { rejected: 0, received: 1, interview: 2, housed: 3 }
+  # enum status: { rejected: 0, received: 1, interview: 2, housed: 3 }
+  enum status: { rejected: 0, received: 1, interview: 2, offer_of_tenancy: 3, housed: 4 }
   has_one_attached :form
   belongs_to :property, required: false
   belongs_to :tenant, required: false
