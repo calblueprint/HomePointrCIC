@@ -107,7 +107,7 @@ class CreatePropertyForm extends React.Component {
     var placesAutocomplete = places({
       appId: 'plT4Z8MULV0O',
       apiKey: '48e619128b523ff86727e917eb1fa1d3',
-      container: document.querySelector('#address')
+      container: this.autocompleteElem
     });
     placesAutocomplete.on('change', (e) => {
       const new_property = this.state.property;
@@ -115,7 +115,6 @@ class CreatePropertyForm extends React.Component {
       new_property['lat'] = e.suggestion.latlng.lat;
       new_property['long'] = e.suggestion.latlng.lng;
       this.setState({ property: new_property });
-      document.querySelector('#address').value = e.suggestion.value;
     });
   }
 
@@ -244,14 +243,7 @@ class CreatePropertyForm extends React.Component {
           <Form.Item
             label="Address"
           >
-            {getFieldDecorator('address', {
-              initialValue: property.address,
-              rules: [{
-                required: true, message: 'Please input the address!',
-              }],
-            })(
-              <Input id="address"/>
-            )}
+            <input id="address" onChange={() => this.handleChange("address")} ref={(ref) => { this.autocompleteElem = ref; }} size="8"/>
           </Form.Item>
           <Form.Item
             label="Monthly rent"
@@ -593,7 +585,7 @@ class CreatePropertyForm extends React.Component {
                   key={'image'}
                   multiple={true}
                   onSuccess={signedIds => { this.uploadImages(signedIds) }}
-                  render={(renderProps) => Utils.activeStorageUploadRenderer({ ...renderProps, onURLChange: this.onURLChange, imageUrl: this.state.imageUrl, type: "images" })}
+                  render={(renderProps) => Utils.activeStorageUploadRenderer({ ...renderProps, onURLChange: this.onURLChange, imageUrl: this.state.imageUrl, type: "images", fileConstraints: "image/*" })}
                 />
               </div>
             </Form.Item>
@@ -623,7 +615,7 @@ class CreatePropertyForm extends React.Component {
                   key={'form'}
                   multiple={false}
                   onSuccess={signedIds => { this.uploadForms(signedIds) }}
-                  render={(renderProps) => Utils.activeStorageUploadRenderer({ ...renderProps, onURLChange: this.onURLChange, filename: this.state.formName, type: "form" })}
+                  render={(renderProps) => Utils.activeStorageUploadRenderer({ ...renderProps, onURLChange: this.onURLChange, filename: this.state.formName, type: "form", fileConstraints: "application/msword, application/vnd.ms-excel, text/plain, application/pdf" })}
                 />
               </div>
             </Form.Item>

@@ -176,27 +176,13 @@ class CreateFormTenants extends React.Component {
 
   renderUpload() {
     let buttonProps = null;
-      buttonProps = {
-        listType: 'picture-card',
-        fileList: this.state.fileList,
-        onRemoveRequest: (e) => this.state.imageRemoveList.push(e.uid),
-        className: 'upload-list-inline',
-        onChange: (fileList) => this.handleChangeImage(fileList)
-      };
-
-      // <ActiveStorageProvider
-      //   endpoint={{
-      //     path: '/api/tenants/' + this.state.tenant.id.toString(),
-      //     model: "Tenant",
-      //     attribute: 'avatar',
-      //     method: "PUT",
-      //   }}
-      //   headers={{
-      //     'Content-Type': 'application/json'
-      //   }}
-      //   render={Utils.activeStorageUploadRenderer}
-      // />
-
+    buttonProps = {
+      listType: 'picture-card',
+      fileList: this.state.fileList,
+      onRemoveRequest: (e) => this.state.imageRemoveList.push(e.uid),
+      className: 'upload-list-inline',
+      onChange: (fileList) => this.handleChangeImage(fileList)
+    };
     return (
       <div>
         Images
@@ -687,7 +673,7 @@ class CreateFormTenants extends React.Component {
                 key={'image'}
                 multiple={false}
                 onSuccess={signedIds => { this.uploadAvatar(signedIds) }}
-                render={(renderProps) => Utils.activeStorageUploadRenderer({ ...renderProps, onURLChange: this.onURLChange, imageUrl: this.state.imageUrl, type: "images" })}
+                render={(renderProps) => Utils.activeStorageUploadRenderer({ ...renderProps, onURLChange: this.onURLChange, imageUrl: this.state.imageUrl, type: "images", fileConstraints: "image/*" })}
               />
             </div>
           </Form.Item>
@@ -715,7 +701,7 @@ class CreateFormTenants extends React.Component {
                 key={'form'}
                 multiple={false}
                 onSuccess={signedIds => { this.uploadForms(signedIds) }}
-                render={(renderProps) => Utils.activeStorageUploadRenderer({ ...renderProps, onURLChange: this.onURLChange, filename: this.state.formName, type: "form" })}
+                render={(renderProps) => Utils.activeStorageUploadRenderer({ ...renderProps, onURLChange: this.onURLChange, filename: this.state.formName, type: "form", type: "form", fileConstraints: "application/msword, application/vnd.ms-excel, text/plain, application/pdf" })}
               />
             </div>
           </Form.Item>

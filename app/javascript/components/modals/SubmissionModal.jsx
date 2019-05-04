@@ -1,4 +1,3 @@
-
 import React from 'react';
 import PropTypes from "prop-types";
 import 'antd/dist/antd.css';
@@ -189,7 +188,7 @@ class SubmissionModal extends React.Component {
                 <DirectUploadProvider
                   multiple={false}
                   onSuccess={signedIds => { this.uploadForms(signedIds) }}
-                  render={(renderProps) => Utils.activeStorageUploadRenderer({ ...renderProps, type: "form" })}
+                  render={(renderProps) => Utils.activeStorageUploadRenderer({ ...renderProps, type: "form", type: "form", fileConstraints: "application/msword, application/vnd.ms-excel, text/plain, application/pdf" })}
                 />
               </div>
               {this.renderErrorMsg()}

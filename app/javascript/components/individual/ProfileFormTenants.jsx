@@ -591,7 +591,7 @@ class ProfileFormTenants extends React.Component {
               <DirectUploadProvider
                 multiple={false}
                 onSuccess={signedIds => { this.uploadAvatar(signedIds) }}
-                render={(renderProps) => Utils.activeStorageUploadRenderer({ ...renderProps, imageUrl: this.props.image_object.url, type: "images" })}
+                render={(renderProps) => Utils.activeStorageUploadRenderer({ ...renderProps, imageUrl: this.props.image_object.url, type: "images", fileConstraints: "image/*" })}
               />
             </div>
           </Form.Item>
@@ -605,7 +605,7 @@ class ProfileFormTenants extends React.Component {
               <DirectUploadProvider
                 multiple={false}
                 onSuccess={signedIds => { this.uploadForms(signedIds) }}
-                render={(renderProps) => Utils.activeStorageUploadRenderer({ ...renderProps, filename: this.props.form_name, type: "form" })}
+                render={(renderProps) => Utils.activeStorageUploadRenderer({ ...renderProps, filename: this.props.form_name, type: "form", type: "form", fileConstraints: "application/msword, application/vnd.ms-excel, text/plain, application/pdf" })}
               />
             </div>
           </Form.Item>
