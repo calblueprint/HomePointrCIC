@@ -15,14 +15,6 @@ class RATenantView extends React.Component {
     window.location = '/tenants/' + this.props.tenant.id.toString() + '/edit'
   }
 
-  renderName() {
-    return (
-      <div className="split-screen-left-title" key='name'>
-        <h1> {this.props.tenant.name} </h1>
-      </div>
-    )
-  }
-
   renderAvatar() {
     if (this.props.avatar == null) {
       return (
@@ -32,9 +24,9 @@ class RATenantView extends React.Component {
       )
     } else {
       return (
-        <React.Fragment key='avatar'>
-          <Avatar size={280} className="profile-picture" src={this.props.avatar}/>
-        </React.Fragment>
+        <div className="profile-picture-wrapper" key='avatar'>
+          <img className="profile-picture" src={this.props.avatar}/>
+        </div>
       )
     }
   }
@@ -136,7 +128,7 @@ class RATenantView extends React.Component {
         {this.renderAvatar()}
         <div className="split-screen-left-text">
           <Row>
-            <Col span={16}><h1>{this.props.tenant.name}</h1></Col>
+            <Col span={16}><h1 className="split-screen-left-title">{this.props.tenant.name}</h1></Col>
             <Col span={8} className='chips'>
               <Button key='button' type='default' onClick={this.editRedirect} className='edit-button'>Edit</Button>
             </Col>

@@ -48,7 +48,6 @@ class PropertyProfileForm extends React.Component {
     this.handleChangeDate = this.handleChangeDate.bind(this);
     this.handleChangeSelect = this.handleChangeSelect.bind(this);
     this.renderUpload = this.renderUpload.bind(this);
-    this.setFile = this.setFile.bind(this);
   }
 
   componentDidMount() {
@@ -60,8 +59,7 @@ class PropertyProfileForm extends React.Component {
     var placesAutocomplete = places({
       appId: 'plT4Z8MULV0O',
       apiKey: '48e619128b523ff86727e917eb1fa1d3',
-      // container: document.querySelectorAll('div.ant-row.ant-form-item')[0].children[1].querySelector('div').querySelector('span').querySelector('input')
-      container: document.querySelector('#address')
+      container: this.autocompleteElem
     });
     placesAutocomplete.on('change', (e) => {
       const new_property = this.state.property;
@@ -69,7 +67,6 @@ class PropertyProfileForm extends React.Component {
       new_property['lat'] = e.suggestion.latlng.lat;
       new_property['long'] = e.suggestion.latlng.lng;
       this.setState({ property: new_property });
-      document.querySelector('#address').value = e.suggestion.value;
     });
   }
 
@@ -84,17 +81,8 @@ class PropertyProfileForm extends React.Component {
   //api destroy
   handleDestroy() {
     let id = this.state.property.id;
-    // let type = this.props.type;
     var request = null;
-    // if (this.props.type === "properties") {
-    //   request = APIRoutes.properties.delete(id)
-    // } else if (this.props.type === "landlords") {
-    //   request = APIRoutes.landlords.delete(id)
-    // } else if (this.props.type === "referral_agencies") {
-    //   request = APIRoutes.referral_agencies.delete(id)
-    // } else {
-      request = APIRoutes.properties.delete(id)
-    // }
+    request = APIRoutes.properties.delete(id)
     fetch(request, {
       method: 'DELETE',
       headers: {
@@ -109,7 +97,6 @@ class PropertyProfileForm extends React.Component {
   //api edit
   handleEdit = (e) => {
     e.preventDefault();
-
     this.props.form.validateFields(
       (err) => {
         if (!err) {
@@ -135,8 +122,11 @@ class PropertyProfileForm extends React.Component {
         } else {
           window.scrollTo(0, 0);
         }
-      });
+      }
+    );
   }
+
+  //delete from picturewall
   removeImages(imageList) {
     var i;
     for (i = 0; i < imageList.length; i++) {
@@ -158,54 +148,17 @@ class PropertyProfileForm extends React.Component {
     property[attr] = event.target.value;
     this.setState({ property: property });
   }
+
   handleChangeDate(date) {
     const property = this.state.property;
     property["date_available"] = date.format("YYYY-MM-DD");
     this.setState({ property: property });
   }
+  
   handleChangeSelect(attr, value) {
     const property = this.state.property;
     property[attr] = value;
     this.setState({ property: property })
-  }
-
-  setFile(e) {
-    const files = e.target.files;
-    if (!files || !files[0]) {
-      return;
-    }
-    this.setState({ files: files[0] });
-  }
-
-  renderUpload() {
-    let buttonProps = null;
-      buttonProps = {
-        listType: 'picture-card',
-        fileList: this.state.fileList,
-        onRemoveRequest: (e) => this.state.imageRemoveList.push(e.uid),
-        className: 'upload-list-inline',
-        onChange: (fileList) => this.handleChangeImage(fileList)
-      };
-
-      // <ActiveStorageProvider
-      //   endpoint={{
-      //     path: '/api/properties/' + this.state.property.id.toString(),
-      //     model: "property",
-      //     attribute: 'avatar',
-      //     method: "PUT",
-      //   }}
-      //   headers={{
-      //     'Content-Type': 'application/json'
-      //   }}
-      //   render={Utils.activeStorageUploadRenderer}
-      // />
-
-    return (
-      <div>
-        Images
-        <PicturesWall {...buttonProps} />
-      </div>
-    )
   }
 
   setupImages = () => {
@@ -243,8 +196,6 @@ class PropertyProfileForm extends React.Component {
         className: 'upload-list-inline',
         onChange: (fileList) => this.handleChangeImage(fileList)
       };
-
-
     return (
       <div>
         <PicturesWall {...buttonProps} />
@@ -293,14 +244,6 @@ class PropertyProfileForm extends React.Component {
     }
   }
 
-  //AVATAR -- DON'T DELETE
-  // <Form.Item
-  //   label="Upload Avatar"
-  // >
-  //   <Avatar property={this.state.property}/>
-  // </Form.Item>
-
-
   render() {
     const { getFieldDecorator } = this.props.form;
     const Option = Select.Option;
@@ -317,14 +260,7 @@ class PropertyProfileForm extends React.Component {
               <Form.Item
                 label="Address"
               >
-                {getFieldDecorator('address', {
-                  initialValue: property.address,
-                  rules: [{
-                    required: true, message: 'Please input the address!',
-                  }],
-                })(
-                  <Input id="address" size="8"/>
-                )}
+                <input id="address" value={property.address} onChange={() => this.handleChange("address")} ref={(ref) => { this.autocompleteElem = ref; }} size="8"/>
               </Form.Item>
               <Form.Item
                 label="Rent"
@@ -575,7 +511,7 @@ class PropertyProfileForm extends React.Component {
                 <DirectUploadProvider
                   multiple={true}
                   onSuccess={signedIds => { this.uploadImages(signedIds) }}
-                  render={(renderProps) => Utils.activeStorageUploadRenderer({ ...renderProps, type: "images" })}
+                  render={(renderProps) => Utils.activeStorageUploadRenderer({ ...renderProps, type: "images", fileConstraints: "image/*" })}
                 />
               </div>
             </Form.Item>
@@ -589,7 +525,7 @@ class PropertyProfileForm extends React.Component {
                   <DirectUploadProvider
                     multiple={false}
                     onSuccess={signedIds => { this.uploadForms(signedIds) }}
-                    render={(renderProps) => Utils.activeStorageUploadRenderer({ ...renderProps, filename: this.props.form_name, type: "form" })}
+                    render={(renderProps) => Utils.activeStorageUploadRenderer({ ...renderProps, filename: this.props.form_name, type: "form", fileConstraints: "application/msword, application/vnd.ms-excel, text/plain, application/pdf" })}
                   />
                 </div>
               </Form.Item>

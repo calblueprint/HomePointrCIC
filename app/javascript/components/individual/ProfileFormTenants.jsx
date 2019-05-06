@@ -46,8 +46,8 @@ class ProfileFormTenants extends React.Component {
 
   convertToDict() {
     const tenant = this.state.tenant;
-    const keys = ["name", "description", "email", "phone", "rent_min", "rent_max", "housing_type", "property_type", "number_of_bedrooms", "location", "referral_agency_id", "date_needed", "avatar", "number_of_bathrooms", "mobility_aids", "accessible_shower", "car_parking", "lift_access", "form"];
-    const values = [tenant.name, tenant.description, tenant.email, tenant.phone, tenant.rent_min, tenant.rent_max, tenant.housing_type, tenant.property_type, tenant.number_of_bedrooms, tenant.location, tenant.referral_agency_id, tenant.date_needed, this.state.avatar, tenant.number_of_bathrooms, tenant.mobility_aids, tenant.accessible_shower, tenant.car_parking, tenant.lift_access, this.state.form];
+    const keys = ["name", "description", "email", "phone", "rent_min", "rent_max", "housing_type", "property_type", "number_of_bedrooms", "location", "referral_agency_id", "date_needed", "avatar", "number_of_bathrooms", "mobility_aids", "accessible_shower", "car_parking", "living_arrangements", "lift_access", "form"];
+    const values = [tenant.name, tenant.description, tenant.email, tenant.phone, tenant.rent_min, tenant.rent_max, tenant.housing_type, tenant.property_type, tenant.number_of_bedrooms, tenant.location, tenant.referral_agency_id, tenant.date_needed, this.state.avatar, tenant.number_of_bathrooms, tenant.mobility_aids, tenant.accessible_shower, tenant.car_parking, tenant.living_arrangements, tenant.lift_access, this.state.form];
     let result = keys.reduce((obj, k, i) => ({...obj, [k]: values[i] }), {})
     return result
   }
@@ -432,10 +432,10 @@ class ProfileFormTenants extends React.Component {
                 <Col span={6}>
                   <InputNumber
                     min={0}
-                    max={5000}
+                    max={this.state.tenant.rent_min}
                     style={{ marginLeft: 16}}
                     value={tenant.rent_min}
-                    onChange={() => this.handleChange("rent_min")}
+                    onChange={(value) => this.handleChangeSelect("rent_min", value)}
                   />
                 </Col>
                 <Col className="slider" span={10}>
@@ -450,11 +450,11 @@ class ProfileFormTenants extends React.Component {
                 </Col>
                 <Col span={6}>
                   <InputNumber
-                    min={0}
+                    min={this.state.tenant.rent_max}
                     max={5000}
                     style={{ marginLeft: 16 }}
                     value={tenant.rent_max}
-                    onChange={() => this.handleChange("rent_max")}
+                    onChange={(value) => this.handleChangeSelect("rent_max", value)}
                   />
                 </Col>
               </Row>
@@ -487,7 +487,10 @@ class ProfileFormTenants extends React.Component {
                   required: true, message: 'Please input your status of local council!',
                 }],
               })(
-                <Input onChange={() => this.handleChange("local_council")}/>
+                <Select onChange={(value) => this.handleChangeSelect("local_council", value)}>
+                  <Option value={true}>Yes</Option>
+                  <Option value={false}>No</Option>
+                </Select>
               )}
             </Form.Item>
             <Form.Item
@@ -588,7 +591,7 @@ class ProfileFormTenants extends React.Component {
               <DirectUploadProvider
                 multiple={false}
                 onSuccess={signedIds => { this.uploadAvatar(signedIds) }}
-                render={(renderProps) => Utils.activeStorageUploadRenderer({ ...renderProps, imageUrl: this.props.image_object.url, type: "images" })}
+                render={(renderProps) => Utils.activeStorageUploadRenderer({ ...renderProps, imageUrl: this.props.image_object.url, type: "images", fileConstraints: "image/*" })}
               />
             </div>
           </Form.Item>
@@ -602,7 +605,7 @@ class ProfileFormTenants extends React.Component {
               <DirectUploadProvider
                 multiple={false}
                 onSuccess={signedIds => { this.uploadForms(signedIds) }}
-                render={(renderProps) => Utils.activeStorageUploadRenderer({ ...renderProps, filename: this.props.form_name, type: "form" })}
+                render={(renderProps) => Utils.activeStorageUploadRenderer({ ...renderProps, filename: this.props.form_name, type: "form", type: "form", fileConstraints: "application/msword, application/vnd.ms-excel, text/plain, application/pdf" })}
               />
             </div>
           </Form.Item>

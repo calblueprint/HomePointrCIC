@@ -82,7 +82,7 @@ class Avatar extends React.Component {
         className="avatar-uploader"
         showUploadList={false}
         customRequest={({file}) => {this.props.handleUpload([file])}}
-        // onChange={this.handleChange}
+        accept={this.props.fileConstraints}
       >
         {display}
       </Upload>,
@@ -108,7 +108,8 @@ class Avatar extends React.Component {
             this.handleChange(upload)
             return <p key={upload.id}>Finished uploading {upload.file.name}</p>
         }
-      })]
+      })
+      ]
 
     );
   }

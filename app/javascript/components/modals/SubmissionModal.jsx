@@ -1,10 +1,9 @@
-
 import React from 'react';
 import PropTypes from "prop-types";
 import 'antd/dist/antd.css';
-import { Modal, Button, Carousel, Avatar, Layout, Row, Col, Upload, Icon, Input } from 'antd';
+import { Modal, Button, Avatar, Layout, Row, Col, Upload, Icon, Input } from 'antd';
 import ApplicationStatusButtons from './../individual/ApplicationStatusButtons'
-import '../../../assets/stylesheets/modal.css';
+import '../../../assets/stylesheets/tenantmodal.css';
 import ActiveStorageProvider from "react-activestorage-provider";
 import Utils from 'helpers/utils';
 import APIRoutes from 'helpers/api_routes';
@@ -119,7 +118,9 @@ class SubmissionModal extends React.Component {
       )
     } else {
       return (
-        <img className="modal-avatar" height="224" width="224" src={this.props.property.images[0]["url"]} />
+        <div className="modal-avatar-wrapper">
+          <img className="modal-avatar" height="224" width="224" src={this.props.property.images[0]["url"]} />
+        </div>
       )
     }
   }
@@ -187,7 +188,7 @@ class SubmissionModal extends React.Component {
                 <DirectUploadProvider
                   multiple={false}
                   onSuccess={signedIds => { this.uploadForms(signedIds) }}
-                  render={(renderProps) => Utils.activeStorageUploadRenderer({ ...renderProps, type: "form" })}
+                  render={(renderProps) => Utils.activeStorageUploadRenderer({ ...renderProps, type: "form", type: "form", fileConstraints: "application/msword, application/vnd.ms-excel, text/plain, application/pdf" })}
                 />
               </div>
               {this.renderErrorMsg()}

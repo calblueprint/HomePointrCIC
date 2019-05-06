@@ -34,8 +34,7 @@ class Carousel extends React.Component {
     }
   }
 
-
-  render() {
+render() {
     if (this.props.location === "modal") {
       if (this.state.imgCount !== 1) {
         return (
@@ -64,11 +63,13 @@ class Carousel extends React.Component {
         return (
           <div className="carousel-view">
             <img className="carousel-img-view" src={this.state.images[this.state.currentImg]["url"]}/>
-            <div className="left-arrow-view">
-              <img src="/assets/left-arrow.png" onClick={this.onLeftClick} className="arrow-img"/>
-            </div>
-            <div className="right-arrow-view">
-              <img src="/assets/right-arrow.png" onClick={this.onRightClick} className="arrow-img"/>
+            <div className="carousel-arrows-wrapper">
+              <div className="left-arrow-view">
+                <img src="/assets/left-arrow.png" onClick={this.onLeftClick} className="arrow-img"/>
+              </div>
+              <div className="right-arrow-view">
+                <img src="/assets/right-arrow.png" onClick={this.onRightClick} className="arrow-img"/>
+              </div>
             </div>
           </div>
         );

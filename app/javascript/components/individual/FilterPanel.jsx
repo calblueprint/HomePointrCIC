@@ -128,21 +128,28 @@ class FilterPanel extends React.Component {
       this.setState({
         [filter_name]: []
       });
+      this.state.actual[filter_name]=[];
     } else if (filter_name == 'rent_min') {
       this.setState({
         rent_max: 5000,
         rent_min: 0,
       });
+      this.state.actual[rent_max] = 5000;
+      this.state.actual[rent_min] = 0;
     } else if (filter_name == 'capacity') {
       this.setState({
         capacity: 0,
         number_of_bedrooms: 0,
       });
+      this.state.actual[capacity] = 0;
+      this.state.actual[number_of_bedrooms] = 0;
     } else {
       this.setState({
         [filter_name]: 0
       });
+      this.state.actual[filter_name] = 0;
     }
+    this.props.applyFilter(this.state.actual);
     var activeFilter;
     if (filter_name == 'location') {
       activeFilter = 'locationFilterActive';

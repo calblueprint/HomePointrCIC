@@ -33,9 +33,9 @@ class TenantsController < ApplicationController
         @propertyimages << { images: nil }
       end
       if a.property.form.attached? == true
-        @propertyForms << { form: url_for(a.property.form) }
+        @propertyForms << { form: url_for(a.property.form), form_name: a.property.form.filename }
       else
-        @propertyForms << { form: nil }
+        @propertyForms << { form: nil, form_name: nil }
       end
       @form << { form: url_for(a.form) } if a.form.attached?
     end
