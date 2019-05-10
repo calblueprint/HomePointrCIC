@@ -67,28 +67,28 @@ const Utils = {
         case "housed":
           status = 0;
           break;
-        case "interview":
+        case "offer_of_tenancy":
           status = 1;
           break;
-        case "received":
+        case "interview":
           status = 2;
           break;
-        case "rejected":
+        case "received":
           status = 3;
           break;
-        case "offer_of_tenancy":
-          status = 5;
+        case "rejected":
+          status = 4;
           break;
       }
     }
 
     const statusDict = {
         0: ["Accepted", "green"],
-        1: ["Interviewing", "blue"],
-        2: ["Applied", "purple"],
-        3: ["Declined", "red"],
-        4: ["No Applications", "gold"],
-        5: ["Offer Tenancy", "brown"]
+        1: ["Offered Tenancy", "cyan"],
+        2: ["Interviewing", "blue"],
+        3: ["Applied", "purple"],
+        4: ["Declined", "red"],
+        5: ["No Applications", "gold"]
     }
 
     if (displayTag) {

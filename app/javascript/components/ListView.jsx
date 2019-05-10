@@ -102,6 +102,7 @@ class ListView extends React.Component {
                   renderModal={this.props.renderModal}
                   noClick={this.props.noClick}
                   viewpoint={this.props.viewpoint}
+                  application={this.getApplication(index)}
                   key={index}
                 />
 

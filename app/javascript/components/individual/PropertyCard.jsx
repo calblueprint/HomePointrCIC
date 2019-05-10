@@ -62,6 +62,7 @@ class PropertyCard extends React.Component {
           visible={this.state.displayModal}
           onOk={this.onDismiss}
           onCancel={this.onDismiss}
+          application_id={this.props.application.id}
         />
       );
     }

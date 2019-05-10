@@ -6,6 +6,9 @@ import Utils from 'helpers/utils';
 import ApplicationStatusButtons from './../individual/ApplicationStatusButtons'
 import '../../../assets/stylesheets/propertymodal.css';
 import Carousel from '../individual/Carousel';
+import APIRoutes from 'helpers/api_routes';
+import ConfirmModal from '../modals/ConfirmModal'
+import DeleteModal from '../modals/DeleteModal'
 
 class PropertyModal extends React.Component {
   constructor(props) {
@@ -13,7 +16,9 @@ class PropertyModal extends React.Component {
     this.state = {
       visible: this.props.visible,
       includes_boolean: false,
-      discludes_boolean: false
+      discludes_boolean: false,
+      displayAcceptModal: 0,
+      displayRejectModal: 0,
     }
   }
 
@@ -71,6 +76,86 @@ class PropertyModal extends React.Component {
     }
   }
 
+  toggleConfirmationModal = (operation) => {
+    if (operation === "Accept") {
+      this.setState((state) => {
+        return {displayAcceptModal: 1 - state.displayAcceptModal}
+      });
+    } else if (operation === "Reject") {
+      this.setState((state) => {
+        return {displayRejectModal: 1 - state.displayRejectModal}
+      });
+    }
+  }
+
+  renderConfirmationModal = (operation) => {
+    if (operation === "Reject") {
+      return(
+        <DeleteModal
+          message={"reject this client"}
+          operation={"Reject"}
+          onOk={() => this.handleStatus("reject")}
+          onCancel={() => this.toggleConfirmationModal("Reject")}
+          visible={this.state.displayRejectModal}
+        />
+      )
+    } else if (operation === "Accept") {
+      return(
+        <ConfirmModal
+          message={"accept this offer of tenancy"}
+          operation={"Accept"}
+          onOk={() => this.handleStatus("housed")}
+          onCancel={() => this.toggleConfirmationModal("Accept")}
+          visible={this.state.displayAcceptModal}
+        />
+      )
+    }
+  }
+
+  renderOfferTenancyButtons = () => {
+    return (
+      <div className="app-buttons" style={{ display: flex }}>
+        <div className="accept-button">
+          <Button
+            key="accept"
+            type="primary"
+            onClick={() => this.toggleConfirmationModal("Accept")}>
+            Accept
+          </Button>
+        </div>
+        <div className="reject-button">
+          <Button
+            key="reject"
+            type="danger"
+            onClick={() => this.toggleConfirmationModal("Reject")}>
+            Reject
+          </Button>
+        </div>
+        {this.renderConfirmationModal("Accept")}
+        {this.renderConfirmationModal("Reject")}
+      </div>
+    );
+  }
+
+  handleStatus = (new_status) => {
+    let application_id = this.props.application_id;
+    let body = JSON.stringify({status: new_status});
+    let request =APIRoutes.applications.update(application_id)
+    fetch(request, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        "X_CSRF-Token": document.getElementsByName("csrf-token")[0].content
+      },
+      body: body,
+      credentials: 'same-origin',
+    }).then((data) => {
+      window.location = '/properties/' + this.props.property.id
+    }).catch((data) => {
+      console.error(data);
+    });
+  }
+
   render() {
     return (
       <div key="PropertyModal">
@@ -81,7 +166,7 @@ class PropertyModal extends React.Component {
           onCancel={this.props.onCancel}
           width="1008px"
           marginTop="-50px"
-          footer={null}
+          footer={this.renderOfferTenancyButtons()}
         >
         <div className="property-modal">
           <div className="flex-container">

@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Button } from 'antd';
+import { Button, Alert } from 'antd';
 import 'antd/dist/antd.css';
 import moment from 'moment';
 import APIRoutes from 'helpers/api_routes';
@@ -156,6 +156,23 @@ class ApplicationStatusButtons extends React.Component {
           </div>
           {this.renderConfirmationModal("Reject")}
           {this.renderConfirmationModal("Offer Tenancy")}
+        </div>
+      );
+    } else if (this.props.status == "offer_of_tenancy") {
+      return (
+        <div style={{ float: "right" }}>
+          <Alert className="offer-tenancy-warning" message="Waiting for Referral Agency Respone to Offer of Tenancy" type="warning" style={{ width: 420, marginRight: 65 }}/>
+          <div className="app-buttons">
+            <div className="reject-button">
+              <Button
+                key="reject"
+                type="danger"
+                onClick={() => this.toggleConfirmationModal("Reject")}>
+                Reject
+              </Button>
+            </div>
+            {this.renderConfirmationModal("Reject")}
+          </div>
         </div>
       );
     } else if (this.props.status === "housed") {

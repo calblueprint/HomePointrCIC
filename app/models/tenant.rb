@@ -19,10 +19,11 @@ class Tenant < ApplicationRecord
   def priority
     ''"Returns priority of tenant:
     0 - matched with a house
-    1 - interviewing with a house
-    2 - applied
-    3 - rejected
-    4 - not applied yet
+    1 - offered tenancy
+    2 - interviewing with a house
+    3 - applied
+    4 - rejected
+    5 - not applied yet
     "''
     # return unless tenant
 
@@ -34,6 +35,7 @@ class Tenant < ApplicationRecord
       status_map.key?(a.status.to_s) ?
       status_map[a.status.to_s] : -1
     end
-    3 - all_statuses.max
+    puts all_statuses
+    4 - all_statuses.max
   end
 end
