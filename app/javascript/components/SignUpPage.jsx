@@ -141,7 +141,7 @@ class SignUpPage extends React.Component {
         <Form onSubmit={this.handleSubmit} layout="vertical" hideRequiredMark={true}>
 
           {/* HOMEPOINTR LOGO */}
-          <div className="logo"/>
+          <img src={logo} alt={"logo"} className="logo2"/>
           {/* FIRST ROW */}
           <Row gutter={60}>
             {/* ITEM 1 */}
