@@ -37,6 +37,17 @@
   background-position: center;
 }
 
+.logo2 {
+  width: 100px;
+  height: 100px;
+  margin-top: 20px;
+  margin-bottom: 30px;
+  margin-left: 42%;
+  background-repeat: no-repeat;
+  background-size: 120px;
+  background-position: center;
+}
+
 .buttons-container {
   margin-top: 64px;
   margin-bottom: 36px;
