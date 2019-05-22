@@ -133,7 +133,6 @@ class SignUpPage extends React.Component {
     callback();
   }
 
-
   renderNextPage = () => {
     const { getFieldDecorator } = this.props.form;
     return (
