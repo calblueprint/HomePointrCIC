@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+load './lib/recommendation.rb' # !Michael
+
 class Tenant < ApplicationRecord
   # locations not set
   belongs_to :referral_agency
@@ -15,6 +17,8 @@ class Tenant < ApplicationRecord
   validates :property_type, inclusion: { in: property_types.keys }
   validates :location, inclusion: { in: locations.keys }
   validates_associated :referral_agency
+
+	include Recommendation
 
   def priority
     ''"Returns priority of tenant:
