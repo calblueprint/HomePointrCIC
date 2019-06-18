@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-load './lib/recommendation.rb' # !Michael
+load './lib/recommendation.rb'
 
 class Tenant < ApplicationRecord
   # locations not set
