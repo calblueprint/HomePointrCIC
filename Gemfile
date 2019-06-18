@@ -79,3 +79,7 @@ gem 'faker', '~> 1.6', '>= 1.6.6'
 gem 'figaro'
 gem "administrate"
 gem 'administrate-field-active_storage'
+
+# Geolocation
+gem 'geokit'
+gem 'geokit-rails'
